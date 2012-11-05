@@ -10,3 +10,6 @@
 *.lai
 *.la
 *.a
+
+# Visual Paradigm
+*.vpp~*
