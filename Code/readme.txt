@@ -29,5 +29,4 @@ Defines:
 
 Info:
 	VS 2010 SP1 required
-	Currently the server is based on a cinder AppBasic class - probably will be changed
-	
+	boost::log is used for runtime logging and debugging
