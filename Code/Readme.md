@@ -34,19 +34,5 @@ is used for logging so it can be removed easily from the final build
 
 1. Cinder lib
 
-# 4. Development guidelines:
-
-## 1. Version Control System
-
-1. Push buildable code only!
-
-## 2. Coding guidelines
-
-1. Document your code with doxygen!
-
-## 3. Conditioning methods
-
-1. If one of the rules above was not followed by a person from our team, this s/he will donate a bar of chocolate to the dev team! :) Yummy, please be sloppy!
-
-# 5. Info:
+# 4. Info:
 VS 2010 SP1 required
