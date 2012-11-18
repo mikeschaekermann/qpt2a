@@ -12,6 +12,8 @@
     <ClCompile Include="..\..\src\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\Player.cpp" />
     <ClCompile Include="..\..\src\Logger.cpp" />
+    <ClCompile Include="..\..\src\Cell.cpp" />
+    <ClCompile Include="..\..\src\StemCell.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Client\ClientMain.h" />
@@ -38,6 +40,8 @@
     <ClInclude Include="..\..\src\NetworkManager.h" />
     <ClInclude Include="..\..\src\Player.h" />
     <ClInclude Include="..\..\src\Logger.h" />
+    <ClInclude Include="..\..\src\Cell.h" />
+    <ClInclude Include="..\..\src\StemCell.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MotionBehaviors">
