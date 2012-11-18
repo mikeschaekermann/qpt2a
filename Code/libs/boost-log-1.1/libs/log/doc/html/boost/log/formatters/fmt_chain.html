@@ -1,0 +1,123 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Class template fmt_chain</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../../formatters.html#header.boost.log.formatters.chain_hpp" title="Header &lt;boost/log/formatters/chain.hpp&gt;">
+<link rel="prev" href="../../../BOOST_LOG_FORMATTERS_C_DECORATOR_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_C_DECORATOR_HPP_INCLUDED_">
+<link rel="next" href="../../../BOOST_LOG_FORMATTERS_CHAIN_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_CHAIN_HPP_INCLUDED_">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../BOOST_LOG_FORMATTERS_C_DECORATOR_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../formatters.html#header.boost.log.formatters.chain_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_FORMATTERS_CHAIN_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.formatters.fmt_chain"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Class template fmt_chain</span></h2>
+<p>boost::log::formatters::fmt_chain &#8212; A formatter compound that encapsulates two other formatters. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../../formatters.html#header.boost.log.formatters.chain_hpp" title="Header &lt;boost/log/formatters/chain.hpp&gt;">boost/log/formatters/chain.hpp</a>&gt;
+
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> LeftFmtT<span class="special">,</span> <span class="keyword">typename</span> RightFmtT<span class="special">&gt;</span> 
+<span class="keyword">class</span> <a href="fmt_chain.html" title="Class template fmt_chain">fmt_chain</a> <span class="special">:</span>
+  <span class="keyword">public</span> <span class="identifier">basic_formatter</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">fmt_chain</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">LeftFmtT</span><span class="special">,</span> <span class="identifier">RightFmtT</span> <span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="comment">// types</span>
+  <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">ostream_type</span> <a name="boost.log.formatters.fmt_chain.ostream_type"></a><span class="identifier">ostream_type</span><span class="special">;</span>  <span class="comment">// Stream type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">record_type</span>  <a name="boost.log.formatters.fmt_chain.record_type"></a><span class="identifier">record_type</span><span class="special">;</span>   <span class="comment">// Log record type. </span>
+
+  <span class="comment">// <a href="fmt_chain.html#boost.log.formatters.fmt_chainconstruct-copy-destruct">construct/copy/destruct</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RightT<span class="special">&gt;</span> <a href="fmt_chain.html#id229139-bb"><span class="identifier">fmt_chain</span></a><span class="special">(</span><span class="identifier">LeftFmtT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">RightT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a href="fmt_chain.html#id229102-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a href="fmt_chain.html#id229105-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">ostream_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id655750"></a><h2>Description</h2>
+<p>The formatting lambda expressions are decomposed by compiler into a sequence of binary operators. This formatter does nothing but to connect two other formatters that participate in such an expression. When invoked, the formatter simply calls its first (or left-hand) aggregated formatter and then calls its second (right-hand) formatter.</p>
+<p>Chaining formatters can be composed into trees which allows to construct arbitrary-sized formatting lambda expressions. </p>
+<div class="refsect2" lang="en">
+<a name="id655762"></a><h3>
+<a name="boost.log.formatters.fmt_chainconstruct-copy-destruct"></a><code class="computeroutput">fmt_chain</code> 
+        public
+       construct/copy/destruct</h3>
+<div class="orderedlist"><ol type="1"><li>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RightT<span class="special">&gt;</span> 
+  <a name="id229139-bb"></a><span class="identifier">fmt_chain</span><span class="special">(</span><span class="identifier">LeftFmtT</span> <span class="keyword">const</span> <span class="special">&amp;</span> left<span class="special">,</span> <span class="identifier">RightT</span> <span class="keyword">const</span> <span class="special">&amp;</span> right<span class="special">)</span><span class="special">;</span></pre>
+<p>Constructor</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><code class="computeroutput">left</code></span></td>
+<td><p>Left-hand formatter </p></td>
+</tr>
+<tr>
+<td><span class="term"><code class="computeroutput">right</code></span></td>
+<td><p>Right-hand formatter </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li></ol></div>
+</div>
+<div class="refsect2" lang="en">
+<a name="id655912"></a><h3>
+<a name="id229102-bb"></a><code class="computeroutput">fmt_chain</code> public member functions</h3>
+<div class="orderedlist"><ol type="1"><li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id229105-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">ostream_type</span> <span class="special">&amp;</span> strm<span class="special">,</span> <span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> record<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Formatting operator. Passes control to the left and right formatters.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><code class="computeroutput">record</code></span></td>
+<td><p>The logging record </p></td>
+</tr>
+<tr>
+<td><span class="term"><code class="computeroutput">strm</code></span></td>
+<td><p>A reference to the stream, where the final text of the logging record is composed </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li></ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../BOOST_LOG_FORMATTERS_C_DECORATOR_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../formatters.html#header.boost.log.formatters.chain_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_FORMATTERS_CHAIN_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

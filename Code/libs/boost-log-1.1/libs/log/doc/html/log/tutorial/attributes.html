@@ -1,0 +1,262 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Adding more information to log: Attributes</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../tutorial.html" title="Tutorial">
+<link rel="prev" href="sources.html" title="Creating loggers and writing logs">
+<link rel="next" href="../detailed.html" title="Detailed features description">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="sources.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorial.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../detailed.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="log.tutorial.attributes"></a><a href="attributes.html" title="Adding more information to log: Attributes">Adding more information to log:
+      Attributes</a>
+</h3></div></div></div>
+<p>
+        If, while reading the previous sections, you wondered where these "LineID"
+        and "Severity" things came from, the answer is here.
+      </p>
+<p>
+        Each log record can have a number of attributes attached. Attributes can
+        contain any essental information about the conditions in which the log record
+        occurred, such as position in the code, executable module name, current date
+        and time, or any piece of data relevant to your particular application and
+        execution environment. An attribute may behave as a value generator, in which
+        case it would return a different value for each log record it's involved
+        in. As soon as the attribute generates the value, the latter becomes independent
+        from the creator and can be used by different filters, formatters and sinks.
+        But in order to do so one has to know the type of the value, or at least
+        what types it may have. There are a number of commonly used attributes implemented
+        in the library, you can find the types of their values in the documentation.
+      </p>
+<p>
+        Aside from that, as noted in the <a href="../design.html" title="Design overview">Design overview</a>
+        section, there are three possible scopes of attributes: source-specific,
+        thread-specific and global. When a log record is made, attribute values from
+        these three sets are accumulated into a single view and passed to sinks,
+        so where the attribute was registered makes no difference for them. Any attribute
+        can be registered in any scope. When registered, an attribute is given a
+        unique name in order to make it possible to search for it. If it happens
+        that the same named attribute is found in several scopes, the attribute from
+        the most specific scope is taken into consideration in any further processing,
+        including filtering and formatting. Such behavior makes it possible to override
+        global or thread-scoped attributes with the ones registered in your local
+        logger, thus reducing thread interference.
+      </p>
+<p>
+        Getting back to our tutorial, "LineID" and "Severity"
+        are attribute names. These attributes are registered by certain parts of
+        the library, such as loggers and trivial logging setup code. Below is the
+        description of the attribute registration process.
+      </p>
+<a name="log.tutorial.attributes.commonly_used_attributes"></a><h5>
+<a name="log.tutorial.attributes.h0"></a>
+        <a href="attributes.html#log.tutorial.attributes.commonly_used_attributes">Commonly
+        used attributes</a>
+      </h5>
+<p>
+        There are attributes that are likely to be used in nearly any application.
+        For instance, log record counter and a time stamp. They can be added with
+        a single function call:
+      </p>
+<pre class="programlisting"><span class="identifier">logging</span><span class="special">::</span><span class="identifier">add_common_attributes</span><span class="special">();</span>
+</pre>
+<p>
+        With this call attributes "LineID", "TimeStamp", "ProcessID"
+        and "ThreadID" are registered globally. The "LineID"
+        attribute is a counter that increments for each record being made, the first
+        record gets identifier 1. The "TimeStamp" attribute always yelds
+        the current time (i.e. the time when the log record is created, not the time
+        it was written to a sink). The last two attributes identify the process and
+        the thread in which every log record is emitted.
+      </p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          In single-threaded builds the "ThreadID" attribute is not registered.
+        </p></td></tr>
+</table></div>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../../../doc/src/images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          The trivial logging support code calls <code class="computeroutput"><span class="identifier">add_common_attributes</span></code>
+          internally in order to set up attributes available by default. If you use
+          trivial logging, you don't have to call this function yourself.
+        </p></td></tr>
+</table></div>
+<p>
+        This function is one of the several convenience functions described <a href="../detailed/utilities.html#log.detailed.utilities.init.convenience" title="Convenience functions">here</a>.
+      </p>
+<p>
+        Some attrubutes are registered automatically on loggers construction. For
+        example, <code class="computeroutput"><span class="identifier">severity_logger</span></code>
+        registers a source-specific attribute "Severity" which can be used
+        to add a level of emphasis for different log records. For example:
+      </p>
+<pre class="programlisting"><span class="comment">// We define our own severity levels</span>
+<span class="keyword">enum</span> <span class="identifier">severity_level</span>
+<span class="special">{</span>
+    <span class="identifier">normal</span><span class="special">,</span>
+    <span class="identifier">notification</span><span class="special">,</span>
+    <span class="identifier">warning</span><span class="special">,</span>
+    <span class="identifier">error</span><span class="special">,</span>
+    <span class="identifier">critical</span>
+<span class="special">};</span>
+
+<span class="comment">// The logger implicitly adds a source-specific attribute 'Severity'</span>
+<span class="comment">// of type 'severity_level' on construction</span>
+<span class="identifier">src</span><span class="special">::</span><span class="identifier">severity_logger</span><span class="special">&lt;</span> <span class="identifier">severity_level</span> <span class="special">&gt;</span> <span class="identifier">slg</span><span class="special">;</span>
+
+<span class="identifier">BOOST_LOG_SEV</span><span class="special">(</span><span class="identifier">slg</span><span class="special">,</span> <span class="identifier">normal</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"A regular message"</span><span class="special">;</span>
+<span class="identifier">BOOST_LOG_SEV</span><span class="special">(</span><span class="identifier">slg</span><span class="special">,</span> <span class="identifier">warning</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"Something bad is going on but I can handle it"</span><span class="special">;</span>
+<span class="identifier">BOOST_LOG_SEV</span><span class="special">(</span><span class="identifier">slg</span><span class="special">,</span> <span class="identifier">critical</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"Everything crumbles, shoot me now!"</span><span class="special">;</span>
+</pre>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../../../doc/src/images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          You can define your own formatting rules for the severity level by defining
+          <code class="computeroutput"><span class="keyword">operator</span> <span class="special">&lt;&lt;</span></code>
+          for this type. See <a href="../detailed/formatters.html#log.detailed.formatters.attr" title="Generic attribute formatter">this</a>
+          section for more details.
+        </p></td></tr>
+</table></div>
+<p>
+        The <code class="computeroutput"><span class="identifier">BOOST_LOG_SEV</span></code> macro acts
+        pretty much like <code class="computeroutput"><span class="identifier">BOOST_LOG</span></code>
+        except that it takes an additional argument for the <code class="computeroutput"><span class="identifier">open_record</span></code>
+        method of the logger. The <code class="computeroutput"><span class="identifier">BOOST_LOG_SEV</span></code>
+        macro can be replaced with this equivalent:
+      </p>
+<pre class="programlisting"><span class="identifier">logging</span><span class="special">::</span><span class="identifier">record</span> <span class="identifier">rec</span> <span class="special">=</span> <span class="identifier">lg</span><span class="special">.</span><span class="identifier">open_record</span><span class="special">(</span><span class="identifier">keywords</span><span class="special">::</span><span class="identifier">severity</span> <span class="special">=</span> <span class="identifier">normal</span><span class="special">);</span>
+<span class="keyword">if</span> <span class="special">(</span><span class="identifier">rec</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">rec</span><span class="special">.</span><span class="identifier">message</span><span class="special">()</span> <span class="special">=</span> <span class="string">"A regular message"</span><span class="special">;</span>
+    <span class="identifier">lg</span><span class="special">.</span><span class="identifier">push_record</span><span class="special">(</span><span class="identifier">rec</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        You can see here that the <code class="computeroutput"><span class="identifier">open_record</span></code>
+        can take named arguments. Some logger types provided by the library have
+        support for such additional parameters and this approach can certainly be
+        used by users when writing their own loggers.
+      </p>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../../../doc/src/images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          If you wonder if it is possible to define formatting rules for your custom
+          severity level type (or any other type for that matter), then yes, it is.
+          The simplest way to do it is to define <code class="computeroutput"><span class="keyword">operator</span>
+          <span class="special">&lt;&lt;</span></code> for your type and then
+          use the <code class="computeroutput"><span class="identifier">attr</span></code> formatter
+          that was described earlier. See <a href="../detailed/formatters.html#log.detailed.formatters.attr" title="Generic attribute formatter">here</a>
+          for more details.
+        </p></td></tr>
+</table></div>
+<a name="log.tutorial.attributes.more_attributes"></a><h5>
+<a name="log.tutorial.attributes.h1"></a>
+        <a href="attributes.html#log.tutorial.attributes.more_attributes">More attributes</a>
+      </h5>
+<p>
+        Let's see what's under the hood of that <code class="computeroutput"><span class="identifier">add_common_attributes</span></code>
+        function we used in the simple form section. It might look something like
+        this:
+      </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">add_common_attributes</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">core</span> <span class="special">&gt;</span> <span class="identifier">pCore</span> <span class="special">=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">core</span><span class="special">::</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">pCore</span><span class="special">-&gt;</span><span class="identifier">add_global_attribute</span><span class="special">(</span>
+        <span class="string">"LineID"</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">attrs</span><span class="special">::</span><span class="identifier">counter</span><span class="special">&lt;</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="special">&gt;</span> <span class="special">&gt;(</span><span class="number">1</span><span class="special">));</span>
+    <span class="identifier">pCore</span><span class="special">-&gt;</span><span class="identifier">add_global_attribute</span><span class="special">(</span>
+        <span class="string">"TimeStamp"</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">attrs</span><span class="special">::</span><span class="identifier">local_clock</span> <span class="special">&gt;());</span>
+
+    <span class="comment">// other attributes skipped for brevity</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Here the <code class="computeroutput"><span class="identifier">counter</span></code> and <code class="computeroutput"><span class="identifier">local_clock</span></code> components are attribute classes,
+        they derive from the common attribute interface <code class="computeroutput"><span class="identifier">attribute</span></code>.
+        The library provides a number of other <a href="../detailed/attributes.html" title="Attributes">attribute
+        classes</a>, including the <code class="computeroutput"><span class="identifier">functor</span></code>
+        attribute that calls some functional object on value acquisition. For example,
+        we can in a similar way register a <code class="computeroutput"><span class="identifier">named_scope</span></code>
+        attrubute:
+      </p>
+<pre class="programlisting"><span class="identifier">pCore</span><span class="special">-&gt;</span><span class="identifier">add_global_attribute</span><span class="special">(</span>
+    <span class="string">"Scope"</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">attrs</span><span class="special">::</span><span class="identifier">named_scope</span> <span class="special">&gt;());</span>
+</pre>
+<p>
+        This will give the ability to store scope names in log for every log record
+        the application makes.
+      </p>
+<p>
+        Logger-specific attributes are no less useful than global ones. Severity
+        levels and channel names are the most obvious candidates to be implemented
+        on the source level. Nothing prevents you from adding more attributes to
+        your loggers, like this:
+      </p>
+<pre class="programlisting"><span class="identifier">lg</span><span class="special">.</span><span class="identifier">add_attribute</span><span class="special">(</span><span class="string">"Tag"</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">attrs</span><span class="special">::</span><span class="identifier">constant</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&gt;(</span><span class="string">"My tag value"</span><span class="special">));</span>
+</pre>
+<p>
+        Now all log records made through this logger will be tagged with the specific
+        attribute. This attribute value may be used later in filtering and formatting.
+      </p>
+<p>
+        Another good use of attributes is the ability to mark log records made by
+        different parts of application in order to highlight activity related to
+        a single process. One may even implement a rough profiling tool to detect
+        performance bottlenecks. For example:
+      </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">foo</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="identifier">BOOST_LOG_SCOPED_THREAD_ATTR</span><span class="special">(</span><span class="string">"Timeline"</span><span class="special">,</span> <span class="identifier">attrs</span><span class="special">::</span><span class="identifier">timer</span><span class="special">);</span>
+    <span class="identifier">bar</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Now every log record made from the <code class="computeroutput"><span class="identifier">bar</span></code>
+        function, or any other function it calls, will contain the "Timeline"
+        attribute with a high precision time duration passed since the attribute
+        was registered. Based on these readings, one may detect which parts of the
+        code require more or less time to execute. The "Timeline" attribute
+        will be unregistered upon leaving the scope of function <code class="computeroutput"><span class="identifier">foo</span></code>.
+      </p>
+<p>
+        See the <a href="../detailed/attributes.html" title="Attributes">Attributes</a> section
+        for detailed description of attributes provided by the library.
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="sources.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorial.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../detailed.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

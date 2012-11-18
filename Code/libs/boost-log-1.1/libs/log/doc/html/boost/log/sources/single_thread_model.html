@@ -1,0 +1,90 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Struct single_thread_model</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../../logging_sources.html#header.boost.log.sources.threading_models_hpp" title="Header &lt;boost/log/sources/threading_models.hpp&gt;">
+<link rel="prev" href="../../../BOOST_LOG_SOURCES_SEVERITY_LOGGER_HPP_INCLUDED_.html" title="Macro BOOST_LOG_SOURCES_SEVERITY_LOGGER_HPP_INCLUDED_">
+<link rel="next" href="multi_thread_model.html" title="Struct template multi_thread_model">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../BOOST_LOG_SOURCES_SEVERITY_LOGGER_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../logging_sources.html#header.boost.log.sources.threading_models_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="multi_thread_model.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.sources.single_thread_model"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Struct single_thread_model</span></h2>
+<p>boost::log::sources::single_thread_model &#8212; Single thread locking model. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../../logging_sources.html#header.boost.log.sources.threading_models_hpp" title="Header &lt;boost/log/sources/threading_models.hpp&gt;">boost/log/sources/threading_models.hpp</a>&gt;
+
+</span>
+<span class="keyword">struct</span> <a href="single_thread_model.html" title="Struct single_thread_model">single_thread_model</a> <span class="special">{</span>
+
+  <span class="comment">// <a href="single_thread_model.html#id237274-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237277-bb"><span class="identifier">lock_shared</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a href="single_thread_model.html#id237285-bb"><span class="identifier">try_lock_shared</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> TimeT<span class="special">&gt;</span> <span class="keyword">bool</span> <a href="single_thread_model.html#id237293-bb"><span class="identifier">timed_lock_shared</span></a><span class="special">(</span><span class="identifier">TimeT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237314-bb"><span class="identifier">unlock_shared</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237322-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a href="single_thread_model.html#id237330-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> TimeT<span class="special">&gt;</span> <span class="keyword">bool</span> <a href="single_thread_model.html#id237338-bb"><span class="identifier">timed_lock</span></a><span class="special">(</span><span class="identifier">TimeT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237359-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237367-bb"><span class="identifier">lock_upgrade</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a href="single_thread_model.html#id237375-bb"><span class="identifier">try_lock_upgrade</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> TimeT<span class="special">&gt;</span> <span class="keyword">bool</span> <a href="single_thread_model.html#id237383-bb"><span class="identifier">timed_lock_upgrade</span></a><span class="special">(</span><span class="identifier">TimeT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237404-bb"><span class="identifier">unlock_upgrade</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237412-bb"><span class="identifier">unlock_upgrade_and_lock</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237420-bb"><span class="identifier">unlock_and_lock_upgrade</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237428-bb"><span class="identifier">unlock_and_lock_shared</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237436-bb"><span class="identifier">unlock_upgrade_and_lock_shared</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="single_thread_model.html#id237444-bb"><span class="identifier">swap</span></a><span class="special">(</span><a href="single_thread_model.html" title="Struct single_thread_model">single_thread_model</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id702721"></a><h2>Description</h2>
+<div class="refsect2" lang="en">
+<a name="id702724"></a><h3>
+<a name="id237274-bb"></a><code class="computeroutput">single_thread_model</code> public member functions</h3>
+<div class="orderedlist"><ol type="1">
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237277-bb"></a><span class="identifier">lock_shared</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">bool</span> <a name="id237285-bb"></a><span class="identifier">try_lock_shared</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> TimeT<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="id237293-bb"></a><span class="identifier">timed_lock_shared</span><span class="special">(</span><span class="identifier">TimeT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237314-bb"></a><span class="identifier">unlock_shared</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237322-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">bool</span> <a name="id237330-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> TimeT<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="id237338-bb"></a><span class="identifier">timed_lock</span><span class="special">(</span><span class="identifier">TimeT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237359-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237367-bb"></a><span class="identifier">lock_upgrade</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">bool</span> <a name="id237375-bb"></a><span class="identifier">try_lock_upgrade</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> TimeT<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="id237383-bb"></a><span class="identifier">timed_lock_upgrade</span><span class="special">(</span><span class="identifier">TimeT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237404-bb"></a><span class="identifier">unlock_upgrade</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237412-bb"></a><span class="identifier">unlock_upgrade_and_lock</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237420-bb"></a><span class="identifier">unlock_and_lock_upgrade</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237428-bb"></a><span class="identifier">unlock_and_lock_shared</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237436-bb"></a><span class="identifier">unlock_upgrade_and_lock_shared</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout"><span class="keyword">void</span> <a name="id237444-bb"></a><span class="identifier">swap</span><span class="special">(</span><a href="single_thread_model.html" title="Struct single_thread_model">single_thread_model</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre></li>
+</ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../BOOST_LOG_SOURCES_SEVERITY_LOGGER_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../logging_sources.html#header.boost.log.sources.threading_models_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="multi_thread_model.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

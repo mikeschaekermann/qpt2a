@@ -1,0 +1,122 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Class current_thread_id</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../../attributes.html#header.boost.log.attributes.current_thread_id_hpp" title="Header &lt;boost/log/attributes/current_thread_id.hpp&gt;">
+<link rel="prev" href="../../../BOOST_LOG_ATTRIBUTES_CURRENT_PROCESS_ID_HPP_INCLUDED_.html" title="Macro BOOST_LOG_ATTRIBUTES_CURRENT_PROCESS_ID_HPP_INCLUDED_">
+<link rel="next" href="../../../BOOST_LOG_ATTRIBUTES_CURRENT_THREAD_ID_HPP_INCLUDED_.html" title="Macro BOOST_LOG_ATTRIBUTES_CURRENT_THREAD_ID_HPP_INCLUDED_">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../BOOST_LOG_ATTRIBUTES_CURRENT_PROCESS_ID_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.current_thread_id_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_ATTRIBUTES_CURRENT_THREAD_ID_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.attributes.current_thread_id"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Class current_thread_id</span></h2>
+<p>boost::log::attributes::current_thread_id &#8212; A class of an attribute that always returns the current thread identifier. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../../attributes.html#header.boost.log.attributes.current_thread_id_hpp" title="Header &lt;boost/log/attributes/current_thread_id.hpp&gt;">boost/log/attributes/current_thread_id.hpp</a>&gt;
+
+</span>
+<span class="keyword">class</span> <a href="current_thread_id.html" title="Class current_thread_id">current_thread_id</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">attribute</span>, <span class="keyword">public</span> <span class="identifier">attribute_value</span> <span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="comment">// types</span>
+  <span class="keyword">typedef</span> <span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span> <a name="boost.log.attributes.current_thread_id.held_type"></a><span class="identifier">held_type</span><span class="special">;</span>  <span class="comment">// A held attribute value type. </span>
+
+  <span class="comment">// <a href="current_thread_id.html#id225841-bb">public member functions</a></span>
+  <span class="keyword">bool</span> <a href="current_thread_id.html#id225844-bb"><span class="identifier">dispatch</span></a><span class="special">(</span><span class="identifier">type_dispatcher</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">shared_ptr</span><span class="special">&lt;</span> <a href="../attribute_value.html" title="Struct attribute_value">attribute_value</a> <span class="special">&gt;</span> <a href="current_thread_id.html#id225876-bb"><span class="identifier">get_value</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">shared_ptr</span><span class="special">&lt;</span> <a href="../attribute_value.html" title="Struct attribute_value">attribute_value</a> <span class="special">&gt;</span> <a href="current_thread_id.html#id225895-bb"><span class="identifier">detach_from_thread</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id633390"></a><h2>Description</h2>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>This attribute may be registered globally, it will still return the correct thread identifier no matter which thread emits the log record. </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="refsect2" lang="en">
+<a name="id633400"></a><h3>
+<a name="id225841-bb"></a><code class="computeroutput">current_thread_id</code> public member functions</h3>
+<div class="orderedlist"><ol type="1">
+<li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="id225844-bb"></a><span class="identifier">dispatch</span><span class="special">(</span><span class="identifier">type_dispatcher</span> <span class="special">&amp;</span> dispatcher<span class="special">)</span><span class="special">;</span></pre>
+<p>The method dispatches the value to the given object.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">dispatcher</code></span></td>
+<td><p>The object that attempts to dispatch the stored value. </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><span class="term">Returns:</span></td>
+<td><p>true if <span class="emphasis"><em>dispatcher</em></span> was capable to consume the real attribute value type and false otherwise. </p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <a href="../attribute_value.html" title="Struct attribute_value">attribute_value</a> <span class="special">&gt;</span> <a name="id225876-bb"></a><span class="identifier">get_value</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Returns:</span></td>
+<td><p>The actual attribute value. It shall not return NULL (exceptions shall be used to indicate errors). </p></td>
+</tr></tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <a href="../attribute_value.html" title="Struct attribute_value">attribute_value</a> <span class="special">&gt;</span> <a name="id225895-bb"></a><span class="identifier">detach_from_thread</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>The method is called when the attribute value is passed to another thread (e.g. in case of asynchronous logging). The value should ensure it properly owns all thread-specific data.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Returns:</span></td>
+<td><p>An actual pointer to the attribute value. It may either point to this object or another. In the latter case the returned pointer replaces the pointer used by caller to invoke this method and is considered to be a functional equivalent to the previous pointer. </p></td>
+</tr></tbody>
+</table></div>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../BOOST_LOG_ATTRIBUTES_CURRENT_PROCESS_ID_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.current_thread_id_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_ATTRIBUTES_CURRENT_THREAD_ID_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

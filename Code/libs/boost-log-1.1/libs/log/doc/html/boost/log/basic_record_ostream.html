@@ -1,0 +1,230 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Class template basic_record_ostream</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../logging_sources.html#header.boost.log.sources.record_ostream_hpp" title="Header &lt;boost/log/sources/record_ostream.hpp&gt;">
+<link rel="prev" href="../../BOOST_LOG_DECLARE_GLOBAL_LOGGER_CTOR_ARGS.html" title="Macro BOOST_LOG_DECLARE_GLOBAL_LOGGER_CTOR_ARGS">
+<link rel="next" href="../../BOOST_LOG_SOURCES_RECORD_OSTREAM_HPP_INCLUDED_.html" title="Macro BOOST_LOG_SOURCES_RECORD_OSTREAM_HPP_INCLUDED_">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../BOOST_LOG_DECLARE_GLOBAL_LOGGER_CTOR_ARGS.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../logging_sources.html#header.boost.log.sources.record_ostream_hpp"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../BOOST_LOG_SOURCES_RECORD_OSTREAM_HPP_INCLUDED_.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.basic_record_ostream"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Class template basic_record_ostream</span></h2>
+<p>boost::log::basic_record_ostream &#8212; Logging record adapter with a streaming capability. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../logging_sources.html#header.boost.log.sources.record_ostream_hpp" title="Header &lt;boost/log/sources/record_ostream.hpp&gt;">boost/log/sources/record_ostream.hpp</a>&gt;
+
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> TraitsT <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">char_traits</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="special">&gt;</span> 
+<span class="keyword">class</span> <a href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span> <span class="special">&gt;</span> <span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="comment">// types</span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span> <span class="special">&gt;</span> <a name="boost.log.basic_record_ostream.ostream_type"></a><span class="identifier">ostream_type</span><span class="special">;</span>  <span class="comment">// Stream type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">basic_record</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span>                <a name="boost.log.basic_record_ostream.record_type"></a><span class="identifier">record_type</span><span class="special">;</span>   <span class="comment">// Log record type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">record_type</span><span class="special">::</span><span class="identifier">char_type</span>               <a name="boost.log.basic_record_ostream.char_type"></a><span class="identifier">char_type</span><span class="special">;</span>     <span class="comment">// Character type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">record_type</span><span class="special">::</span><span class="identifier">string_type</span>             <a name="boost.log.basic_record_ostream.string_type"></a><span class="identifier">string_type</span><span class="special">;</span>   <span class="comment">// String type to be used as a message text holder. </span>
+
+  <span class="comment">// <a href="basic_record_ostream.html#boost.log.basic_record_ostreamconstruct-copy-destruct">construct/copy/destruct</a></span>
+  <a href="basic_record_ostream.html#id235741-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a href="basic_record_ostream.html#id235755-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="identifier">record_handle</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a href="basic_record_ostream.html#id235785-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a href="basic_record_ostream.html#id235842-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><a href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  basic_record_ostream&amp; <a href="basic_record_ostream.html#id235851-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a href="basic_record_ostream.html#id235812-bb"><span class="special">~</span><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a href="basic_record_ostream.html#id235657-bb">public member functions</a></span>
+  <span class="keyword">bool</span> <a href="basic_record_ostream.html#id235660-bb"><span class="keyword">operator</span><span class="special">!</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a href="basic_record_ostream.html#id235699-bb"><span class="identifier">record</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="basic_record_ostream.html#id235717-bb"><span class="identifier">record</span></a><span class="special">(</span><span class="identifier">record_type</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a href="basic_record_ostream.html#id235817-bb">private member functions</a></span>
+  <span class="keyword">void</span> <a href="basic_record_ostream.html#id235820-bb"><span class="identifier">init_stream</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="basic_record_ostream.html#id235831-bb"><span class="identifier">detach_from_record</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id692326"></a><h2>Description</h2>
+<p>This class allows to compose the logging record message by streaming operations. It aggregates the log record and provides the standard output stream interface. </p>
+<div class="refsect2" lang="en">
+<a name="id692333"></a><h3>
+<a name="boost.log.basic_record_ostreamconstruct-copy-destruct"></a><code class="computeroutput">basic_record_ostream</code> 
+        public
+       construct/copy/destruct</h3>
+<div class="orderedlist"><ol type="1">
+<li>
+<pre class="literallayout"><a name="id235741-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>Default constructor. Creates an empty record that is equivalent to the invalid record handle. The stream capability is not available after construction.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Postconditions:</span></td>
+<td><p><code class="computeroutput">!*this == true</code> </p></td>
+</tr></tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="id235755-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="identifier">record_handle</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
+<p>Conversion from a record handle. Adopts the record referenced by the handle.</p>
+<p>
+
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">rec</code></span></td>
+<td><p>The record handle being adopted </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><span class="term">Requires:</span></td>
+<td><p>The handle, if valid, have been issued by the logging core with the same character type as the record being constructed. </p></td>
+</tr>
+<tr>
+<td><span class="term">Postconditions:</span></td>
+<td><p><code class="computeroutput">this-&gt;handle() == rec</code> </p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><a name="id235785-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
+<p>Conversion from a record object. Adopts the record referenced by the object.</p>
+<p>
+
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">rec</code></span></td>
+<td><p>The record handle being adopted </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><span class="term">Requires:</span></td>
+<td><p>The handle, if valid, have been issued by the logging core with the same character type as the record being constructed. </p></td>
+</tr>
+<tr>
+<td><span class="term">Postconditions:</span></td>
+<td><p><code class="computeroutput">this-&gt;handle() == rec</code> </p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li><pre class="literallayout"><a name="id235842-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><a href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li><pre class="literallayout">basic_record_ostream&amp; <a name="id235851-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li>
+<pre class="literallayout"><a name="id235812-bb"></a><span class="special">~</span><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>Destructor. Destroys the record, releases any sinks and attribute values that were involved in processing this record. </p>
+</li>
+</ol></div>
+</div>
+<div class="refsect2" lang="en">
+<a name="id692742"></a><h3>
+<a name="id235657-bb"></a><code class="computeroutput">basic_record_ostream</code> public member functions</h3>
+<div class="orderedlist"><ol type="1">
+<li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="id235660-bb"></a><span class="keyword">operator</span><span class="special">!</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Conversion to an unspecified boolean type</p>
+<p>
+Inverted conversion to an unspecified boolean type</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term">Returns:</span></td>
+<td><p><code class="computeroutput">true</code>, if stream is valid and ready for formatting, <code class="computeroutput">false</code>, if the stream is not valid. The latter also applies to the case when the stream is not attached to a log record.</p></td>
+</tr>
+<tr>
+<td><span class="term">Returns:</span></td>
+<td><p><code class="computeroutput">false</code>, if stream is valid and ready for formatting, <code class="computeroutput">true</code>, if the stream is not valid. The latter also applies to the case when the stream is not attached to a log record. </p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="id235699-bb"></a><span class="identifier">record</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Flushes internal buffers to complete all pending formatting operations and returns the aggregated log record</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Returns:</span></td>
+<td><p>The aggregated record object </p></td>
+</tr></tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id235717-bb"></a><span class="identifier">record</span><span class="special">(</span><span class="identifier">record_type</span> rec<span class="special">)</span><span class="special">;</span></pre>
+<p>If the stream is attached to a log record, flushes internal buffers to complete all pending formatting operations. Then reattaches the stream to another log record.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">rec</code></span></td>
+<td><p>New log record to attach to </p></td>
+</tr></tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li>
+</ol></div>
+</div>
+<div class="refsect2" lang="en">
+<a name="id692999"></a><h3>
+<a name="id235817-bb"></a><code class="computeroutput">basic_record_ostream</code> private member functions</h3>
+<div class="orderedlist"><ol type="1">
+<li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id235820-bb"></a><span class="identifier">init_stream</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>The function initializes the stream and the stream buffer. </li>
+<li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id235831-bb"></a><span class="identifier">detach_from_record</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>The function resets the stream into a detached (default initialized) state. </li>
+</ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../BOOST_LOG_DECLARE_GLOBAL_LOGGER_CTOR_ARGS.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../logging_sources.html#header.boost.log.sources.record_ostream_hpp"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../BOOST_LOG_SOURCES_RECORD_OSTREAM_HPP_INCLUDED_.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

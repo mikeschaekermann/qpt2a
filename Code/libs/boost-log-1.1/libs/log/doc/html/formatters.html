@@ -1,0 +1,424 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Formatters</title>
+<link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="log/reference.html" title="Reference">
+<link rel="prev" href="BOOST_LOG_FILTERS_HAS_ATTR_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FILTERS_HAS_ATTR_HPP_INCLUDED_">
+<link rel="next" href="boost/log/formatters/fmt_attr.html" title="Class template fmt_attr">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../boost.png"></td><td valign="bottom" halign="right"><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=199644&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></a></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="BOOST_LOG_FILTERS_HAS_ATTR_HPP_INCLUDED_.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="log/reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost/log/formatters/fmt_attr.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="formatters"></a>Formatters</h3></div></div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.attr_hpp">Header &lt;boost/log/formatters/attr.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.basic_formatters_hpp">Header &lt;boost/log/formatters/basic_formatters.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.c_decorator_hpp">Header &lt;boost/log/formatters/c_decorator.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.chain_hpp">Header &lt;boost/log/formatters/chain.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.char_decorator_hpp">Header &lt;boost/log/formatters/char_decorator.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.csv_decorator_hpp">Header &lt;boost/log/formatters/csv_decorator.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.date_time_hpp">Header &lt;boost/log/formatters/date_time.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.exception_policies_hpp">Header &lt;boost/log/formatters/exception_policies.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.format_hpp">Header &lt;boost/log/formatters/format.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.if_hpp">Header &lt;boost/log/formatters/if.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.message_hpp">Header &lt;boost/log/formatters/message.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.named_scope_hpp">Header &lt;boost/log/formatters/named_scope.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.stream_hpp">Header &lt;boost/log/formatters/stream.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.wrappers_hpp">Header &lt;boost/log/formatters/wrappers.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="formatters.html#header.boost.log.formatters.xml_decorator_hpp">Header &lt;boost/log/formatters/xml_decorator.hpp&gt;</a></span></dt>
+</dl></div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.attr_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/attr.hpp" target="_top">boost/log/formatters/attr.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>22.04.2007</p>
+<p>
+The header contains implementation of a generic attribute formatter. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_ATTR_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_ATTR_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_ATTR_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> 
+               <span class="keyword">typename</span> ExceptionPolicyT<span class="special">&gt;</span> 
+        <span class="keyword">class</span> <a href="boost/log/formatters/fmt_attr.html" title="Class template fmt_attr">fmt_attr</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> 
+               <span class="keyword">typename</span> ExceptionPolicyT<span class="special">&gt;</span> 
+        <span class="keyword">class</span> <a href="boost/log/formatters/fmt_attr_formatted.html" title="Class template fmt_attr_formatted">fmt_attr_formatted</a><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.basic_formatters_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/basic_formatters.hpp" target="_top">boost/log/formatters/basic_formatters.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>22.04.2007</p>
+<p>
+The header contains implementation of basic facilities for auto-generated formatters, including the base class for formatters. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_BASIC_FORMATTERS_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_BASIC_FORMATTERS_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_BASIC_FORMATTERS_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">struct</span> <a href="boost/log/formatters/formatter_base.html" title="Struct formatter_base">formatter_base</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a href="boost/log/formatters/is_formatter.html" title="Struct template is_formatter">is_formatter</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> DerivedT<span class="special">&gt;</span> <span class="keyword">struct</span> <a href="boost/log/formatters/basic_formatter.html" title="Struct template basic_formatter">basic_formatter</a><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.c_decorator_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/c_decorator.hpp" target="_top">boost/log/formatters/c_decorator.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>07.06.2009</p>
+<p>
+The header contains implementation of C-style decorators. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_C_DECORATOR_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_C_DECORATOR_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_C_DECORATOR_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FormatterT<span class="special">&gt;</span> <span class="keyword">class</span> <a href="boost/log/formatters/fmt_c_ascii_decorator.html" title="Class template fmt_c_ascii_decorator">fmt_c_ascii_decorator</a><span class="special">;</span>
+
+      <span class="identifier">implementation_defined</span> <a href="boost/log/formatters/c_dec.html" title="Global c_dec">c_dec</a><span class="special">;</span>
+      <span class="identifier">implementation_defined</span> <a href="boost/log/formatters/c_ascii_dec.html" title="Global c_ascii_dec">c_ascii_dec</a><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.chain_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/chain.hpp" target="_top">boost/log/formatters/chain.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>22.04.2007</p>
+<p>
+The header contains implementation of formatter chaining mechanism. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_CHAIN_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_CHAIN_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_CHAIN_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> LeftFmtT<span class="special">,</span> <span class="keyword">typename</span> RightFmtT<span class="special">&gt;</span> 
+        <span class="keyword">class</span> <a href="boost/log/formatters/fmt_chain.html" title="Class template fmt_chain">fmt_chain</a><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.char_decorator_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/char_decorator.hpp" target="_top">boost/log/formatters/char_decorator.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>07.06.2009</p>
+<p>
+The header contains implementation of a character decorator. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_CHAR_DECORATOR_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_CHAR_DECORATOR_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_CHAR_DECORATOR_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FormatterT<span class="special">&gt;</span> <span class="keyword">class</span> <a href="boost/log/formatters/fmt_char_decorator.html" title="Class template fmt_char_decorator">fmt_char_decorator</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RangeT<span class="special">&gt;</span> 
+        <span class="identifier">implementation_defined</span> <a href="boost/log/formatters/char_dec_id229423.html" title="Function template char_dec"><span class="identifier">char_dec</span></a><span class="special">(</span><span class="identifier">RangeT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RangeT1<span class="special">,</span> <span class="keyword">typename</span> RangeT2<span class="special">&gt;</span> 
+        <span class="identifier">implementation_defined</span> <a href="boost/log/formatters/char_dec_id229464.html" title="Function template char_dec"><span class="identifier">char_dec</span></a><span class="special">(</span><span class="identifier">RangeT1</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">RangeT2</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.csv_decorator_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/csv_decorator.hpp" target="_top">boost/log/formatters/csv_decorator.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>07.06.2009</p>
+<p>
+The header contains implementation of CSV-style decorator. See: <a href="http://en.wikipedia.org/wiki/Comma-separated_values" target="_top">http://en.wikipedia.org/wiki/Comma-separated_values</a> </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_CSV_DECORATOR_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_CSV_DECORATOR_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_CSV_DECORATOR_HPP_INCLUDED_</a></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.date_time_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/date_time.hpp" target="_top">boost/log/formatters/date_time.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>11.03.2008</p>
+<p>
+The header contains implementation of date and time-related formatters. </p>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> 
+               <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> FormatterImplT<span class="special">,</span> 
+               <span class="keyword">typename</span> ExceptionPolicyT<span class="special">&gt;</span> 
+        <span class="keyword">class</span> <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/throw_policy.html" title="Struct throw_policy">throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/date_id229783.html" title="Function template date"><span class="identifier">date</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/throw_policy.html" title="Struct throw_policy">throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/time_id229855.html" title="Function template time"><span class="identifier">time</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/throw_policy.html" title="Struct throw_policy">throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/date_time_id229927.html" title="Function template date_time"><span class="identifier">date_time</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/throw_policy.html" title="Struct throw_policy">throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/time_duration_id229998.html" title="Function template time_duration"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/throw_policy.html" title="Struct throw_policy">throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/time_period_id230070.html" title="Function template time_period"><span class="identifier">time_period</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/no_throw_policy.html" title="Struct no_throw_policy">no_throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/date_id230165.html" title="Function template date"><span class="identifier">date</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+             <span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/no_throw_policy.html" title="Struct no_throw_policy">no_throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/time_id230243.html" title="Function template time"><span class="identifier">time</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+             <span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/no_throw_policy.html" title="Struct no_throw_policy">no_throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/date_time_id230322.html" title="Function template date_time"><span class="identifier">date_time</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+                  <span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/no_throw_policy.html" title="Struct no_throw_policy">no_throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/time_duration_id230401.html" title="Function template time_duration"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+                      <span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> <span class="keyword">typename</span> CharT<span class="special">,</span> 
+               <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_date_time_facade.html" title="Class template fmt_date_time_facade">fmt_date_time_facade</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">AttributeValueTypesT</span><span class="special">,</span> <span class="identifier">implementation_defined</span><span class="special">,</span> <a href="boost/log/formatters/no_throw_policy.html" title="Struct no_throw_policy">no_throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/time_period_id230480.html" title="Function template time_period"><span class="identifier">time_period</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+                    <span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.exception_policies_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/exception_policies.hpp" target="_top">boost/log/formatters/exception_policies.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>01.11.2009</p>
+<p>
+The header contains declaration of policies for exception throwing from formatters </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_EXCEPTION_POLICIES_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_EXCEPTION_POLICIES_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_EXCEPTION_POLICIES_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">struct</span> <a href="boost/log/formatters/no_throw_policy.html" title="Struct no_throw_policy">no_throw_policy</a><span class="special">;</span>
+      <span class="keyword">struct</span> <a href="boost/log/formatters/throw_policy.html" title="Struct throw_policy">throw_policy</a><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.format_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/format.hpp" target="_top">boost/log/formatters/format.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>16.03.2008</p>
+<p>
+The header contains implementation of a hook for Boost.Format-like formatters. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_FORMAT_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_FORMAT_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_FORMAT_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <span class="keyword">class</span> <a href="boost/log/formatters/fmt_format.html" title="Class template fmt_format">fmt_format</a><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.if_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/if.hpp" target="_top">boost/log/formatters/if.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>12.01.2008</p>
+<p>
+The header contains implementation of a conditional formatter. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_IF_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_IF_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_IF_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FilterT<span class="special">,</span> <span class="keyword">typename</span> ThenT<span class="special">,</span> <span class="keyword">typename</span> ElseT<span class="special">&gt;</span> 
+        <span class="keyword">class</span> <a href="boost/log/formatters/fmt_if_else.html" title="Class template fmt_if_else">fmt_if_else</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FilterT<span class="special">,</span> <span class="keyword">typename</span> FormatterT<span class="special">&gt;</span> <span class="keyword">class</span> <a href="boost/log/formatters/fmt_if.html" title="Class template fmt_if">fmt_if</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FilterT<span class="special">&gt;</span> <span class="identifier">implementation_defined</span> <a href="boost/log/formatters/if_.html" title="Function template if_"><span class="identifier">if_</span></a><span class="special">(</span><span class="identifier">FilterT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.message_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/message.hpp" target="_top">boost/log/formatters/message.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>22.04.2007</p>
+<p>
+The header contains implementation of a message placeholder in formatters. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_MESSAGE_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_MESSAGE_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_MESSAGE_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <span class="keyword">class</span> <a href="boost/log/formatters/fmt_message.html" title="Class template fmt_message">fmt_message</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <a href="boost/log/formatters/fmt_message.html" title="Class template fmt_message">fmt_message</a><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <a href="boost/log/formatters/message.html" title="Function template message"><span class="identifier">message</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.named_scope_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/named_scope.hpp" target="_top">boost/log/formatters/named_scope.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>26.11.2007</p>
+<p>
+The header contains implementation of a named scope formatter. </p>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> ExceptionPolicyT<span class="special">&gt;</span> <span class="keyword">class</span> <a href="boost/log/formatters/fmt_named_scope.html" title="Class template fmt_named_scope">fmt_named_scope</a><span class="special">;</span>
+
+      <span class="comment">// Scope iteration directions. </span>
+      <span class="keyword">enum</span> <a name="boost.log.formatters.scope_iteration_direction"></a>scope_iteration_direction <span class="special">{</span> forward, reverse <span class="special">}</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_named_scope.html" title="Class template fmt_named_scope">fmt_named_scope</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <a href="boost/log/formatters/throw_policy.html" title="Struct throw_policy">throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/named_scope_id231593.html" title="Function template named_scope"><span class="identifier">named_scope</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
+        <a href="boost/log/formatters/fmt_named_scope.html" title="Class template fmt_named_scope">fmt_named_scope</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <a href="boost/log/formatters/no_throw_policy.html" title="Struct no_throw_policy">no_throw_policy</a> <span class="special">&gt;</span> 
+        <a href="boost/log/formatters/named_scope_id231671.html" title="Function template named_scope"><span class="identifier">named_scope</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+                    <span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.stream_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/stream.hpp" target="_top">boost/log/formatters/stream.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>22.04.2007</p>
+<p>
+The header contains implementation of a hook for streaming formatters. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_STREAM_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_STREAM_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_STREAM_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <span class="keyword">struct</span> <a href="boost/log/formatters/stream_placeholder.html" title="Struct template stream_placeholder">stream_placeholder</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> LeftFmtT<span class="special">,</span> <span class="keyword">typename</span> RightT<span class="special">&gt;</span> 
+        <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a href="boost/log/formatters/operator_id231849.html" title="Function template operator&lt;&lt;"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><a href="boost/log/formatters/basic_formatter.html" title="Struct template basic_formatter">basic_formatter</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">LeftFmtT</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+                               <span class="identifier">RightT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.wrappers_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/wrappers.hpp" target="_top">boost/log/formatters/wrappers.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>22.04.2007</p>
+<p>
+The header contains implementation of wrappers that are used to construct lambda expressions of formatters. These wrappers are used to convert third-party objects (like string literals, for instance) into valid formatters. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_WRAPPERS_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_WRAPPERS_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_WRAPPERS_HPP_INCLUDED_</a></pre>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">formatters</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">class</span> <a href="boost/log/formatters/fmt_wrapper.html" title="Class template fmt_wrapper">fmt_wrapper</a><span class="special">;</span>
+
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> 
+        <span class="keyword">class</span> <a href="boost/log/formatters/fmt_wrapper_CharT__refe_id232031.html" title="Class template fmt_wrapper&lt;CharT, reference_wrapper&lt; T &gt;&gt;">fmt_wrapper</a><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">reference_wrapper</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span><span class="special">&gt;</span><span class="special">;</span>
+
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span> <span class="keyword">struct</span> <a href="boost/log/formatters/wrap_if_c.html" title="Struct template wrap_if_c">wrap_if_c</a><span class="special">;</span>
+
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a href="boost/log/formatters/wrap_if_c_CharT__T__fal_id232173.html" title="Struct template wrap_if_c&lt;CharT, T, false&gt;">wrap_if_c</a><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">false</span><span class="special">&gt;</span><span class="special">;</span>
+
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">,</span> <span class="keyword">typename</span> PredT<span class="special">&gt;</span> <span class="keyword">struct</span> <a href="boost/log/formatters/wrap_if.html" title="Struct template wrap_if">wrap_if</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a href="boost/log/formatters/wrap_if_not_formatter.html" title="Struct template wrap_if_not_formatter">wrap_if_not_formatter</a><span class="special">;</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.formatters.xml_decorator_hpp"></a>Header &lt;<a href="../../../../boost/log/formatters/xml_decorator.hpp" target="_top">boost/log/formatters/xml_decorator.hpp</a>&gt;</h4></div></div></div>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>07.06.2009</p>
+<p>
+The header contains implementation of XML-style decorator. </p>
+<pre class="synopsis">
+
+<a href="BOOST_LOG_FORMATTERS_XML_DECORATOR_HPP_INCLUDED_.html" title="Macro BOOST_LOG_FORMATTERS_XML_DECORATOR_HPP_INCLUDED_">BOOST_LOG_FORMATTERS_XML_DECORATOR_HPP_INCLUDED_</a></pre>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="BOOST_LOG_FILTERS_HAS_ATTR_HPP_INCLUDED_.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="log/reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost/log/formatters/fmt_attr.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
