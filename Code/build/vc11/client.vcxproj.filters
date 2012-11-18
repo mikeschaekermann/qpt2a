@@ -11,6 +11,8 @@
     <ClCompile Include="..\..\src\GameObject.cpp" />
     <ClCompile Include="..\..\src\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\Player.cpp" />
+    <ClCompile Include="..\..\src\Log.cpp" />
+    <ClCompile Include="..\..\src\tri_logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Client\ClientMain.h" />
@@ -36,6 +38,9 @@
     <ClInclude Include="..\..\src\GameObject.h" />
     <ClInclude Include="..\..\src\NetworkManager.h" />
     <ClInclude Include="..\..\src\Player.h" />
+    <ClInclude Include="..\..\src\Log.h" />
+    <ClInclude Include="..\..\src\nullstream.hpp" />
+    <ClInclude Include="..\..\src\tri_logger.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MotionBehaviors">

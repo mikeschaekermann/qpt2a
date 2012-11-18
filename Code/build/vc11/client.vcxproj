@@ -20,9 +20,11 @@
     <ClCompile Include="..\..\src\Client\MessagingBehavior.cpp" />
     <ClCompile Include="..\..\src\CollisionManager.cpp" />
     <ClCompile Include="..\..\src\GameObject.cpp" />
+    <ClCompile Include="..\..\src\Log.cpp" />
     <ClCompile Include="..\..\src\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\Player.cpp" />
     <ClCompile Include="..\..\src\Server\GameManager.cpp" />
+    <ClCompile Include="..\..\src\tri_logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Client\AssetManager.h" />
@@ -36,8 +38,11 @@
     <ClInclude Include="..\..\src\GameObject.h" />
     <ClInclude Include="..\..\src\ICollisionBehavior.h" />
     <ClInclude Include="..\..\src\IMotionBehavior.h" />
+    <ClInclude Include="..\..\src\Log.h" />
     <ClInclude Include="..\..\src\NetworkManager.h" />
+    <ClInclude Include="..\..\src\nullstream.hpp" />
     <ClInclude Include="..\..\src\Player.h" />
+    <ClInclude Include="..\..\src\tri_logger.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{01B47039-3133-407A-944A-3F554A017C2C}</ProjectGuid>
@@ -99,7 +104,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_WINDOWS;_CONSOLE;FTLOG=main;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;..\..\libs\apache-log4cxx-0.10.0\src\main\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>Cdecl</CallingConvention>
