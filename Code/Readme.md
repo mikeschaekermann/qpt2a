@@ -26,6 +26,9 @@ Is only available in Debug and Release target
 ## NDEBUG
 is only available in Final target
 
+## _LOG
+is used for logging so it can be removed easily from the final build
+
 
 # 3. Libraries:
 
