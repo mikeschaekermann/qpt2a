@@ -5,6 +5,8 @@
 
 void ClientMain::setup()
 {
+	setWindowPos(100, 100);
+
 	Logger::getInstance()->configure("main.log");
 	LOG_INFO("\n\n\n");
 	LOG_INFO("Client start up");

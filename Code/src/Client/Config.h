@@ -8,8 +8,6 @@
 /*  
  * common define variables:
  *
- */
-
 
 
 
