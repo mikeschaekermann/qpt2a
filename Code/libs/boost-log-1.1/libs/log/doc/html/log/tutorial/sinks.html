@@ -1,0 +1,207 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Setting up sinks</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../tutorial.html" title="Tutorial">
+<link rel="prev" href="trivial_filtering.html" title="Trivial logging with filters">
+<link rel="next" href="formatters.html" title="Log record formatting">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="trivial_filtering.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorial.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="formatters.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="log.tutorial.sinks"></a><a href="sinks.html" title="Setting up sinks">Setting up sinks</a>
+</h3></div></div></div>
+<p>
+        Sometimes trivial logging doesn't provide enough flexibility. For example,
+        one may want a more sophisticated logic of log processing, rather than simply
+        storing it into a file. In order to customize this, you have to construct
+        logging sinks and register them with the logging core. This should normally
+        be done only once somewhere in the startup code of your application.
+      </p>
+<a name="log.tutorial.sinks.file_logging_unleashed"></a><h5>
+<a name="log.tutorial.sinks.h0"></a>
+        <a href="sinks.html#log.tutorial.sinks.file_logging_unleashed">File logging unleashed</a>
+      </h5>
+<p>
+        As a starting point, here is how you would initialize logginig into a file,
+        similarly to the trivial logging:
+      </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">init</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="identifier">logging</span><span class="special">::</span><span class="identifier">init_log_to_file</span><span class="special">(</span><span class="string">"sample.log"</span><span class="special">);</span>
+    <span class="identifier">logging</span><span class="special">::</span><span class="identifier">core</span><span class="special">::</span><span class="identifier">get</span><span class="special">()-&gt;</span><span class="identifier">set_filter</span>
+    <span class="special">(</span>
+        <span class="identifier">flt</span><span class="special">::</span><span class="identifier">attr</span><span class="special">&lt;</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">trivial</span><span class="special">::</span><span class="identifier">severity_level</span> <span class="special">&gt;(</span><span class="string">"Severity"</span><span class="special">)</span> <span class="special">&gt;=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">trivial</span><span class="special">::</span><span class="identifier">info</span>
+    <span class="special">);</span>
+<span class="special">}</span>
+
+<span class="comment">// We'll skip the "main" function for now</span>
+</pre>
+<p>
+        The added piece is a call to the <code class="computeroutput"><span class="identifier">init_log_to_file</span></code>
+        function. As the name implies, the function initializes a logging sink that
+        stores log records into a text file. The function also accepts a number of
+        customization options, such as the rotation interval and size limits. For
+        instance:
+      </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">init</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="identifier">logging</span><span class="special">::</span><span class="identifier">init_log_to_file</span>
+    <span class="special">(</span>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">file_name</span> <span class="special">=</span> <span class="string">"sample_%N.log"</span><span class="special">,</span>                  <span class="comment">// file name pattern</span>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">rotation_size</span> <span class="special">=</span> <span class="number">10</span> <span class="special">*</span> <span class="number">1024</span> <span class="special">*</span> <span class="number">1024</span><span class="special">,</span>             <span class="comment">// rotate files every 10 MiB...</span>
+                                                                <span class="comment">// ...or at midnight</span>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">time_based_rotation</span> <span class="special">=</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">file</span><span class="special">::</span><span class="identifier">rotation_at_time_point</span><span class="special">(</span><span class="number">0</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="number">0</span><span class="special">),</span>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">format</span> <span class="special">=</span> <span class="string">"[%TimeStamp%]: %_%"</span>                 <span class="comment">// log record format</span>
+    <span class="special">);</span>
+
+    <span class="identifier">logging</span><span class="special">::</span><span class="identifier">core</span><span class="special">::</span><span class="identifier">get</span><span class="special">()-&gt;</span><span class="identifier">set_filter</span>
+    <span class="special">(</span>
+        <span class="identifier">flt</span><span class="special">::</span><span class="identifier">attr</span><span class="special">&lt;</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">trivial</span><span class="special">::</span><span class="identifier">severity_level</span> <span class="special">&gt;(</span><span class="string">"Severity"</span><span class="special">)</span> <span class="special">&gt;=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">trivial</span><span class="special">::</span><span class="identifier">info</span>
+    <span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        You can see that the options are passed to the function in the named form.
+        This approach is taken in many places of the library. You'll get used to
+        it. The meaning of the parameters is mostly self-explaining, and is documented
+        in this manual (see <a href="../detailed/sink_backends.html#log.detailed.sink_backends.text_file" title="Text file backend">here</a>
+        for what regards the text file sink). This and other convenience initialization
+        functions are described in <a href="../detailed/utilities.html#log.detailed.utilities.init.convenience" title="Convenience functions">this</a>
+        section.
+      </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          You can register more than one sink. Each sink will process log records
+          independently from others. In particular this means that you can use trivial
+          logging and additionally register one or more sinks as shown above. All
+          sinks will receive log records as you emit them.
+        </p></td></tr>
+</table></div>
+<a name="log.tutorial.sinks.sinks_in_depth__more_sinks"></a><h5>
+<a name="log.tutorial.sinks.h1"></a>
+        <a href="sinks.html#log.tutorial.sinks.sinks_in_depth__more_sinks">Sinks in depth:
+        More sinks</a>
+      </h5>
+<p>
+        If you don't want to go into details, you can skip this section and continue
+        from the next one. Otherwise, if you need more comprehensive control over
+        sink configuration, or want to use different sinks, you may consider registering
+        them manually.
+      </p>
+<p>
+        In the simplest form, the call to the <code class="computeroutput"><span class="identifier">init_log_to_file</span></code>
+        function in the section above is equivalent to this:
+      </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">init</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="comment">// Construct the sink</span>
+    <span class="keyword">typedef</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">synchronous_sink</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">text_ostream_backend</span> <span class="special">&gt;</span> <span class="identifier">text_sink</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">text_sink</span> <span class="special">&gt;</span> <span class="identifier">pSink</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">text_sink</span> <span class="special">&gt;();</span>
+
+    <span class="comment">// Add a stream to write log to</span>
+    <span class="identifier">pSink</span><span class="special">-&gt;</span><span class="identifier">locked_backend</span><span class="special">()-&gt;</span><span class="identifier">add_stream</span><span class="special">(</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ofstream</span> <span class="special">&gt;(</span><span class="string">"sample.log"</span><span class="special">));</span>
+
+    <span class="comment">// Register the sink in the logging core</span>
+    <span class="identifier">logging</span><span class="special">::</span><span class="identifier">core</span><span class="special">::</span><span class="identifier">get</span><span class="special">()-&gt;</span><span class="identifier">add_sink</span><span class="special">(</span><span class="identifier">pSink</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Ok, the first thing you may have noticed about sinks is that they are composed
+        of two classes: the frontend and the backend. The frontend (which is the
+        <code class="computeroutput"><span class="identifier">synchronous_sink</span></code> class template
+        in the snippet above) is responsible for various common tasks for all sinks,
+        such as thread synchronization model and filtering. The backend (the <code class="computeroutput"><span class="identifier">text_ostream_backend</span></code> class above) implements
+        everything specific to the sink, such as text formatting and writing to a
+        file in this case. The library provides a number of frontends and backends
+        that can be used with each other out of the box.
+      </p>
+<p>
+        The <code class="computeroutput"><span class="identifier">synchronous_sink</span></code> class
+        template above indicates that the sink is synchronous, that is, it allows
+        several threads to log simultaneously and will block in case of contention.
+        This means that the backend <code class="computeroutput"><span class="identifier">text_ostream_backend</span></code>
+        need not worry about multithreading at all. There are other sink frontends
+        available, you can read more about them <a href="../detailed/sink_frontends.html" title="Sink Frontends">here</a>.
+      </p>
+<p>
+        The <code class="computeroutput"><span class="identifier">text_ostream_backend</span></code>
+        class writes formatted log records into STL-compatible streams. We have used
+        a file stream above but we could have used any type of stream. For example,
+        adding output to console could look as follows:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">log</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">empty_deleter</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="comment">// We have to provide an empty deleter to avoid destroying the global stream object</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span> <span class="special">&gt;</span> <span class="identifier">pStream</span><span class="special">(&amp;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">clog</span><span class="special">,</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">empty_deleter</span><span class="special">());</span>
+<span class="identifier">pSink</span><span class="special">-&gt;</span><span class="identifier">locked_backend</span><span class="special">()-&gt;</span><span class="identifier">add_stream</span><span class="special">(</span><span class="identifier">pStream</span><span class="special">);</span>
+</pre>
+<p>
+        The <code class="computeroutput"><span class="identifier">text_ostream_backend</span></code>
+        supports adding several streams. In that case its output will be duplicated
+        to all added streams. This may be useful to duplicate output to console and
+        file, since all the filtering, formatting and other overhead of the library
+        happen only once per record for the sink.
+      </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Please note the difference between registering several distinct sinks and
+          registering one sink with several target streams. While the former allows
+          independently customizing output to each sink, the latter would work considerably
+          faster if such customization is not needed. This feature is specific to
+          this particular backend.
+        </p></td></tr>
+</table></div>
+<p>
+        The library provides a number of <a href="../detailed/sink_backends.html" title="Sink Backends">backends</a>
+        that provide different log processing logic. For instance, by specifying
+        a <a href="../detailed/sink_backends.html#log.detailed.sink_backends.syslog" title="Syslog backend">syslog</a> backend
+        you can send log records over the network to the syslog server, or by setting
+        up a <a href="../detailed/sink_backends.html#log.detailed.sink_backends.event_log" title="Windows event log backends">Windows NT event
+        log</a> backend you can monitor your application run time by the standard
+        Windows tools.
+      </p>
+<p>
+        The last thing worth noting here is the <code class="computeroutput"><span class="identifier">locked_backend</span></code>
+        member function call to access the sink backend. It is used to get thread-safe
+        access to the backend and is provided by all sink frontends. This function
+        returns a smart-pointer to the backend and as long as it exists the backend
+        is locked (which means even if another thread tries to log and the log record
+        is passed to the sink, it will not be logged until you release the backend).
+        The only exception is the <code class="computeroutput"><span class="identifier">unlocked_sink</span></code>
+        frontend which does not synchronize at all and simply returns an unlocked
+        pointer to the backend.
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="trivial_filtering.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorial.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="formatters.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

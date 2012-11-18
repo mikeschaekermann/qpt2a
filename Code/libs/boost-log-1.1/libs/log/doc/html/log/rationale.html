@@ -1,0 +1,87 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Rationale and FAQ</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="prev" href="extension/settings.html" title="Extending library settings support">
+<link rel="next" href="rationale/why_weak_scoped_attributes.html" title="Why scoped attributes don't override existing attributes?">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td><td valign="bottom" halign="right"><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=199644&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></a></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="extension/settings.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="rationale/why_weak_scoped_attributes.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="log.rationale"></a><a href="rationale.html" title="Rationale and FAQ">Rationale and FAQ</a>
+</h2></div></div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="rationale.html#log.rationale.why_str_lit">Why string literals as scope
+      names?</a></span></dt>
+<dt><span class="section"><a href="rationale/why_weak_scoped_attributes.html">Why scoped
+      attributes don't override existing attributes?</a></span></dt>
+<dt><span class="section"><a href="rationale/why_weak_record_ordering.html">Why log records
+      are weakly ordered in a multithreaded application?</a></span></dt>
+<dt><span class="section"><a href="rationale/why_wide_attribute_names.html">Why wide-character
+      version of the library requires wide attribute names?</a></span></dt>
+<dt><span class="section"><a href="rationale/why_no_attribute_manips.html">Why attributes
+      cannot be set with stream manipulators?</a></span></dt>
+<dt><span class="section"><a href="rationale/why_not_lazy_streaming.html">Why not using lazy
+      streaming?</a></span></dt>
+<dt><span class="section"><a href="rationale/why_not_log4j.html">Why not using hierarchy
+      of loggers, like in log4j? Why not Boost.Log4j? Etc.</a></span></dt>
+</dl></div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="log.rationale.why_str_lit"></a><a href="rationale.html#log.rationale.why_str_lit" title="Why string literals as scope names?">Why string literals as scope
+      names?</a>
+</h3></div></div></div>
+<p>
+        One may wonder why not to allow the use of arbitrary strings as named scope
+        names. The answer is simple: for performance and safety reasons. Named scope
+        support functionality has one significant difference from other attribute-related
+        features of the library. The scope stack is maintained even when no logging
+        is done, so if a function <code class="computeroutput"><span class="identifier">foo</span></code>
+        has a <code class="computeroutput"><span class="identifier">BOOST_LOG_FUNCTION</span><span class="special">()</span></code> statement in its body, it is always a slowdown.
+        Allowing the scope name to be an arbitrary string would make the slowdown
+        significantly greater because of the need to allocate memory and copy the
+        string (not to mention that there would be a need to previously format it,
+        which also takes its toll).
+      </p>
+<p>
+        Dynamic memory allocation also introduces exception safety issues: the <code class="computeroutput"><span class="identifier">BOOST_LOG_FUNCTION</span><span class="special">()</span></code>
+        statement (and alikes) would become a potential source of exception. These
+        issues would complicate user's code if he wants to solve memory allocation
+        problems gracefully.
+      </p>
+<p>
+        One possible alternative solution would be pooling pre-formatted and pre-allocated
+        scope names somewhere but this would surely degrade performance even more
+        and introduce the problem of detecting when to update or free pooled strings.
+      </p>
+<p>
+        Therefore restricting to string literals seemed to be the optimal decision,
+        which reduced dynamic memory usage and provided enough flexibility for common
+        needs.
+      </p>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="extension/settings.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="rationale/why_weak_scoped_attributes.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

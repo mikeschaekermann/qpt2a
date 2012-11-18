@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template make_functor_attr</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../../attributes.html#header.boost.log.attributes.functor_hpp" title="Header &lt;boost/log/attributes/functor.hpp&gt;">
+<link rel="prev" href="../../../BOOST_LOG_ATTRIBUTES_CURRENT_THREAD_ID_HPP_INCLUDED_.html" title="Macro BOOST_LOG_ATTRIBUTES_CURRENT_THREAD_ID_HPP_INCLUDED_">
+<link rel="next" href="../../../BOOST_LOG_ATTRIBUTES_FUNCTOR_HPP_INCLUDED_.html" title="Macro BOOST_LOG_ATTRIBUTES_FUNCTOR_HPP_INCLUDED_">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../BOOST_LOG_ATTRIBUTES_CURRENT_THREAD_ID_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.functor_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_ATTRIBUTES_FUNCTOR_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.attributes.make_functor_attr"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template make_functor_attr</span></h2>
+<p>boost::log::attributes::make_functor_attr</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../../attributes.html#header.boost.log.attributes.functor_hpp" title="Header &lt;boost/log/attributes/functor.hpp&gt;">boost/log/attributes/functor.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">shared_ptr</span><span class="special">&lt;</span> <a href="../attribute.html" title="Struct attribute">attribute</a> <span class="special">&gt;</span> <span class="identifier">make_functor_attr</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> fun<span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id633990"></a><h2>Description</h2>
+<p>The function constructs functor attribute instance with the provided functional object.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">fun</code></span></td>
+<td><p>Nullary functional object that returns an actual stored value for an attribute value. </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><span class="term">Returns:</span></td>
+<td><p>Pointer to the attribute instance </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../BOOST_LOG_ATTRIBUTES_CURRENT_THREAD_ID_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.functor_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_ATTRIBUTES_FUNCTOR_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

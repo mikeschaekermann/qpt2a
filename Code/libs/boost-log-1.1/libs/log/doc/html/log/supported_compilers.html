@@ -1,0 +1,119 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Supported compilers and platforms</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="prev" href="how_to_read.html" title="How to read the documentation">
+<link rel="next" href="installation.html" title="Installation">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td><td valign="bottom" halign="right"><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=199644&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></a></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="how_to_read.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="installation.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="log.supported_compilers"></a><a href="supported_compilers.html" title="Supported compilers and platforms">Supported compilers and platforms</a>
+</h2></div></div></div>
+<p>
+      The library should build and work with a reasonably compliant compiler. The
+      library was successfully built and tested on the following platforms:
+    </p>
+<div class="itemizedlist"><ul type="disc">
+<li>
+          Windows XP, Windows Vista. MSVC 8.0, 9.0. MSVC 7.1 may work too, but it
+          was not tested.
+        </li>
+<li>
+          Windows Vista. Intel C++ Compiler 10.1.022, 11.1.048.
+        </li>
+<li>
+          Linux. GCC 4.2 and newer. GCC 4.1 may work too, but it was not tested.
+        </li>
+<li>
+          Linux. Intel C++ 11.1.056.
+        </li>
+</ul></div>
+<p>
+      The following compilers/platforms are not supported and will likely fail to
+      compile the library:
+    </p>
+<div class="itemizedlist"><ul type="disc">
+<li>
+          MSVC 7.0 and older.
+        </li>
+<li>
+          Borland C++ 5.5.1 (free version). Newer versions might or might not work.
+        </li>
+<li>
+          GCC 4.0 and older.
+        </li>
+<li>
+          Windows 9x, ME, NT4 and older are not supported.
+        </li>
+</ul></div>
+<a name="log.supported_compilers.notes_for_mingw__cygwin_and_visual_studio_express_edition_users"></a><h4>
+<a name="log.supported_compilers.h0"></a>
+      <a href="supported_compilers.html#log.supported_compilers.notes_for_mingw__cygwin_and_visual_studio_express_edition_users">Notes
+      for MinGW, Cygwin and Visual Studio Express Edition users</a>
+    </h4>
+<p>
+      In order to compile the library under these compilers special preparations
+      are needed. First, in case of MinGW or Cygwin make sure you have installed
+      the latest GCC version. The library will most likely fail to compile with GCC
+      3.x.
+    </p>
+<p>
+      Second, at some point the library will require a Message Compiler tool (<code class="computeroutput"><span class="identifier">mc</span><span class="special">.</span><span class="identifier">exe</span></code>),
+      which is not available in MinGW, Cygwin and MSVC Express Edition. You have
+      two options to settle the problem. In case of MinGW and Cygwin you can use
+      the <code class="computeroutput"><span class="identifier">windmc</span><span class="special">.</span><span class="identifier">exe</span></code> tool, which is the analogue of the original
+      <code class="computeroutput"><span class="identifier">mc</span><span class="special">.</span><span class="identifier">exe</span></code>. In order to do that you will have to
+      patch Boost.Build files (in particular, the <code class="computeroutput"><span class="identifier">tools</span><span class="special">/</span><span class="identifier">build</span><span class="special">/</span><span class="identifier">v2</span><span class="special">/</span><span class="identifier">tools</span><span class="special">/</span><span class="identifier">mc</span><span class="special">.</span><span class="identifier">jam</span></code> file) as described in <a href="https://svn.boost.org/trac/boost/ticket/4111" target="_top">this</a>
+      ticket. After that you will be able to specify the <code class="computeroutput"><span class="identifier">mc</span><span class="special">-</span><span class="identifier">compiler</span><span class="special">=</span><span class="identifier">windmc</span></code> option
+      to bjam to build the library.
+    </p>
+<p>
+      Another way is to obtain the original <code class="computeroutput"><span class="identifier">mc</span><span class="special">.</span><span class="identifier">exe</span></code>. This
+      tool is available in Windows SDK, which can be downloaded from the Microsoft
+      site freely (for example, <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=71deb800-c591-4f97-a900-bea146e4fae1&amp;displaylang=en" target="_top">here</a>).
+      Also, this tool should be available in Visual Studio 2010 Express Edition.
+      During the compilation, <code class="computeroutput"><span class="identifier">mc</span><span class="special">.</span><span class="identifier">exe</span></code> should
+      be accessible through one of the directories in your PATH environment variable.
+    </p>
+<a name="log.supported_compilers.additional_notes_for_cygwin_users"></a><h4>
+<a name="log.supported_compilers.h1"></a>
+      <a href="supported_compilers.html#log.supported_compilers.additional_notes_for_cygwin_users">Additional
+      notes for Cygwin users</a>
+    </h4>
+<p>
+      Cygwin support is rather preliminary. Some functionality is not available.
+      In particular, the socket-based syslog backend is not supported, as it is based
+      on <a href="http://www.boost.org/doc/libs/release/doc/html/boost_asio.html" target="_top">Boost.ASIO</a>,
+      which doesn't compile on this platform. However, the native syslog support
+      is still in place.
+    </p>
+<p>
+      Furthermore, in order to compile the library the following parameters should
+      be explicitly specified in the bjam command line: <code class="computeroutput"><span class="identifier">target</span><span class="special">-</span><span class="identifier">os</span><span class="special">=</span><span class="identifier">cygwin</span> <span class="identifier">logapi</span><span class="special">=</span><span class="identifier">unix</span></code>.
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="how_to_read.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="installation.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

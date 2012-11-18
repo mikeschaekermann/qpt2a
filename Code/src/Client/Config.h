@@ -1,8 +1,20 @@
+#pragma once
+
 /*
- *	Config file for define variables
+ *	Config file
+ */
+
+
+/*  
+ * containing define variables:
  *
- *
- *
- *
+ */
+
+
+
+
+
+/*
+ * ... common include directives
  *
  */

@@ -1,0 +1,86 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Class template mutable_constant&lt;T, void, void, void&gt;</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../../attributes.html#header.boost.log.attributes.mutable_constant_hpp" title="Header &lt;boost/log/attributes/mutable_constant.hpp&gt;">
+<link rel="prev" href="mutable_constant.html" title="Class template mutable_constant">
+<link rel="next" href="../../../BOOST_LOG_ATTRIBUTES_MUTABLE_CONSTANT_HPP_INCLUDED_.html" title="Macro BOOST_LOG_ATTRIBUTES_MUTABLE_CONSTANT_HPP_INCLUDED_">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="mutable_constant.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.mutable_constant_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_ATTRIBUTES_MUTABLE_CONSTANT_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.attributes.mutable_constant_T,_voi_id226153"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Class template mutable_constant&lt;T, void, void, void&gt;</span></h2>
+<p>boost::log::attributes::mutable_constant&lt;T, void, void, void&gt; &#8212; Specialization for unlocked case. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../../attributes.html#header.boost.log.attributes.mutable_constant_hpp" title="Header &lt;boost/log/attributes/mutable_constant.hpp&gt;">boost/log/attributes/mutable_constant.hpp</a>&gt;
+
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
+<span class="keyword">class</span> <a href="mutable_constant_T__voi_id226153.html" title="Class template mutable_constant&lt;T, void, void, void&gt;">mutable_constant</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="keyword">void</span><span class="special">,</span> <span class="keyword">void</span><span class="special">,</span> <span class="keyword">void</span><span class="special">&gt;</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">attribute</span> <span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="comment">// types</span>
+  <span class="keyword">typedef</span> <span class="keyword">void</span> <a name="boost.log.attributes.mutable_constant_T,_voi_id226153.mutex_type"></a><span class="identifier">mutex_type</span><span class="special">;</span>         <span class="comment">// Mutex type. </span>
+  <span class="keyword">typedef</span> <span class="keyword">void</span> <a name="boost.log.attributes.mutable_constant_T,_voi_id226153.scoped_read_lock"></a><span class="identifier">scoped_read_lock</span><span class="special">;</span>   <span class="comment">// Shared lock type. </span>
+  <span class="keyword">typedef</span> <span class="keyword">void</span> <a name="boost.log.attributes.mutable_constant_T,_voi_id226153.scoped_write_lock"></a><span class="identifier">scoped_write_lock</span><span class="special">;</span>  <span class="comment">// Exclusive lock type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">T</span>    <a name="boost.log.attributes.mutable_constant_T,_voi_id226153.held_type"></a><span class="identifier">held_type</span><span class="special">;</span>          <span class="comment">// A held constant type. </span>
+
+  <span class="comment">// <a href="mutable_constant_T__voi_id226153.html#id226218-bb">public member functions</a></span>
+   <a href="mutable_constant_T__voi_id226153.html#id226221-bb"><span class="identifier">mutable_constant</span></a><span class="special">(</span><span class="identifier">held_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">shared_ptr</span><span class="special">&lt;</span> <a href="../attribute_value.html" title="Struct attribute_value">attribute_value</a> <span class="special">&gt;</span> <a href="mutable_constant_T__voi_id226153.html#id226237-bb"><span class="identifier">get_value</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="mutable_constant_T__voi_id226153.html#id226257-bb"><span class="identifier">set_value</span></a><span class="special">(</span><span class="identifier">held_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id635526"></a><h2>Description</h2>
+<p>This version of attribute does not perform thread synchronization to access the stored value. </p>
+<div class="refsect2" lang="en">
+<a name="id635532"></a><h3>
+<a name="id226218-bb"></a><code class="computeroutput">mutable_constant</code> public member functions</h3>
+<div class="orderedlist"><ol type="1">
+<li>
+<pre class="literallayout"> <a name="id226221-bb"></a><span class="identifier">mutable_constant</span><span class="special">(</span><span class="identifier">held_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> value<span class="special">)</span><span class="special">;</span></pre>
+<p>Constructor with the stored value initialization </p>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <a href="../attribute_value.html" title="Struct attribute_value">attribute_value</a> <span class="special">&gt;</span> <a name="id226237-bb"></a><span class="identifier">get_value</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Returns:</span></td>
+<td><p>The actual attribute value. It shall not return NULL (exceptions shall be used to indicate errors). </p></td>
+</tr></tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id226257-bb"></a><span class="identifier">set_value</span><span class="special">(</span><span class="identifier">held_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre>
+<p>The method sets a new attribute value. </p>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="mutable_constant.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.mutable_constant_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_ATTRIBUTES_MUTABLE_CONSTANT_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

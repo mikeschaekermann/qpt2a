@@ -1,0 +1,78 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Struct template formatter_types</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../utilities.html#header.boost.log.utility.init.formatter_parser_hpp" title="Header &lt;boost/log/utility/init/formatter_parser.hpp&gt;">
+<link rel="prev" href="../../BOOST_LOG_UTILITY_INIT_FILTER_PARSER_HPP_INCLUDED_.html" title="Macro BOOST_LOG_UTILITY_INIT_FILTER_PARSER_HPP_INCLUDED_">
+<link rel="next" href="register_formatter_fact_id250705.html" title="Function template register_formatter_factory">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../BOOST_LOG_UTILITY_INIT_FILTER_PARSER_HPP_INCLUDED_.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../utilities.html#header.boost.log.utility.init.formatter_parser_hpp"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="register_formatter_fact_id250705.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.formatter_types"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Struct template formatter_types</span></h2>
+<p>boost::log::formatter_types &#8212; Auxiliary formatter traits. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../utilities.html#header.boost.log.utility.init.formatter_parser_hpp" title="Header &lt;boost/log/utility/init/formatter_parser.hpp&gt;">boost/log/utility/init/formatter_parser.hpp</a>&gt;
+
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> 
+<span class="keyword">struct</span> <a href="formatter_types.html" title="Struct template formatter_types">formatter_types</a> <span class="special">{</span>
+  <span class="comment">// <a href="formatter_types.html#boost.log.formatter_typestypes">types</a></span>
+  <span class="keyword">typedef</span> <span class="identifier">CharT</span>                                                                            <a name="boost.log.formatter_types.char_type"></a><span class="identifier">char_type</span><span class="special">;</span>               <span class="comment">// Character type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">char_type</span> <span class="special">&gt;</span>                                                   <a name="boost.log.formatter_types.string_type"></a><span class="identifier">string_type</span><span class="special">;</span>             <span class="comment">// String type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">char_type</span> <span class="special">&gt;</span>                                                  <a name="boost.log.formatter_types.ostream_type"></a><span class="identifier">ostream_type</span><span class="special">;</span>            <span class="comment">// Output stream type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">basic_record</span><span class="special">&lt;</span> <span class="identifier">char_type</span> <span class="special">&gt;</span>                                                        <a name="boost.log.formatter_types.record_type"></a><span class="identifier">record_type</span><span class="special">;</span>             <span class="comment">// Log record type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">function2</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">,</span> <span class="identifier">ostream_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="special">&gt;</span>                           <a name="boost.log.formatter_types.formatter_type"></a><span class="identifier">formatter_type</span><span class="special">;</span>          <span class="comment">// The formatter function object. </span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span> <span class="identifier">string_type</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="special">&gt;</span> <a href="formatter_types.html#boost.log.formatter_types.formatter_factory_args"><span class="identifier">formatter_factory_args</span></a><span class="special">;</span>
+  <span class="keyword">typedef</span> <span class="identifier">function2</span><span class="special">&lt;</span> <span class="identifier">formatter_type</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">formatter_factory_args</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="special">&gt;</span> <a href="formatter_types.html#boost.log.formatter_types.formatter_factory"><span class="identifier">formatter_factory</span></a><span class="special">;</span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span> <span class="identifier">string_type</span><span class="special">,</span> <span class="identifier">formatter_factory</span> <span class="special">&gt;</span>                                       <a name="boost.log.formatter_types.factories_map"></a><span class="identifier">factories_map</span><span class="special">;</span>           <span class="comment">// Map of formatter factory function objects. </span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id757592"></a><h2>Description</h2>
+<p>The structure generates commonly used types related to formatters and formatter factories. </p>
+<div class="refsect2" lang="en">
+<a name="id757598"></a><h3>
+<a name="boost.log.formatter_typestypes"></a><code class="computeroutput">formatter_types</code> 
+        public
+       types</h3>
+<div class="orderedlist"><ol type="1">
+<li>
+<p>
+<span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span> <span class="identifier">string_type</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="special">&gt;</span> <a name="boost.log.formatter_types.formatter_factory_args"></a><span class="identifier">formatter_factory_args</span><span class="special">;</span></p>
+<p>Type of the map of formatter factory arguments [argument name -&gt; argument value]. This type of maps will be passed to formatter factories on attempt to create a formatter. </p>
+</li>
+<li>
+<p>
+<span class="keyword">typedef</span> <span class="identifier">function2</span><span class="special">&lt;</span> <span class="identifier">formatter_type</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">formatter_factory_args</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="special">&gt;</span> <a name="boost.log.formatter_types.formatter_factory"></a><span class="identifier">formatter_factory</span><span class="special">;</span></p>
+<p>
+
+<span class="bold"><strong>Throws:</strong></span> An <code class="computeroutput">std::exception</code>-based If an exception is thrown from the method, the exception is propagated to the parse_formatter caller </p>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../BOOST_LOG_UTILITY_INIT_FILTER_PARSER_HPP_INCLUDED_.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../utilities.html#header.boost.log.utility.init.formatter_parser_hpp"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="register_formatter_fact_id250705.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

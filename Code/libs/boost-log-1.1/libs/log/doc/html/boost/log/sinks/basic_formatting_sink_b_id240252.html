@@ -1,0 +1,204 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Class template basic_formatting_sink_backend</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../../sinks.html#header.boost.log.sinks.basic_sink_backend_hpp" title="Header &lt;boost/log/sinks/basic_sink_backend.hpp&gt;">
+<link rel="prev" href="basic_sink_backend.html" title="Struct template basic_sink_backend">
+<link rel="next" href="../../../BOOST_LOG_SINKS_BASIC_SINK_BACKEND_HPP_INCLUDED_.html" title="Macro BOOST_LOG_SINKS_BASIC_SINK_BACKEND_HPP_INCLUDED_">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="basic_sink_backend.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.basic_sink_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_SINKS_BASIC_SINK_BACKEND_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.sinks.basic_formatting_sink_b_id240252"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Class template basic_formatting_sink_backend</span></h2>
+<p>boost::log::sinks::basic_formatting_sink_backend &#8212; A base class for a logging sink backend with message formatting support. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../../sinks.html#header.boost.log.sinks.basic_sink_backend_hpp" title="Header &lt;boost/log/sinks/basic_sink_backend.hpp&gt;">boost/log/sinks/basic_sink_backend.hpp</a>&gt;
+
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> TargetCharT <span class="special">=</span> <span class="identifier">CharT</span><span class="special">,</span> 
+         <span class="keyword">typename</span> ThreadingModelTagT <span class="special">=</span> <a href="frontend_synchronizatio_id245668.html" title="Struct frontend_synchronization_tag">frontend_synchronization_tag</a><span class="special">&gt;</span> 
+<span class="keyword">class</span> <a href="basic_formatting_sink_b_id240252.html" title="Class template basic_formatting_sink_backend">basic_formatting_sink_backend</a> <span class="special">:</span>
+  <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">log</span><span class="special">::</span><span class="identifier">sinks</span><span class="special">::</span><span class="identifier">basic_sink_backend</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">ThreadingModelTagT</span> <span class="special">&gt;</span>
+<span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="comment">// types</span>
+  <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">char_type</span>                  <a name="boost.log.sinks.basic_formatting_sink_b_id240252.char_type"></a><span class="identifier">char_type</span><span class="special">;</span>           <span class="comment">// Character type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">string_type</span>                <a name="boost.log.sinks.basic_formatting_sink_b_id240252.string_type"></a><span class="identifier">string_type</span><span class="special">;</span>         <span class="comment">// String type to be used as a message text holder. </span>
+  <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">values_view_type</span>           <a name="boost.log.sinks.basic_formatting_sink_b_id240252.values_view_type"></a><span class="identifier">values_view_type</span><span class="special">;</span>    <span class="comment">// Attribute values view type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">threading_model</span>            <a name="boost.log.sinks.basic_formatting_sink_b_id240252.threading_model"></a><span class="identifier">threading_model</span><span class="special">;</span>     <span class="comment">// Threading model tag. </span>
+  <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">record_type</span>                <a name="boost.log.sinks.basic_formatting_sink_b_id240252.record_type"></a><span class="identifier">record_type</span><span class="special">;</span>         <span class="comment">// Log record type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">char_type</span> <span class="special">&gt;</span>       <a name="boost.log.sinks.basic_formatting_sink_b_id240252.stream_type"></a><span class="identifier">stream_type</span><span class="special">;</span>         <span class="comment">// Output stream type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">TargetCharT</span>                           <a name="boost.log.sinks.basic_formatting_sink_b_id240252.target_char_type"></a><span class="identifier">target_char_type</span><span class="special">;</span>    <span class="comment">// Target character type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">target_char_type</span> <span class="special">&gt;</span> <a name="boost.log.sinks.basic_formatting_sink_b_id240252.target_string_type"></a><span class="identifier">target_string_type</span><span class="special">;</span>  <span class="comment">// Target string type. </span>
+
+  <span class="comment">// <a href="basic_formatting_sink_b_id240252.html#boost.log.sinks.basic_formatting_sink_b_id240252construct-copy-destruct">construct/copy/destruct</a></span>
+  <a href="basic_formatting_sink_b_id240252.html#id240518-bb"><span class="identifier">basic_formatting_sink_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a href="basic_formatting_sink_b_id240252.html#id240528-bb"><span class="special">~</span><span class="identifier">basic_formatting_sink_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a href="basic_formatting_sink_b_id240252.html#id240376-bb">private member functions</a></span>
+   <a href="basic_formatting_sink_b_id240252.html#id240379-bb"><span class="identifier">BOOST_MPL_ASSERT</span></a><span class="special">(</span><span class="special">(</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">or_</span><span class="special">&lt;</span> <a href="is_model_supported.html" title="Struct template is_model_supported">is_model_supported</a><span class="special">&lt;</span> <span class="identifier">threading_model</span><span class="special">,</span> <a href="single_thread_tag.html" title="Struct single_thread_tag">single_thread_tag</a> <span class="special">&gt;</span><span class="special">,</span> <a href="is_model_supported.html" title="Struct template is_model_supported">is_model_supported</a><span class="special">&lt;</span> <span class="identifier">threading_model</span><span class="special">,</span> <a href="frontend_synchronizatio_id245668.html" title="Struct frontend_synchronization_tag">frontend_synchronization_tag</a> <span class="special">&gt;</span> <span class="special">&gt;</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a href="basic_formatting_sink_b_id240252.html#id240407-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a href="basic_formatting_sink_b_id240252.html#id240410-bb"><span class="identifier">set_formatter</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="basic_formatting_sink_b_id240252.html#id240440-bb"><span class="identifier">reset_formatter</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <a href="basic_formatting_sink_b_id240252.html#id240453-bb"><span class="identifier">getloc</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <a href="basic_formatting_sink_b_id240252.html#id240465-bb"><span class="identifier">imbue</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a href="basic_formatting_sink_b_id240252.html#id240482-bb"><span class="identifier">consume</span></a><span class="special">(</span><span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a href="basic_formatting_sink_b_id240252.html#id240533-bb">protected member functions</a></span>
+  <span class="keyword">void</span> <a href="basic_formatting_sink_b_id240252.html#id240536-bb"><span class="identifier">do_consume</span></a><span class="special">(</span><span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">target_string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id711989"></a><h2>Description</h2>
+<p>The <code class="computeroutput"><a href="basic_formatting_sink_b_id240252.html" title="Class template basic_formatting_sink_backend">basic_formatting_sink_backend</a></code> class template implements logging record formatting. Formatting requires storing auxiliary data, such as formatter and formatting stream. This requires thread synchronization to be done in sink frontend.</p>
+<p>The class also supports performing encoding conversion in case if the sink backend requires the formatted string in some fixed encoding (e.g. if underlying API supports only narrow or wide characters). In order to perform conversion one should specify the desired final character type in the <code class="computeroutput">TargetCharT</code> template parameter. </p>
+<div class="refsect2" lang="en">
+<a name="id712019"></a><h3>
+<a name="boost.log.sinks.basic_formatting_sink_b_id240252construct-copy-destruct"></a><code class="computeroutput">basic_formatting_sink_backend</code> 
+        public
+       construct/copy/destruct</h3>
+<div class="orderedlist"><ol type="1">
+<li>
+<pre class="literallayout"><a name="id240518-bb"></a><span class="identifier">basic_formatting_sink_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>Default constructor</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Postconditions:</span></td>
+<td><p>The sink backend base class is initialized. The formatter is not set. </p></td>
+</tr></tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><a name="id240528-bb"></a><span class="special">~</span><span class="identifier">basic_formatting_sink_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>Virtual destructor </p>
+</li>
+</ol></div>
+</div>
+<div class="refsect2" lang="en">
+<a name="id712121"></a><h3>
+<a name="id240376-bb"></a><code class="computeroutput">basic_formatting_sink_backend</code> private member functions</h3>
+<div class="orderedlist"><ol type="1"><li><pre class="literallayout"> <a name="id240379-bb"></a><span class="identifier">BOOST_MPL_ASSERT</span><span class="special">(</span><span class="special">(</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">or_</span><span class="special">&lt;</span> <a href="is_model_supported.html" title="Struct template is_model_supported">is_model_supported</a><span class="special">&lt;</span> <span class="identifier">threading_model</span><span class="special">,</span> <a href="single_thread_tag.html" title="Struct single_thread_tag">single_thread_tag</a> <span class="special">&gt;</span><span class="special">,</span> <a href="is_model_supported.html" title="Struct template is_model_supported">is_model_supported</a><span class="special">&lt;</span> <span class="identifier">threading_model</span><span class="special">,</span> <a href="frontend_synchronizatio_id245668.html" title="Struct frontend_synchronization_tag">frontend_synchronization_tag</a> <span class="special">&gt;</span> <span class="special">&gt;</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+</div>
+<div class="refsect2" lang="en">
+<a name="id712277"></a><h3>
+<a name="id240407-bb"></a><code class="computeroutput">basic_formatting_sink_backend</code> public member functions</h3>
+<div class="orderedlist"><ol type="1">
+<li>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a name="id240410-bb"></a><span class="identifier">set_formatter</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> fmt<span class="special">)</span><span class="special">;</span></pre>
+<p>The method sets formatter functional object</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">fmt</code></span></td>
+<td><p>Formatter object </p></td>
+</tr></tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id240440-bb"></a><span class="identifier">reset_formatter</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>The method resets the formatter. If the formatter is not set, the result of formatting is equivalent to the log record message text. </p>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <a name="id240453-bb"></a><span class="identifier">getloc</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>The method returns the current locale used for formatting </p>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <a name="id240465-bb"></a><span class="identifier">imbue</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="keyword">const</span> <span class="special">&amp;</span> loc<span class="special">)</span><span class="special">;</span></pre>
+<p>The method sets the locale used for formatting </p>
+</li>
+<li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id240482-bb"></a><span class="identifier">consume</span><span class="special">(</span><span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> record<span class="special">)</span><span class="special">;</span></pre>
+<p>The method formats the message and passes it to the to the sink implementation by calling <code class="computeroutput">do_consume</code>.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Do not override in derived classes. Use <code class="computeroutput">do_consume</code> method to process the formatted message in a sink-specific manner.</p></td></tr>
+</table></div>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">record</code></span></td>
+<td><p>Log record to consume </p></td>
+</tr></tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li>
+</ol></div>
+</div>
+<div class="refsect2" lang="en">
+<a name="id712663"></a><h3>
+<a name="id240533-bb"></a><code class="computeroutput">basic_formatting_sink_backend</code> protected member functions</h3>
+<div class="orderedlist"><ol type="1"><li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id240536-bb"></a><span class="identifier">do_consume</span><span class="special">(</span><span class="identifier">record_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> record<span class="special">,</span> 
+                <span class="identifier">target_string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> formatted_message<span class="special">)</span><span class="special">;</span></pre>
+<p>A backend-defined implementation of the formatted message processing</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><code class="computeroutput">formatted_message</code></span></td>
+<td><p>Formatted log record </p></td>
+</tr>
+<tr>
+<td><span class="term"><code class="computeroutput">record</code></span></td>
+<td><p>The original log record </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li></ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="basic_sink_backend.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.basic_sink_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_SINKS_BASIC_SINK_BACKEND_HPP_INCLUDED_.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

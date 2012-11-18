@@ -1,0 +1,171 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Creating loggers and writing logs</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../tutorial.html" title="Tutorial">
+<link rel="prev" href="formatters.html" title="Log record formatting">
+<link rel="next" href="attributes.html" title="Adding more information to log: Attributes">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="formatters.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorial.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="attributes.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="log.tutorial.sources"></a><a href="sources.html" title="Creating loggers and writing logs">Creating loggers and writing logs</a>
+</h3></div></div></div>
+<a name="log.tutorial.sources.dedicated_logger_objects"></a><h5>
+<a name="log.tutorial.sources.h0"></a>
+        <a href="sources.html#log.tutorial.sources.dedicated_logger_objects">Dedicated logger
+        objects</a>
+      </h5>
+<p>
+        Now that we have defined where and how the log is to be stored, it's time
+        to go on and try logging. In order to do this one has to create a logging
+        source. This would be a logger object in our case and it is as simple as
+        that:
+      </p>
+<pre class="programlisting"><span class="identifier">src</span><span class="special">::</span><span class="identifier">logger</span> <span class="identifier">lg</span><span class="special">;</span>
+</pre>
+<p>
+        Note that unlike sinks, sources need not be registered anywhere, since they
+        interact directly with logging core. Also note that there are two versions
+        of loggers provided by the library: the thread-safe ones and the non-thread-safe
+        ones. For the non-thread-safe loggers it is safe for different threads to
+        write logs through different instances of loggers and thus there should be
+        a separate logger for each thread that writes logs. The thread-safe counterparts
+        may be accessed from different threads concurrently, but this would involve
+        locking and may slow things down in case of intense logging. The thread-safe
+        logger types have the <code class="computeroutput"><span class="identifier">_mt</span></code>
+        suffix in their name.
+      </p>
+<p>
+        Regardless of the thread safety, all loggers provided by the library are
+        default and copy-constructible and support swapping, so there should be no
+        problem in making a logger a member of your class. As you will see later,
+        such approach can give you additional benefits.
+      </p>
+<p>
+        The library provides a number of loggers with different features, such as
+        severity and channel support. These features may be combined with each other
+        in order to construct more complex loggers. See <a href="../detailed/sources.html" title="Logging sources">here</a>
+        for more datails.
+      </p>
+<a name="log.tutorial.sources.global_logger_objects"></a><h5>
+<a name="log.tutorial.sources.h1"></a>
+        <a href="sources.html#log.tutorial.sources.global_logger_objects">Global logger
+        objects</a>
+      </h5>
+<p>
+        In case you cannot put a logger into your class (suppose you don't have one),
+        the library provides a way of declaring global loggers like this:
+      </p>
+<pre class="programlisting"><span class="identifier">BOOST_LOG_DECLARE_GLOBAL_LOGGER</span><span class="special">(</span><span class="identifier">my_logger</span><span class="special">,</span> <span class="identifier">src</span><span class="special">::</span><span class="identifier">logger_mt</span><span class="special">)</span>
+</pre>
+<p>
+        Here <code class="computeroutput"><span class="identifier">my_logger</span></code> is a user-defined
+        tag name that will be used later to retrieve the logger instance and <code class="computeroutput"><span class="identifier">logger_mt</span></code> is the logger type. Any logger
+        type provided by the library or defined by the user can be used in such declaration.
+        However, since the logger will have a single instance, you will normally
+        want to use thread-safe loggers in a multithreaded application as global
+        ones.
+      </p>
+<p>
+        In case you want to pass some arguments to the logger on construction, you
+        can use the following macro:
+      </p>
+<pre class="programlisting"><span class="identifier">BOOST_LOG_DECLARE_GLOBAL_LOGGER_CTOR_ARGS</span><span class="special">(</span><span class="identifier">my_logger</span><span class="special">,</span> <span class="identifier">src</span><span class="special">::</span><span class="identifier">logger_mt</span><span class="special">,</span> <span class="special">(</span><span class="identifier">arg1</span><span class="special">)(</span><span class="identifier">arg2</span><span class="special">)(</span><span class="identifier">arg3</span><span class="special">))</span>
+</pre>
+<p>
+        or even write the initialization code yourself:
+      </p>
+<pre class="programlisting"><span class="identifier">BOOST_LOG_DECLARE_GLOBAL_LOGGER_INIT</span><span class="special">(</span><span class="identifier">my_logger</span><span class="special">,</span> <span class="identifier">src</span><span class="special">::</span><span class="identifier">logger_mt</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="comment">// do something on logger initialization and return logger instance</span>
+    <span class="keyword">return</span> <span class="identifier">src</span><span class="special">::</span><span class="identifier">logger_mt</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+        You can have such declaration in either a header or a compiled cpp unit.
+        You can even have it in different modules of your application, however, the
+        declaration should be exactly the same in all places, including the definition
+        of the logger type (<code class="computeroutput"><span class="identifier">logger_mt</span></code>
+        in this case) and all symbol bindings within the logger initialization body.
+      </p>
+<p>
+        Later on you can acquire the logger like this:
+      </p>
+<pre class="programlisting"><span class="identifier">src</span><span class="special">::</span><span class="identifier">logger_mt</span><span class="special">&amp;</span> <span class="identifier">lg</span> <span class="special">=</span> <span class="identifier">get_my_logger</span><span class="special">();</span>
+</pre>
+<p>
+        or like this:
+      </p>
+<pre class="programlisting"><span class="identifier">src</span><span class="special">::</span><span class="identifier">logger_mt</span><span class="special">&amp;</span> <span class="identifier">lg</span> <span class="special">=</span> <span class="identifier">my_logger</span><span class="special">::</span><span class="identifier">get</span><span class="special">();</span>
+</pre>
+<p>
+        In any case, the <code class="computeroutput"><span class="identifier">lg</span></code> will
+        reference to the one and only instance of the logger throughout the application,
+        even if the application consists of multiple modules.
+      </p>
+<a name="log.tutorial.sources.writing_logs"></a><h5>
+<a name="log.tutorial.sources.h2"></a>
+        <a href="sources.html#log.tutorial.sources.writing_logs">Writing logs</a>
+      </h5>
+<p>
+        No matter what kind of logger you use (class member or global, thread-safe
+        or not), to write a log record into a logger you could write something like
+        this:
+      </p>
+<pre class="programlisting"><span class="identifier">logging</span><span class="special">::</span><span class="identifier">record</span> <span class="identifier">rec</span> <span class="special">=</span> <span class="identifier">lg</span><span class="special">.</span><span class="identifier">open_record</span><span class="special">();</span>
+<span class="keyword">if</span> <span class="special">(</span><span class="identifier">rec</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">rec</span><span class="special">.</span><span class="identifier">message</span><span class="special">()</span> <span class="special">=</span> <span class="string">"Hello world!"</span><span class="special">;</span>
+    <span class="identifier">lg</span><span class="special">.</span><span class="identifier">push_record</span><span class="special">(</span><span class="identifier">rec</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Here the <code class="computeroutput"><span class="identifier">open_record</span></code> function
+        call determines if the record to be constructed is going to be consumed by
+        at least one sink. Filtering is applied at this stage. If the record is to
+        be consumed, the function returns a valid record object, and one may fill
+        in the record message string. After that the record processing can be completed
+        with the call to <code class="computeroutput"><span class="identifier">push_record</span></code>.
+      </p>
+<p>
+        Of course, the above syntax can easily be wrapped in a macro and, in fact,
+        users are encouraged to write their own macros instead of using the C++ logger
+        interface directly. The log record above can be written like this:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">log</span><span class="special">/</span><span class="identifier">sources</span><span class="special">/</span><span class="identifier">record_ostream</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="identifier">BOOST_LOG</span><span class="special">(</span><span class="identifier">lg</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"Hello, World!"</span><span class="special">;</span>
+</pre>
+<p>
+        Looks a bit shorter, doesn't it? The <code class="computeroutput"><span class="identifier">BOOST_LOG</span></code>
+        macro, along with other similar ones, is defined by the library. It automatically
+        provides an STL-like stream in order to format the message with ordinary
+        insertion expressions. Having all that code written, compiled and executed
+        you should be able to see the "Hello, World!" record in the "sample.log"
+        file.
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="formatters.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorial.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="attributes.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

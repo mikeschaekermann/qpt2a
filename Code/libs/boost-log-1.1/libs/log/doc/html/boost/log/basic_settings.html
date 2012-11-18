@@ -1,0 +1,181 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Class template basic_settings</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../utilities.html#header.boost.log.utility.init.from_settings_hpp" title="Header &lt;boost/log/utility/init/from_settings.hpp&gt;">
+<link rel="prev" href="../../BOOST_LOG_UTILITY_INIT_FORMATTER_PARSER_HPP_INCLUDED_.html" title="Macro BOOST_LOG_UTILITY_INIT_FORMATTER_PARSER_HPP_INCLUDED_">
+<link rel="next" href="init_from_settings.html" title="Function template init_from_settings">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../BOOST_LOG_UTILITY_INIT_FORMATTER_PARSER_HPP_INCLUDED_.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../utilities.html#header.boost.log.utility.init.from_settings_hpp"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="init_from_settings.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.basic_settings"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Class template basic_settings</span></h2>
+<p>boost::log::basic_settings &#8212; The class represents settings container. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../utilities.html#header.boost.log.utility.init.from_settings_hpp" title="Header &lt;boost/log/utility/init/from_settings.hpp&gt;">boost/log/utility/init/from_settings.hpp</a>&gt;
+
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> 
+<span class="keyword">class</span> <a href="basic_settings.html" title="Class template basic_settings">basic_settings</a> <span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="comment">// types</span>
+  <span class="keyword">typedef</span> <span class="identifier">CharT</span>                                    <a name="boost.log.basic_settings.char_type"></a><span class="identifier">char_type</span><span class="special">;</span>        <span class="comment">// Character type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">char_type</span> <span class="special">&gt;</span>           <a name="boost.log.basic_settings.string_type"></a><span class="identifier">string_type</span><span class="special">;</span>      <span class="comment">// String type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span> <span class="identifier">string_type</span><span class="special">,</span> <span class="identifier">any</span> <span class="special">&gt;</span>             <a name="boost.log.basic_settings.parameters_type"></a><span class="identifier">parameters_type</span><span class="special">;</span>  <span class="comment">// The type of the map of parameters and their names. </span>
+  <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span> <span class="identifier">string_type</span><span class="special">,</span> <span class="identifier">parameters_type</span> <span class="special">&gt;</span> <a name="boost.log.basic_settings.sections_type"></a><span class="identifier">sections_type</span><span class="special">;</span>    <span class="comment">// The type of the map of sections. </span>
+
+  <span class="comment">// <a href="basic_settings.html#id251187-bb">public member functions</a></span>
+  <span class="keyword">bool</span> <a href="basic_settings.html#id251190-bb"><span class="identifier">empty</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">implementation_defined</span> <a href="basic_settings.html#id251202-bb"><span class="keyword">operator</span><span class="special">[</span><span class="special">]</span></a><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">implementation_defined</span> <a href="basic_settings.html#id251230-bb"><span class="keyword">operator</span><span class="special">[</span><span class="special">]</span></a><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">sections_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a href="basic_settings.html#id251259-bb"><span class="identifier">sections</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">sections_type</span> <span class="special">&amp;</span> <a href="basic_settings.html#id251270-bb"><span class="identifier">sections</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a href="basic_settings.html#id251282-bb"><span class="identifier">has_section</span></a><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a href="basic_settings.html#id251306-bb"><span class="identifier">has_parameter</span></a><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id760802"></a><h2>Description</h2>
+<p>All settings are presented as a number of named parameters divided into named sections. There is only one layer of sections (i.e. there are no subsections), and all parameters reside in sections (i.e. no top-level parameters). The parameters may have any type compatible with <code class="computeroutput">boost::any</code>, which is used to store parameters. Individual parameters may be queried via subscript operators, like this:</p>
+<p><code class="computeroutput"> any param = settings["Section1"]["Param1"]; // reads parameter "Param1" in section "Section1" // returns empty value if no such parameter exists settings["Section2"]["Param2"] = 10; // sets the parameter "Param2" in section "Section2" to value 10 (of type int) </code></p>
+<p>There are also other methods to work with parameters. </p>
+<div class="refsect2" lang="en">
+<a name="id760828"></a><h3>
+<a name="id251187-bb"></a><code class="computeroutput">basic_settings</code> public member functions</h3>
+<div class="orderedlist"><ol type="1">
+<li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="id251190-bb"></a><span class="identifier">empty</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Checks if the container is empty (i.e. contains no sections and parameters). </p>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">implementation_defined</span> <a name="id251202-bb"></a><span class="keyword">operator</span><span class="special">[</span><span class="special">]</span><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> section_name<span class="special">)</span><span class="special">;</span></pre>
+<p>Accessor to a single parameter. This operator should be used in conjunction with the subsequent subscript operator that designates the parameter name.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">section_name</code></span></td>
+<td><p>The name of the section in which the parameter resides </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><span class="term">Returns:</span></td>
+<td><p>An unspecified reference type that can be used for parameter name specifying </p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">implementation_defined</span> <a name="id251230-bb"></a><span class="keyword">operator</span><span class="special">[</span><span class="special">]</span><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> section_name<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Accessor to a single parameter. This operator should be used in conjunction with the subsequent subscript operator that designates the parameter name.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">section_name</code></span></td>
+<td><p>The name of the section in which the parameter resides </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><span class="term">Returns:</span></td>
+<td><p>An unspecified reference type that can be used for parameter name specifying </p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">sections_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="id251259-bb"></a><span class="identifier">sections</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Accessor for the map of sections </p>
+</li>
+<li>
+<pre class="literallayout"><span class="identifier">sections_type</span> <span class="special">&amp;</span> <a name="id251270-bb"></a><span class="identifier">sections</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>Accessor for the map of sections </p>
+</li>
+<li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="id251282-bb"></a><span class="identifier">has_section</span><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> section_name<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Checks if the specified section is present in the container.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">section_name</code></span></td>
+<td><p>The name of the section </p></td>
+</tr></tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li>
+<li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="id251306-bb"></a><span class="identifier">has_parameter</span><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> section_name<span class="special">,</span> 
+                   <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> param_name<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Checks if the specified parameter is present in the container.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><code class="computeroutput">param_name</code></span></td>
+<td><p>The name of the parameter </p></td>
+</tr>
+<tr>
+<td><span class="term"><code class="computeroutput">section_name</code></span></td>
+<td><p>The name of the section in which the parameter resides </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../BOOST_LOG_UTILITY_INIT_FORMATTER_PARSER_HPP_INCLUDED_.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../utilities.html#header.boost.log.utility.init.from_settings_hpp"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="init_from_settings.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

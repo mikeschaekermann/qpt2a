@@ -1,0 +1,125 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Class template flt_attr</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log">
+<link rel="up" href="../../../filters.html#header.boost.log.filters.attr_hpp" title="Header &lt;boost/log/filters/attr.hpp&gt;">
+<link rel="prev" href="../../../filters.html" title="Filters">
+<link rel="next" href="attr_id219029.html" title="Function template attr">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../filters.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../filters.html#header.boost.log.filters.attr_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="attr_id219029.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry" lang="en">
+<a name="boost.log.filters.flt_attr"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Class template flt_attr</span></h2>
+<p>boost::log::filters::flt_attr &#8212; The filter checks that the attribute value satisfies the predicate <code class="computeroutput">FunT</code>. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a href="../../../filters.html#header.boost.log.filters.attr_hpp" title="Header &lt;boost/log/filters/attr.hpp&gt;">boost/log/filters/attr.hpp</a>&gt;
+
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> FunT<span class="special">,</span> <span class="keyword">typename</span> AttributeValueTypesT<span class="special">,</span> 
+         <span class="keyword">typename</span> ExceptionPolicyT<span class="special">&gt;</span> 
+<span class="keyword">class</span> <a href="flt_attr.html" title="Class template flt_attr">flt_attr</a> <span class="special">:</span> <span class="keyword">public</span> basic_filter&lt; CharT, flt_attr&lt; CharT, FunT, AttributeValueTypesT, ExceptionPolicyT &gt; &gt;
+<span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="comment">// types</span>
+  <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">string_type</span>      <a name="boost.log.filters.flt_attr.string_type"></a><span class="identifier">string_type</span><span class="special">;</span>       <span class="comment">// String type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">values_view_type</span> <a name="boost.log.filters.flt_attr.values_view_type"></a><span class="identifier">values_view_type</span><span class="special">;</span>  <span class="comment">// Attribute values container type. </span>
+  <span class="keyword">typedef</span> <span class="identifier">FunT</span>                        <a name="boost.log.filters.flt_attr.checker_type"></a><span class="identifier">checker_type</span><span class="special">;</span>      <span class="comment">// Predicate functor type. </span>
+
+  <span class="comment">// <a href="flt_attr.html#boost.log.filters.flt_attrconstruct-copy-destruct">construct/copy/destruct</a></span>
+  <a href="flt_attr.html#id223336-bb"><span class="identifier">flt_attr</span></a><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">checker_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a href="flt_attr.html#id223306-bb">public member functions</a></span>
+  <span class="keyword">bool</span> <a href="flt_attr.html#id223310-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">values_view_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1" lang="en">
+<a name="id643206"></a><h2>Description</h2>
+<p>The <code class="computeroutput"><a href="flt_attr.html" title="Class template flt_attr">flt_attr</a></code> filter extracts stored attribute value and applies the predicate to it. The result of the predicate is returned as a result of filtering. If the attribute value is not found a <code class="computeroutput">missing_attribute_value</code> exception is thrown.</p>
+<p>One should not resort to direct usage of this class. The filter is constructed with the <code class="computeroutput">attr</code> helper function and lambda expression. See "Advanced features -&gt;
+ Filters -&gt; Generic attribute placeholder" section of the library documentation. </p>
+<div class="refsect2" lang="en">
+<a name="id643242"></a><h3>
+<a name="boost.log.filters.flt_attrconstruct-copy-destruct"></a><code class="computeroutput">flt_attr</code> 
+        public
+       construct/copy/destruct</h3>
+<div class="orderedlist"><ol type="1"><li>
+<pre class="literallayout"><a name="id223336-bb"></a><span class="identifier">flt_attr</span><span class="special">(</span><span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">checker_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> checker<span class="special">)</span><span class="special">;</span></pre>
+<p>Constructs the filter</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><code class="computeroutput">checker</code></span></td>
+<td><p>A predicate that is applied to the attribute value </p></td>
+</tr>
+<tr>
+<td><span class="term"><code class="computeroutput">name</code></span></td>
+<td><p>The attribute name </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li></ol></div>
+</div>
+<div class="refsect2" lang="en">
+<a name="id643371"></a><h3>
+<a name="id223306-bb"></a><code class="computeroutput">flt_attr</code> public member functions</h3>
+<div class="orderedlist"><ol type="1"><li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="id223310-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">values_view_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> values<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Applies the filter</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term">Parameters:</span></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><code class="computeroutput">values</code></span></td>
+<td><p>A set of attribute values of a single log record </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><span class="term">Returns:</span></td>
+<td><p>true if the log record passed the filter, false otherwise </p></td>
+</tr>
+</tbody>
+</table></div>
+</li></ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Andrey
+      Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../filters.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../filters.html#header.boost.log.filters.attr_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="attr_id219029.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
