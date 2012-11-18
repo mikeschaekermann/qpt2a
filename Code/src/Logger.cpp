@@ -3,7 +3,7 @@
 #include <time.h>
 #include <sstream>
 
-Logger* Logger::logger = new Logger();
+Logger* Logger::m_pLogger = new Logger();
 
 Logger::Logger(void)
 {
@@ -11,27 +11,27 @@ Logger::Logger(void)
 
 Logger::~Logger(void)
 {
-	file.close();
-	delete file;
+	m_file.close();
+	delete m_file;
 }
 
 void Logger::configure(string filename)
 {
-	file.open(filename, fstream::in | fstream::app);
+	m_file.open(filename, fstream::in | fstream::app);
 }
 
 void Logger::log(LogSeverity lvl, string message)
 {
-	assert(file);
+	assert(m_file);
 
 	stringstream output;
 
 	// set line prefix
-	if(lvl == LOG_INFO)
+	if(lvl == logInfo)
 	{
 		output << "INFO\t";
 	}
-	else if(lvl == LOG_WARNING)
+	else if(lvl == logWarning)
 	{
 		output << "WARNING\t";
 	}
@@ -46,15 +46,10 @@ void Logger::log(LogSeverity lvl, string message)
 	output << now->tm_hour << ":" << now->tm_min << ":" << now->tm_sec << " " << now->tm_mday << "." << (now->tm_mon + 1) << "." << (now->tm_year + 1900) << "\t";
 
 	// append the message
-	output << message << endl;
+	output << message << "\n";
 	
-	streamWriteMutex._Lock();
-	file << output.str();
-	file.flush();
-	streamWriteMutex._Unlock();
-}
-
-Logger * const Logger::getInstance()
-{
-	return logger;
+	m_streamWriteMutex._Lock();
+	m_file << output.str();
+	m_file.flush();
+	m_streamWriteMutex._Unlock();
 }

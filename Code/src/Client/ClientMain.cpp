@@ -6,7 +6,8 @@
 void ClientMain::setup()
 {
 	Logger::getInstance()->configure("main.log");
-	Logger::getInstance()->log(LogSeverity::LOG_INFO, "Test");
+	LOG_INFO("\n\n\n");
+	LOG_INFO("Client start up");
 }
 
 void ClientMain::update()

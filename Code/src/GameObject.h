@@ -18,13 +18,13 @@ public:
 	GameObject(Player* player, Vec3f position, Vec3f rotation);
 	virtual ~GameObject(void);
 
-	Vec3f getPosition() { return position; }
+	Vec3f getPosition() const { return position; }
 	void setPosition(Vec3f position) { this->position = position; }
 
-	Vec3f getRotation() { return rotation; }
+	Vec3f getRotation() const { return rotation; }
 	void setRotation(Vec3f rotation) { this->rotation = rotation; }
 
-	Vec3f getScale() { return scale; }
+	Vec3f getScale() const { return scale; }
 	void setScale(Vec3f scale) { this->scale = scale; }
 
 	void update(float frameTime);
