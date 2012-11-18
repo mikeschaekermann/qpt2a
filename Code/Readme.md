@@ -31,6 +31,16 @@
 
 	1. Cinder lib
 
-# 4. Info:
+# 4. Development guidelines:
+	
+	## 1. Version Control System
+	
+	1. Push buildable code only!
+	
+	## 2. Coding guidelines
+	
+	1. Document your code with doxygen!
+	
+# 5. Info:
 	VS 2010 SP1 required
 	boost::log is used for runtime logging and debugging
