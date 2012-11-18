@@ -6,7 +6,7 @@
 
 
 /*  
- * containing define variables:
+ * common define variables:
  *
  */
 
@@ -15,6 +15,11 @@
 
 
 /*
- * ... common include directives
+ * logger
  *
  */
+
+#include "../libs/apache-log4cxx-0.10.0/src/main/include/log4cxx/logger.h"
+#include "../libs/apache-log4cxx-0.10.0/src/main/include/log4cxx/basicconfigurator.h"
+
+using namespace log4cxx;

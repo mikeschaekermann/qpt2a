@@ -100,7 +100,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;..\..\libs\apache-log4cxx-0.10.0\src\main\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>Cdecl</CallingConvention>
       <IntrinsicFunctions>false</IntrinsicFunctions>
