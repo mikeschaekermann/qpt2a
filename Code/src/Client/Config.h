@@ -8,4 +8,13 @@
 /*  
  * common define variables:
  *
+
+
+
+
+/*
+ * logger
+ *
  */
+
+#include "..\Logger.h"

@@ -20,11 +20,10 @@
     <ClCompile Include="..\..\src\Client\MessagingBehavior.cpp" />
     <ClCompile Include="..\..\src\CollisionManager.cpp" />
     <ClCompile Include="..\..\src\GameObject.cpp" />
-    <ClCompile Include="..\..\src\Log.cpp" />
+    <ClCompile Include="..\..\src\Logger.cpp" />
     <ClCompile Include="..\..\src\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\Player.cpp" />
     <ClCompile Include="..\..\src\Server\GameManager.cpp" />
-    <ClCompile Include="..\..\src\tri_logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Client\AssetManager.h" />
@@ -38,11 +37,9 @@
     <ClInclude Include="..\..\src\GameObject.h" />
     <ClInclude Include="..\..\src\ICollisionBehavior.h" />
     <ClInclude Include="..\..\src\IMotionBehavior.h" />
-    <ClInclude Include="..\..\src\Log.h" />
+    <ClInclude Include="..\..\src\Logger.h" />
     <ClInclude Include="..\..\src\NetworkManager.h" />
-    <ClInclude Include="..\..\src\nullstream.hpp" />
     <ClInclude Include="..\..\src\Player.h" />
-    <ClInclude Include="..\..\src\tri_logger.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{01B47039-3133-407A-944A-3F554A017C2C}</ProjectGuid>
@@ -104,8 +101,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_WINDOWS;_CONSOLE;FTLOG=main;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;..\..\libs\apache-log4cxx-0.10.0\src\main\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>Cdecl</CallingConvention>
       <IntrinsicFunctions>false</IntrinsicFunctions>
@@ -140,7 +137,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -152,7 +149,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cinder_d.lib;;opencv_core242d.lib; opencv_imgproc242d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -165,7 +162,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_LOG;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -177,7 +174,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cinder.lib;;opencv_core242.lib; opencv_imgproc242.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cinder.lib;opencv_core242.lib;opencv_imgproc242.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
     </Link>
   </ItemDefinitionGroup>
