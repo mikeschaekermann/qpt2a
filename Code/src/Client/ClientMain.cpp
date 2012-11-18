@@ -10,11 +10,12 @@ void ClientMain::setup()
 
 void ClientMain::update()
 {
+	
 }
 
 void ClientMain::draw()
 {
-	
+
 }
 
 

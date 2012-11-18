@@ -15,7 +15,7 @@ using namespace ci;
 class GameObject
 {
 public:
-	GameObject(Player* player);
+	GameObject(Player* player, Vec3f position, Vec3f rotation);
 	virtual ~GameObject(void);
 
 	Vec3f getPosition() { return position; }
@@ -31,18 +31,28 @@ public:
 	void draw();
 
 private:
+	/// object id assigned by the player class which is unique per player
 	int id;
+	/// player class which ownes this object
 	Player* owner;
 	
+	/// current position in the game
 	Vec3f position;
+	/// current rotation of the object
 	Vec3f rotation;
+	/// current scale of the object
 	Vec3f scale;
 
+	/// all children in the scene graph
 	std::vector<GameObject*> children;
+	/// parent object in the scene graph
 	GameObject* parent;
 
+	/// defines the motion of the object
 	IMotionBehavior* motionBehavior;
+	/// defines the collision behavior of the object
 	ICollisionBehavior* collisionBehavior;
+	/// contains all network messages relevant to this object
 	std::vector<MessagingBehavior*> messagingBehaviors;
 };
 
