@@ -46,7 +46,7 @@ is used for logging so it can be removed easily from the final build
 
 ## 3. Conditioning methods
 
-1. If one of the rules above was not followed by person from our team, this s/he will donate a bar of chocolate to the dev team! :) Yummy, please be sloppy!
+1. If one of the rules above was not followed by a person from our team, this s/he will donate a bar of chocolate to the dev team! :) Yummy, please be sloppy!
 
 # 5. Info:
 VS 2010 SP1 required  
