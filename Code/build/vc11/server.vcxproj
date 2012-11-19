@@ -82,12 +82,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-<<<<<<< HEAD
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(BOOST_DIR)</AdditionalIncludeDirectories>
-=======
       <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
->>>>>>> 12a5298756455715fe417d19e6e0653f145998e0
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
