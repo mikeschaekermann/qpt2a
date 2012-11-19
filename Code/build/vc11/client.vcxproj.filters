@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Client\ClientMain.cpp" />
+    <ClCompile Include="..\..\src\Server\GameManager.cpp" />
+    <ClCompile Include="..\..\src\Client\MessagingBehavior.cpp">
+      <Filter>MessagingBehavior</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Client\AssetManager.cpp" />
+    <ClCompile Include="..\..\src\CollisionManager.cpp" />
+    <ClCompile Include="..\..\src\GameObject.cpp" />
+    <ClCompile Include="..\..\src\NetworkManager.cpp" />
+    <ClCompile Include="..\..\src\Player.cpp" />
+    <ClCompile Include="..\..\src\Logger.cpp" />
+    <ClCompile Include="..\..\src\Cell.cpp" />
+    <ClCompile Include="..\..\src\StemCell.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Client\ClientMain.h" />
+    <ClInclude Include="..\..\src\Client\Config.h" />
+    <ClInclude Include="..\..\src\Client\GameManager.h" />
+    <ClInclude Include="..\..\src\IMotionBehavior.h">
+      <Filter>MotionBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ICollisionBehavior.h">
+      <Filter>CollisionBehavior</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Client\IMenu.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Client\IMenuItem.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Client\MessagingBehavior.h">
+      <Filter>MessagingBehavior</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Client\AssetManager.h" />
+    <ClInclude Include="..\..\src\CollisionManager.h" />
+    <ClInclude Include="..\..\src\GameObject.h" />
+    <ClInclude Include="..\..\src\NetworkManager.h" />
+    <ClInclude Include="..\..\src\Player.h" />
+    <ClInclude Include="..\..\src\Logger.h" />
+    <ClInclude Include="..\..\src\Cell.h" />
+    <ClInclude Include="..\..\src\StemCell.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="MotionBehaviors">
+      <UniqueIdentifier>{a1b2649f-1c58-4482-8c08-9a005f4cfe64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionBehavior">
+      <UniqueIdentifier>{5454ec9f-8f6d-4aad-aa7b-2c592fabb596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Menu">
+      <UniqueIdentifier>{deed9728-520a-4cf5-a117-3768b475af42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MessagingBehavior">
+      <UniqueIdentifier>{086ed099-bb35-4a0b-9702-b94f912cc70b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,8 +1,20 @@
+#pragma once
+
 /*
- *	Config file for define variables
+ *	Config file
+ */
+
+
+/*  
+ * common define variables:
  *
- *
- *
- *
+
+
+
+
+/*
+ * logger
  *
  */
+
+#include "..\Logger.h"
