@@ -33,7 +33,7 @@
 # 3. Libraries:
 
 * Cinder lib
-* IrrKlang for sound
+* FMod for sound
 * Assimp as asset importer
 
 # 4. Info:
