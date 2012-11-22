@@ -15,13 +15,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cell.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="includes.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="..\..\src\Server\network\CellAttack.h" />
+    <ClInclude Include="..\..\src\Server\network\CellDie.h" />
+    <ClInclude Include="..\..\src\Server\network\CellNew.h" />
+    <ClInclude Include="..\..\src\Server\network\CellType.h" />
+    <ClInclude Include="..\..\src\Server\network\CreateCellComplete.h" />
+    <ClInclude Include="..\..\src\Server\network\CreateCellErrorCode.h" />
+    <ClInclude Include="..\..\src\Server\network\CreateCellFailure.h" />
+    <ClInclude Include="..\..\src\Server\network\CreateCellRequest.h" />
+    <ClInclude Include="..\..\src\Server\network\CreateCellSuccess.h" />
+    <ClInclude Include="..\..\src\Server\network\GameOver.h" />
+    <ClInclude Include="..\..\src\Server\network\JoinErrorCode.h" />
+    <ClInclude Include="..\..\src\Server\network\JoinFailure.h" />
+    <ClInclude Include="..\..\src\Server\network\JoinRequest.h" />
+    <ClInclude Include="..\..\src\Server\network\JoinSuccess.h" />
+    <ClInclude Include="..\..\src\Server\network\MessageType.h" />
+    <ClInclude Include="..\..\src\Server\network\NetworkManager.h" />
+    <ClInclude Include="..\..\src\Server\network\NetworkMessage.h" />
+    <ClInclude Include="..\..\src\Server\network\StartGame.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\src\Server\Main.cpp" />
+    <ClCompile Include="..\..\src\Server\network\JoinFailure.cpp" />
+    <ClCompile Include="..\..\src\Server\network\JoinRequest.cpp" />
+    <ClCompile Include="..\..\src\Server\network\JoinSuccess.cpp" />
+    <ClCompile Include="..\..\src\Server\network\MessageType.cpp" />
+    <ClCompile Include="..\..\src\Server\network\NetworkManager.cpp" />
+    <ClCompile Include="..\..\src\Server\network\NetworkMessage.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7C072AE6-2637-47ED-A4D2-637EECF59EE7}</ProjectGuid>
@@ -84,12 +104,15 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(BOOST_DIR)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <AdditionalLibraryDirectories>$(BOOST_DIR)/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libboost_system-vc100-mt-sgd-1_48.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -100,17 +123,18 @@
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_LOG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(BOOST_DIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <AdditionalLibraryDirectories>$(BOOST_DIR)/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libboost_system-vc100-mt-s-1_48.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
@@ -124,6 +148,7 @@
       <PreprocessorDefinitions>WIN32;_LOG;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
