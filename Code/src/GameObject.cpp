@@ -5,8 +5,8 @@
 using namespace cinder;
 using namespace gl;
 
-GameObject::GameObject(Player* player, Vec3f position, Vec3f rotation, Vec3f scale) : 
-	m_pOwner(player), 
+GameObject::GameObject(unsigned id, Vec3f position, Vec3f rotation, Vec3f scale) : 
+	m_uiId(id),
 	m_position(position),
 	m_rotation(rotation),
 	m_scale(scale)
@@ -16,7 +16,7 @@ GameObject::GameObject(Player* player, Vec3f position, Vec3f rotation, Vec3f sca
 GameObject::~GameObject(void)
 {
 #if _DEBUG
-	app::console() << "GameObject deleted. id: " << id << std::endl;
+	app::console() << "GameObject deleted. id: " << m_uiId << std::endl;
 #endif
 
 	delete m_pMotionBehavior;

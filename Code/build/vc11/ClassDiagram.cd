@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="IMotionBehavior" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAEAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\IMotionBehavior.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ICollisionBehavior" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAIA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\ICollisionBehavior.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IMenu" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Client\IMenu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IMenuItem" Collapsed="true">
+    <Position X="11.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Client\IMenuItem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MessagingBehavior" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAEAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Client\MessagingBehavior.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cell">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAIAAAAAABAAAAAAAAAAEAAAAAAAAAAgAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Cell.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AssetManager" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Client\AssetManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClientMain" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Client\ClientMain.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollisionManager" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\CollisionManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QxAAIIAAACAAACAAABIAAQAGCAAwAAICAAAAAIMEAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Logger" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAIAAAAAAAAACACAQAAAAAQAAGAAAAAAAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Logger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="11.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAEIQAAEBA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StemCell">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="Cell" FixedToPoint="true">
+      <Path>
+        <Point X="3.75" Y="0.5" />
+        <Point X="3.75" Y="0.26" />
+        <Point X="1.25" Y="0.26" />
+        <Point X="1.25" Y="0.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\StemCell.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="LogSeverity" Collapsed="true">
+    <Position X="7.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAIAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Logger.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -15,8 +15,10 @@ using namespace ci;
 class GameObject
 {
 public:
-	GameObject(Player* player, Vec3f position = Vec3f(0, 0, 0), Vec3f rotation = Vec3f(0, 0, 0), Vec3f scale = Vec3f(1, 1, 1));
+	GameObject(unsigned id, Vec3f position = Vec3f(0, 0, 0), Vec3f rotation = Vec3f(0, 0, 0), Vec3f scale = Vec3f(1, 1, 1));
 	virtual ~GameObject(void);
+
+	unsigned getId() const { return m_uiId; }
 
 	Vec3f getPosition() const { return m_position; }
 	void setPosition(Vec3f position) { m_position = position; }
@@ -41,9 +43,7 @@ protected:
 	
 private:
 	/// object id assigned by the player class which is unique per player
-	int id;
-	/// player class which ownes this object
-	Player* m_pOwner;
+	unsigned m_uiId;
 	
 	/// current position in the game
 	Vec3f m_position;

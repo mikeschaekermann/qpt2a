@@ -9,7 +9,6 @@
     <ClCompile Include="..\..\src\Client\AssetManager.cpp" />
     <ClCompile Include="..\..\src\CollisionManager.cpp" />
     <ClCompile Include="..\..\src\GameObject.cpp" />
-    <ClCompile Include="..\..\src\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\Player.cpp" />
     <ClCompile Include="..\..\src\Logger.cpp" />
     <ClCompile Include="..\..\src\Cell.cpp" />
@@ -19,9 +18,6 @@
     <ClInclude Include="..\..\src\Client\ClientMain.h" />
     <ClInclude Include="..\..\src\Client\Config.h" />
     <ClInclude Include="..\..\src\Client\GameManager.h" />
-    <ClInclude Include="..\..\src\IMotionBehavior.h">
-      <Filter>MotionBehaviors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\ICollisionBehavior.h">
       <Filter>CollisionBehavior</Filter>
     </ClInclude>
@@ -37,11 +33,13 @@
     <ClInclude Include="..\..\src\Client\AssetManager.h" />
     <ClInclude Include="..\..\src\CollisionManager.h" />
     <ClInclude Include="..\..\src\GameObject.h" />
-    <ClInclude Include="..\..\src\NetworkManager.h" />
     <ClInclude Include="..\..\src\Player.h" />
     <ClInclude Include="..\..\src\Logger.h" />
     <ClInclude Include="..\..\src\Cell.h" />
     <ClInclude Include="..\..\src\StemCell.h" />
+    <ClInclude Include="..\..\src\IMotionBehavior.h">
+      <Filter>MotionBehaviors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MotionBehaviors">
@@ -56,5 +54,8 @@
     <Filter Include="MessagingBehavior">
       <UniqueIdentifier>{086ed099-bb35-4a0b-9702-b94f912cc70b}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

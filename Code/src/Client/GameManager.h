@@ -9,7 +9,7 @@ class GameManager
 public:
 	~GameManager(void);
 
-	GameManager * const getInstance() { return m_pManager; }
+	static GameManager * const getInstance() { return m_pManager; }
 
 private:
 	/// singleton instance
