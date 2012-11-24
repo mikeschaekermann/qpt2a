@@ -28,8 +28,8 @@ public:
 	  m_ipAddress(ipAddresse),
 	  m_port(port)
 	{
-		Cell stemcell(createCellId(), position);
-		m_population.setRoot(stemcell);
+		Cell* stemcell = new Cell(createCellId(), position);
+		m_population.createCell(stemcell);
 	}
 
 	unsigned int getId() const { return m_id; }

@@ -102,12 +102,12 @@ public:
 					startgame.playerNames[i][j] = m_players[i].getName()[j];
 				}
 
-				startgame.startCellIds[i] = m_players[i].getPopulation().getRoot().getId();
+				startgame.startCellIds[i] = 0;
 
 				startgame.startPositions[i] = new float[3];
-				startgame.startPositions[i][0] = m_players[i].getPopulation().getRoot().getPosition()[0];
-				startgame.startPositions[i][1] = m_players[i].getPopulation().getRoot().getPosition()[1];
-				startgame.startPositions[i][2] = m_players[i].getPopulation().getRoot().getPosition()[2];
+				startgame.startPositions[i][0] = m_players[i].getPopulation().getCellById().getPosition()[0];
+				startgame.startPositions[i][1] = m_players[i].getPopulation().getCellById().getPosition()[1];
+				startgame.startPositions[i][2] = m_players[i].getPopulation().getCellById().getPosition()[2];
 			}
 		}
 	}

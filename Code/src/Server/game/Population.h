@@ -5,45 +5,41 @@
 
 #pragma once
 
+#include <map>
+#include <vector>
+
 #include "Cell.h"
+
+using namespace std;
 
 class Population
 {
 private:
-	struct Branch
+	class CellRelation
 	{
-		Cell* m_cell;
-		Branch** m_children;
-		unsigned int m_childrenSize;
-	};
-
-	Branch m_root;
-public:
-	class Indexer
-	{
-	private:
-		Branch* m_current;
 	public:
-		bool hasChildren()
-		{
-			return m_current->m_childrenSize > 0;
-		}
+		Cell* c;
+		vector<Cell*> parents;
+		vector<Cell*> children;
 	};
-	Population() { };
 
-	void setRoot(const Cell& cell)
+	map<int, CellRelation*> m_idMap;
+	map<int, map<int, CellRelation*> > m_positionMap;
+public:
+	void createCell(Cell* cell)
 	{
-		Cell* c = new Cell(cell);
-		m_root.m_cell = c;
-	}
-
-	const Cell& getRoot() const
-	{
-		return *m_root.m_cell;
+		CellRelation* relation = new CellRelation();
+		relation->c = cell;
+		m_idMap.insert(pair<int, CellRelation*>(size(), relation));
 	}
 
 	unsigned int size() const
 	{
-		return 0;
+		return m_idMap.size();
+	}
+
+	const Cell& getCellById() const
+	{
+		return *(m_idMap.at(0)->c);
 	}
 };
