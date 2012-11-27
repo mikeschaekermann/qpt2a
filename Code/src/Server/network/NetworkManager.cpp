@@ -13,6 +13,11 @@ NetworkManager::NetworkManager(unsigned short listenPort) : serverSocket(io_serv
 	
 }
 
+NetworkManager::NetworkManager(const NetworkManager &other)
+{
+
+}
+
 NetworkManager::~NetworkManager()
 {
 
@@ -20,29 +25,14 @@ NetworkManager::~NetworkManager()
 		
 void NetworkManager::operator()()
 {
+	boost::array<char, 5000> buffer;
 	while (1)
 	{
-		boost::array<unsigned, 1> size_buffer;
 		udp::endpoint remote_endpoint;
 		boost::system::error_code error;
 		
-		// Receive the message size
-		serverSocket.receive_from(boost::asio::buffer(size_buffer), remote_endpoint, 0, error);
-		
-		if (error && error != boost::asio::error::message_size)
-		{
-			throw boost::system::system_error(error);
-		}
-
-		size_buffer[0] = ntohl(size_buffer[0]);
-		if (size_buffer[0] < 0)
-		{
-			size_buffer[0] = 0;
-		}
-		char* data = new char[size_buffer[0]];
-
-		// Receive the rest of the message
-		serverSocket.receive_from(boost::asio::buffer(data, size_buffer[0]), remote_endpoint, 0, error);
+		// Receive the message
+		serverSocket.receive_from(boost::asio::buffer(buffer), remote_endpoint, 0, error);
 		
 		if (error && error != boost::asio::error::message_size)
 		{
@@ -51,7 +41,7 @@ void NetworkManager::operator()()
 
 		// Distinguish the messages by their type
 		unsigned messageType;
-		memcpy(&messageType, data, sizeof(unsigned));
+		memcpy(&messageType, (void*) buffer.c_array()[sizeof(unsigned)], sizeof(unsigned));
 		MessageType type(messageType);
 
 		switch (type.getType())
@@ -59,7 +49,7 @@ void NetworkManager::operator()()
 		case MessageType::JoinRequest:
 			{
 				unsigned index = 0;
-				JoinRequest request(data, index);
+				JoinRequest request(buffer.c_array(), index);
 				break;
 			}
 		case MessageType::CreateCellRequest:

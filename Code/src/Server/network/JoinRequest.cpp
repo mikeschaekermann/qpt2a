@@ -1,7 +1,9 @@
 #include "JoinRequest.h"
 
 JoinRequest::JoinRequest() : NetworkMessage(), name(0), nameSize(0)
-{ }
+{
+	messageType = MessageType::JoinRequest;
+}
 
 JoinRequest::JoinRequest(char* data, unsigned &index) : NetworkMessage(data, index), name(0), nameSize(0)
 {
@@ -16,12 +18,16 @@ JoinRequest::JoinRequest(char* data, unsigned &index) : NetworkMessage(data, ind
 
 JoinRequest::JoinRequest(const JoinRequest &other) : NetworkMessage(other), name(0), nameSize(other.nameSize)
 {
+	messageType = MessageType::JoinRequest;
+
 	name = new char[nameSize];
 	memcpy((void*) name, (void*) other.name, nameSize);
 }
 
 JoinRequest::JoinRequest(const NetworkMessage &other) : NetworkMessage(other), name(0), nameSize(0)
-{ }
+{ 
+	messageType = MessageType::JoinRequest;
+}
 
 JoinRequest::~JoinRequest()
 {

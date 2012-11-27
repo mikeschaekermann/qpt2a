@@ -12,6 +12,7 @@ public:
 	void send(NetworkMessage message);
 
 private:
+	NetworkManager(const NetworkManager &other);
 	boost::asio::ip::udp::socket serverSocket;
 	boost::asio::io_service io_service;
 };

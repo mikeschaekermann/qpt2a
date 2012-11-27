@@ -7,6 +7,7 @@ class CreateCellFailure : public NetworkMessage
 {
 public:
 	/* Fields */
+	unsigned int requestId;
 	CreateCellErrorCode errorCode;
 
 	/* Constructor / Destructor */

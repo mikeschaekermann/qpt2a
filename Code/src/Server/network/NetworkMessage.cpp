@@ -12,13 +12,16 @@ NetworkMessage::NetworkMessage(const NetworkMessage &other) : messageType(Messag
 
 NetworkMessage::NetworkMessage(char* data, unsigned &index) : messageType(MessageType::Invalid)
 {
+	memcpy(&messageSize, (void*) data[index], sizeof(messageSize));
+	messageSize = ntohl(messageSize);
+	index += sizeof(messageSize);
+
 	unsigned networkMessageType = 0;
-	memcpy( &networkMessageType, (void*) data[index], sizeof(networkMessageType));
+	memcpy(&networkMessageType, (void*) data[index], sizeof(networkMessageType));
 	messageType = MessageType(networkMessageType);
 	index += sizeof(networkMessageType);
-
 	
-	memcpy( &messageId, (void*) data[index], sizeof(messageId));
+	memcpy(&messageId, (void*) data[index], sizeof(messageId));
 	messageId = ntohl(messageId);
 	index += sizeof(messageId);
 }

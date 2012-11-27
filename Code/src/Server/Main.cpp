@@ -23,7 +23,7 @@ int main(int argc, char argv[])
 	// networkmanager singleton??
 	// access from game object to networkmanager??
 	NetworkManager nm(port);
-	boost::thread networkThread(nm);
+	boost::thread thr(boost::bind(&NetworkManager::operator(), &nm));
 
 	cout << "test";
 	return 0;
