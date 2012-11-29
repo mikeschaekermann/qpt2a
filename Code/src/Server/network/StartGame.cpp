@@ -100,19 +100,6 @@ StartGame::~StartGame()
 
 unsigned StartGame::writeToArray(char* data, unsigned start)
 {
-	float worldRadius;
-
-		unsigned playerCount;
-
-		unsigned *playerIds;
-
-		unsigned *playerNameSizes;
-		char **playerNames;
-
-		unsigned *startCellIds;
-		float **startPositions;
-
-
 	unsigned index = NetworkMessage::writeToArray(data);
 
 	memcpy((void*) data[index], &worldRadius, sizeof(worldRadius));

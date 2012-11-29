@@ -5,7 +5,7 @@ NetworkMessage::NetworkMessage() : messageType(MessageType::Invalid)
 
 }
 
-NetworkMessage::NetworkMessage(const NetworkMessage &other) : messageType(MessageType::Invalid), ipAddress(other.ipAddress), port(other.port)
+NetworkMessage::NetworkMessage(const NetworkMessage &other) : messageType(MessageType::Invalid), endpoint(other.endpoint)
 { 
 
 }
@@ -34,7 +34,7 @@ NetworkMessage::~NetworkMessage()
 unsigned NetworkMessage::calculateSize()
 {
 	return sizeof(messageId) 
-				+ sizeof(messageType);
+		+ sizeof(messageType);
 }
 
 unsigned NetworkMessage::writeToArray(char* data, unsigned start)
