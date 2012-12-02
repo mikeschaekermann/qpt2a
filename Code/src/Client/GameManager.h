@@ -11,6 +11,9 @@ public:
 
 	static GameManager * const getInstance() { return m_pManager; }
 
+	void update(float frameTime);
+	void draw();
+
 private:
 	/// singleton instance
 	static GameManager* const m_pManager;

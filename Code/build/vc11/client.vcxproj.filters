@@ -13,6 +13,12 @@
     <ClCompile Include="..\..\src\Logger.cpp" />
     <ClCompile Include="..\..\src\Cell.cpp" />
     <ClCompile Include="..\..\src\StemCell.cpp" />
+    <ClCompile Include="..\..\src\Client\ScreenManager.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Client\GameScreen.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Client\ClientMain.h" />
@@ -20,12 +26,6 @@
     <ClInclude Include="..\..\src\Client\GameManager.h" />
     <ClInclude Include="..\..\src\ICollisionBehavior.h">
       <Filter>CollisionBehavior</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Client\IMenu.h">
-      <Filter>Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Client\IMenuItem.h">
-      <Filter>Menu</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Client\MessagingBehavior.h">
       <Filter>MessagingBehavior</Filter>
@@ -39,6 +39,18 @@
     <ClInclude Include="..\..\src\StemCell.h" />
     <ClInclude Include="..\..\src\IMotionBehavior.h">
       <Filter>MotionBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Client\IScreen.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Client\IScreenItem.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Client\ScreenManager.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Client\GameScreen.h">
+      <Filter>Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

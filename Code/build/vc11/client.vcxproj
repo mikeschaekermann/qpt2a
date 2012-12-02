@@ -18,7 +18,9 @@
     <ClCompile Include="..\..\src\Cell.cpp" />
     <ClCompile Include="..\..\src\Client\AssetManager.cpp" />
     <ClCompile Include="..\..\src\Client\ClientMain.cpp" />
+    <ClCompile Include="..\..\src\Client\GameScreen.cpp" />
     <ClCompile Include="..\..\src\Client\MessagingBehavior.cpp" />
+    <ClCompile Include="..\..\src\Client\ScreenManager.cpp" />
     <ClCompile Include="..\..\src\CollisionManager.cpp" />
     <ClCompile Include="..\..\src\GameObject.cpp" />
     <ClCompile Include="..\..\src\Logger.cpp" />
@@ -32,9 +34,11 @@
     <ClInclude Include="..\..\src\Client\ClientMain.h" />
     <ClInclude Include="..\..\src\Client\Config.h" />
     <ClInclude Include="..\..\src\Client\GameManager.h" />
-    <ClInclude Include="..\..\src\Client\IMenu.h" />
-    <ClInclude Include="..\..\src\Client\IMenuItem.h" />
+    <ClInclude Include="..\..\src\Client\GameScreen.h" />
+    <ClInclude Include="..\..\src\Client\IScreen.h" />
+    <ClInclude Include="..\..\src\Client\IScreenItem.h" />
     <ClInclude Include="..\..\src\Client\MessagingBehavior.h" />
+    <ClInclude Include="..\..\src\Client\ScreenManager.h" />
     <ClInclude Include="..\..\src\CollisionManager.h" />
     <ClInclude Include="..\..\src\GameObject.h" />
     <ClInclude Include="..\..\src\ICollisionBehavior.h" />
