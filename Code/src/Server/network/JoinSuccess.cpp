@@ -1,7 +1,9 @@
 #include "JoinSuccess.h"
 
 JoinSuccess::JoinSuccess() : NetworkMessage(), playerId(0)
-{ }
+{ 
+	messageType = MessageType::JoinSuccess;
+}
 
 JoinSuccess::JoinSuccess(char* data, unsigned &index) : NetworkMessage(data, index), playerId(0)
 {
@@ -11,10 +13,14 @@ JoinSuccess::JoinSuccess(char* data, unsigned &index) : NetworkMessage(data, ind
 }
 
 JoinSuccess::JoinSuccess(const JoinSuccess &other) : NetworkMessage(other), playerId(other.playerId)
-{ }
+{ 
+	messageType = MessageType::JoinSuccess;
+}
 
 JoinSuccess::JoinSuccess(const NetworkMessage &other) : NetworkMessage(other), playerId(0)
-{ }
+{ 
+	messageType = MessageType::JoinSuccess;
+}
 
 JoinSuccess::~JoinSuccess() 
 { }

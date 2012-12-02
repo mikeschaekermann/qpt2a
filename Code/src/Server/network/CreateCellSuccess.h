@@ -6,8 +6,9 @@ class CreateCellSuccess : public NetworkMessage
 {
 public:
 	/* Fields */
+	unsigned int requestId;
 	unsigned int cellId;
-	float position[3];
+	float position[2];
 	float angle;
 
 	/* Constructor / Destructor */

@@ -7,6 +7,7 @@ class CreateCellRequest : public NetworkMessage
 {
 public:
 	/* Fields */
+	unsigned int requestId;
 	unsigned int playerId;
 	unsigned int cellId;
 	float angle;

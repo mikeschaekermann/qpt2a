@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <boost\thread\thread.hpp>
-
+#include "game\Game.h"
 #include "network\NetworkManager.h"
 //#include "game\Game.h"
 
@@ -18,12 +18,12 @@ int main(int argc, char argv[])
 		cout << "Error: input failes" << endl;
 	}
 
-	//Game game;
+	Game game;
 	// add game to networkmanager
 	// networkmanager singleton??
 	// access from game object to networkmanager??
-	NetworkManager nm(port);
-	boost::thread networkThread(nm);
+	NetworkManager nm(port, &game);
+	boost::thread thr(boost::bind(&NetworkManager::operator(), &nm));
 
 	cout << "test";
 	return 0;
