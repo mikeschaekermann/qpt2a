@@ -1,8 +1,8 @@
 #pragma once
 
 #include <stack>
-#include "..\GameObject.h"
-#include "IMenu.h"
+#include "..\common\GameObject.h"
+#include "IScreen.h"
 
 class GameManager
 {
@@ -21,7 +21,7 @@ private:
 	GameObject* m_pScene;
 
 	/// current menu stack
-	std::stack<IMenu> m_menuStack;
+	std::stack<IScreen> m_menuStack;
 	/// all active players
 	vector<Player*> m_players;
 

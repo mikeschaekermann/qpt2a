@@ -17,6 +17,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\client\AssetManager.cpp" />
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
+    <ClCompile Include="..\..\src\client\GameManager.cpp" />
     <ClCompile Include="..\..\src\client\MessagingBehavior.cpp" />
     <ClCompile Include="..\..\src\common\Cell.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
