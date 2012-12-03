@@ -17,4 +17,4 @@
  *
  */
 
-#include "..\Logger.h"
+#include "..\common\Logger.h"

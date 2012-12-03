@@ -14,18 +14,18 @@
       <FileName>D:\Repos\qpt2a\Code\src\ICollisionBehavior.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IMenu" Collapsed="true">
+  <Class Name="IScreen" Collapsed="true">
     <Position X="9.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
-      <FileName>D:\Repos\qpt2a\Code\src\Client\IMenu.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAIAAAAAAAAAAEAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Client\IScreen.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IMenuItem" Collapsed="true">
+  <Class Name="IScreenItem" Collapsed="true">
     <Position X="11.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
-      <FileName>D:\Repos\qpt2a\Code\src\Client\IMenuItem.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Repos\qpt2a\Code\src\Client\IScreenItem.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MessagingBehavior" Collapsed="true">

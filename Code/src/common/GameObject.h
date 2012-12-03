@@ -2,12 +2,10 @@
 
 #include <vector>
 
-#include "Client\Config.h"
+#include "../common/Config.h"
 #include "Player.h"
 #include "cinder\Vector.h"
-#include "IMotionBehavior.h"
-#include "ICollisionBehavior.h"
-#include "Client\MessagingBehavior.h"
+#include "../client/MessagingBehavior.h"
 
 using namespace cinder;
 using namespace ci;
@@ -57,10 +55,6 @@ private:
 	/// parent object in the scene graph
 	GameObject* m_pParent;
 
-	/// defines the motion of the object
-	IMotionBehavior* m_pMotionBehavior;
-	/// defines the collision behavior of the object
-	ICollisionBehavior* m_pCollisionBehavior;
 	/// contains all network messages relevant to this object
 	std::vector<MessagingBehavior*> m_messagingBehaviors;
 };

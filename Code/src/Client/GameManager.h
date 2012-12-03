@@ -1,8 +1,8 @@
 #pragma once
 
 #include <stack>
-#include "..\GameObject.h"
-#include "IMenu.h"
+#include "..\common\GameObject.h"
+#include "IScreen.h"
 
 class GameManager
 {
@@ -11,6 +11,9 @@ public:
 
 	static GameManager * const getInstance() { return m_pManager; }
 
+	void update(float frameTime);
+	void draw();
+
 private:
 	/// singleton instance
 	static GameManager* const m_pManager;
@@ -18,7 +21,7 @@ private:
 	GameObject* m_pScene;
 
 	/// current menu stack
-	std::stack<IMenu> m_menuStack;
+	std::stack<IScreen> m_menuStack;
 	/// all active players
 	vector<Player*> m_players;
 
