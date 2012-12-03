@@ -53,7 +53,7 @@ public:
 		cout << "NetworkManager bound to Game" << endl;
 	}
 
-	void join(string playerName, string ipAddress, unsigned short port)
+	void join(string playerName, boost::asio::ip::udp::endpoint endpoint)
 	{
 		if(m_players.size() >= MAX_PLAYER_SIZE)
 		{
@@ -75,7 +75,7 @@ public:
 			}
 		}
 
-		Player p(createPlayerId(), playerName, ipAddress, port, m_pafStartPositions[m_players.size()]);
+		Player p(createPlayerId(), playerName, endpoint, m_pafStartPositions[m_players.size()]);
 
 		m_players.push_back(p);
 

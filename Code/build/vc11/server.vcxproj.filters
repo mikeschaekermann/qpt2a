@@ -46,6 +46,9 @@
     <ClCompile Include="..\..\src\Server\network\CreateCellComplete.cpp">
       <Filter>Messages\Implemented Messages</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\ConnectionMessage.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\Server\game\StandardCell.cpp">
       <Filter>Gamelogic</Filter>
     </ClCompile>

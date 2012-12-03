@@ -36,6 +36,7 @@
     <ClInclude Include="..\..\src\Server\network\CellDie.h" />
     <ClInclude Include="..\..\src\Server\network\CellNew.h" />
     <ClInclude Include="..\..\src\Server\network\CellType.h" />
+    <ClInclude Include="..\..\src\Server\network\ConnectionMessage.h" />
     <ClInclude Include="..\..\src\Server\network\CreateCellComplete.h" />
     <ClInclude Include="..\..\src\Server\network\CreateCellErrorCode.h" />
     <ClInclude Include="..\..\src\Server\network\CreateCellFailure.h" />
@@ -58,6 +59,7 @@
     <ClCompile Include="..\..\src\Server\network\CellDie.cpp" />
     <ClCompile Include="..\..\src\Server\network\CellNew.cpp" />
     <ClCompile Include="..\..\src\Server\network\CellType.cpp" />
+    <ClCompile Include="..\..\src\Server\network\ConnectionMessage.cpp" />
     <ClCompile Include="..\..\src\Server\network\CreateCellComplete.cpp" />
     <ClCompile Include="..\..\src\Server\network\CreateCellErrorCode.cpp" />
     <ClCompile Include="..\..\src\Server\network\CreateCellFailure.cpp" />
