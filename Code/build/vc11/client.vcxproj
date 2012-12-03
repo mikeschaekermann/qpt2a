@@ -18,7 +18,10 @@
     <ClCompile Include="..\..\src\client\AssetManager.cpp" />
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
     <ClCompile Include="..\..\src\client\GameManager.cpp" />
+    <ClCompile Include="..\..\src\client\GameScreen.cpp" />
     <ClCompile Include="..\..\src\client\MessagingBehavior.cpp" />
+    <ClCompile Include="..\..\src\client\Screen.cpp" />
+    <ClCompile Include="..\..\src\client\ScreenManager.cpp" />
     <ClCompile Include="..\..\src\common\Cell.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
@@ -28,12 +31,14 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\client\AssetManager.h" />
     <ClInclude Include="..\..\src\client\ClientMain.h" />
-    <ClInclude Include="..\..\src\client\Config.h" />
     <ClInclude Include="..\..\src\client\GameManager.h" />
-    <ClInclude Include="..\..\src\client\IScreen.h" />
+    <ClInclude Include="..\..\src\client\GameScreen.h" />
+    <ClInclude Include="..\..\src\Client\Screen.h" />
     <ClInclude Include="..\..\src\client\IScreenItem.h" />
     <ClInclude Include="..\..\src\client\MessagingBehavior.h" />
+    <ClInclude Include="..\..\src\client\ScreenManager.h" />
     <ClInclude Include="..\..\src\common\Cell.h" />
+    <ClInclude Include="..\..\src\common\Config.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
     <ClInclude Include="..\..\src\common\Logger.h" />
     <ClInclude Include="..\..\src\common\Player.h" />

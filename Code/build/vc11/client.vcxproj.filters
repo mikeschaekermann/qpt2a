@@ -18,17 +18,22 @@
     <ClCompile Include="..\..\src\client\GameManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\GameScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\ScreenManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\Screen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\ClientMain.h" />
-    <ClInclude Include="..\..\src\client\Config.h" />
     <ClInclude Include="..\..\src\client\MessagingBehavior.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
     <ClInclude Include="..\..\src\common\Logger.h" />
     <ClInclude Include="..\..\src\common\Player.h" />
-    <ClInclude Include="..\..\src\client\IScreen.h">
-      <Filter>Screens</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\client\IScreenItem.h">
       <Filter>Screens</Filter>
     </ClInclude>
@@ -44,6 +49,16 @@
     <ClInclude Include="..\..\src\client\AssetManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\client\GameScreen.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\ScreenManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Client\Screen.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Config.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Screens">
