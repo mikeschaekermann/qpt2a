@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\src\Server\Main.cpp" />
@@ -92,6 +92,45 @@
     <ClInclude Include="..\..\src\Server\network\JoinRequest.h">
       <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\Cell.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\CellCollisionBehavior.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\Game.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\GameObject.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\ICellMap.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\ICollisionBehavior.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\IdCellMap.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\Player.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\Population.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\PositionCellMap.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\event\BuildingEvent.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\event\Event.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\event\EventQueue.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Messages">
@@ -105,6 +144,12 @@
     </Filter>
     <Filter Include="Messages\Unimplemented Messages">
       <UniqueIdentifier>{8d5f6332-f341-4ecc-80ba-74787f969510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gamelogic">
+      <UniqueIdentifier>{868b33a6-5fcb-4649-8b11-f53c406d64b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eventlogic">
+      <UniqueIdentifier>{6f568755-2dbb-4475-b441-4ae79a524778}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
