@@ -5,7 +5,7 @@
 
 class Game;
 class Player;
-#include "NetworkMessage.h"
+#include "messages/NetworkMessage.h"
 
 class NetworkManager
 {

@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 
-#include "../network/NetworkMessage.h"
+#include "../../common/network/messages/NetworkMessage.h"
 #include "Population.h"
 
 using namespace std;

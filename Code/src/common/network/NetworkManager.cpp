@@ -2,12 +2,11 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 
-#include "JoinRequest.h"
-#include "CreateCellRequest.h"
-#include "ConnectionMessage.h"
+#include "messages/game/outgame/JoinRequest.h"
+#include "messages/ConnectionMessage.h"
 
-#include "../game/Game.h"
-#include "../game/Player.h"
+#include "../../server/game/Game.h"
+#include "../../server/game/Player.h"
 
 #include <iostream>
 
@@ -88,18 +87,6 @@ void NetworkManager::operator()()
 }
 
 void NetworkManager::handleMessage(NetworkMessage* message) {
-	JoinRequest *joinRequest = dynamic_cast<JoinRequest*>(message);
-	if (joinRequest) 
-	{
-		// do Stuff
-	}
-
-	CreateCellRequest *createCellRequest = dynamic_cast<CreateCellRequest*>(message);
-	if (createCellRequest) 
-	{
-		// do Stuff
-	}
-
 	ConnectionMessage *connectionMessage = dynamic_cast<ConnectionMessage*>(message);
 	if (connectionMessage) 
 	{
@@ -193,11 +180,6 @@ NetworkMessage* NetworkManager::createNetworkMessage(char* data)
 		{
 				
 			message = new JoinRequest(data, index);
-			break;
-		}
-	case MessageType::CreateCellRequest:
-		{
-			message = new CreateCellRequest(data, index);
 			break;
 		}
 	default:

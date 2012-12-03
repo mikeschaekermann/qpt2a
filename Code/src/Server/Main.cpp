@@ -3,7 +3,7 @@
 #include <iostream>
 #include <boost\thread\thread.hpp>
 #include "game\Game.h"
-#include "network\NetworkManager.h"
+#include "../common/network/NetworkManager.h"
 //#include "game\Game.h"
 
 using namespace std;

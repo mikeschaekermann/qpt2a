@@ -15,6 +15,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h" />
+    <ClInclude Include="..\..\src\common\network\messages\enum\CellType.h" />
+    <ClInclude Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.h" />
+    <ClInclude Include="..\..\src\common\network\messages\enum\JoinErrorCode.h" />
+    <ClInclude Include="..\..\src\common\network\messages\enum\MessageType.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellComplete.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellFailure.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\GameOver.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinFailure.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinRequest.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\StartGame.h" />
+    <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h" />
+    <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h" />
     <ClInclude Include="..\..\src\Server\event\BuildingEvent.h" />
     <ClInclude Include="..\..\src\Server\event\Event.h" />
@@ -32,48 +51,29 @@
     <ClInclude Include="..\..\src\Server\game\StandardCell.h" />
     <ClInclude Include="..\..\src\Server\game\StemCell.h" />
     <ClInclude Include="..\..\src\Server\game\StemCellCollisionBehavior.h" />
-    <ClInclude Include="..\..\src\Server\network\CellAttack.h" />
-    <ClInclude Include="..\..\src\Server\network\CellDie.h" />
-    <ClInclude Include="..\..\src\Server\network\CellNew.h" />
-    <ClInclude Include="..\..\src\Server\network\CellType.h" />
-    <ClInclude Include="..\..\src\Server\network\ConnectionMessage.h" />
-    <ClInclude Include="..\..\src\Server\network\CreateCellComplete.h" />
-    <ClInclude Include="..\..\src\Server\network\CreateCellErrorCode.h" />
-    <ClInclude Include="..\..\src\Server\network\CreateCellFailure.h" />
-    <ClInclude Include="..\..\src\Server\network\CreateCellRequest.h" />
-    <ClInclude Include="..\..\src\Server\network\CreateCellSuccess.h" />
-    <ClInclude Include="..\..\src\Server\network\GameOver.h" />
-    <ClInclude Include="..\..\src\Server\network\JoinErrorCode.h" />
-    <ClInclude Include="..\..\src\Server\network\JoinFailure.h" />
-    <ClInclude Include="..\..\src\Server\network\JoinRequest.h" />
-    <ClInclude Include="..\..\src\Server\network\JoinSuccess.h" />
-    <ClInclude Include="..\..\src\Server\network\MessageType.h" />
-    <ClInclude Include="..\..\src\Server\network\NetworkManager.h" />
-    <ClInclude Include="..\..\src\Server\network\NetworkMessage.h" />
-    <ClInclude Include="..\..\src\Server\network\StartGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\enum\CellType.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\enum\JoinErrorCode.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\enum\MessageType.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellComplete.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellFailure.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\GameOver.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinFailure.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinRequest.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
+    <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\Server\game\StandardCell.cpp" />
     <ClCompile Include="..\..\src\Server\Main.cpp" />
-    <ClCompile Include="..\..\src\Server\network\CellAttack.cpp" />
-    <ClCompile Include="..\..\src\Server\network\CellDie.cpp" />
-    <ClCompile Include="..\..\src\Server\network\CellNew.cpp" />
-    <ClCompile Include="..\..\src\Server\network\CellType.cpp" />
-    <ClCompile Include="..\..\src\Server\network\ConnectionMessage.cpp" />
-    <ClCompile Include="..\..\src\Server\network\CreateCellComplete.cpp" />
-    <ClCompile Include="..\..\src\Server\network\CreateCellErrorCode.cpp" />
-    <ClCompile Include="..\..\src\Server\network\CreateCellFailure.cpp" />
-    <ClCompile Include="..\..\src\Server\network\CreateCellRequest.cpp" />
-    <ClCompile Include="..\..\src\Server\network\CreateCellSuccess.cpp" />
-    <ClCompile Include="..\..\src\Server\network\GameOver.cpp" />
-    <ClCompile Include="..\..\src\Server\network\JoinErrorCode.cpp" />
-    <ClCompile Include="..\..\src\Server\network\JoinFailure.cpp" />
-    <ClCompile Include="..\..\src\Server\network\JoinRequest.cpp" />
-    <ClCompile Include="..\..\src\Server\network\JoinSuccess.cpp" />
-    <ClCompile Include="..\..\src\Server\network\MessageType.cpp" />
-    <ClCompile Include="..\..\src\Server\network\NetworkManager.cpp" />
-    <ClCompile Include="..\..\src\Server\network\NetworkMessage.cpp" />
-    <ClCompile Include="..\..\src\Server\network\StartGame.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7C072AE6-2637-47ED-A4D2-637EECF59EE7}</ProjectGuid>

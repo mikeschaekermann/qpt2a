@@ -1,7 +1,7 @@
 #pragma once
 
-#include "NetworkMessage.h"
-#include "JoinErrorCode.h"
+#include "../../NetworkMessage.h"
+#include "../../enum/JoinErrorCode.h"
 
 class JoinFailure : public NetworkMessage
 {

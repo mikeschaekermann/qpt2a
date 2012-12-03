@@ -3,14 +3,14 @@
 #include <vector>
 #include <cmath>
 
-#include "../network/NetworkManager.h"
-#include "../network/JoinFailure.h"
-#include "../network/JoinSuccess.h"
-#include "../network/StartGame.h"
-#include "../network/CellType.h"
-#include "../network/CreateCellFailure.h"
-#include "../network/CreateCellSuccess.h"
-#include "../network/CellNew.h"
+#include "../../common/network/NetworkManager.h"
+#include "../../common/network/messages/game/outgame/JoinFailure.h"
+#include "../../common/network/messages/game/outgame/JoinSuccess.h"
+#include "../../common/network/messages/game/outgame/StartGame.h"
+#include "../../common/network/messages/enum/CellType.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CreateCellFailure.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CellNew.h"
 
 #include "../event/BuildingEvent.h"
 #include "../event/AttackEvent.h"
