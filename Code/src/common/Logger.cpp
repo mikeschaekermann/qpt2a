@@ -46,10 +46,15 @@ void Logger::log(LogSeverity lvl, string message)
 	output << now->tm_hour << ":" << now->tm_min << ":" << now->tm_sec << " " << now->tm_mday << "." << (now->tm_mon + 1) << "." << (now->tm_year + 1900) << "\t";
 
 	// append the message
-	output << message << "\n";
+	output << message;
 	
 	m_streamWriteMutex._Lock();
-	m_file << output.str();
+	m_file << output.str() << "\n";
 	m_file.flush();
+
+#ifdef _DEBUG
+	cinder::app::console() << output.str() << std::endl;
+#endif
+
 	m_streamWriteMutex._Unlock();
 }
