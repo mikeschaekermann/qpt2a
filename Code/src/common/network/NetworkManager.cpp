@@ -16,6 +16,13 @@ NetworkManager::NetworkManager(unsigned short listenPort) : run(true)
 	serverSocket = new boost::asio::ip::udp::socket(*io_service, udp::endpoint(udp::v4(), listenPort));
 }
 
+NetworkManager::NetworkManager() : run(true)
+{
+	io_service = new boost::asio::io_service();
+	serverSocket = new boost::asio::ip::udp::socket(*io_service);
+    serverSocket->open(udp::v4());
+}
+
 NetworkManager::NetworkManager(const NetworkManager &other) : run(true)
 {
 	io_service = new boost::asio::io_service();

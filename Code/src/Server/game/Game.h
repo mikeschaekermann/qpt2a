@@ -55,6 +55,7 @@ public:
 
 	void join(string playerName, boost::asio::ip::udp::endpoint endpoint)
 	{
+		cout << "IRGENDWAS GEHT SOGAR" << endl;
 		if(m_players.size() >= MAX_PLAYER_SIZE)
 		{
 			JoinFailure failure;
