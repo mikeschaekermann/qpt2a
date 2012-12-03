@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Client\Config.h"
+#include "../common/Config.h"
+#include <string>
+
+using namespace std;
 
 class Player
 {

@@ -9,7 +9,7 @@ public:
 	/* Fields */
 	unsigned int playerId;
 	unsigned int cellId;
-	float position[3];
+	float position[2];
 	CellType type;
 
 	/* Constructor / Destructor */

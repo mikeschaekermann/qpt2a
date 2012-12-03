@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ClientMain.h"
-#include "Config.h"
+#include "../common/Config.h"
 
 void ClientMain::setup()
 {

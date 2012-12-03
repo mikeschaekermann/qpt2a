@@ -1,5 +1,5 @@
 #include "cinder\app\AppBasic.h"
-#include "../GameObject.h"
+#include "../common/GameObject.h"
 
 using namespace ci;
 using namespace ci::app;

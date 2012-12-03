@@ -49,12 +49,24 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Server\Main.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CellAttack.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CellDie.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CellNew.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CellType.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CreateCellComplete.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CreateCellErrorCode.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CreateCellFailure.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CreateCellRequest.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CreateCellSuccess.cpp" />
+    <ClCompile Include="..\..\src\Server\network\GameOver.cpp" />
+    <ClCompile Include="..\..\src\Server\network\JoinErrorCode.cpp" />
     <ClCompile Include="..\..\src\Server\network\JoinFailure.cpp" />
     <ClCompile Include="..\..\src\Server\network\JoinRequest.cpp" />
     <ClCompile Include="..\..\src\Server\network\JoinSuccess.cpp" />
     <ClCompile Include="..\..\src\Server\network\MessageType.cpp" />
     <ClCompile Include="..\..\src\Server\network\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\Server\network\NetworkMessage.cpp" />
+    <ClCompile Include="..\..\src\Server\network\StartGame.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7C072AE6-2637-47ED-A4D2-637EECF59EE7}</ProjectGuid>

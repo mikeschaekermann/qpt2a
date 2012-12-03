@@ -1,5 +1,4 @@
 #pragma once
-
 #include <string>
 #include <vector>
 #include <cmath>
@@ -13,7 +12,6 @@
 
 #include "../event/BuildingEvent.h"
 #include "../event/EventQueue.h"
-
 #include "Player.h"
 
 using namespace std;
@@ -53,7 +51,7 @@ public:
 		if(m_players.size() >= MAX_PLAYER_SIZE)
 		{
 			JoinFailure failure;
-			failure.errorCode = JoinErrorCode(JoinErrorCode::Type::GameIsFull);
+			failure.errorCode = JoinErrorCode(JoinErrorCode::GameIsFull);
 			m_pNetworkManager->send(failure);
 			return;
 		}
@@ -64,7 +62,7 @@ public:
 			if (it->getName() == playerName)
 			{
 				JoinFailure failure;
-				failure.errorCode = JoinErrorCode(JoinErrorCode::Type::NameAlreadyTaken);
+				failure.errorCode = JoinErrorCode(JoinErrorCode::NameAlreadyTaken);
 				m_pNetworkManager->send(failure);
 				return;
 			}
@@ -150,10 +148,11 @@ public:
 			delete position;
 		}
 	}
+
+	vector<Player> m_players;
 private:
 	NetworkManager* m_pNetworkManager;
 	EventQueue* m_pEventQueue;
-	vector<Player> m_players;
 	float (*m_pafStartPositions)[2]; ///< pointer of arrays
 	float m_fWorldRadius;
 

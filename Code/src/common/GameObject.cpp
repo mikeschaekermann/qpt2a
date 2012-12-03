@@ -18,9 +18,6 @@ GameObject::~GameObject(void)
 #if _DEBUG
 	app::console() << "GameObject deleted. id: " << m_uiId << std::endl;
 #endif
-
-	delete m_pMotionBehavior;
-	delete m_pCollisionBehavior;
 	
 	for(auto it = m_messagingBehaviors.begin(); it != m_messagingBehaviors.end(); ++it)
 	{
@@ -30,9 +27,6 @@ GameObject::~GameObject(void)
 
 void GameObject::update(float frameTime)
 {
-	m_pMotionBehavior->update(frameTime);
-	m_pCollisionBehavior->update(frameTime);
-
 	for(auto it = m_messagingBehaviors.begin(); it != m_messagingBehaviors.end(); ++it)
 	{
 		(*it)->update(frameTime);

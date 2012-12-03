@@ -1,130 +1,110 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\src\Server\network\JoinFailure.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
+    <ClCompile Include="..\..\src\Server\Main.cpp" />
+    <ClCompile Include="..\..\src\Server\network\MessageType.cpp" />
+    <ClCompile Include="..\..\src\Server\network\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\Server\network\JoinRequest.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Server\network\JoinSuccess.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Server\network\MessageType.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Server\network\NetworkManager.cpp">
-      <Filter>network</Filter>
+      <Filter>Messages\Implemented Messages</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Server\network\NetworkMessage.cpp">
-      <Filter>network</Filter>
+      <Filter>Messages\Implemented Messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Server\Main.cpp" />
+    <ClCompile Include="..\..\src\Server\network\JoinSuccess.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\StartGame.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\JoinErrorCode.cpp" />
+    <ClCompile Include="..\..\src\Server\network\GameOver.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\CellType.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CreateCellErrorCode.cpp" />
+    <ClCompile Include="..\..\src\Server\network\CellAttack.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\CellDie.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\CellNew.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\JoinFailure.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\CreateCellSuccess.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\CreateCellRequest.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\CreateCellFailure.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\network\CreateCellComplete.cpp">
+      <Filter>Messages\Implemented Messages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Server\network\CellAttack.h">
-      <Filter>network</Filter>
-    </ClInclude>
+    <ClInclude Include="..\..\src\Server\network\CellType.h" />
+    <ClInclude Include="..\..\src\Server\network\CreateCellErrorCode.h" />
+    <ClInclude Include="..\..\src\Server\network\JoinErrorCode.h" />
+    <ClInclude Include="..\..\src\Server\network\MessageType.h" />
     <ClInclude Include="..\..\src\Server\network\StartGame.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\network\CellAttack.h">
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\network\CellDie.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\network\CellNew.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\network\CellType.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\network\CreateCellComplete.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\network\CreateCellErrorCode.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\network\CreateCellFailure.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\network\CreateCellRequest.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\network\CreateCellSuccess.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\network\GameOver.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\network\JoinErrorCode.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\network\JoinFailure.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\network\JoinRequest.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\network\JoinSuccess.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\network\MessageType.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\network\NetworkManager.h">
-      <Filter>network</Filter>
-    </ClInclude>
+    <ClInclude Include="..\..\src\Server\network\NetworkManager.h" />
     <ClInclude Include="..\..\src\Server\network\NetworkMessage.h">
-      <Filter>network</Filter>
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\Cell.h">
-      <Filter>game</Filter>
+    <ClInclude Include="..\..\src\Server\network\JoinFailure.h">
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\Game.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\Player.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\Population.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\event\EventQueue.h">
-      <Filter>event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\event\Event.h">
-      <Filter>event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\IdCellMap.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\PositionCellMap.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\ICellMap.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\ICollisionBehavior.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\CellCollisionBehavior.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\GameObject.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\event\BuildingEvent.h">
-      <Filter>event</Filter>
+    <ClInclude Include="..\..\src\Server\network\JoinRequest.h">
+      <Filter>Messages\MessageHeaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="network">
-      <UniqueIdentifier>{dd740942-5fd3-44eb-a167-5558cd9b02df}</UniqueIdentifier>
+    <Filter Include="Messages">
+      <UniqueIdentifier>{d958e47d-fa0f-4405-ba47-8adabc7d8279}</UniqueIdentifier>
     </Filter>
-    <Filter Include="game">
-      <UniqueIdentifier>{c0cd6443-cf4b-4456-a648-527f4ab0b410}</UniqueIdentifier>
+    <Filter Include="Messages\Implemented Messages">
+      <UniqueIdentifier>{f2f2478b-513e-47dc-8875-37f2229e407e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="event">
-      <UniqueIdentifier>{6650481e-02c4-409a-b61b-5286b93fa1fa}</UniqueIdentifier>
+    <Filter Include="Messages\MessageHeaders">
+      <UniqueIdentifier>{ba7000d2-367f-47d6-9839-73558e5bbd7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messages\Unimplemented Messages">
+      <UniqueIdentifier>{8d5f6332-f341-4ecc-80ba-74787f969510}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
