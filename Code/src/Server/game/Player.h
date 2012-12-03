@@ -4,38 +4,29 @@
 #include <vector>
 #include <map>
 
-#include "../../common/network/messages/NetworkMessage.h"
+#include "../../common/network/ConnectionEndpoint.h"
+#include "StemCell.h"
 #include "Population.h"
 
 using namespace std;
 
-class Player
+class Player : public ConnectionEndpoint
 {
-friend class NetworkManager;
 
 private:
 	unsigned int m_uiId;
 	string m_strName;
-	boost::asio::ip::udp::endpoint m_endpoint;
 	Population m_population;
-
-	unsigned m_uiServerPacketId;
-	unsigned m_uiClientPacketId;
-
-	list<unsigned> m_unreceivedMessages;
-	map<unsigned, NetworkMessage> m_unconfirmedMessages;
-
+	
 public:
 
 	Player(unsigned int id, string name, boost::asio::ip::udp::endpoint endpoint, float position[2]) :
 	  m_uiId(id),
 	  m_strName(name),
-	  m_endpoint(endpoint),
-	  m_uiServerPacketId(0),
-	  m_uiClientPacketId(0)
+	  ConnectionEndpoint(endpoint)
 	{
 		Cell* stemcell = new StemCell();
-		m_population.createCell(stemcell);
+		m_population.createCell(stemcell, position, 0.f);
 	}
 
 	unsigned int getId() const { return m_uiId; }

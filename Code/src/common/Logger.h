@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "cinder\app\AppBasic.h"
 
 using namespace std;
 

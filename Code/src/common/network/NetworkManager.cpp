@@ -5,22 +5,18 @@
 #include "messages/game/outgame/JoinRequest.h"
 #include "messages/ConnectionMessage.h"
 
-#include "../../server/game/Game.h"
-#include "../../server/game/Player.h"
-
 #include <iostream>
 
 using boost::asio::ip::udp;
 using namespace std;
 
-NetworkManager::NetworkManager(unsigned short listenPort, Game *game) :  game(game), 
-	run(true)
+NetworkManager::NetworkManager(unsigned short listenPort) : run(true)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service, udp::endpoint(udp::v4(), listenPort));
 }
 
-NetworkManager::NetworkManager(const NetworkManager &other) : game(other.game), run(true)
+NetworkManager::NetworkManager(const NetworkManager &other) : run(true)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service, udp::endpoint(udp::v4(), other.serverSocket->local_endpoint().port()));
@@ -30,8 +26,15 @@ NetworkManager::~NetworkManager()
 {
 	run = false;
 	serverSocket->shutdown(boost::asio::socket_base::shutdown_both);
-	delete serverSocket;
-	delete io_service;
+	if (serverSocket)
+	{
+		delete serverSocket;
+	}
+	
+	if (io_service)
+	{
+		delete io_service;
+	}
 }
 		
 void NetworkManager::operator()()
@@ -58,19 +61,20 @@ void NetworkManager::operator()()
 
 		if (!dynamic_cast<JoinRequest*>(message) && !dynamic_cast<ConnectionMessage*>(message))
 		{
-			Player *player = getPlayer(message->endpoint);
-			if (player)
+			ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
+			if (connectionEndpoint)
 			{
-				for (unsigned i = player->m_uiClientPacketId + 1; i < message->messageId; ++i)
+				for (unsigned i = connectionEndpoint->m_uiRemotePacketId + 1; i < message->messageId; ++i)
 				{
 					/// Check whether the messageId is already missing and add it then
-					if(std::find(player->m_unreceivedMessages.begin(), player->m_unreceivedMessages.end(), i) == player->m_unreceivedMessages.end()) 
+					if(std::find(connectionEndpoint->m_unreceivedMessages.begin(), connectionEndpoint->m_unreceivedMessages.end(), i) 
+						== connectionEndpoint->m_unreceivedMessages.end()) 
 					{
-						player->m_unreceivedMessages.push_back(i);
+						connectionEndpoint->m_unreceivedMessages.push_back(i);
 					}
 				}
-				player->m_unreceivedMessages.remove(message->messageId);
-				player->m_uiClientPacketId = message->messageId;
+				connectionEndpoint->m_unreceivedMessages.remove(message->messageId);
+				connectionEndpoint->m_uiRemotePacketId = message->messageId;
 			}
 			else
 			{
@@ -80,24 +84,31 @@ void NetworkManager::operator()()
 		}
 
 		// React to the Message and delete it.
-		handleMessage(message);
+		ConnectionMessage *connectionMessage = dynamic_cast<ConnectionMessage*> (message);
+		if (connectionMessage)
+		{
+			handleConnectionMessage(connectionMessage);
+		}
+		else
+		{
+			handleMessage(message);
+		}
 		delete message;
 		maintenanceMutex.unlock();
 	}
 }
 
-void NetworkManager::handleMessage(NetworkMessage* message) {
-	ConnectionMessage *connectionMessage = dynamic_cast<ConnectionMessage*>(message);
-	if (connectionMessage) 
+void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
+	ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
+	
+	if (connectionEndpoint)
 	{
-		Player *player = getPlayer(message->endpoint);
-
 		/// Resend all missing messages
-		for (unsigned i = 0; i < connectionMessage->missingMessageCount; ++i)
+		for (unsigned i = 0; i < message->missingMessageCount; ++i)
 		{
-			if (player->m_unconfirmedMessages.find(connectionMessage->missingMessageIds[i]) != player->m_unconfirmedMessages.end())
+			if (connectionEndpoint->m_unconfirmedMessages.find(message->missingMessageIds[i]) != connectionEndpoint->m_unconfirmedMessages.end())
 			{
-				baseSend(player->m_unconfirmedMessages[connectionMessage->missingMessageIds[i]]);
+				baseSend(connectionEndpoint->m_unconfirmedMessages[message->missingMessageIds[i]]);
 			}
 			else
 			{
@@ -107,14 +118,14 @@ void NetworkManager::handleMessage(NetworkMessage* message) {
 		}
 
 		/// Remove obsolete messages
-		for(std::map<unsigned, NetworkMessage>::iterator it = player->m_unconfirmedMessages.begin(); it != player->m_unconfirmedMessages.end(); ++it) 
+		for(std::map<unsigned, NetworkMessage>::iterator it = connectionEndpoint->m_unconfirmedMessages.begin(); it != connectionEndpoint->m_unconfirmedMessages.end(); ++it) 
 		{
-			if (it->first <= connectionMessage->messageId)
+			if (it->first <= message->messageId)
 			{
 				bool obsolete = true;
-				for (unsigned i = 0; i < connectionMessage->missingMessageCount; ++i)
+				for (unsigned i = 0; i < message->missingMessageCount; ++i)
 				{
-					if (connectionMessage->missingMessageIds[i] == it->first)
+					if (message->missingMessageIds[i] == it->first)
 					{
 						obsolete = false;
 						break;
@@ -123,7 +134,7 @@ void NetworkManager::handleMessage(NetworkMessage* message) {
 
 				if (obsolete)
 				{
-					player->m_unconfirmedMessages.erase(it->first);
+					connectionEndpoint->m_unconfirmedMessages.erase(it->first);
 				}
 			}
 		}
@@ -136,12 +147,14 @@ void NetworkManager::connectionMaintenance()
 	{
 		boost::this_thread::sleep(boost::posix_time::milliseconds(100));
 		maintenanceMutex.lock();
-		for (std::vector<Player>::iterator it = game->m_players.begin(); it != game->m_players.end(); ++it)
+		
+		std::vector<ConnectionEndpoint> endpoints =  getConnectionEndpoints();
+		for (std::vector<ConnectionEndpoint>::iterator it = endpoints.begin(); it != endpoints.end(); ++it)
 		{
 			ConnectionMessage message;
 			// Fill with data
 			message.endpoint = (*it).m_endpoint;
-			message.messageId = (*it).m_uiClientPacketId;
+			message.messageId = (*it).m_uiRemotePacketId;
 			message.missingMessageCount = (*it).m_unreceivedMessages.size();
 
 			message.missingMessageIds = new unsigned[message.missingMessageCount];
@@ -172,14 +185,12 @@ NetworkMessage* NetworkManager::createNetworkMessage(char* data)
 		
 	NetworkMessage *message = 0;
 
-
 	unsigned index = 0;
 	switch (type.getType())
 	{
-	case MessageType::JoinRequest:
+	case MessageType::ConnectionMessage:
 		{
-				
-			message = new JoinRequest(data, index);
+			message = new ConnectionMessage(data, index);
 			break;
 		}
 	default:
@@ -191,43 +202,31 @@ NetworkMessage* NetworkManager::createNetworkMessage(char* data)
 
 void NetworkManager::baseSend(NetworkMessage &message)
 {
+	/// Set the size and create the send buffer
 	message.messageSize = message.calculateSize();
-
 	char* buffer = new char[message.messageSize];
-
-	message.writeToArray(buffer);
 	boost::system::error_code ignored_error;
 
+	/// Serialize the Array, send the message and delete the buffer
+	message.writeToArray(buffer);
 	serverSocket->send_to(boost::asio::buffer(buffer, message.messageSize), message.endpoint, 0, ignored_error);
-
 	delete[] buffer;
 }
 
 void NetworkManager::send(NetworkMessage message)
 {
+	/// Lock when changes inthe connectionEndpoint are possible
 	maintenanceMutex.lock();
-	Player *player = getPlayer(message.endpoint);
+	ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message.endpoint);
 
-	if (player)
+	if (connectionEndpoint)
 	{
-		message.messageId = player->m_uiServerPacketId++;
-		player->m_unconfirmedMessages[message.messageId] =  message;
+		/// Increment the messageId and set it to identify the message
+		message.messageId = connectionEndpoint->m_uiLocalPacketId++;
+		connectionEndpoint->m_unconfirmedMessages[message.messageId] =  message;
 	}
 
 	baseSend(message);
 	
 	maintenanceMutex.unlock();
-}
-
-Player* NetworkManager::getPlayer(boost::asio::ip::udp::endpoint endpoint)
-{
-	for (std::vector<Player>::iterator it = game->m_players.begin(); it != game->m_players.end(); ++it)
-	{
-		if ((*it).getEndpoint() == endpoint)
-		{
-			return &(*it);
-		}
-	}
-
-	return 0;
 }

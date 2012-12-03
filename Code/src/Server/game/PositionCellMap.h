@@ -27,6 +27,18 @@ public:
 		return 0;
 	}
 
+	virtual void removeCell(Cell* cell)
+	{
+		map<float, map<float, Cell*> >::iterator find = m_map.find(cell->getPosition()[0]);
+		if (find != m_map.end())
+		{
+			if (find->second.erase(cell->getPosition()[1]))
+			{
+				/// worked
+			}
+		}
+	}
+
 	Cell* find(const float position[2]) const
 	{
 		map<float, map<float, Cell*> >::const_iterator cellXIt = m_map.find(position[0]);

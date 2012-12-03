@@ -21,6 +21,14 @@ public:
 		return 0;
 	}
 
+	virtual void removeCell(Cell* cell)
+	{
+		if (m_map.erase(cell->getId()))
+		{
+			/// worked
+		}
+	}
+
 	Cell* find(unsigned int id) const
 	{
 		map<unsigned int, Cell*>::const_iterator it = m_map.find(id);
@@ -37,9 +45,10 @@ public:
 	}
 private:
 	map<unsigned int, Cell*> m_map;
+	static unsigned int m_uiMaxCellId;
 
 	unsigned int generateKey() const
 	{
-		return size();
+		return ++m_uiMaxCellId;
 	}
 };

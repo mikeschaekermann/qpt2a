@@ -25,12 +25,13 @@ class Population
 {
 public:
 	/// returns cell id: positive if valid
-	int createCell(Cell* cell)
+	int createCell(Cell* cell, const float position[2], float angle)
 	{
 		if (m_idMap.addCell(cell))
 		{
 			if (m_positionMap.addCell(cell))
 			{
+				cell->init(position, angle);
 				return cell->getId();
 			}
 			/// error
@@ -39,13 +40,19 @@ public:
 		return -1;
 	}
 
-
-	/// returns cell id: positive if valid
-	int createCell(Cell* cell, const float position[2])
+	void removeCell(unsigned int cellId)
 	{
-		cell->setPosition(position);
-		
-		return createCell(cell);
+		Cell* cell = find(cellId);
+		if (cell != 0)
+		{
+			m_idMap.removeCell(cell);
+			m_positionMap.removeCell(cell);
+			delete cell;
+		}
+		else
+		{
+			/// error
+		}
 	}
 
 	const float* const getRelativePosition(unsigned int cellId, float angle) const
