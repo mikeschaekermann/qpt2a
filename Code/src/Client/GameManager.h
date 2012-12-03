@@ -28,5 +28,6 @@ private:
 	string m_gameVersion;
 
 	GameManager(void);
+	GameManager(const GameManager&);
 };
 

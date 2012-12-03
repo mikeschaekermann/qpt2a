@@ -72,6 +72,8 @@ ipch/
 *.psess
 *.vsp
 
+# Visual Studio class diagrams
+*.cd
 
 #[Bb]in
 Ankh.NoLoad
