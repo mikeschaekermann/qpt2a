@@ -62,8 +62,14 @@
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellComplete.cpp">
       <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\network\ServerNetworkmanager.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\Server\game\IdCellMap.cpp">
       <Filter>Gamelogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +180,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellComplete.h">
       <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\network\ServerNetworkManager.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

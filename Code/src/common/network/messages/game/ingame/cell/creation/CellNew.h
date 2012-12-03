@@ -10,6 +10,7 @@ public:
 	unsigned int playerId;
 	unsigned int cellId;
 	float position[2];
+	float angle;
 	CellType type;
 
 	/* Constructor / Destructor */
