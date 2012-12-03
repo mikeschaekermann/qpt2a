@@ -1,7 +1,7 @@
 #pragma once
 
-#include "NetworkMessage.h"
-#include "CreateCellErrorCode.h"
+#include "../../../../NetworkMessage.h"
+#include "../../../../enum/CreateCellErrorCode.h"
 
 class CreateCellFailure : public NetworkMessage
 {

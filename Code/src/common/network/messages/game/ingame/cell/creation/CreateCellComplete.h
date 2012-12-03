@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NetworkMessage.h"
+#include "../../../../NetworkMessage.h"
 
 class CreateCellComplete : public NetworkMessage
 {

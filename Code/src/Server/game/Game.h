@@ -3,15 +3,22 @@
 #include <vector>
 #include <cmath>
 
-#include "../network/NetworkManager.h"
-#include "../network/JoinFailure.h"
-#include "../network/JoinSuccess.h"
-#include "../network/StartGame.h"
-#include "../network/CellType.h"
-#include "../network/CreateCellFailure.h"
+#include "../../common/network/NetworkManager.h"
+#include "../../common/network/messages/game/outgame/JoinFailure.h"
+#include "../../common/network/messages/game/outgame/JoinSuccess.h"
+#include "../../common/network/messages/game/outgame/StartGame.h"
+#include "../../common/network/messages/enum/CellType.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CreateCellFailure.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CellNew.h"
 
 #include "../event/BuildingEvent.h"
+#include "../event/AttackEvent.h"
 #include "../event/EventQueue.h"
+
+#include "Cell.h"
+#include "StemCell.h"
+#include "StandardCell.h"
 #include "Player.h"
 
 using namespace std;
@@ -46,7 +53,7 @@ public:
 		cout << "NetworkManager bound to Game" << endl;
 	}
 
-	void join(string playerName, string ipAddress, unsigned short port)
+	void join(string playerName, boost::asio::ip::udp::endpoint endpoint)
 	{
 		if(m_players.size() >= MAX_PLAYER_SIZE)
 		{
@@ -68,7 +75,7 @@ public:
 			}
 		}
 
-		Player p(createPlayerId(), playerName, ipAddress, port, m_pafStartPositions[m_players.size()]);
+		Player p(createPlayerId(), playerName, endpoint, m_pafStartPositions[m_players.size()]);
 
 		m_players.push_back(p);
 
@@ -123,9 +130,9 @@ public:
 			switch (type.getType())
 			{
 			case CellType::StemCell:
-				cell = new Cell();
+				cell = new StemCell();
 			case CellType::StandardCell:
-				cell = new Cell();
+				cell = new StandardCell();
 			default:
 				cell = 0;
 			}
@@ -137,14 +144,71 @@ public:
 				if (cells.size() > 0)
 				{
 					/// collision detected
+					CreateCellFailure failure;
+					/// failure.requestId = ???
+					failure.errorCode = CreateCellErrorCode::SpotAlreadyTaken;
+					m_pNetworkManager->send(failure);
 					return;
 				}
 			}
-			player.getPopulation().createCell(cell, position);
-			/// add building event to event queue
-			BuildingEvent* e = new BuildingEvent();
-			m_pEventQueue->addEvent(e);
 
+			player.getPopulation().createCell(cell, position);
+
+			if (cell->getId() < 0)
+			{
+				/**
+				 * TODO: add enum for creation errors
+				 * NOW:  -1 for all creation errors
+				 */
+				return;
+			}
+
+			/// pass relevant data for the building
+			BuildingEvent* be = new BuildingEvent();
+			m_pEventQueue->addEvent(be);
+
+			CreateCellSuccess success;
+			/// success.requestId = ???
+			success.cellId = cell->getId();
+			success.position[0] = cell->getPosition()[0];
+			success.position[1] = cell->getPosition()[1];
+			success.angle = angle;
+			m_pNetworkManager->send(success);
+
+			for (unsigned int i = 0; i < m_players.size(); ++i)
+			{
+				if (m_players[i].getId() != player.getId())
+				{
+					CellNew cellnew;
+					cellnew.playerId = player.getId();
+					cellnew.cellId = cell->getId();
+					cellnew.position[0] = cell->getPosition()[0];
+					cellnew.position[1] = cell->getPosition()[1];
+					cellnew.type = type.getType();
+					/// add player ip
+				}
+			}
+
+			for (unsigned int i = 0; i < m_players.size(); ++i)
+			{
+				if (m_players[i].getId() != player.getId())
+				{
+					const vector<Cell*>& cells =
+						m_players[i].getPopulation().findInRadiusOf(cell->getPosition(), cell->getRadius() + StandardCell::m_fAttackRadius);
+
+					for (vector<Cell*>::const_iterator it = cells.begin(); it != cells.end(); ++it)
+					{
+						if ((*it)->isComplete() && dynamic_cast<StandardCell*>(*it) != 0)
+						{
+							/// pass relevant data for attacking
+							AttackEvent* ae = new AttackEvent();
+							m_pEventQueue->addEvent(ae);
+
+							/// attack message is sent in event
+						}
+					}
+				}
+			}
 			delete position;
 		}
 	}

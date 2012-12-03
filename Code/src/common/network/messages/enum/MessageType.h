@@ -7,6 +7,7 @@ private:
 public:
 	enum Type {
 		Invalid,					/// Determines that this is an invalid message
+		ConnectionMessage,			/// Is for resending not transmitted messages
 		JoinRequest,				/// Is sent by the client when he wants to join an open game.
 		JoinSuccess,				/// Is sent by the server when the join request of the client has been accepted
 		JoinFailure,				/// Is sent by the server when the join request has been refused

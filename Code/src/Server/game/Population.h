@@ -24,20 +24,28 @@ using namespace std;
 class Population
 {
 public:
-	bool createCell(Cell* cell)
+	/// returns cell id: positive if valid
+	int createCell(Cell* cell)
 	{
-		if (m_positionMap.addCell(cell))
+		if (m_idMap.addCell(cell))
 		{
-			return m_idMap.addCell(cell);
+			if (m_positionMap.addCell(cell))
+			{
+				return cell->getId();
+			}
+			/// error
 		}
-		return false;
+		/// error
+		return -1;
 	}
 
-	void createCell(Cell* cell, const float position[2])
+
+	/// returns cell id: positive if valid
+	int createCell(Cell* cell, const float position[2])
 	{
-		cell->m_afPosition[0] = position[0];
-		cell->m_afPosition[1] = position[1];
-		createCell(cell);
+		cell->setPosition(position);
+		
+		return createCell(cell);
 	}
 
 	const float* const getRelativePosition(unsigned int cellId, float angle) const
@@ -46,8 +54,8 @@ public:
 		if (cell != 0)
 		{
 			float* position = new float[2];
-			position[0] = cell->getPosition()[0] + cosf(angle * (float)M_PI / 180.f) * cell->m_fRadius;
-			position[1] = cell->getPosition()[1] + sinf(angle * (float)M_PI / 180.f) * cell->m_fRadius;
+			position[0] = cell->getPosition()[0] + cosf(angle * (float)M_PI / 180.f) * cell->getRadius();
+			position[1] = cell->getPosition()[1] + sinf(angle * (float)M_PI / 180.f) * cell->getRadius();
 			return position;
 		}
 		return 0;

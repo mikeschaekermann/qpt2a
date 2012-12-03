@@ -1,7 +1,7 @@
 #pragma once
 
-#include "NetworkMessage.h"
-#include "CellType.h"
+#include "../../../../NetworkMessage.h"
+#include "../../../../enum/CellType.h"
 
 class CellNew : public NetworkMessage
 {

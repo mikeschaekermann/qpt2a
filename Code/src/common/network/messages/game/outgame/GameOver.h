@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NetworkMessage.h"
+#include "../../NetworkMessage.h"
 
 class GameOver : public NetworkMessage
 {

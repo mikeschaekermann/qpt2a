@@ -14,13 +14,17 @@ using namespace std;
 class PositionCellMap : public ICellMap
 {
 public:
-	virtual bool addCell(Cell* cell)
+	virtual Cell* addCell(Cell* cell)
 	{
 		pair<map<float, map<float, Cell*> >::iterator, bool> insertResult = 
 			m_map.insert(pair<float, map<float, Cell*> >(cell->getPosition()[0], map<float, Cell*>()));
 		pair<map<float, Cell*>::iterator, bool> insertResult2 = 
 			insertResult.first->second.insert(pair<float, Cell*>(cell->getPosition()[1], cell));
-		return insertResult2.second;
+		if (insertResult2.second)
+		{
+			return insertResult2.first->second;
+		}
+		return 0;
 	}
 
 	Cell* find(const float position[2]) const
