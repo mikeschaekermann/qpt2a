@@ -3,11 +3,15 @@
 #include <vector>
 #include <cmath>
 
+#include "cinder/Vector.h"
+
 #include "../../common/network/NetworkManager.h"
+#include "../../common/network/messages/game/outgame/JoinRequest.h"
 #include "../../common/network/messages/game/outgame/JoinFailure.h"
 #include "../../common/network/messages/game/outgame/JoinSuccess.h"
 #include "../../common/network/messages/game/outgame/StartGame.h"
 #include "../../common/network/messages/enum/CellType.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CreateCellRequest.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellFailure.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CellNew.h"
@@ -53,9 +57,11 @@ public:
 		cout << "NetworkManager bound to Game" << endl;
 	}
 
-	void join(string playerName, boost::asio::ip::udp::endpoint endpoint)
+	void join(JoinRequest request)
 	{
 		cout << "IRGENDWAS GEHT SOGAR" << endl;
+		string playerName = string(request.name, request.nameSize);
+		
 		if(m_players.size() >= MAX_PLAYER_SIZE)
 		{
 			JoinFailure failure;
@@ -76,7 +82,7 @@ public:
 			}
 		}
 
-		Player p(createPlayerId(), playerName, endpoint, m_pafStartPositions[m_players.size()]);
+		Player p(createPlayerId(), playerName, request.endpoint, m_pafStartPositions[m_players.size()]);
 
 		m_players.push_back(p);
 
@@ -114,8 +120,13 @@ public:
 		}
 	}
 
-	void createCell(unsigned int playerId, unsigned int cellId, float angle, CellType type)
+	void createCell(CreateCellRequest request)
 	{
+		unsigned int playerId = request.playerId;
+		unsigned int cellId = request.cellId;
+		float angle = request.angle;
+		CellType type = request.type;
+
 		if (playerId < m_players.size())
 		{
 			Player& player = m_players[playerId];
@@ -146,14 +157,14 @@ public:
 				{
 					/// collision detected
 					CreateCellFailure failure;
-					/// failure.requestId = ???
+					failure.requestId = request.requestId;
 					failure.errorCode = CreateCellErrorCode::SpotAlreadyTaken;
 					m_pNetworkManager->send(failure);
 					return;
 				}
 			}
 
-			player.getPopulation().createCell(cell, position);
+			player.getPopulation().createCell(cell, position, angle);
 
 			if (cell->getId() < 0)
 			{
@@ -164,16 +175,18 @@ public:
 				return;
 			}
 
-			/// pass relevant data for the building
-			BuildingEvent* be = new BuildingEvent();
+			/// get current time
+			double time = m_pEventQueue->getTime();
+
+			BuildingEvent* be = new BuildingEvent(time, *m_pNetworkManager, *cell, m_players);
 			m_pEventQueue->addEvent(be);
 
 			CreateCellSuccess success;
-			/// success.requestId = ???
+			success.requestId = request.requestId;
 			success.cellId = cell->getId();
 			success.position[0] = cell->getPosition()[0];
 			success.position[1] = cell->getPosition()[1];
-			success.angle = angle;
+			success.angle = cell->getAngle();
 			m_pNetworkManager->send(success);
 
 			for (unsigned int i = 0; i < m_players.size(); ++i)
@@ -186,7 +199,7 @@ public:
 					cellnew.position[0] = cell->getPosition()[0];
 					cellnew.position[1] = cell->getPosition()[1];
 					cellnew.type = type.getType();
-					/// add player ip
+					cellnew.endpoint = m_players[i].getEndpoint();
 				}
 			}
 
@@ -201,8 +214,23 @@ public:
 					{
 						if ((*it)->isComplete() && dynamic_cast<StandardCell*>(*it) != 0)
 						{
-							/// pass relevant data for attacking
-							AttackEvent* ae = new AttackEvent();
+							ci::Vec2f attacker((*it)->getPosition());
+							ci::Vec2f victim(cell->getPosition());
+
+							ci::Vec2f attackerDir;
+							attackerDir.rotate((*it)->getAngle() * (float)M_PI / 180.f);
+							attackerDir.normalize();
+
+							ci::Vec2f attacker2victim = victim - attacker;
+							attacker2victim.normalize();
+
+							float dot = abs(attackerDir.dot(attacker2victim));
+
+							/// damage modifier 10.f
+							float damage = 1.f - dot * 10.f;
+							damage = damage < 0.2f ? 0.2f : damage;
+
+							AttackEvent* ae = new AttackEvent(time, *m_pNetworkManager, *m_pEventQueue, *(*it), *cell, damage, m_players);
 							m_pEventQueue->addEvent(ae);
 
 							/// attack message is sent in event
