@@ -10,9 +10,15 @@ using namespace std;
 class IdCellMap : public ICellMap
 {
 public:
-	virtual bool addCell(Cell* cell)
+	virtual Cell* addCell(Cell* cell)
 	{
-		return m_map.insert(pair<unsigned int, Cell*>(generateKey(), cell)).second;
+		cell->setId(generateKey());
+		pair<map<unsigned int, Cell*>::iterator, bool> insertResult = m_map.insert(pair<unsigned int, Cell*>(cell->getId(), cell));
+		if (insertResult.second)
+		{
+			return insertResult.first->second;
+		}
+		return 0;
 	}
 
 	Cell* find(unsigned int id) const

@@ -46,6 +46,9 @@
     <ClCompile Include="..\..\src\Server\network\CreateCellComplete.cpp">
       <Filter>Messages\Implemented Messages</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Server\game\StandardCell.cpp">
+      <Filter>Gamelogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Server\network\CellType.h" />
@@ -129,6 +132,18 @@
       <Filter>Eventlogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\event\EventQueue.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\StemCell.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\StandardCell.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\StemCellCollisionBehavior.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\event\AttackEvent.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,6 +15,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Server\event\AttackEvent.h" />
     <ClInclude Include="..\..\src\Server\event\BuildingEvent.h" />
     <ClInclude Include="..\..\src\Server\event\Event.h" />
     <ClInclude Include="..\..\src\Server\event\EventQueue.h" />
@@ -28,6 +29,9 @@
     <ClInclude Include="..\..\src\Server\game\Player.h" />
     <ClInclude Include="..\..\src\Server\game\Population.h" />
     <ClInclude Include="..\..\src\Server\game\PositionCellMap.h" />
+    <ClInclude Include="..\..\src\Server\game\StandardCell.h" />
+    <ClInclude Include="..\..\src\Server\game\StemCell.h" />
+    <ClInclude Include="..\..\src\Server\game\StemCellCollisionBehavior.h" />
     <ClInclude Include="..\..\src\Server\network\CellAttack.h" />
     <ClInclude Include="..\..\src\Server\network\CellDie.h" />
     <ClInclude Include="..\..\src\Server\network\CellNew.h" />
@@ -48,6 +52,7 @@
     <ClInclude Include="..\..\src\Server\network\StartGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Server\game\StandardCell.cpp" />
     <ClCompile Include="..\..\src\Server\Main.cpp" />
     <ClCompile Include="..\..\src\Server\network\CellAttack.cpp" />
     <ClCompile Include="..\..\src\Server\network\CellDie.cpp" />

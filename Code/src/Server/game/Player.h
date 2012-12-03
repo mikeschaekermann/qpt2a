@@ -25,11 +25,6 @@ private:
 	queue<unsigned> m_unreceivedMessages;
 	queue<NetworkMessage> m_unconfirmedMessages;
 
-	unsigned int createCellId()
-	{
-		return m_population.size();
-	}
-
 public:
 
 	Player(unsigned int id, string name, string ipAddresse, unsigned short port, float position[2]) :
@@ -40,7 +35,7 @@ public:
 	  m_uiServerPacketId(0),
 	  m_uiClientPacketId(0)
 	{
-		Cell* stemcell = new Cell(createCellId(), position);
+		Cell* stemcell = new StemCell();
 		m_population.createCell(stemcell);
 	}
 
