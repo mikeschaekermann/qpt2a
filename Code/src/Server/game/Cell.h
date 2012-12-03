@@ -5,14 +5,17 @@
 #include "GameObject.h"
 #include "CellCollisionBehavior.h"
 
+#define HEALTH_POINTS 100.f
+
 using namespace std;
 
 class Cell : public GameObject
 {
 public:
 	Cell() :
+	  m_fHealthPoints(HEALTH_POINTS),
 	  m_bIdSet(false),
-	  m_bPositionSet(false)
+	  m_bIsInitialized(false)
 	{
 		m_pCollisionBehavior = new CellCollisionBehavior();
 	}
@@ -20,7 +23,19 @@ public:
 	Cell(const Cell& cpy)
 	{
 		m_uiId = cpy.m_uiId;
-		setPosition(cpy.m_afPosition);
+		m_afPosition[0] = cpy.m_afPosition[0];
+		m_afPosition[1] = cpy.m_afPosition[1];
+	}
+
+	void init(const float position[2], float angle)
+	{
+		if (!m_bIsInitialized)
+		{
+			m_bIsInitialized = true;
+			m_afPosition[0] = position[0];
+			m_afPosition[1] = position[1];
+			m_fAngle = angle;
+		}
 	}
 
 	void setId(unsigned int id)
@@ -32,27 +47,26 @@ public:
 		}
 	}
 
-	void setPosition(const float position[2])
+	void decreaseHealthPointsBy(float damage)
 	{
-		if(!m_bPositionSet)
-		{
-			m_bPositionSet = true;
-			m_afPosition[0] = position[0];
-			m_afPosition[1] = position[1];
-		}
+		m_fHealthPoints -= damage;
 	}
 
 	void completeCell() { m_bIsComplete = true; }
 
 	unsigned int getId() const { return m_uiId; }
+	float getHealthPoints() const { return m_fHealthPoints; }
 	const float* const getPosition() const { return m_afPosition; }
+	float getAngle() const { return m_fAngle; }
 	float getRadius() const { return m_fRadius; }
 	bool isComplete() const { return m_bIsComplete; }
 protected:
 	unsigned int m_uiId;
+	float m_fHealthPoints;
 	bool m_bIdSet;
 	float m_afPosition[2];
-	bool m_bPositionSet;
+	float m_fAngle;
+	bool m_bIsInitialized;
 	float m_fRadius;
 	bool m_bIsComplete;
 	vector<Cell*> m_parents;

@@ -5,6 +5,7 @@
 #include <map>
 
 #include "../../common/network/messages/NetworkMessage.h"
+#include "StemCell.h"
 #include "Population.h"
 
 using namespace std;
@@ -35,7 +36,7 @@ public:
 	  m_uiClientPacketId(0)
 	{
 		Cell* stemcell = new StemCell();
-		m_population.createCell(stemcell);
+		m_population.createCell(stemcell, position, 0.f);
 	}
 
 	unsigned int getId() const { return m_uiId; }

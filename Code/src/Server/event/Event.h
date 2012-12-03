@@ -2,29 +2,22 @@
 
 class Event
 {
-private:
-	float m_fDuration;
 protected:
-	float m_fDeadTime;
+	double m_dDeadTime;
 public:
-	Event(float duration) :
-	  m_fDuration(duration)
+	Event(double startTime, double duration) :
+	  m_dDeadTime(startTime + duration)
 	{ }
 
 	bool operator<(Event& other)
 	{
-		return m_fDeadTime < other.m_fDeadTime;
+		return m_dDeadTime < other.m_dDeadTime;
 	}
 
 	virtual void trigger() = 0;
 
-	void setDeadTime(float time)
+	double getDeadTime() const
 	{
-		m_fDeadTime = time + m_fDuration;
-	}
-
-	float getDeadTime() const
-	{
-		return m_fDeadTime;
+		return m_dDeadTime;
 	}
 };

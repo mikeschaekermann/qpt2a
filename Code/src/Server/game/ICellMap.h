@@ -10,5 +10,6 @@ class ICellMap
 {
 public:
 	virtual Cell* addCell(Cell* cell) = 0;
+	virtual void removeCell(Cell* cell) = 0;
 	virtual unsigned int size() const = 0;
 };
