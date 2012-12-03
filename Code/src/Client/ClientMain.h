@@ -19,4 +19,8 @@ class ClientMain : public AppBasic
 		@brief draws the original and the mask images to the screen
 	 */
 	void draw();
+
+private:
+	float m_fFrameTime;
+	float m_fElapsedGameTimeLastFrame;
 };
