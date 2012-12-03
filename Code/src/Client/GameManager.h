@@ -2,7 +2,7 @@
 
 #include <stack>
 #include "..\common\GameObject.h"
-#include "IScreen.h"
+#include "Screen.h"
 
 class GameManager
 {
@@ -17,11 +17,10 @@ public:
 private:
 	/// singleton instance
 	static GameManager* const m_pManager;
+
 	/// scene object
 	GameObject* m_pScene;
 
-	/// current menu stack
-	std::stack<IScreen> m_menuStack;
 	/// all active players
 	vector<Player*> m_players;
 
