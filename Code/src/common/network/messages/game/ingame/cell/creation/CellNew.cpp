@@ -18,6 +18,9 @@ CellNew::CellNew(char* data, unsigned &index) : NetworkMessage(data, index), pla
 	memcpy(&position, (void*) data[index], sizeof(position));
 	index += sizeof(position);
 
+	memcpy(&angle, (void*) data[index], sizeof(angle));
+	index += sizeof(angle);
+
 	unsigned networkCellType = 0;
 	memcpy(&networkCellType, (void*) data[index], sizeof(networkCellType));
 	type = CellType(networkCellType);

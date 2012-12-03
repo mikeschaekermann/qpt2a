@@ -15,6 +15,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h" />
     <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\CellType.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.h" />
@@ -51,8 +52,10 @@
     <ClInclude Include="..\..\src\Server\game\StandardCell.h" />
     <ClInclude Include="..\..\src\Server\game\StemCell.h" />
     <ClInclude Include="..\..\src\Server\game\StemCellCollisionBehavior.h" />
+    <ClInclude Include="..\..\src\server\network\ServerNetworkManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\CellType.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.cpp" />
@@ -74,6 +77,7 @@
     <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\Server\game\StandardCell.cpp" />
     <ClCompile Include="..\..\src\Server\Main.cpp" />
+    <ClCompile Include="..\..\src\server\network\ServerNetworkmanager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7C072AE6-2637-47ED-A4D2-637EECF59EE7}</ProjectGuid>
