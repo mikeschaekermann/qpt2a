@@ -1,7 +1,8 @@
 #pragma once
 
 #include <string>
-#include <queue>
+#include <vector>
+#include <map>
 
 #include "../network/NetworkMessage.h"
 #include "Population.h"
@@ -15,15 +16,14 @@ friend class NetworkManager;
 private:
 	unsigned int m_uiId;
 	string m_strName;
-	string m_strIpAddress;
-	unsigned short m_usPort;
+	boost::asio::ip::udp::endpoint m_endpoint;
 	Population m_population;
 
 	unsigned m_uiServerPacketId;
 	unsigned m_uiClientPacketId;
 
-	queue<unsigned> m_unreceivedMessages;
-	queue<NetworkMessage> m_unconfirmedMessages;
+	list<unsigned> m_unreceivedMessages;
+	map<unsigned, NetworkMessage> m_unconfirmedMessages;
 
 	unsigned int createCellId()
 	{
@@ -32,11 +32,10 @@ private:
 
 public:
 
-	Player(unsigned int id, string name, string ipAddresse, unsigned short port, float position[2]) :
+	Player(unsigned int id, string name, boost::asio::ip::udp::endpoint endpoint, float position[2]) :
 	  m_uiId(id),
 	  m_strName(name),
-	  m_strIpAddress(ipAddresse),
-	  m_usPort(port),
+	  m_endpoint(endpoint),
 	  m_uiServerPacketId(0),
 	  m_uiClientPacketId(0)
 	{
@@ -46,7 +45,6 @@ public:
 
 	unsigned int getId() const { return m_uiId; }
 	const string& getName() const { return m_strName; }
-	const string& getIpAddress() const { return m_strIpAddress; }
-	unsigned short getPort() const { return m_usPort; }
+	const boost::asio::ip::udp::endpoint& getEndpoint() const { return m_endpoint; }
 	Population& getPopulation() { return m_population; }
 };

@@ -17,14 +17,19 @@ int main(int argc, char argv[])
 	{
 		cout << "Error: input failes" << endl;
 	}
-
+	
 	Game game;
+
+	
 	// add game to networkmanager
 	// networkmanager singleton??
 	// access from game object to networkmanager??
 	NetworkManager nm(port, &game);
+
 	boost::thread thr(boost::bind(&NetworkManager::operator(), &nm));
 
+
+	thr.join();
 	cout << "test";
 	return 0;
 }
