@@ -3,6 +3,9 @@
 #include <stack>
 #include "..\common\GameObject.h"
 #include "Screen.h"
+#include "GameScreen.h"
+#include "ScreenManager.h"
+#include "../common/network/NetworkManager.h"
 
 class GameManager
 {
@@ -18,11 +21,7 @@ private:
 	/// singleton instance
 	static GameManager* m_pManager;
 
-	/// scene object
-	GameObject* m_pScene;
-
-	/// all active players
-	vector<Player*> m_players;
+	ScreenManager m_screenManager;
 
 	/// game version
 	string m_gameVersion;

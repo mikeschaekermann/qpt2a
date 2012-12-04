@@ -17,7 +17,7 @@ public:
 	Screen(ScreenManager& screenManager);
 	virtual ~Screen(void);
 
-	virtual void update(float frameTime) = 0;
+	virtual void update(float frameTime);
 	virtual void draw() = 0;
 
 	virtual void loadContent() = 0;
@@ -25,6 +25,9 @@ public:
 protected:
 	float m_fTransitionOnTime;
 	float m_fTransitionOffTime;
+
+	bool m_bIsInitialized;
+	bool m_bCoveredByOtherScreen;
 
 	ScreenState m_screenState;
 

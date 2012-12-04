@@ -1,7 +1,9 @@
 #pragma once
 
 #include "ClientMain.h"
+#include "../common/Logger.h"
 #include "../common/Config.h"
+#include "GameManager.h"
 #include "network/ClientNetworkManager.h"
 #include "boost/asio.hpp"
 #include "../common/network/messages/game/outgame/JoinRequest.h"
@@ -9,6 +11,9 @@
 void	ClientMain::setup()
 {
 	setWindowPos(100, 100);
+
+	m_fFrameTime = 0;
+	m_fElapsedGameTimeLastFrame = getElapsedSeconds();
 
 	Logger::getInstance()->configure("main.log");
 
@@ -49,7 +54,11 @@ void	ClientMain::prepareSettings( Settings *settings )
 
 void	ClientMain::update()
 {
+	m_fFrameTime = getElapsedSeconds() - m_fElapsedGameTimeLastFrame;
+
 	
+
+	m_fElapsedGameTimeLastFrame = getElapsedSeconds();
 }
 
 void	ClientMain::draw()
@@ -74,7 +83,7 @@ void	ClientMain::touchesBegan( TouchEvent event )
 
 void	ClientMain::touchesMoved( TouchEvent event )
 {
-
+	
 }
 
 void	ClientMain::touchesEnded( TouchEvent event )

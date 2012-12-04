@@ -4,6 +4,7 @@
 #include <sstream>
 
 Logger* Logger::m_pLogger = new Logger();
+ofstream Logger::m_file;
 
 Logger::Logger(void)
 {
@@ -11,8 +12,10 @@ Logger::Logger(void)
 
 Logger::~Logger(void)
 {
-	m_file.close();
-	delete m_file;
+	if(m_file)
+	{
+		m_file.close();
+	}
 }
 
 void Logger::configure(string filename)
@@ -22,7 +25,12 @@ void Logger::configure(string filename)
 
 void Logger::log(LogSeverity lvl, string message)
 {
-	assert(m_file);
+#ifdef _LOG
+
+	if(!m_file.is_open())
+	{
+		configure("main.log");
+	}
 
 	stringstream output;
 
@@ -57,4 +65,5 @@ void Logger::log(LogSeverity lvl, string message)
 #endif
 
 	m_streamWriteMutex._Unlock();
+#endif
 }

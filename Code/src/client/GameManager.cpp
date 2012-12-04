@@ -4,11 +4,11 @@ GameManager* GameManager::m_pManager = nullptr;
 
 GameManager::GameManager(void)
 {
+	m_screenManager.openScreen(new GameScreen(m_screenManager));
 }
 
 GameManager::~GameManager(void)
 {
-	delete m_pScene;
 }
 
 GameManager * const GameManager::getInstance()
@@ -23,10 +23,10 @@ GameManager * const GameManager::getInstance()
 
 void GameManager::update(float frameTime)
 {
-
+	m_screenManager.update(frameTime);
 }
 
 void GameManager::draw()
 {
-
+	m_screenManager.draw();
 }

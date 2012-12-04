@@ -37,6 +37,7 @@ void ScreenManager::draw()
 void ScreenManager::openScreen(Screen* screen)
 {
 	screen->loadContent();
+
 	m_screenStack.push(screen);
 }
 

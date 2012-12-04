@@ -10,7 +10,7 @@ class ClientMain : public AppBasic
  public:
 	/// @brief initializes the app
 	void	setup();
-	
+
 	/**
 		@brief prepares the app for the specific environment (i.e. desktop, mobile, multi-touch table app etc.)
 		@param settings			settings object that allows for settings to be modified
@@ -32,4 +32,8 @@ class ClientMain : public AppBasic
 	void	touchesEnded( TouchEvent event );
 
 	void	keyDown( KeyEvent event );
+
+private:
+	float m_fFrameTime;
+	float m_fElapsedGameTimeLastFrame;
 };
