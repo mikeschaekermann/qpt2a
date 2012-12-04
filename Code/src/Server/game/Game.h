@@ -59,8 +59,9 @@ public:
 
 	void join(JoinRequest request)
 	{
+		cout << "IRGENDWAS GEHT SOGAR" << endl;
 		string playerName = string(request.name, request.nameSize);
-
+		
 		if(m_players.size() >= MAX_PLAYER_SIZE)
 		{
 			JoinFailure failure;

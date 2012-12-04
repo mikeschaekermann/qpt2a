@@ -76,5 +76,4 @@ vector<ConnectionEndpoint> ServerNetworkManager::getConnectionEndpoints()
 
 ServerNetworkManager::ServerNetworkManager(unsigned short listenPort, Game *game) : NetworkManager(listenPort), m_game(game)
 {
-
 }

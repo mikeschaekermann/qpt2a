@@ -12,7 +12,8 @@ class NetworkManager
 {
 public:
 	NetworkManager(unsigned short listenPort);
-	~NetworkManager();
+	NetworkManager();
+	virtual ~NetworkManager();
 		
 	void operator()();
 	void send(NetworkMessage message);
