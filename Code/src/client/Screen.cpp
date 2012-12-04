@@ -6,6 +6,8 @@ Screen::Screen(ScreenManager& screenManager) :
 	m_screenState(ScreenState::TransitionOn),
 	m_fTransitionOnTime(1),
 	m_fTransitionOffTime(1),
+	m_bIsInitialized(false),
+	m_bCoveredByOtherScreen(false),
 	m_bIsExiting(false)
 {
 }
@@ -38,12 +40,7 @@ void Screen::update(float frameTime)
 	}*/
 }
 
-void Screen::draw()
-{
-
-}
-
-bool updateTransition(float frameTime, float time)
+bool Screen::updateTransition(float frameTime, float time)
 {
 	return true;
 }

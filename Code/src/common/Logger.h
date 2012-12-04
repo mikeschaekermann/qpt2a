@@ -43,7 +43,7 @@ private:
 	static Logger* m_pLogger;
 	
 	/// file handle
-	ofstream m_file;
+	static ofstream m_file;
 	/// the mutex for thread safe file handling
 	std::_Mutex m_streamWriteMutex;
 

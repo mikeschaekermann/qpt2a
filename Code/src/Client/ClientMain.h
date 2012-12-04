@@ -8,13 +8,12 @@ using namespace ci::app;
 class ClientMain : public AppBasic
 {
  public:
-	/// @brief initializes the app
-	void	setup();
-	
 	/**
 		@brief prepares the app for the specific environment (i.e. desktop, mobile, multi-touch table app etc.)
 		@param settings			settings object that allows for settings to be modified
 	 */
+	void setup();
+
 	void	prepareSettings( Settings *settings );
 
 	/// @brief handles all updates needed for time-based events (e.g. animations etc.)
@@ -32,4 +31,8 @@ class ClientMain : public AppBasic
 	void	touchesEnded( TouchEvent event );
 
 	void	keyDown( KeyEvent event );
+
+private:
+	float m_fFrameTime;
+	float m_fElapsedGameTimeLastFrame;
 };
