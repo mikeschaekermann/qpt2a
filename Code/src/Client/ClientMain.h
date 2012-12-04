@@ -1,6 +1,7 @@
 #include "cinder/app/AppBasic.h"
 #include "../common/GameObject.h"
 #include "cinder/System.h"
+#include "input/TouchWay.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -25,6 +26,7 @@ class ClientMain : public AppBasic
 	/// input methods
 	void	mouseDown( MouseEvent event );
 	void	mouseDrag( MouseEvent event );
+	void	mouseUp( MouseEvent event );
 
 	void	touchesBegan( TouchEvent event );
 	void	touchesMoved( TouchEvent event );
@@ -35,4 +37,5 @@ class ClientMain : public AppBasic
 private:
 	float m_fFrameTime;
 	float m_fElapsedGameTimeLastFrame;
+	map<uint32_t, TouchWay> m_touchWays;
 };

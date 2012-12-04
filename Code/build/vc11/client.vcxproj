@@ -19,6 +19,7 @@
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
     <ClCompile Include="..\..\src\client\GameManager.cpp" />
     <ClCompile Include="..\..\src\client\GameScreen.cpp" />
+    <ClCompile Include="..\..\src\Client\input\TouchWay.cpp" />
     <ClCompile Include="..\..\src\client\MessagingBehavior.cpp" />
     <ClCompile Include="..\..\src\client\network\ClientNetworkManager.cpp" />
     <ClCompile Include="..\..\src\client\Screen.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="..\..\src\client\ClientMain.h" />
     <ClInclude Include="..\..\src\client\GameManager.h" />
     <ClInclude Include="..\..\src\client\GameScreen.h" />
+    <ClInclude Include="..\..\src\Client\input\TouchWay.h" />
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h" />
     <ClInclude Include="..\..\src\Client\Screen.h" />
     <ClInclude Include="..\..\src\client\IScreenItem.h" />

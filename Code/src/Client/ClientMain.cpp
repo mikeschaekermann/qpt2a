@@ -8,7 +8,7 @@
 #include "boost/asio.hpp"
 #include "../common/network/messages/game/outgame/JoinRequest.h"
 
-void	ClientMain::setup()
+void ClientMain::setup()
 {
 	setWindowPos(100, 100);
 
@@ -19,6 +19,7 @@ void	ClientMain::setup()
 
 	LOG_INFO("\n\n\n");
 	
+	/*
 	LOG_INFO("Client start up");
 
 	boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address_v4::loopback(), 2345);
@@ -33,6 +34,7 @@ void	ClientMain::setup()
 	request.nameSize = test.size();
 
 	nm.send(request);
+	*/
 	
 	LOG_INFO("PROGRAM START");
 
@@ -47,12 +49,12 @@ void	ClientMain::setup()
 	}
 }
 
-void	ClientMain::prepareSettings( Settings *settings )
+void ClientMain::prepareSettings( Settings *settings )
 {
 	settings->enableMultiTouch();
 }
 
-void	ClientMain::update()
+void ClientMain::update()
 {
 	m_fFrameTime = getElapsedSeconds() - m_fElapsedGameTimeLastFrame;
 
@@ -61,37 +63,51 @@ void	ClientMain::update()
 	m_fElapsedGameTimeLastFrame = getElapsedSeconds();
 }
 
-void	ClientMain::draw()
+void ClientMain::draw()
 {
 
 }
 
-void	ClientMain::mouseDown( MouseEvent event )
+void ClientMain::mouseDown( MouseEvent event )
 {
-
+	m_touchWays.insert(make_pair(-1, TouchWay(-1, event.getPos(), m_fElapsedGameTimeLastFrame)));
 }
 
-void	ClientMain::mouseDrag( MouseEvent event )
+void ClientMain::mouseDrag( MouseEvent event )
 {
-
+	m_touchWays[-1].addPoint(event.getPos(), m_fElapsedGameTimeLastFrame);
 }
 
-void	ClientMain::touchesBegan( TouchEvent event )
+void ClientMain::mouseUp( MouseEvent event )
 {
-
+	m_touchWays.erase(-1);
 }
 
-void	ClientMain::touchesMoved( TouchEvent event )
+void ClientMain::touchesBegan( TouchEvent event )
 {
-	
+	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
+	{
+		m_touchWays.insert(make_pair(touchIt->getId(), TouchWay(touchIt->getId(), touchIt->getPos(), m_fElapsedGameTimeLastFrame)));
+	}
 }
 
-void	ClientMain::touchesEnded( TouchEvent event )
+void ClientMain::touchesMoved( TouchEvent event )
 {
-
+	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
+	{
+		m_touchWays[touchIt->getId()].addPoint(touchIt->getPos(), m_fElapsedGameTimeLastFrame);
+	}
 }
 
-void	ClientMain::keyDown( KeyEvent event )
+void ClientMain::touchesEnded( TouchEvent event )
+{
+	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
+	{
+		m_touchWays.erase(touchIt->getId());
+	}
+}
+
+void ClientMain::keyDown( KeyEvent event )
 {
 
 }
