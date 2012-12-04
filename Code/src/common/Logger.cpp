@@ -4,7 +4,6 @@
 #include <sstream>
 
 Logger* Logger::m_pLogger = new Logger();
-ofstream Logger::m_file;
 
 Logger::Logger(void)
 {

@@ -15,9 +15,7 @@ GameObject::GameObject(unsigned id, Vec3f position, Vec3f rotation, Vec3f scale)
 
 GameObject::~GameObject(void)
 {
-#if _DEBUG
-	app::console() << "GameObject deleted. id: " << m_uiId << std::endl;
-#endif
+	LOG_INFO(concate("GameObject deleted. id: ", m_uiId));
 	
 	for(auto it = m_messagingBehaviors.begin(); it != m_messagingBehaviors.end(); ++it)
 	{
@@ -63,9 +61,6 @@ void GameObject::drawAtTransformation() const
 
 void GameObject::addChild(GameObject* child)
 {
-	if (child != nullptr)
-	{
-		m_children.push_back(child);
-		child->m_pParent = this;
-	}
+	m_children.push_back(child);
+	child->m_pParent = this;
 };

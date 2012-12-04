@@ -185,6 +185,7 @@
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\Helper.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Screens">

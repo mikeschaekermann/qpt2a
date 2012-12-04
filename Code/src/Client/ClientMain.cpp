@@ -16,9 +16,8 @@ void	ClientMain::setup()
 	m_fElapsedGameTimeLastFrame = getElapsedSeconds();
 
 	Logger::getInstance()->configure("main.log");
-
-	LOG_INFO("\n\n\n");
 	
+	LOG_INFO("\n\n\n");
 	LOG_INFO("Client start up");
 
 	/*boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address_v4::loopback(), 2345);
@@ -56,14 +55,14 @@ void	ClientMain::update()
 {
 	m_fFrameTime = getElapsedSeconds() - m_fElapsedGameTimeLastFrame;
 
-	
+	GameManager::getInstance()->update(m_fFrameTime);
 
 	m_fElapsedGameTimeLastFrame = getElapsedSeconds();
 }
 
 void	ClientMain::draw()
 {
-
+	GameManager::getInstance()->draw();
 }
 
 void	ClientMain::mouseDown( MouseEvent event )
