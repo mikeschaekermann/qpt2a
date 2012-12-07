@@ -58,7 +58,7 @@ public:
 		m_pEventQueue = eventQueue;
 		cout << "EventQueue bound to Game" << endl;
 
-		EventCreator::getInstance()->bind(m_pNetworkManager, m_pEventQueue, &m_players);
+		EventCreator::getInstance().bind(m_pNetworkManager, m_pEventQueue, &m_players);
 	}
 
 	void join(JoinRequest request)
@@ -74,10 +74,10 @@ public:
 			return;
 		}
 
-		vector<Player&>::const_iterator it = m_players.begin();
+		vector<Player*>::const_iterator it = m_players.begin();
 		for (; it != m_players.end(); ++it)
 		{
-			if (it->getName() == playerName)
+			if ((*it)->getName() == playerName)
 			{
 				JoinFailure failure;
 				failure.errorCode = JoinErrorCode(JoinErrorCode::NameAlreadyTaken);
@@ -88,7 +88,7 @@ public:
 
 		Player p(createPlayerId(), playerName, request.endpoint, m_pafStartPositions[m_players.size()]);
 
-		m_players.push_back(p);
+		m_players.push_back(&p);
 
 		JoinSuccess success;
 		success.playerId = p.getId();
@@ -106,18 +106,18 @@ public:
 			startgame.startPositions = new float*[m_players.size()];
 			for (unsigned int i = 0; i < m_players.size(); ++i)
 			{
-				startgame.playerIds[i] = m_players[i].getId();
-				startgame.playerNameSizes[i] = m_players[i].getName().length();
+				startgame.playerIds[i] = m_players[i]->getId();
+				startgame.playerNameSizes[i] = m_players[i]->getName().length();
 				for (unsigned int j = 0; j < startgame.playerNameSizes[i]; ++j)
 				{
-					startgame.playerNames[i][j] = m_players[i].getName()[j];
+					startgame.playerNames[i][j] = m_players[i]->getName()[j];
 				}
 
 				startgame.startCellIds[i] = 0;
 
 				startgame.startPositions[i] = new float[2];
-				startgame.startPositions[i][0] = m_players[i].getPopulation().find((unsigned int)0)->getPosition()[0];
-				startgame.startPositions[i][1] = m_players[i].getPopulation().find((unsigned int)0)->getPosition()[1];
+				startgame.startPositions[i][0] = m_players[i]->getPopulation().find((unsigned int)0)->getPosition()[0];
+				startgame.startPositions[i][1] = m_players[i]->getPopulation().find((unsigned int)0)->getPosition()[1];
 			}
 
 			m_pNetworkManager->send(startgame);
@@ -133,7 +133,7 @@ public:
 
 		if (playerId < m_players.size())
 		{
-			Player& player = m_players[playerId];
+			Player& player = *(m_players[playerId]);
 			Cell* parentCell = player.getPopulation().find(cellId);
 			if (parentCell == 0)
 			{
@@ -155,13 +155,13 @@ public:
 			/// get current time
 			double time = m_pEventQueue->getTime();
 
-			if (!EventCreator::getInstance()->createBuildEvent(time, request.requestId, type.getType(), angle, player, *cell))
+			if (!EventCreator::getInstance().createBuildEvent(time, request.requestId, type.getType(), angle, player, *cell))
 			{
 				/// creation failed
 				return;
 			}
 
-			if (EventCreator::getInstance()->createAttackEvent(time, false, player, *cell))
+			if (EventCreator::getInstance().createAttackEvent(time, false, player, *cell))
 			{
 				/// no attacks are performed
 				return;
@@ -169,7 +169,7 @@ public:
 		}
 	}
 
-	vector<Player&> m_players;
+	vector<Player*> m_players;
 private:
 	NetworkManager* m_pNetworkManager;
 	EventQueue* m_pEventQueue;

@@ -187,6 +187,9 @@
     <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\EventCreator.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">

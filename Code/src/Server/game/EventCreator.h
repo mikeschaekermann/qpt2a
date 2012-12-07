@@ -21,16 +21,16 @@
 class EventCreator
 {
 public:
-	static EventCreator* getInstance()
+	static EventCreator& getInstance()
 	{
 		if (m_pInstance == 0)
 		{
 			m_pInstance = new EventCreator();
 		}
-		return m_pInstance;
+		return *m_pInstance;
 	}
 
-	void bind(NetworkManager* networkmanager, EventQueue* eventqueue, vector<Player&>* players)
+	void bind(NetworkManager* networkmanager, EventQueue* eventqueue, vector<Player*>* players)
 	{
 		m_pNetworkManager = networkmanager;
 		m_pEventQueue = eventqueue;
@@ -44,7 +44,7 @@ public:
 		for (unsigned int i = 0; i < m_pPlayers->size(); ++i)
 		{
 			const vector<Cell*>& cells = 
-				(*m_pPlayers)[i].getPopulation().findInRadiusOf(position, cell.getRadius());
+				(*m_pPlayers)[i]->getPopulation().findInRadiusOf(position, cell.getRadius());
 			if (cells.size() > 0)
 			{
 				/// collision detected
@@ -52,7 +52,7 @@ public:
 				failure.requestId = requestId;
 				failure.errorCode = CreateCellErrorCode::SpotAlreadyTaken;
 				m_pNetworkManager->send(failure);
-				return;
+				return false;
 			}
 		}
 
@@ -64,13 +64,10 @@ public:
 				* TODO: add enum for creation errors
 				* NOW:  -1 for all creation errors
 				*/
-			return;
+			return false;
 		}
 
-		/// get current time
-		double time = m_pEventQueue->getTime();
-
-		BuildingEvent* be = new BuildingEvent(time, *m_pNetworkManager, *cell, *m_pPlayers);
+		BuildingEvent* be = new BuildingEvent(time, *m_pNetworkManager, cell, *m_pPlayers);
 		m_pEventQueue->addEvent(be);
 		
 		CreateCellSuccess success;
@@ -83,7 +80,7 @@ public:
 
 		for (unsigned int i = 0; i < m_pPlayers->size(); ++i)
 		{
-			if ((*m_pPlayers)[i].getId() != currentPlayer.getId())
+			if ((*m_pPlayers)[i]->getId() != currentPlayer.getId())
 			{
 				CellNew cellnew;
 				cellnew.playerId = currentPlayer.getId();
@@ -91,11 +88,13 @@ public:
 				cellnew.position[0] = cell.getPosition()[0];
 				cellnew.position[1] = cell.getPosition()[1];
 				cellnew.type = type;
-				cellnew.endpoint = (*m_pPlayers)[i].getEndpoint();
+				cellnew.endpoint = (*m_pPlayers)[i]->getEndpoint();
 			}
 		}
 
 		delete position;
+
+		return true;
 	}
 
 	bool createAttackEvent(const double time, const bool isAttacker, const Player& currentPlayer, Cell& currentCell)
@@ -114,14 +113,14 @@ public:
 
 		for (unsigned int i = 0; i < m_pPlayers->size(); ++i)
 		{
-			if ((*m_pPlayers)[i].getId() != currentPlayer.getId())
+			if ((*m_pPlayers)[i]->getId() != currentPlayer.getId())
 			{
 				/** 
 					* search for all cells that would be in its attack radius
 					* reversely all the other cells that are attackers have the current cell in its attack radius
 					*/
 				const vector<Cell*>& cells =
-					(*m_pPlayers)[i].getPopulation().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + StandardCell::m_fAttackRadius);
+					(*m_pPlayers)[i]->getPopulation().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + StandardCell::m_fAttackRadius);
 					
 				ci::Vec2f attacker;
 				ci::Vec2f victim;
@@ -176,7 +175,7 @@ private:
 	static EventCreator* m_pInstance;
 	NetworkManager* m_pNetworkManager;
 	EventQueue* m_pEventQueue;
-	vector<Player&>* m_pPlayers;
+	vector<Player*>* m_pPlayers;
 
 	EventCreator()
 	{ }

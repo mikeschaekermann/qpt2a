@@ -16,7 +16,7 @@
 class BuildingEvent : public Event
 {
 public:
-	BuildingEvent(double startTime, NetworkManager& manager, Cell& cell, const vector<Player&>& players) :
+	BuildingEvent(double startTime, NetworkManager& manager, Cell& cell, const vector<Player*>& players) :
 	  m_rManager(manager),
 	  m_rCell(cell),
 	  m_rPlayers(players),
@@ -27,22 +27,22 @@ public:
 	{
 		m_rCell.completeCell();
 		Player* current = 0;
-		for (vector<Player&>::const_iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
+		for (vector<Player*>::const_iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
 		{
 			CreateCellComplete complete;
 			complete.cellId = m_rCell.getId();
-			complete.endpoint = it->getEndpoint();
+			complete.endpoint = (*it)->getEndpoint();
 			m_rManager.send(complete);
 
-			if (it->getConstPopulation().find(m_rCell.getId()))
+			if ((*it)->getConstPopulation().find(m_rCell.getId()))
 			{
-				current = &(*it);
+				current = *it;
 			}
 		}
-		EventCreator::getInstance()->createAttackEvent(m_dDeadTime, true, *current, m_rCell);
+		EventCreator::getInstance().createAttackEvent(m_dDeadTime, true, *current, m_rCell);
 	}
 private:
 	NetworkManager& m_rManager;
 	Cell& m_rCell;
-	const vector<Player&>& m_rPlayers;
+	const vector<Player*>& m_rPlayers;
 };

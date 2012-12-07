@@ -7,11 +7,11 @@ using namespace std;
 
 ConnectionEndpoint* ServerNetworkManager::getConnectionEndpoint(boost::asio::ip::udp::endpoint endpoint)
 {
-	for (std::vector<Player>::iterator it = m_game->m_players.begin(); it != m_game->m_players.end(); ++it)
+	for (std::vector<Player*>::iterator it = m_game->m_players.begin(); it != m_game->m_players.end(); ++it)
 	{
-		if ((*it).getEndpoint() == endpoint)
+		if ((*it)->getEndpoint() == endpoint)
 		{
-			return &(*it);
+			return *it;
 		}
 	}
 
@@ -53,13 +53,13 @@ void ServerNetworkManager::handleMessage(NetworkMessage* message)
 	JoinRequest *joinRequest = dynamic_cast<JoinRequest*> (message);
 	if (joinRequest)
 	{
-		m_game->join("", joinRequest->endpoint);
+		m_game->join(*joinRequest);
 	}
 
 	CreateCellRequest *createCellRequest = dynamic_cast<CreateCellRequest*> (message);
 	if (createCellRequest)
 	{
-		m_game->createCell(0, 0, 0.0f, 0);
+		m_game->createCell(*createCellRequest);
 	}
 }
 
@@ -68,7 +68,7 @@ vector<ConnectionEndpoint> ServerNetworkManager::getConnectionEndpoints()
 	vector<ConnectionEndpoint> endpoints;
 	for (unsigned i = 0; i < m_game->m_players.size(); ++i)
 	{
-		endpoints.push_back(m_game->m_players[i]);
+		endpoints.push_back(*m_game->m_players[i]);
 	}
 		
 	return endpoints;

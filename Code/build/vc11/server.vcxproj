@@ -41,6 +41,7 @@
     <ClInclude Include="..\..\src\Server\event\EventQueue.h" />
     <ClInclude Include="..\..\src\Server\game\Cell.h" />
     <ClInclude Include="..\..\src\Server\game\CellCollisionBehavior.h" />
+    <ClInclude Include="..\..\src\Server\game\EventCreator.h" />
     <ClInclude Include="..\..\src\Server\game\Game.h" />
     <ClInclude Include="..\..\src\Server\game\GameObject.h" />
     <ClInclude Include="..\..\src\Server\game\ICellMap.h" />
