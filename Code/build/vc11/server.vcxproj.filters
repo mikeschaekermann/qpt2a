@@ -71,6 +71,12 @@
     <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Server\game\EventCreator.cpp">
+      <Filter>Gamelogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Server\event\BuildingEvent.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Server\game\Cell.h">

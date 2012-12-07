@@ -76,6 +76,8 @@
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
+    <ClCompile Include="..\..\src\Server\event\BuildingEvent.cpp" />
+    <ClCompile Include="..\..\src\Server\game\EventCreator.cpp" />
     <ClCompile Include="..\..\src\Server\game\IdCellMap.cpp" />
     <ClCompile Include="..\..\src\Server\game\StandardCell.cpp" />
     <ClCompile Include="..\..\src\Server\Main.cpp" />

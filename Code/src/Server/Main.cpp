@@ -1,10 +1,10 @@
 #define _USE_MATH_DEFINES
 
 #include <iostream>
-#include <boost\thread\thread.hpp>
-#include "game\Game.h"
+#include <boost/thread/thread.hpp>
 #include "event/EventQueue.h"
 #include "network/ServerNetworkManager.h"
+#include "game/Game.h"
 //#include "game\Game.h"
 
 using namespace std;
