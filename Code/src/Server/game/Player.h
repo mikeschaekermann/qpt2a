@@ -33,4 +33,5 @@ public:
 	const string& getName() const { return m_strName; }
 	const boost::asio::ip::udp::endpoint& getEndpoint() const { return m_endpoint; }
 	Population& getPopulation() { return m_population; }
+	const Population& getConstPopulation() const { return m_population; }
 };
