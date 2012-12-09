@@ -21,3 +21,8 @@ void GameManager::draw()
 {
 	m_screenManager.draw();
 }
+
+ScreenManager & GameManager::getScreenManager()
+{
+	return m_screenManager;
+}

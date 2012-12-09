@@ -7,6 +7,8 @@
 #include "ScreenManager.h"
 #include "../common/network/NetworkManager.h"
 
+#define GAME_MGR GameManager::getInstance()
+
 class GameManager
 {
 public:
@@ -16,6 +18,7 @@ public:
 
 	void update(float frameTime);
 	void draw();
+	ScreenManager & getScreenManager();
 
 private:
 	/// singleton instance

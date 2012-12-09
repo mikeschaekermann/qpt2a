@@ -52,3 +52,23 @@ void ScreenManager::fadeToBlack(float alpha)
 	color(cinder::ColorA(0, 0, 0, alpha));
 	drawSolidRect(cinder::Rectf(0, 0, windowSize.x, windowSize.y));
 }
+
+void ScreenManager::touchBegan(const TouchWay & touchWay)
+{
+	m_screenStack.top()->touchBegan(touchWay);
+}
+
+void ScreenManager::touchMoved(const TouchWay & touchWay)
+{
+	m_screenStack.top()->touchMoved(touchWay);
+}
+
+void ScreenManager::touchEnded(TouchWay touchWay)
+{
+	m_screenStack.top()->touchEnded(touchWay);
+
+	if (touchWay.isClick())
+	{
+		m_screenStack.top()->touchClick(touchWay);
+	}
+}

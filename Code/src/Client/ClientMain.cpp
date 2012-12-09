@@ -71,15 +71,19 @@ void ClientMain::draw()
 void ClientMain::mouseDown( MouseEvent event )
 {
 	m_touchWays.insert(make_pair(-1, TouchWay(-1, event.getPos(), m_fElapsedGameTimeLastFrame)));
+	GAME_MGR->getScreenManager().touchBegan(m_touchWays[-1]);
 }
 
 void ClientMain::mouseDrag( MouseEvent event )
 {
 	m_touchWays[-1].addPoint(event.getPos(), m_fElapsedGameTimeLastFrame);
+	GAME_MGR->getScreenManager().touchMoved(m_touchWays[-1]);
 }
 
 void ClientMain::mouseUp( MouseEvent event )
 {
+	m_touchWays[-1].addPoint(event.getPos(), m_fElapsedGameTimeLastFrame);
+	GAME_MGR->getScreenManager().touchEnded(m_touchWays[-1]);
 	m_touchWays.erase(-1);
 }
 
@@ -88,6 +92,7 @@ void ClientMain::touchesBegan( TouchEvent event )
 	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
 	{
 		m_touchWays.insert(make_pair(touchIt->getId(), TouchWay(touchIt->getId(), touchIt->getPos(), m_fElapsedGameTimeLastFrame)));
+		GAME_MGR->getScreenManager().touchBegan(m_touchWays[touchIt->getId()]);
 	}
 }
 
@@ -96,6 +101,7 @@ void ClientMain::touchesMoved( TouchEvent event )
 	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
 	{
 		m_touchWays[touchIt->getId()].addPoint(touchIt->getPos(), m_fElapsedGameTimeLastFrame);
+		GAME_MGR->getScreenManager().touchMoved(m_touchWays[touchIt->getId()]);
 	}
 }
 
@@ -103,6 +109,8 @@ void ClientMain::touchesEnded( TouchEvent event )
 {
 	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
 	{
+		m_touchWays[touchIt->getId()].addPoint(touchIt->getPos(), m_fElapsedGameTimeLastFrame);
+		GAME_MGR->getScreenManager().touchMoved(m_touchWays[touchIt->getId()]);
 		m_touchWays.erase(touchIt->getId());
 	}
 }
