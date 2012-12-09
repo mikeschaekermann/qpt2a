@@ -47,8 +47,8 @@ private:
 	/// the mutex for thread safe file handling
 	std::_Mutex m_streamWriteMutex;
 
-	/**
-		@brief private constructor as defined for the singleton pattern
-	 */
+	/// @brief private constructor as defined for the singleton pattern
 	Logger(void);
+	/// @brief privagte copy constructor
+	Logger(const Logger &);
 };
