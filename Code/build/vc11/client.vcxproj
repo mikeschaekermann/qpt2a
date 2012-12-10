@@ -64,6 +64,7 @@
     <ClInclude Include="..\..\src\common\Cell.h" />
     <ClInclude Include="..\..\src\common\Config.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
+    <ClInclude Include="..\..\src\common\Helper.h" />
     <ClInclude Include="..\..\src\common\Logger.h" />
     <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h" />
     <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h" />

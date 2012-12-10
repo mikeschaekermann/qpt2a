@@ -13,7 +13,7 @@
 class AttackEvent : public Event
 {
 public:
-	AttackEvent(double startTime, NetworkManager& manager, EventQueue& queue, Cell& attacker, Cell& victim, float damage, vector<Player>& players) :
+	AttackEvent(double startTime, NetworkManager& manager, EventQueue& queue, Cell& attacker, Cell& victim, float damage, vector<Player*>& players) :
 	  m_rManager(manager),
 	  m_rQueue(queue),
 	  m_rAttacker(attacker),
@@ -30,9 +30,9 @@ public:
 		attack.attackerCellId = m_rAttacker.getId();
 		attack.attackedCellId = m_rVictim.getId();
 		attack.damage = m_fDamage;
-		for (vector<Player>::const_iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
+		for (vector<Player*>::const_iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
 		{
-			attack.endpoint = it->getEndpoint();
+			attack.endpoint = (*it)->getEndpoint();
 			m_rManager.send(attack);
 		}
 
@@ -41,13 +41,13 @@ public:
 			CellDie die;
 			die.cellId = m_rVictim.getId();
 			Player* player = 0;
-			for (vector<Player>::iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
+			for (vector<Player*>::iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
 			{
-				if (it->getPopulation().find(m_rVictim.getId()) != 0) 
+				if ((*it)->getPopulation().find(m_rVictim.getId()) != 0) 
 				{
-					player = &(*it);
+					player = *it;
 				}
-				die.endpoint = it->getEndpoint();
+				die.endpoint = (*it)->getEndpoint();
 				m_rManager.send(die);
 			}
 			player->getPopulation().removeCell(m_rVictim.getId());
@@ -64,5 +64,5 @@ private:
 	Cell& m_rAttacker;
 	Cell& m_rVictim;
 	float m_fDamage;
-	vector<Player>& m_rPlayers;
+	vector<Player*>& m_rPlayers;
 };

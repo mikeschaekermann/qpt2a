@@ -1,9 +1,10 @@
 #define _USE_MATH_DEFINES
 
 #include <iostream>
-#include <boost\thread\thread.hpp>
-#include "game\Game.h"
+#include <boost/thread/thread.hpp>
+#include "event/EventQueue.h"
 #include "network/ServerNetworkManager.h"
+#include "game/Game.h"
 //#include "game\Game.h"
 
 using namespace std;
@@ -20,15 +21,13 @@ int main(int argc, char argv[])
 	
 	Game game;
 
+	EventQueue eq;
 	
-	// add game to networkmanager
-	// networkmanager singleton??
-	// access from game object to networkmanager??
 	ServerNetworkManager nm(port, &game);
 
 	boost::thread thr(boost::bind(&NetworkManager::operator(), &nm));
 	
-	game.bindNetworkManager(&nm);
+	game.bind(&nm, &eq);
 
 	thr.join();
 	cout << "test";

@@ -81,28 +81,70 @@
       <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\Config.h" />
-    <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h" />
-    <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h" />
-    <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h" />
-    <ClInclude Include="..\..\src\common\network\messages\enum\CellType.h" />
-    <ClInclude Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.h" />
-    <ClInclude Include="..\..\src\common\network\messages\enum\JoinErrorCode.h" />
-    <ClInclude Include="..\..\src\common\network\messages\enum\MessageType.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellComplete.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellFailure.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\GameOver.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinFailure.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinRequest.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.h" />
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\StartGame.h" />
-    <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h" />
-    <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
-    <ClInclude Include="..\..\src\Client\input\TouchWay.h" />
+    <ClInclude Include="..\..\src\common\network\NetworkManager.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellComplete.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellFailure.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\GameOver.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinFailure.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinRequest.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\StartGame.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\CellType.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\JoinErrorCode.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\MessageType.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Helper.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Screens">

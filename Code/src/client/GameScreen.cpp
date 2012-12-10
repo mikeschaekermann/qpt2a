@@ -2,10 +2,10 @@
 #include "../common/network/NetworkManager.h"
 
 GameScreen::GameScreen(ScreenManager& screenManager) :
-	Screen(screenManager)
+	Screen(screenManager),
+	m_pScene(nullptr)
 {
-	/*NetworkManager nm(15600);
-	boost::thread thr(boost::bind(&NetworkManager::operator(), &nm));*/
+	
 }
 
 GameScreen::~GameScreen(void)
@@ -14,12 +14,18 @@ GameScreen::~GameScreen(void)
 
 void GameScreen::update(float frameTime)
 {
-	m_pScene->update(frameTime);
+	if(m_pScene != nullptr)
+	{
+		m_pScene->update(frameTime);
+	}
 }
 
 void GameScreen::draw()
 {
-	m_pScene->draw();
+	if(m_pScene != nullptr)
+	{
+		m_pScene->draw();
+	}
 }
 
 void GameScreen::loadContent()
