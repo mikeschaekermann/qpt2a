@@ -12,7 +12,7 @@ TouchWay::TouchWay(int32_t id, const Vec2f& startPos, double startTime):
 	m_way.push_back(TouchPoint(startPos, startTime));
 }
 
-uint32_t TouchWay::getId() const
+int32_t TouchWay::getId() const
 {
 	return m_iId;
 }
