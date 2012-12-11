@@ -26,7 +26,7 @@ public:
 	TouchWay(int32_t id, const Vec2f& startPos, double startTime);
 
 	/// @brief gets the touch way's id
-	uint32_t getId() const;
+	int32_t getId() const;
 	/// @brief gets the first position of the touch way
 	Vec2f getStartPos() const;
 	/// @brief gets the current position of the touch way
