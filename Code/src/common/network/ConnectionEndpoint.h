@@ -16,7 +16,7 @@ public:
 	unsigned m_uiRemotePacketId;
 	
 	std::list<unsigned int> m_unreceivedMessages;
-	std::map<unsigned int, NetworkMessage> m_unconfirmedMessages;
+	std::map<unsigned int, NetworkMessage*> m_unconfirmedMessages;
 	
 	boost::asio::ip::udp::endpoint m_endpoint;
 

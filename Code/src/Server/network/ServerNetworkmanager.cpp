@@ -25,7 +25,7 @@ NetworkMessage* ServerNetworkManager::createNetworkMessage(char* data)
 	if (!message)
 	{
 		unsigned messageType;
-		memcpy(&messageType, (void*) data[sizeof(unsigned)], sizeof(unsigned));
+		memcpy(&messageType, &data[sizeof(unsigned)], sizeof(unsigned));
 		MessageType type(messageType);
 		
 		unsigned index = 0;

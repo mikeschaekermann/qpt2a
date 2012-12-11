@@ -77,6 +77,7 @@
     <ClCompile Include="..\..\src\Server\event\BuildingEvent.cpp">
       <Filter>Eventlogic</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\common\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Server\game\Cell.h">
@@ -196,6 +197,7 @@
     <ClInclude Include="..\..\src\Server\game\EventCreator.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\Logger.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">

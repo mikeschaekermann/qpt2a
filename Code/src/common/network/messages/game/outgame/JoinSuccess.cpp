@@ -7,7 +7,7 @@ JoinSuccess::JoinSuccess() : NetworkMessage(), playerId(0)
 
 JoinSuccess::JoinSuccess(char* data, unsigned &index) : NetworkMessage(data, index), playerId(0)
 {
-	memcpy(&playerId, (void*) data[index], sizeof(playerId));
+	memcpy(&playerId, &data[index], sizeof(playerId));
 	playerId = ntohl(playerId);
 	index += sizeof(playerId);
 }
@@ -30,7 +30,7 @@ unsigned JoinSuccess::writeToArray(char* data, unsigned start)
 	unsigned index = NetworkMessage::writeToArray(data);
 	
 	unsigned networkPlayerId = htonl(playerId);
-	memcpy((void*) data[index], &networkPlayerId, sizeof(networkPlayerId));
+	memcpy(&data[index], &networkPlayerId, sizeof(networkPlayerId));
 	index += sizeof(networkPlayerId);
 	
 	return index;

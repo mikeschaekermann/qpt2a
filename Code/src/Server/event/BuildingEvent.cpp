@@ -13,9 +13,9 @@ void BuildingEvent::trigger()
 	Player* current = 0;
 	for (vector<Player*>::const_iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
 	{
-		CreateCellComplete complete;
-		complete.cellId = m_rCell.getId();
-		complete.endpoint = (*it)->getEndpoint();
+		CreateCellComplete *complete = new CreateCellComplete();
+		complete->cellId = m_rCell.getId();
+		complete->endpoint = (*it)->getEndpoint();
 		m_rManager.send(complete);
 
 		if ((*it)->getConstPopulation().find(m_rCell.getId()))

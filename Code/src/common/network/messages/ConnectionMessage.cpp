@@ -7,13 +7,13 @@ ConnectionMessage::ConnectionMessage() : NetworkMessage(), missingMessageCount(0
 
 ConnectionMessage::ConnectionMessage(char* data, unsigned &index) : NetworkMessage(data, index), missingMessageCount(0), missingMessageIds(0)
 {
-	memcpy(&missingMessageCount, (void*) data[index], sizeof(missingMessageCount));
+	memcpy(&missingMessageCount, &data[index], sizeof(missingMessageCount));
 	missingMessageCount = ntohl(missingMessageCount);
 	index += sizeof(missingMessageCount);
 
 	missingMessageIds = new unsigned[missingMessageCount];
 
-	memcpy(&missingMessageIds, (void*) data[index], missingMessageCount * sizeof(messageId));
+	memcpy(missingMessageIds, &data[index], missingMessageCount * sizeof(messageId));
 
 	for (unsigned i = 0; i < missingMessageCount; ++i)
 	{
@@ -29,7 +29,7 @@ ConnectionMessage::ConnectionMessage(const ConnectionMessage &other) : NetworkMe
 
 	missingMessageIds = new unsigned[missingMessageCount];
 
-	memcpy(&missingMessageIds, (void*) other.missingMessageIds, missingMessageCount * sizeof(messageId));
+	memcpy(missingMessageIds, other.missingMessageIds, missingMessageCount * sizeof(messageId));
 
 }
 
@@ -51,7 +51,7 @@ unsigned ConnectionMessage::writeToArray(char* data, unsigned start)
 	unsigned index = NetworkMessage::writeToArray(data);
 	
 	unsigned networkMissingMessageCount = htonl(missingMessageCount);
-	memcpy((void*) data[index], &networkMissingMessageCount, sizeof(networkMissingMessageCount));
+	memcpy(&data[index], &networkMissingMessageCount, sizeof(networkMissingMessageCount));
 	index += sizeof(networkMissingMessageCount);
 
 	unsigned *networkMessageIds = new unsigned[missingMessageCount];
@@ -59,7 +59,7 @@ unsigned ConnectionMessage::writeToArray(char* data, unsigned start)
 	{
 		networkMessageIds[i] = htonl(missingMessageIds[i]);
 	}
-	memcpy((void*) data[index], &networkMessageIds, missingMessageCount * sizeof(messageId));
+	memcpy(&data[index], networkMessageIds, missingMessageCount * sizeof(messageId));
 	delete[] networkMessageIds;
 	index += missingMessageCount * sizeof(messageId);
 	

@@ -7,7 +7,7 @@ CreateCellComplete::CreateCellComplete() : NetworkMessage(), cellId(0)
 
 CreateCellComplete::CreateCellComplete(char* data, unsigned &index) : NetworkMessage(data, index), cellId(0)
 {
-	memcpy(&cellId, (void*) data[index], sizeof(cellId));
+	memcpy(&cellId, &data[index], sizeof(cellId));
 	cellId = ntohl(cellId);
 	index += sizeof(cellId);
 }
@@ -30,7 +30,7 @@ unsigned CreateCellComplete::writeToArray(char* data, unsigned start)
 	unsigned index = NetworkMessage::writeToArray(data);
 	
 	unsigned networkcellId = htonl(cellId);
-	memcpy((void*) data[index], &networkcellId, sizeof(networkcellId));
+	memcpy(&data[index], &networkcellId, sizeof(networkcellId));
 	index += sizeof(networkcellId);
 	
 	return index;

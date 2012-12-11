@@ -7,11 +7,11 @@ StartGame::StartGame() : NetworkMessage(), worldRadius(0.f), playerCount(0), pla
 
 StartGame::StartGame(char* data, unsigned &index) : NetworkMessage(data, index), worldRadius(0.f), playerCount(0), playerIds(0), playerNameSizes(0), playerNames(0)
 {
-	memcpy(&worldRadius, (void*) data[index], sizeof(worldRadius));
+	memcpy(&worldRadius, &data[index], sizeof(worldRadius));
 	index += sizeof(worldRadius);
 
 
-	memcpy(&playerCount, (void*) data[index], sizeof(playerCount));
+	memcpy(&playerCount, &data[index], sizeof(playerCount));
 	playerCount = ntohl(playerCount);
 	index += sizeof(playerCount);
 
@@ -23,24 +23,24 @@ StartGame::StartGame(char* data, unsigned &index) : NetworkMessage(data, index),
 
 	for (unsigned i = 0; i < playerCount; ++i)
 	{
-		memcpy(&playerIds[i], (void*) data[index], sizeof(playerIds[i]));
+		memcpy(&playerIds[i], &data[index], sizeof(playerIds[i]));
 		playerIds[i] = ntohl(playerIds[i]);
 		index += sizeof(playerIds[i]);
 
-		memcpy(&playerNameSizes[i], (void*) data[index], sizeof(playerNameSizes[i]));
+		memcpy(&playerNameSizes[i], &data[index], sizeof(playerNameSizes[i]));
 		playerNameSizes[i] = ntohl(playerNameSizes[i]);
 		index += sizeof(playerNameSizes[i]);
 
 		playerNames[i] = new char[playerNameSizes[i]];
-		memcpy((void*) playerNames[i], (void*) data[index], playerNameSizes[i]);
+		memcpy(&playerNames[i], &data[index], playerNameSizes[i]);
 		index += playerNameSizes[i];
 
-		memcpy(&startCellIds[i], (void*) data[index], sizeof(startCellIds[i]));
+		memcpy(&startCellIds[i], &data[index], sizeof(startCellIds[i]));
 		startCellIds[i] = ntohl(startCellIds[i]);
 		index += sizeof(startCellIds[i]);
 
 		startPositions[i] = new float[2];
-		memcpy((void*) playerNames[i], (void*) data[index], 2 * sizeof(float));
+		memcpy(&playerNames[i], &data[index], 2 * sizeof(float));
 		index += (2 * sizeof(float));
 	}
 }
@@ -62,10 +62,10 @@ StartGame::StartGame(const StartGame &other) : NetworkMessage(other), worldRadiu
 		startCellIds[i] = other.startCellIds[i];
 		
 		playerNames[i] = new char[playerNameSizes[i]];
-		memcpy((void*) playerNames[i], (void*) other.playerNames[i], playerNameSizes[i]);
+		memcpy(&playerNames[i], &other.playerNames[i], playerNameSizes[i]);
 
 		startPositions[i] = new float[2];
-		memcpy((void*) startPositions[i], (void*) other.startPositions[i], 2 * sizeof(float));
+		memcpy(&startPositions[i], &other.startPositions[i], 2 * sizeof(float));
 	}
 }
 
@@ -102,31 +102,31 @@ unsigned StartGame::writeToArray(char* data, unsigned start)
 {
 	unsigned index = NetworkMessage::writeToArray(data);
 
-	memcpy((void*) data[index], &worldRadius, sizeof(worldRadius));
+	memcpy(&data[index], &worldRadius, sizeof(worldRadius));
 	index += sizeof(worldRadius);
 
 	unsigned networkplayerCount = htonl(playerCount);
-	memcpy((void*) data[index], &networkplayerCount, sizeof(networkplayerCount));
+	memcpy(&data[index], &networkplayerCount, sizeof(networkplayerCount));
 	index += sizeof(networkplayerCount);
 
 	for (unsigned i = 0; i < playerCount; ++i)
 	{
 		unsigned networkplayerId = htonl(playerIds[i]);
-		memcpy((void*) data[index], &networkplayerId, sizeof(networkplayerId));
+		memcpy(&data[index], &networkplayerId, sizeof(networkplayerId));
 		index += sizeof(networkplayerId);
 
 		unsigned networkplayerNameSizes = htonl(playerNameSizes[i]);
-		memcpy((void*) data[index], &networkplayerNameSizes, sizeof(networkplayerNameSizes));
+		memcpy(&data[index], &networkplayerNameSizes, sizeof(networkplayerNameSizes));
 		index += sizeof(networkplayerNameSizes);
 
-		memcpy((void*) data[index], (void*) playerNames[i], sizeof(playerNameSizes[i]));
+		memcpy(&data[index], &playerNames[i], sizeof(playerNameSizes[i]));
 		index += playerNameSizes[i];
 
 		unsigned networkstartCellId = htonl(startCellIds[i]);
-		memcpy((void*) data[index], &networkstartCellId, sizeof(networkstartCellId));
+		memcpy(&data[index], &networkstartCellId, sizeof(networkstartCellId));
 		index += sizeof(networkstartCellId);
 
-		memcpy((void*) data[index], (void*) startPositions[i], 2 * sizeof(float));
+		memcpy(&data[index], &startPositions[i], 2 * sizeof(float));
 		index += (2 * sizeof(float));
 	}
 	

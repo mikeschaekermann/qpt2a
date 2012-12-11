@@ -7,18 +7,18 @@ CreateCellSuccess::CreateCellSuccess() : NetworkMessage(), requestId(0), cellId(
 
 CreateCellSuccess::CreateCellSuccess(char* data, unsigned &index) : NetworkMessage(data, index), requestId(0), cellId(0), angle(0.f)
 {
-	memcpy(&requestId, (void*) data[index], sizeof(requestId));
+	memcpy(&requestId, &data[index], sizeof(requestId));
 	requestId = ntohl(requestId);
 	index += sizeof(requestId);
 
-	memcpy(&cellId, (void*) data[index], sizeof(cellId));
+	memcpy(&cellId, &data[index], sizeof(cellId));
 	cellId = ntohl(cellId);
 	index += sizeof(cellId);
 
-	memcpy(&position, (void*) data[index], sizeof(position));
+	memcpy(&position, &data[index], sizeof(position));
 	index += sizeof(position);
 
-	memcpy(&angle, (void*) data[index], sizeof(angle));
+	memcpy(&angle, &data[index], sizeof(angle));
 	index += sizeof(angle);
 }
 
@@ -42,17 +42,17 @@ unsigned CreateCellSuccess::writeToArray(char* data, unsigned start)
 	unsigned index = NetworkMessage::writeToArray(data);
 	
 	unsigned networkrequestId = htonl(requestId);
-	memcpy((void*) data[index], &networkrequestId, sizeof(networkrequestId));
+	memcpy(&data[index], &networkrequestId, sizeof(networkrequestId));
 	index += sizeof(networkrequestId);
 
 	unsigned networkcellId = htonl(cellId);
-	memcpy((void*) data[index], &networkcellId, sizeof(networkcellId));
+	memcpy(&data[index], &networkcellId, sizeof(networkcellId));
 	index += sizeof(networkcellId);
 
-	memcpy((void*) data[index], &position, sizeof(position));
+	memcpy(&data[index], &position, sizeof(position));
 	index += sizeof(position);
 
-	memcpy((void*) data[index], &angle, sizeof(angle));
+	memcpy(&data[index], &angle, sizeof(angle));
 	index += sizeof(angle);
 	
 	return index;

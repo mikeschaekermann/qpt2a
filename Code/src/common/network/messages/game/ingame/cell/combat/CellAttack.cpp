@@ -7,15 +7,15 @@ CellAttack::CellAttack() : NetworkMessage(), attackerCellId(0), attackedCellId(0
 
 CellAttack::CellAttack(char* data, unsigned &index) : NetworkMessage(data, index), attackerCellId(0), attackedCellId(0), damage(0.f)
 {
-	memcpy(&attackerCellId, (void*) data[index], sizeof(attackerCellId));
+	memcpy(&attackerCellId, &data[index], sizeof(attackerCellId));
 	attackerCellId = ntohl(attackerCellId);
 	index += sizeof(attackerCellId);
 
-	memcpy(&attackedCellId, (void*) data[index], sizeof(attackedCellId));
+	memcpy(&attackedCellId, &data[index], sizeof(attackedCellId));
 	attackedCellId = ntohl(attackedCellId);
 	index += sizeof(attackedCellId);
 
-	memcpy(&damage, (void*) data[index], sizeof(damage));
+	memcpy(&damage, &data[index], sizeof(damage));
 	index += sizeof(damage);
 }
 
@@ -38,14 +38,14 @@ unsigned CellAttack::writeToArray(char* data, unsigned start)
 	unsigned index = NetworkMessage::writeToArray(data);
 	
 	unsigned networkattackerCellId = htonl(attackerCellId);
-	memcpy((void*) data[index], &networkattackerCellId, sizeof(networkattackerCellId));
+	memcpy(&data[index], &networkattackerCellId, sizeof(networkattackerCellId));
 	index += sizeof(networkattackerCellId);
 	
 	unsigned networkattackedCellId = htonl(attackedCellId);
-	memcpy((void*) data[index], &networkattackedCellId, sizeof(networkattackedCellId));
+	memcpy(&data[index], &networkattackedCellId, sizeof(networkattackedCellId));
 	index += sizeof(networkattackedCellId);
 	
-	memcpy((void*) data[index], &damage, sizeof(damage));
+	memcpy(&data[index], &damage, sizeof(damage));
 	index += sizeof(damage);
 
 	return index;
