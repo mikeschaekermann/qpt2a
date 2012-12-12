@@ -7,12 +7,12 @@ CreateCellFailure::CreateCellFailure() : NetworkMessage(), requestId(0), errorCo
 
 CreateCellFailure::CreateCellFailure(char* data, unsigned &index) : NetworkMessage(data, index), requestId(0), errorCode(CreateCellErrorCode::Invalid)
 {
-	memcpy(&requestId, (void*) data[index], sizeof(requestId));
+	memcpy(&requestId, &data[index], sizeof(requestId));
 	requestId = ntohl(requestId);
 	index += sizeof(requestId);
 
 	unsigned networkErrorCode = 0;
-	memcpy(&networkErrorCode, (void*) data[index], sizeof(networkErrorCode));
+	memcpy(&networkErrorCode, &data[index], sizeof(networkErrorCode));
 	errorCode = CreateCellErrorCode(networkErrorCode);
 	index += sizeof(networkErrorCode);
 }
@@ -35,11 +35,11 @@ unsigned CreateCellFailure::writeToArray(char* data, unsigned start)
 	unsigned index = NetworkMessage::writeToArray(data);
 	
 	unsigned networkrequestId = htonl(requestId);
-	memcpy((void*) data[index], &networkrequestId, sizeof(networkrequestId));
+	memcpy(&data[index], &networkrequestId, sizeof(networkrequestId));
 	index += sizeof(networkrequestId);
 
 	unsigned networkErrorCode = 0;
-	memcpy(&networkErrorCode, (void*) data[index], sizeof(networkErrorCode));
+	memcpy(&networkErrorCode, &data[index], sizeof(networkErrorCode));
 	errorCode = CreateCellErrorCode(networkErrorCode);
 	index += sizeof(networkErrorCode);
 	

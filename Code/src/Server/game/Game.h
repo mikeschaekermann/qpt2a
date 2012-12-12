@@ -63,13 +63,12 @@ public:
 
 	void join(JoinRequest request)
 	{
-		cout << "IRGENDWAS GEHT SOGAR" << endl;
-		string playerName = string(request.name, request.nameSize);
+		string playerName = request.name;
 		
 		if(m_players.size() >= MAX_PLAYER_SIZE)
 		{
-			JoinFailure failure;
-			failure.errorCode = JoinErrorCode(JoinErrorCode::GameIsFull);
+			JoinFailure *failure = new JoinFailure();
+			failure->errorCode = JoinErrorCode::GameIsFull;
 			m_pNetworkManager->send(failure);
 			return;
 		}
@@ -79,45 +78,45 @@ public:
 		{
 			if ((*it)->getName() == playerName)
 			{
-				JoinFailure failure;
-				failure.errorCode = JoinErrorCode(JoinErrorCode::NameAlreadyTaken);
+				JoinFailure *failure = new JoinFailure();
+				failure->errorCode = JoinErrorCode::NameAlreadyTaken;
 				m_pNetworkManager->send(failure);
 				return;
 			}
 		}
 
-		Player p(createPlayerId(), playerName, request.endpoint, m_pafStartPositions[m_players.size()]);
+		Player *p = new Player(createPlayerId(), playerName, request.endpoint, m_pafStartPositions[m_players.size()]);
 
-		m_players.push_back(&p);
+		m_players.push_back(p);
 
-		JoinSuccess success;
-		success.playerId = p.getId();
+		JoinSuccess *success = new JoinSuccess();
+		success->playerId = p->getId();
 		m_pNetworkManager->send(success);
 
 		if (m_players.size() == MAX_PLAYER_SIZE)
 		{
-			StartGame startgame;
-			startgame.worldRadius = m_fWorldRadius;
-			startgame.playerCount = m_players.size();
-			startgame.playerIds = new unsigned int[m_players.size()];
-			startgame.playerNames = new char*[m_players.size()];
-			startgame.playerNameSizes = new unsigned int[m_players.size()];
-			startgame.startCellIds = new unsigned int[m_players.size()];
-			startgame.startPositions = new float*[m_players.size()];
+			StartGame *startgame = new StartGame();
+			startgame->worldRadius = m_fWorldRadius;
+			startgame->playerCount = m_players.size();
+			startgame->playerIds = new unsigned int[m_players.size()];
+			startgame->playerNames = new char*[m_players.size()];
+			startgame->playerNameSizes = new unsigned int[m_players.size()];
+			startgame->startCellIds = new unsigned int[m_players.size()];
+			startgame->startPositions = new float*[m_players.size()];
 			for (unsigned int i = 0; i < m_players.size(); ++i)
 			{
-				startgame.playerIds[i] = m_players[i]->getId();
-				startgame.playerNameSizes[i] = m_players[i]->getName().length();
-				for (unsigned int j = 0; j < startgame.playerNameSizes[i]; ++j)
+				startgame->playerIds[i] = m_players[i]->getId();
+				startgame->playerNameSizes[i] = m_players[i]->getName().length();
+				for (unsigned int j = 0; j < startgame->playerNameSizes[i]; ++j)
 				{
-					startgame.playerNames[i][j] = m_players[i]->getName()[j];
+					startgame->playerNames[i][j] = m_players[i]->getName()[j];
 				}
 
-				startgame.startCellIds[i] = 0;
+				startgame->startCellIds[i] = 0;
 
-				startgame.startPositions[i] = new float[2];
-				startgame.startPositions[i][0] = m_players[i]->getPopulation().find((unsigned int)0)->getPosition()[0];
-				startgame.startPositions[i][1] = m_players[i]->getPopulation().find((unsigned int)0)->getPosition()[1];
+				startgame->startPositions[i] = new float[2];
+				startgame->startPositions[i][0] = m_players[i]->getPopulation().find((unsigned int)0)->getPosition()[0];
+				startgame->startPositions[i][1] = m_players[i]->getPopulation().find((unsigned int)0)->getPosition()[1];
 			}
 
 			m_pNetworkManager->send(startgame);

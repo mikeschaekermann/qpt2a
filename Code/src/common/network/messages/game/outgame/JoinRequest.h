@@ -1,13 +1,14 @@
 #pragma once
 
+#include <string>
+
 #include "../../NetworkMessage.h"
 
 class JoinRequest : public NetworkMessage
 {
 public:
 	/* Fields */
-	unsigned nameSize;
-	const char* name;
+	std::string name;
 
 	/* Constructor / Destructor */
 	JoinRequest();														/// Default constructor

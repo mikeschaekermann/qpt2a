@@ -26,20 +26,20 @@ public:
 	virtual void trigger()
 	{
 		m_rVictim.decreaseHealthPointsBy(m_fDamage);
-		CellAttack attack;
-		attack.attackerCellId = m_rAttacker.getId();
-		attack.attackedCellId = m_rVictim.getId();
-		attack.damage = m_fDamage;
+		CellAttack *attack = new CellAttack();
+		attack->attackerCellId = m_rAttacker.getId();
+		attack->attackedCellId = m_rVictim.getId();
+		attack->damage = m_fDamage;
 		for (vector<Player*>::const_iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
 		{
-			attack.endpoint = (*it)->getEndpoint();
+			attack->endpoint = (*it)->getEndpoint();
 			m_rManager.send(attack);
 		}
 
 		if (m_rVictim.getHealthPoints() < 0.f)
 		{
-			CellDie die;
-			die.cellId = m_rVictim.getId();
+			CellDie *die = new CellDie();
+			die->cellId = m_rVictim.getId();
 			Player* player = 0;
 			for (vector<Player*>::iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
 			{
@@ -47,7 +47,7 @@ public:
 				{
 					player = *it;
 				}
-				die.endpoint = (*it)->getEndpoint();
+				die->endpoint = (*it)->getEndpoint();
 				m_rManager.send(die);
 			}
 			player->getPopulation().removeCell(m_rVictim.getId());

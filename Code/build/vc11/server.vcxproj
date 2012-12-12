@@ -57,35 +57,6 @@
     <ClInclude Include="..\..\src\Server\game\StemCell.h" />
     <ClInclude Include="..\..\src\server\network\ServerNetworkManager.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\common\GameObject.cpp" />
-    <ClCompile Include="..\..\src\common\Logger.cpp" />
-    <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\enum\CellType.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\enum\JoinErrorCode.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\enum\MessageType.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellComplete.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellFailure.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\outgame\GameOver.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinFailure.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinRequest.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp" />
-    <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
-    <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
-    <ClCompile Include="..\..\src\Server\event\BuildingEvent.cpp" />
-    <ClCompile Include="..\..\src\Server\game\EventCreator.cpp" />
-    <ClCompile Include="..\..\src\Server\game\StandardCell.cpp" />
-    <ClCompile Include="..\..\src\Server\Main.cpp" />
-    <ClCompile Include="..\..\src\server\network\ServerNetworkmanager.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7C072AE6-2637-47ED-A4D2-637EECF59EE7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -156,6 +127,7 @@
       </EntryPointSymbol>
       <AdditionalLibraryDirectories>$(BOOST_DIR)/lib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw</AdditionalLibraryDirectories>
       <AdditionalDependencies>libboost_system-vc100-mt-sgd-1_48.lib;cinder_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -169,15 +141,15 @@
       <PreprocessorDefinitions>WIN32;_LOG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(BOOST_DIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_DIR);$(CINDER_DIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalLibraryDirectories>$(BOOST_DIR)/lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libboost_system-vc100-mt-s-1_48.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(BOOST_DIR)/lib;$(CINDER_DIR)/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libboost_system-vc100-mt-s-1_48.lib;cinder.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">

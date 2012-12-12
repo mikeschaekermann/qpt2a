@@ -29,9 +29,9 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 		if (cells.size() > 0)
 		{
 			/// collision detected
-			CreateCellFailure failure;
-			failure.requestId = requestId;
-			failure.errorCode = CreateCellErrorCode::SpotAlreadyTaken;
+			CreateCellFailure *failure = new CreateCellFailure();
+			failure->requestId = requestId;
+			failure->errorCode = CreateCellErrorCode::SpotAlreadyTaken;
 			m_pNetworkManager->send(failure);
 			return false;
 		}
@@ -51,12 +51,12 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	BuildingEvent* be = new BuildingEvent(time, *m_pNetworkManager, cell, *m_pPlayers);
 	m_pEventQueue->addEvent(be);
 		
-	CreateCellSuccess success;
-	success.requestId = requestId;
-	success.cellId = cell.getId();
-	success.position[0] = cell.getPosition()[0];
-	success.position[1] = cell.getPosition()[1];
-	success.angle = cell.getAngle();
+	CreateCellSuccess *success = new CreateCellSuccess();
+	success->requestId = requestId;
+	success->cellId = cell.getId();
+	success->position[0] = cell.getPosition()[0];
+	success->position[1] = cell.getPosition()[1];
+	success->angle = cell.getAngle();
 	m_pNetworkManager->send(success);
 
 	for (unsigned int i = 0; i < m_pPlayers->size(); ++i)

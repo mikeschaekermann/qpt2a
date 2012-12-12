@@ -1,53 +1,50 @@
 #include "JoinRequest.h"
 
-JoinRequest::JoinRequest() : NetworkMessage(), name(0), nameSize(0)
+JoinRequest::JoinRequest() : NetworkMessage(), name()
 {
 	messageType = MessageType::JoinRequest;
 }
 
-JoinRequest::JoinRequest(char* data, unsigned &index) : NetworkMessage(data, index), name(0), nameSize(0)
+JoinRequest::JoinRequest(char* data, unsigned &index) : NetworkMessage(data, index), name()
 {
-	memcpy(&nameSize, (void*) data[index], sizeof(nameSize));
+	unsigned nameSize;
+	memcpy(&nameSize, &data[index], sizeof(nameSize));
 	nameSize = ntohl(nameSize);
 	index += sizeof(nameSize);
 
-	name = new char[nameSize];
-	memcpy((void*) name, (void*) data[index], sizeof(nameSize));
+	char *nameArray = new char[nameSize + 1];
+	memcpy(nameArray, &data[index], nameSize);
+	nameArray[nameSize] = 0;
+	name = std::string(nameArray);
 	index += nameSize;
 }
 
-JoinRequest::JoinRequest(const JoinRequest &other) : NetworkMessage(other), name(0), nameSize(other.nameSize)
+JoinRequest::JoinRequest(const JoinRequest &other) : NetworkMessage(other), name(other.name)
 {
 	messageType = MessageType::JoinRequest;
-
-	name = new char[nameSize];
-	memcpy((void*) name, (void*) other.name, nameSize);
 }
 
-JoinRequest::JoinRequest(const NetworkMessage &other) : NetworkMessage(other), name(0), nameSize(0)
+JoinRequest::JoinRequest(const NetworkMessage &other) : NetworkMessage(other), name()
 { 
 	messageType = MessageType::JoinRequest;
 }
 
 JoinRequest::~JoinRequest()
 {
-	if (name)
-	{
-		delete[] name;
-	}
+
 }
 
 unsigned JoinRequest::writeToArray(char* data, unsigned start)
 {
 	unsigned index = NetworkMessage::writeToArray(data);
 	
-	unsigned networkNameSize = htonl(nameSize);
-	memcpy((void*) data[index], &networkNameSize, sizeof(networkNameSize));
+	unsigned networkNameSize = htonl(name.length());
+	memcpy(&data[index], &networkNameSize, sizeof(networkNameSize));
 	index += sizeof(networkNameSize);
 
-	
-	memcpy((void*) data[index], (void*) name, sizeof(nameSize));
-	index += nameSize;
+	const char* nameArray = name.c_str();
+	memcpy(&data[index], nameArray, name.length());
+	index += name.length();
 	
 	return index;
 }
@@ -55,6 +52,6 @@ unsigned JoinRequest::writeToArray(char* data, unsigned start)
 unsigned JoinRequest::calculateSize()
 {
 	return NetworkMessage::calculateSize() 
-		+ sizeof(nameSize)
-		+ nameSize;
+		+ sizeof(unsigned)
+		+ name.length();
 }

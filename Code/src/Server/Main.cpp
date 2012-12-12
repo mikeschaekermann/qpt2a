@@ -25,11 +25,12 @@ int main(int argc, char argv[])
 	
 	ServerNetworkManager nm(port, &game);
 
-	boost::thread thr(boost::bind(&NetworkManager::operator(), &nm));
-	
+	boost::thread networkThread(boost::bind(&NetworkManager::operator(), &nm));
+	//boost::thread eventQueueThread(boost::bind(&EventQueue::operator(), &eq));
 	game.bind(&nm, &eq);
+	networkThread.join();
+	//eventQueueThread.join();
 
-	thr.join();
 	cout << "test";
 	return 0;
 }

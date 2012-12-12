@@ -2,8 +2,8 @@
 
 #include <queue>
 
-#include "boost\thread\thread.hpp"
-#include "cinder\Timer.h"
+#include "boost/thread/thread.hpp"
+#include "cinder/Timer.h"
 
 #include "Event.h"
 

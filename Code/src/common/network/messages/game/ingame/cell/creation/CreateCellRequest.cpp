@@ -7,23 +7,23 @@ CreateCellRequest::CreateCellRequest() : NetworkMessage(), requestId(0), playerI
 
 CreateCellRequest::CreateCellRequest(char* data, unsigned &index) : NetworkMessage(data, index), requestId(0), playerId(0), cellId(0), angle(0.f), type(CellType::Invalid)
 {
-	memcpy(&requestId, (void*) data[index], sizeof(requestId));
+	memcpy(&requestId, &data[index], sizeof(requestId));
 	requestId = ntohl(requestId);
 	index += sizeof(requestId);
 
-	memcpy(&playerId, (void*) data[index], sizeof(playerId));
+	memcpy(&playerId, &data[index], sizeof(playerId));
 	playerId = ntohl(playerId);
 	index += sizeof(playerId);
 
-	memcpy(&cellId, (void*) data[index], sizeof(cellId));
+	memcpy(&cellId, &data[index], sizeof(cellId));
 	cellId = ntohl(cellId);
 	index += sizeof(cellId);
 
-	memcpy(&angle, (void*) data[index], sizeof(angle));
+	memcpy(&angle, &data[index], sizeof(angle));
 	index += sizeof(angle);
 
 	unsigned networkCellType = 0;
-	memcpy(&networkCellType, (void*) data[index], sizeof(networkCellType));
+	memcpy(&networkCellType, &data[index], sizeof(networkCellType));
 	type = CellType(networkCellType);
 	index += sizeof(networkCellType);
 }
@@ -47,22 +47,22 @@ unsigned CreateCellRequest::writeToArray(char* data, unsigned start)
 	unsigned index = NetworkMessage::writeToArray(data);
 	
 	unsigned networkrequestId = htonl(requestId);
-	memcpy((void*) data[index], &networkrequestId, sizeof(networkrequestId));
+	memcpy(&data[index], &networkrequestId, sizeof(networkrequestId));
 	index += sizeof(networkrequestId);
 
 	unsigned networkPlayerId = htonl(playerId);
-	memcpy((void*) data[index], &networkPlayerId, sizeof(networkPlayerId));
+	memcpy(&data[index], &networkPlayerId, sizeof(networkPlayerId));
 	index += sizeof(networkPlayerId);
 
 	unsigned networkcellId = htonl(cellId);
-	memcpy((void*) data[index], &networkcellId, sizeof(networkcellId));
+	memcpy(&data[index], &networkcellId, sizeof(networkcellId));
 	index += sizeof(networkcellId);
 
-	memcpy((void*) data[index], &angle, sizeof(angle));
+	memcpy(&data[index], &angle, sizeof(angle));
 	index += sizeof(angle);
 	
 	unsigned networkType = type.getNetworkType();
-	memcpy((void*) data[index], &networkType, sizeof(networkType));
+	memcpy(&data[index], &networkType, sizeof(networkType));
 	index += sizeof(networkType);
 
 	return index;

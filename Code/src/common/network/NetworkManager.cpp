@@ -5,7 +5,7 @@
 #include "messages/game/outgame/JoinRequest.h"
 #include "messages/ConnectionMessage.h"
 
-#include <iostream>
+#include "../Config.h"
 
 using boost::asio::ip::udp;
 using namespace std;
@@ -57,10 +57,15 @@ void NetworkManager::operator()()
 		// Receive the message
 		serverSocket->receive_from(boost::asio::buffer(buffer), remote_endpoint, 0, error);
 		maintenanceMutex.lock();
-		if (error && error != boost::asio::error::message_size)
+
+		if (!run || (error && error != boost::asio::error::message_size))
 		{
-			cout << error.message() << endl;
-			throw boost::system::system_error(error);
+			if (error)
+			{
+				LOG_ERROR(error.message());
+			}
+			maintenanceMutex.unlock();
+			continue;
 		}
 		// Distinguish the messages by their type
 		NetworkMessage *message = createNetworkMessage(buffer.c_array());
@@ -89,19 +94,20 @@ void NetworkManager::operator()()
 				assert(false);
 			}
 		}
-
+		
 		// React to the Message and delete it.
 		ConnectionMessage *connectionMessage = dynamic_cast<ConnectionMessage*> (message);
 		if (connectionMessage)
 		{
 			handleConnectionMessage(connectionMessage);
+			maintenanceMutex.unlock();
 		}
 		else
 		{
+			maintenanceMutex.unlock();
 			handleMessage(message);
 		}
 		delete message;
-		maintenanceMutex.unlock();
 	}
 }
 
@@ -115,7 +121,7 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 		{
 			if (connectionEndpoint->m_unconfirmedMessages.find(message->missingMessageIds[i]) != connectionEndpoint->m_unconfirmedMessages.end())
 			{
-				baseSend(connectionEndpoint->m_unconfirmedMessages[message->missingMessageIds[i]]);
+				baseSend(*(connectionEndpoint->m_unconfirmedMessages[message->missingMessageIds[i]]));
 			}
 			else
 			{
@@ -125,7 +131,7 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 		}
 
 		/// Remove obsolete messages
-		for(std::map<unsigned, NetworkMessage>::iterator it = connectionEndpoint->m_unconfirmedMessages.begin(); it != connectionEndpoint->m_unconfirmedMessages.end(); ++it) 
+		for(std::map<unsigned, NetworkMessage*>::iterator it = connectionEndpoint->m_unconfirmedMessages.begin(); it != connectionEndpoint->m_unconfirmedMessages.end(); ++it) 
 		{
 			if (it->first <= message->messageId)
 			{
@@ -141,6 +147,7 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 
 				if (obsolete)
 				{
+					delete[] it->second;
 					connectionEndpoint->m_unconfirmedMessages.erase(it->first);
 				}
 			}
@@ -155,11 +162,16 @@ void NetworkManager::connectionMaintenance()
 		boost::this_thread::sleep(boost::posix_time::milliseconds(100));
 		maintenanceMutex.lock();
 		
+		if (!run) 
+		{
+			maintenanceMutex.unlock();
+			continue;
+		}
+
 		std::vector<ConnectionEndpoint> endpoints =  getConnectionEndpoints();
 		for (std::vector<ConnectionEndpoint>::iterator it = endpoints.begin(); it != endpoints.end(); ++it)
 		{
 			ConnectionMessage message;
-			// Fill with data
 			message.endpoint = (*it).m_endpoint;
 			message.messageId = (*it).m_uiRemotePacketId;
 			message.missingMessageCount = (*it).m_unreceivedMessages.size();
@@ -187,7 +199,7 @@ void NetworkManager::stop()
 NetworkMessage* NetworkManager::createNetworkMessage(char* data)
 {
 	unsigned messageType;
-	memcpy(&messageType, (void*) data[sizeof(unsigned)], sizeof(unsigned));
+	memcpy(&messageType, &data[sizeof(unsigned)], sizeof(unsigned));
 	MessageType type(messageType);
 		
 	NetworkMessage *message = 0;
@@ -220,20 +232,20 @@ void NetworkManager::baseSend(NetworkMessage &message)
 	delete[] buffer;
 }
 
-void NetworkManager::send(NetworkMessage message)
+void NetworkManager::send(NetworkMessage *message)
 {
 	/// Lock when changes inthe connectionEndpoint are possible
 	maintenanceMutex.lock();
-	ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message.endpoint);
+	ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
 
 	if (connectionEndpoint)
 	{
 		/// Increment the messageId and set it to identify the message
-		message.messageId = connectionEndpoint->m_uiLocalPacketId++;
-		connectionEndpoint->m_unconfirmedMessages[message.messageId] =  message;
+		message->messageId = connectionEndpoint->m_uiLocalPacketId++;
+		connectionEndpoint->m_unconfirmedMessages[message->messageId] =  message;
 	}
 
-	baseSend(message);
+	baseSend(*message);
 	
 	maintenanceMutex.unlock();
 }
