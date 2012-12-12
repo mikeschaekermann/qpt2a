@@ -1,22 +1,22 @@
 #pragma once
 
+#include "../common/Config.h"
+#include "ICollisionBehavior.h"
+#include "Player.h"
+#include "cinder/gl/gl.h"
+
 #include <vector>
 
-#include "../common/Config.h"
-#include "Player.h"
-#include "cinder\Vector.h"
-#include "../client/MessagingBehavior.h"
-
-using namespace cinder;
-using namespace ci;
+using namespace gl;
 
 class GameObject
 {
 public:
-	GameObject(unsigned id, Vec3f position = Vec3f(0, 0, 0), Vec3f rotation = Vec3f(0, 0, 0), Vec3f scale = Vec3f(1, 1, 1));
+	GameObject();
 	virtual ~GameObject(void);
 
 	unsigned getId() const { return m_uiId; }
+	unsigned setId(unsigned id) { m_uiId = id; }
 
 	Vec3f getPosition() const { return m_position; }
 	void setPosition(Vec3f position) { m_position = position; }
@@ -27,13 +27,21 @@ public:
 	Vec3f getScale() const { return m_scale; }
 	void setScale(Vec3f scale) { m_scale = scale; }
 
+	void setCollisionBehavior(ICollisionBehavior* collisionBehavior) { m_pCollisionBehavior = collisionBehavior; }
+
 	void update(float frameTime);
 	void draw() const;
 
 	/**
 		@brief adds a child to the list of children
+		@param child		pointer to child to be added
 	 */
 	void addChild(GameObject* child);
+	/**
+		@brief adds a parent to the list of parents
+		@param parent		pointer to parent to be added
+	 */
+	void addParent(GameObject* parent);
 
 protected:
 	/// @brief here the pure draw process is defined, independent from the transformation
@@ -51,10 +59,10 @@ private:
 	Vec3f m_scale;
 
 	/// all children in the scene graph
-	std::vector<GameObject*> m_children;
-	/// parent object in the scene graph
-	GameObject* m_pParent;
+	vector<GameObject*> m_children;
+	/// all parents in the scene graph
+	vector<GameObject*> m_parents;
 
-	/// contains all network messages relevant to this object
-	std::vector<MessagingBehavior*> m_messagingBehaviors;
+	/// game object's collision behavior
+	ICollisionBehavior* m_pCollisionBehavior;
 };

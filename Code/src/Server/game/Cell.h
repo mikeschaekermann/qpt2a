@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "GameObject.h"
-#include "CellCollisionBehavior.h"
+#include "../../common/CellCollisionBehavior.h"
 
 #define HEALTH_POINTS 100.f
 

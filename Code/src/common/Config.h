@@ -4,7 +4,7 @@
  *	Config file
  */
 
-#include "cinder\app\AppBasic.h"
+#include "cinder/app/AppBasic.h"
 
 #include "../common/Helper.h"
 

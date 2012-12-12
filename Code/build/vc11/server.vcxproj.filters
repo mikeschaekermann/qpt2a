@@ -65,9 +65,6 @@
     <ClCompile Include="..\..\src\server\network\ServerNetworkmanager.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Server\game\IdCellMap.cpp">
-      <Filter>Gamelogic</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -77,12 +74,15 @@
     <ClCompile Include="..\..\src\Server\event\BuildingEvent.cpp">
       <Filter>Eventlogic</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\common\Logger.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\GameObject.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Server\game\Cell.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\CellCollisionBehavior.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\game\Game.h">
@@ -91,22 +91,7 @@
     <ClInclude Include="..\..\src\Server\game\GameObject.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\ICellMap.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\ICollisionBehavior.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\IdCellMap.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Server\game\Player.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\Population.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\PositionCellMap.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\event\BuildingEvent.h">
@@ -122,9 +107,6 @@
       <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\game\StandardCell.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\StemCellCollisionBehavior.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h">
@@ -196,6 +178,33 @@
     <ClInclude Include="..\..\src\Server\game\EventCreator.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\PositionCellMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\CellCollisionBehavior.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Config.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\ICellMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\ICollisionBehavior.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Logger.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Population.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\GameObject.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -230,6 +239,9 @@
     </Filter>
     <Filter Include="Network\Messages\Game\InGame\Cell\Combat">
       <UniqueIdentifier>{483f6d08-a6af-4dae-b360-9088f2677fc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{a4fb2bda-a748-4b28-b6f6-af4050e87560}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

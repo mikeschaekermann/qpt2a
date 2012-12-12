@@ -15,17 +15,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\client\AssetManager.cpp" />
+    <ClCompile Include="..\..\src\client\actors\behaviors\MessagingBehavior.cpp" />
+    <ClCompile Include="..\..\src\client\actors\CellClient.cpp" />
+    <ClCompile Include="..\..\src\client\actors\GameObjectClient.cpp" />
+    <ClCompile Include="..\..\src\client\actors\PlayerClient.cpp" />
+    <ClCompile Include="..\..\src\client\actors\StemCellClient.cpp" />
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
-    <ClCompile Include="..\..\src\client\GameManager.cpp" />
-    <ClCompile Include="..\..\src\client\GameScreen.cpp" />
     <ClCompile Include="..\..\src\Client\input\TouchWay.cpp" />
+    <ClCompile Include="..\..\src\client\managers\AssetManager.cpp" />
+    <ClCompile Include="..\..\src\client\managers\GameManager.cpp" />
+    <ClCompile Include="..\..\src\client\managers\ScreenManager.cpp" />
     <ClCompile Include="..\..\src\client\MessagingBehavior.cpp" />
     <ClCompile Include="..\..\src\client\network\ClientNetworkManager.cpp" />
-    <ClCompile Include="..\..\src\client\Screen.cpp" />
-    <ClCompile Include="..\..\src\client\ScreenManager.cpp" />
-    <ClCompile Include="..\..\src\common\Cell.cpp" />
+    <ClCompile Include="..\..\src\client\screens\GameScreen.cpp" />
+    <ClCompile Include="..\..\src\client\screens\Screen.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
+    <ClCompile Include="..\..\src\common\IdCellMap.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
     <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp" />
@@ -47,24 +52,32 @@
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
-    <ClCompile Include="..\..\src\common\Player.cpp" />
-    <ClCompile Include="..\..\src\common\StemCell.cpp" />
+    <ClCompile Include="..\..\src\common\StandardCell.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\client\AssetManager.h" />
+    <ClInclude Include="..\..\src\client\actors\behaviors\MessagingBehavior.h" />
+    <ClInclude Include="..\..\src\client\actors\CellClient.h" />
+    <ClInclude Include="..\..\src\client\actors\GameObjectClient.h" />
+    <ClInclude Include="..\..\src\client\actors\PlayerClient.h" />
+    <ClInclude Include="..\..\src\client\actors\StemCellClient.h" />
     <ClInclude Include="..\..\src\client\ClientMain.h" />
-    <ClInclude Include="..\..\src\client\GameManager.h" />
-    <ClInclude Include="..\..\src\client\GameScreen.h" />
     <ClInclude Include="..\..\src\Client\input\TouchWay.h" />
+    <ClInclude Include="..\..\src\client\managers\AssetManager.h" />
+    <ClInclude Include="..\..\src\client\managers\GameManager.h" />
+    <ClInclude Include="..\..\src\client\managers\ScreenManager.h" />
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h" />
-    <ClInclude Include="..\..\src\Client\Screen.h" />
-    <ClInclude Include="..\..\src\client\IScreenItem.h" />
     <ClInclude Include="..\..\src\client\MessagingBehavior.h" />
-    <ClInclude Include="..\..\src\client\ScreenManager.h" />
+    <ClInclude Include="..\..\src\client\screens\GameScreen.h" />
+    <ClInclude Include="..\..\src\client\screens\IScreenItem.h" />
+    <ClInclude Include="..\..\src\client\screens\Screen.h" />
     <ClInclude Include="..\..\src\common\Cell.h" />
+    <ClInclude Include="..\..\src\common\CellCollisionBehavior.h" />
     <ClInclude Include="..\..\src\common\Config.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
     <ClInclude Include="..\..\src\common\Helper.h" />
+    <ClInclude Include="..\..\src\common\ICellMap.h" />
+    <ClInclude Include="..\..\src\common\ICollisionBehavior.h" />
+    <ClInclude Include="..\..\src\common\IdCellMap.h" />
     <ClInclude Include="..\..\src\common\Logger.h" />
     <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h" />
     <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h" />
@@ -87,7 +100,11 @@
     <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h" />
     <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
     <ClInclude Include="..\..\src\common\Player.h" />
+    <ClInclude Include="..\..\src\common\Population.h" />
+    <ClInclude Include="..\..\src\common\PositionCellMap.h" />
+    <ClInclude Include="..\..\src\common\StandardCell.h" />
     <ClInclude Include="..\..\src\common\StemCell.h" />
+    <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

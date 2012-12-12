@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ICollisionBehavior.h"
+#include "../../common/ICollisionBehavior.h"
 
 class GameObject : public ICollisionBehavior
 {

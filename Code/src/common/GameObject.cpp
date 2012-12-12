@@ -1,35 +1,20 @@
 #include "GameObject.h"
-#include "cinder\gl\gl.h"
-#include "cinder\app\AppBasic.h"
 
-using namespace cinder;
-using namespace gl;
-
-GameObject::GameObject(unsigned id, Vec3f position, Vec3f rotation, Vec3f scale) : 
-	m_uiId(id),
-	m_position(position),
-	m_rotation(rotation),
-	m_scale(scale)
+GameObject::GameObject() : 
+	m_uiId(0),
+	m_position(0, 0, 0),
+	m_rotation(0, 0, 0),
+	m_scale(1, 1, 1)
 {
 }
 
 GameObject::~GameObject(void)
 {
-	LOG_INFO(concate("GameObject deleted. id: ", m_uiId));
-	
-	for(auto it = m_messagingBehaviors.begin(); it != m_messagingBehaviors.end(); ++it)
-	{
-		delete (*it);
-	}
+	LOG_INFO(concatenate("GameObject deleted. id: ", m_uiId));
 }
 
 void GameObject::update(float frameTime)
 {
-	for(auto it = m_messagingBehaviors.begin(); it != m_messagingBehaviors.end(); ++it)
-	{
-		(*it)->update(frameTime);
-	}
-
 	for(auto it = m_children.begin(); it != m_children.end(); ++it)
 	{
 		(*it)->update(frameTime);
@@ -38,29 +23,34 @@ void GameObject::update(float frameTime)
 
 void GameObject::draw() const
 {
-	gl::pushMatrices();
+	pushMatrices();
 
-	gl::translate(m_position);
-	gl::rotate(m_rotation);
-	gl::scale(m_scale);
+	translate(m_position);
+	rotate(m_rotation);
+	scale(m_scale);
 
 	drawAtTransformation();
+
+	popMatrices();
 
 	for(auto it = m_children.begin(); it != m_children.end(); ++it)
 	{
 		(*it)->draw();
 	}
-
-	gl::popMatrices();
 }
 
 void GameObject::drawAtTransformation() const
 {
-	gl::drawSphere(Vec3f(0, 0, 0), 15);
+	drawSphere(Vec3f(0, 0, 0), 15);
 }
 
 void GameObject::addChild(GameObject* child)
 {
 	m_children.push_back(child);
-	child->m_pParent = this;
+	child->addParent(this);
+};
+
+void GameObject::addParent(GameObject* parent)
+{
+	m_parents.push_back(parent);
 };

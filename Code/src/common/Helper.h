@@ -7,7 +7,7 @@
 using namespace std;
 
 template <class T>
-string concate(string str, T value)
+string concatenate(string str, T value)
 {
 	return str + static_cast<ostringstream*>( &(ostringstream() << value) )->str();
 }

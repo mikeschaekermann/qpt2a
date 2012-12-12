@@ -6,7 +6,7 @@
 
 #include "../../common/network/ConnectionEndpoint.h"
 #include "StemCell.h"
-#include "Population.h"
+#include "../../common/Population.h"
 
 using namespace std;
 
