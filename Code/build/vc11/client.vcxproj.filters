@@ -95,23 +95,26 @@
     <ClCompile Include="..\..\src\client\actors\behaviors\MessagingBehavior.cpp">
       <Filter>Actors\Behaviors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\client\actors\StemCellClient.cpp">
-      <Filter>Actors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\client\actors\PlayerClient.cpp">
       <Filter>Actors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\client\actors\GameObjectClient.cpp">
       <Filter>Actors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\client\actors\CellClient.cpp">
-      <Filter>Actors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\common\GameObject.cpp">
       <Filter>Actors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\actors\CellClient.cpp">
+      <Filter>Actors\Cells</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\common\StandardCell.cpp">
-      <Filter>Actors</Filter>
+      <Filter>Actors\Cells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\actors\StemCellClient.cpp">
+      <Filter>Actors\Cells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\Cell.cpp">
+      <Filter>Actors\Cells</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,16 +233,10 @@
     <ClInclude Include="..\..\src\common\GameObject.h">
       <Filter>Actors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\client\actors\StemCellClient.h">
-      <Filter>Actors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\client\actors\PlayerClient.h">
       <Filter>Actors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\client\actors\GameObjectClient.h">
-      <Filter>Actors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\client\actors\CellClient.h">
       <Filter>Actors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\Player.h">
@@ -255,13 +252,19 @@
       <Filter>Actors\Behaviors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\Cell.h">
-      <Filter>Actors</Filter>
+      <Filter>Actors\Cells</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\StemCell.h">
-      <Filter>Actors</Filter>
+    <ClInclude Include="..\..\src\client\actors\CellClient.h">
+      <Filter>Actors\Cells</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\StandardCell.h">
-      <Filter>Actors</Filter>
+      <Filter>Actors\Cells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\StemCell.h">
+      <Filter>Actors\Cells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\actors\StemCellClient.h">
+      <Filter>Actors\Cells</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +288,9 @@
     </Filter>
     <Filter Include="Actors\Behaviors">
       <UniqueIdentifier>{4743efb3-979e-4b06-94d9-70ad904eec9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actors\Cells">
+      <UniqueIdentifier>{6a731559-e388-4819-93bb-ad66c35d137d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

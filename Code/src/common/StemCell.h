@@ -5,7 +5,7 @@
 class StemCell : public Cell
 {
 public:
-	StemCell() : Cell(10.f)
+	StemCell() : Cell()
 	{
 	}
 };
