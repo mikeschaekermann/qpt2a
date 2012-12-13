@@ -1,5 +1,5 @@
 #include "Screen.h"
-#include "ScreenManager.h"
+#include "../managers/ScreenManager.h"
 
 Screen::Screen(ScreenManager& screenManager) :
 	m_screenManager(screenManager),

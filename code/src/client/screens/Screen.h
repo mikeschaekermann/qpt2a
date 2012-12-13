@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ScreenManager.h"
-#include "input/TouchWay.h"
+#include "../managers/ScreenManager.h"
+#include "../input/TouchWay.h"
 
 enum ScreenState
 {

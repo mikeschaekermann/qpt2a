@@ -1,4 +1,4 @@
-#include "..\Client\GameManager.h"
+#include "GameManager.h"
 
 GameManager* GameManager::m_pManager = nullptr;
 

@@ -4,9 +4,10 @@
 
 #include "GameObject.h"
 #include "CellCollisionBehavior.h"
-#include "Player.h"
 
 #define HEALTH_POINTS 100.f
+
+class Player;
 
 class Cell : public GameObject
 {

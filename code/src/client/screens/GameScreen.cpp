@@ -1,5 +1,5 @@
 #include "GameScreen.h"
-#include "../common/network/NetworkManager.h"
+#include "../../common/network/NetworkManager.h"
 
 GameScreen::GameScreen(ScreenManager& screenManager) :
 	Screen(screenManager),

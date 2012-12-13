@@ -1,11 +1,11 @@
 #pragma once
 
 #include <stack>
-#include "..\common\GameObject.h"
-#include "Screen.h"
-#include "GameScreen.h"
+#include "../../common/GameObject.h"
+#include "../screens/Screen.h"
+#include "../screens/GameScreen.h"
 #include "ScreenManager.h"
-#include "../common/network/NetworkManager.h"
+#include "../../common/network/NetworkManager.h"
 
 #define GAME_MGR GameManager::getInstance()
 

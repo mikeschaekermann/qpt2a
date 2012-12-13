@@ -3,7 +3,7 @@
 #include "ClientMain.h"
 #include "../common/Logger.h"
 #include "../common/Config.h"
-#include "GameManager.h"
+#include "managers/GameManager.h"
 #include "network/ClientNetworkManager.h"
 #include "boost/asio.hpp"
 #include "../common/network/messages/game/outgame/JoinRequest.h"

@@ -2,7 +2,6 @@
 
 #include "../common/Config.h"
 #include "ICollisionBehavior.h"
-#include "Player.h"
 #include "cinder/gl/gl.h"
 
 #include <vector>
@@ -16,7 +15,7 @@ public:
 	virtual ~GameObject(void);
 
 	unsigned getId() const { return m_uiId; }
-	unsigned setId(unsigned id) { m_uiId = id; }
+	void setId(unsigned id) { m_uiId = id; }
 
 	Vec3f getPosition() const { return m_position; }
 	void setPosition(Vec3f position) { m_position = position; }

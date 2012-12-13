@@ -25,7 +25,6 @@
     <ClCompile Include="..\..\src\client\managers\AssetManager.cpp" />
     <ClCompile Include="..\..\src\client\managers\GameManager.cpp" />
     <ClCompile Include="..\..\src\client\managers\ScreenManager.cpp" />
-    <ClCompile Include="..\..\src\client\MessagingBehavior.cpp" />
     <ClCompile Include="..\..\src\client\network\ClientNetworkManager.cpp" />
     <ClCompile Include="..\..\src\client\rendering\Cam.cpp" />
     <ClCompile Include="..\..\src\client\screens\GameScreen.cpp" />
@@ -68,8 +67,11 @@
     <ClInclude Include="..\..\src\client\managers\GameManager.h" />
     <ClInclude Include="..\..\src\client\managers\ScreenManager.h" />
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h" />
+<<<<<<< HEAD
     <ClInclude Include="..\..\src\client\MessagingBehavior.h" />
     <ClInclude Include="..\..\src\client\rendering\Cam.h" />
+=======
+>>>>>>> 02a73cb64b190a0f14e6f5b0748e4fe069da3570
     <ClInclude Include="..\..\src\client\screens\GameScreen.h" />
     <ClInclude Include="..\..\src\client\screens\IScreenItem.h" />
     <ClInclude Include="..\..\src\client\screens\Screen.h" />
