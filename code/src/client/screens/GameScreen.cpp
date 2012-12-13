@@ -5,7 +5,8 @@ GameScreen::GameScreen(ScreenManager& screenManager) :
 	Screen(screenManager),
 	m_pScene(nullptr)
 {
-	
+	auto screenSize = getWindowSize();
+	cam = Cam(screenSize.x, screenSize.y, toRadians(45.f), 1.f, 10.f);
 }
 
 GameScreen::~GameScreen(void)
@@ -53,4 +54,9 @@ void GameScreen::touchEnded(TouchWay touchWay)
 void GameScreen::touchClick(TouchWay touchWay)
 {
 	LOG_INFO("touch click!");
+
+	auto pointInWorld = cam.screenToWorld(touchWay.getCurrentPos());
+
+	LOG_INFO(concate(concate("Point on Screen: ", touchWay.getCurrentPos().x), touchWay.getCurrentPos().y));
+	LOG_INFO(concate(concate(concate("Point in 3D: ", pointInWorld.x), pointInWorld.y), pointInWorld.z));
 };

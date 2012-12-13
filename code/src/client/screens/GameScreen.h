@@ -4,6 +4,8 @@
 #include "../common/Config.h"
 #include "../common/GameObject.h"
 #include "../common/Player.h"
+#include "cinder/Vector.h"
+#include "Cam.h"
 
 class GameScreen :
 	public Screen
@@ -46,5 +48,8 @@ private:
 
 	/// all active players
 	vector<Player*> m_players;
+
+	/// perspective cam for the game
+	Cam cam;
 };
 

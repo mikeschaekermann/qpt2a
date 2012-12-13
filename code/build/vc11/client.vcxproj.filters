@@ -116,6 +116,9 @@
     <ClCompile Include="..\..\src\common\Cell.cpp">
       <Filter>Actors\Cells</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\rendering\Cam.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\ClientMain.h" />
@@ -266,6 +269,9 @@
     <ClInclude Include="..\..\src\client\actors\StemCellClient.h">
       <Filter>Actors\Cells</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\client\rendering\Cam.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -291,6 +297,9 @@
     </Filter>
     <Filter Include="Actors\Cells">
       <UniqueIdentifier>{6a731559-e388-4819-93bb-ad66c35d137d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{7d5d5b5c-d78b-4738-8662-a26403340421}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
