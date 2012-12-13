@@ -2,7 +2,7 @@
 
 #include "Screen.h"
 #include "../../common/Config.h"
-#include "../../common/GameObject.h"
+#include "../actors/GameObjectClient.h"
 #include "../../common/Player.h"
 
 class GameScreen :

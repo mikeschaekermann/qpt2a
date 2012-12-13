@@ -2,8 +2,7 @@
 #include "../../common/network/NetworkManager.h"
 
 GameScreen::GameScreen(ScreenManager& screenManager) :
-	Screen(screenManager),
-	scene(nullptr)
+	Screen(screenManager)
 {
 	
 }
@@ -14,10 +13,6 @@ GameScreen::~GameScreen(void)
 
 void GameScreen::update(float frameTime)
 {
-	if(scene != nullptr)
-	{
-		scene->update(frameTime);
-	}
 }
 
 void GameScreen::draw()
