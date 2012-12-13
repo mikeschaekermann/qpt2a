@@ -67,11 +67,7 @@
     <ClInclude Include="..\..\src\client\managers\GameManager.h" />
     <ClInclude Include="..\..\src\client\managers\ScreenManager.h" />
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h" />
-<<<<<<< HEAD
-    <ClInclude Include="..\..\src\client\MessagingBehavior.h" />
     <ClInclude Include="..\..\src\client\rendering\Cam.h" />
-=======
->>>>>>> 02a73cb64b190a0f14e6f5b0748e4fe069da3570
     <ClInclude Include="..\..\src\client\screens\GameScreen.h" />
     <ClInclude Include="..\..\src\client\screens\IScreenItem.h" />
     <ClInclude Include="..\..\src\client\screens\Screen.h" />

@@ -262,7 +262,7 @@
     </ClInclude>
     <ClInclude Include="..\..\src\client\rendering\Cam.h">
       <Filter>Rendering</Filter>
-	</ClCompile>
+	</ClInclude>
     <ClInclude Include="..\..\src\client\actors\behaviors\MessagingBehavior.h">
       <Filter>Actors\Behaviors</Filter>
     </ClInclude>

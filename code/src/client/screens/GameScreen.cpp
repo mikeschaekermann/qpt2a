@@ -57,6 +57,6 @@ void GameScreen::touchClick(TouchWay touchWay)
 
 	auto pointInWorld = cam.screenToWorld(touchWay.getCurrentPos());
 
-	LOG_INFO(concate(concate("Point on Screen: ", touchWay.getCurrentPos().x), touchWay.getCurrentPos().y));
-	LOG_INFO(concate(concate(concate("Point in 3D: ", pointInWorld.x), pointInWorld.y), pointInWorld.z));
+	LOG_INFO(concatenate(concatenate("Point on Screen: ", touchWay.getCurrentPos().x), touchWay.getCurrentPos().y));
+	LOG_INFO(concatenate(concatenate(concatenate("Point in 3D: ", pointInWorld.x), pointInWorld.y), pointInWorld.z));
 };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Screen.h"
-#include "Cam.h"
+#include "../rendering/Cam.h"
 #include "../../common/Config.h"
 #include "../../common/GameObject.h"
 #include "../../common/Player.h"
