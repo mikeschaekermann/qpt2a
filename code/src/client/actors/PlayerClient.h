@@ -4,7 +4,8 @@
 
 using namespace std;
 
-class PlayerClient: public Player
+class PlayerClient:
+	public Player
 {
 public:
 	PlayerClient(unsigned int id, string name, Vec2f position, bool canManipulate);

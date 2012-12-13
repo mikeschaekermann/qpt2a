@@ -2,13 +2,13 @@
 #include "../managers/ScreenManager.h"
 
 Screen::Screen(ScreenManager& screenManager) :
-	m_screenManager(screenManager),
-	m_screenState(ScreenState::TransitionOn),
-	m_fTransitionOnTime(1),
-	m_fTransitionOffTime(1),
-	m_bIsInitialized(false),
-	m_bCoveredByOtherScreen(false),
-	m_bIsExiting(false)
+	screenManager(screenManager),
+	screenState(ScreenState::TransitionOn),
+	transitionOnTime(1),
+	transitionOffTime(1),
+	isInitialized(false),
+	coveredByOtherScreen(false),
+	isExiting(false)
 {
 }
 
@@ -18,18 +18,18 @@ Screen::~Screen()
 
 void Screen::update(float frameTime)
 {
-	/*if(m_bIsExiting)
+	/*if(isExiting)
 	{
-		m_screenState = ScreenState::TransitionOff;
+		screenState = ScreenState::TransitionOff;
 
-		if(!updateTransition(frameTime, m_fTransitionOffTime))
+		if(!updateTransition(frameTime, transitionOffTime))
 		{
 			ScreenManager::getInstance()->closeScreen();
 		}
 	}
 	else
 	{
-		if(updateTransition(frameTime, m_fTransitionOnTime))
+		if(updateTransition(frameTime, transitionOnTime))
 		{
 
 		}

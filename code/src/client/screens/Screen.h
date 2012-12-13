@@ -47,18 +47,18 @@ public:
 	virtual void touchClick(TouchWay touchWay) = 0;
 
 protected:
-	float m_fTransitionOnTime;
-	float m_fTransitionOffTime;
+	float transitionOnTime;
+	float transitionOffTime;
 
-	bool m_bIsInitialized;
-	bool m_bCoveredByOtherScreen;
+	bool isInitialized;
+	bool coveredByOtherScreen;
 
-	ScreenState m_screenState;
+	ScreenState screenState;
 
 private:
-	bool m_bIsExiting;
+	bool isExiting;
 
-	ScreenManager& m_screenManager;
+	ScreenManager& screenManager;
 
 	bool updateTransition(float frameTime, float time);
 };

@@ -9,6 +9,8 @@ class GameScreen :
 	public Screen
 {
 public:
+	typedef map<unsigned, GameObjectClient*> IdGameObjectMap;
+
 	GameScreen(ScreenManager& screenManager);
 	virtual ~GameScreen(void);
 
@@ -41,10 +43,13 @@ public:
 	virtual void touchClick(TouchWay touchWay);
 
 private:
-	/// scene object
-	GameObject* m_pScene;
-
 	/// all active players
-	vector<Player*> m_players;
+	vector<Player*> players;
+
+	/// all game objects registered to be drawn
+	IdGameObjectMap		gameObjectsToDraw;
+
+	/// all game objects registered to be pickable
+	IdGameObjectMap		gameObjectsToPick;
 };
 

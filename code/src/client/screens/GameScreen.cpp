@@ -3,7 +3,7 @@
 
 GameScreen::GameScreen(ScreenManager& screenManager) :
 	Screen(screenManager),
-	m_pScene(nullptr)
+	scene(nullptr)
 {
 	
 }
@@ -14,17 +14,17 @@ GameScreen::~GameScreen(void)
 
 void GameScreen::update(float frameTime)
 {
-	if(m_pScene != nullptr)
+	if(scene != nullptr)
 	{
-		m_pScene->update(frameTime);
+		scene->update(frameTime);
 	}
 }
 
 void GameScreen::draw()
 {
-	if(m_pScene != nullptr)
+	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
 	{
-		m_pScene->draw();
+		it->second->draw();
 	}
 }
 
@@ -32,7 +32,7 @@ void GameScreen::loadContent()
 {
 
 	/// if everything was loaded set the isInitialized to true
-	m_bIsInitialized = true;
+	isInitialized = true;
 }
 
 void GameScreen::touchBegan(const TouchWay & touchWay)
