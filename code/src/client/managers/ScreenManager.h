@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../common/Config.h"
-#include "Screen.h"
+#include "../../common/Config.h"
+#include "../screens/Screen.h"
 #include <stack>
-#include "input/TouchWay.h"
+#include "../input/TouchWay.h"
 
 class Screen;
 

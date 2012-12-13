@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Screen.h"
-#include "../common/Config.h"
-#include "../common/GameObject.h"
-#include "../common/Player.h"
+#include "../../common/Config.h"
+#include "../../common/GameObject.h"
+#include "../../common/Player.h"
 
 class GameScreen :
 	public Screen
