@@ -2,7 +2,8 @@
 
 #include "Cell.h"
 
-class StandardCell : public Cell
+class StandardCell :
+	public virtual Cell
 {
 public:
 	static const float m_fAttackRadius;

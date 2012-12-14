@@ -29,7 +29,6 @@ public:
 	void setCollisionBehavior(ICollisionBehavior* collisionBehavior) { m_pCollisionBehavior = collisionBehavior; }
 
 	void update(float frameTime);
-	void draw() const;
 
 	/**
 		@brief adds a child to the list of children
@@ -43,13 +42,6 @@ public:
 	void addParent(GameObject* parent);
 
 protected:
-	/// @brief here the pure draw process is defined, independent from the transformation
-	virtual void drawAtTransformation() const;
-	
-private:
-	/// object id assigned by the player class which is unique per player
-	unsigned m_uiId;
-	
 	/// current position in the game
 	Vec3f m_position;
 	/// current rotation of the object
@@ -57,6 +49,10 @@ private:
 	/// current scale of the object
 	Vec3f m_scale;
 
+private:
+	/// object id assigned by the player class which is unique per player
+	unsigned m_uiId;
+	
 	/// all children in the scene graph
 	vector<GameObject*> m_children;
 	/// all parents in the scene graph

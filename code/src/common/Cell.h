@@ -9,7 +9,8 @@
 
 class Player;
 
-class Cell : public GameObject
+class Cell :
+	virtual public GameObject
 {
 public:
 	Cell();

@@ -1,6 +1,8 @@
 #pragma once
 #include "CellClient.h"
+#include "../../common/StemCell.h"
 
 class StemCellClient :
-	public CellClient
+	virtual public StemCell,
+	virtual public CellClient
 {};

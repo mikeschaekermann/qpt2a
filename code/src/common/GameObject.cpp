@@ -21,29 +21,6 @@ void GameObject::update(float frameTime)
 	}
 }
 
-void GameObject::draw() const
-{
-	pushMatrices();
-
-	translate(m_position);
-	rotate(m_rotation);
-	scale(m_scale);
-
-	drawAtTransformation();
-
-	popMatrices();
-
-	for(auto it = m_children.begin(); it != m_children.end(); ++it)
-	{
-		(*it)->draw();
-	}
-}
-
-void GameObject::drawAtTransformation() const
-{
-	drawSphere(Vec3f(0, 0, 0), 15);
-}
-
 void GameObject::addChild(GameObject* child)
 {
 	m_children.push_back(child);
