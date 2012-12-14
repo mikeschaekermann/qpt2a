@@ -6,7 +6,10 @@ class StemCell :
 	virtual public Cell
 {
 public:
-	StemCell() : Cell()
+	StemCell(unsigned id) :
+		GameObject(id),
+		Cell(id)
 	{
+		m_fRadius = 10.f;
 	}
 };

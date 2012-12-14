@@ -31,7 +31,7 @@
     <ClCompile Include="..\..\src\client\screens\Screen.cpp" />
     <ClCompile Include="..\..\src\common\Cell.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
-    <ClCompile Include="..\..\src\common\IdCellMap.cpp" />
+    <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
     <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp" />
@@ -76,9 +76,9 @@
     <ClInclude Include="..\..\src\common\Config.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
     <ClInclude Include="..\..\src\common\Helper.h" />
-    <ClInclude Include="..\..\src\common\ICellMap.h" />
+    <ClInclude Include="..\..\src\common\IGameObjectMap.h" />
     <ClInclude Include="..\..\src\common\ICollisionBehavior.h" />
-    <ClInclude Include="..\..\src\common\IdCellMap.h" />
+    <ClInclude Include="..\..\src\common\IdGameObjectMap.h" />
     <ClInclude Include="..\..\src\common\Logger.h" />
     <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h" />
     <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h" />
@@ -101,8 +101,8 @@
     <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h" />
     <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
     <ClInclude Include="..\..\src\common\Player.h" />
-    <ClInclude Include="..\..\src\common\Population.h" />
-    <ClInclude Include="..\..\src\common\PositionCellMap.h" />
+    <ClInclude Include="..\..\src\common\GameObjectContainer.h" />
+    <ClInclude Include="..\..\src\common\PositionGameObjectMap.h" />
     <ClInclude Include="..\..\src\common\StandardCell.h" />
     <ClInclude Include="..\..\src\common\StemCell.h" />
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h" />

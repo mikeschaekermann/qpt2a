@@ -51,10 +51,12 @@ private:
 	/// perspective cam for the game
 	Cam cam;
 
+	/// all game objects registered to be updated
+	IdGameObjectMap		gameObjectsToUpdate;
+
 	/// all game objects registered to be drawn
 	IdGameObjectMap		gameObjectsToDraw;
 
 	/// all game objects registered to be pickable
 	IdGameObjectMap		gameObjectsToPick;
 };
-

@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
-GameObject::GameObject() : 
-	m_uiId(0),
+GameObject::GameObject(unsigned id) : 
+	m_uiId(id),
 	m_position(0, 0, 0),
 	m_rotation(0, 0, 0),
 	m_scale(1, 1, 1)

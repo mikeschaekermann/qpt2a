@@ -42,4 +42,3 @@ private:
 	std::stack<Screen*> m_screenStack;
 	Screen* m_backgroundScreen;
 };
-

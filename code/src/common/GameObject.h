@@ -2,21 +2,17 @@
 
 #include "../common/Config.h"
 #include "ICollisionBehavior.h"
-#include "cinder/gl/gl.h"
 
 #include <vector>
-
-using namespace gl;
 
 class GameObject
 {
 public:
-	GameObject();
+	GameObject(const unsigned id);
 	virtual ~GameObject(void);
 
 	unsigned getId() const { return m_uiId; }
-	void setId(unsigned id) { m_uiId = id; }
-
+	
 	Vec3f getPosition() const { return m_position; }
 	void setPosition(Vec3f position) { m_position = position; }
 
@@ -25,6 +21,8 @@ public:
 
 	Vec3f getScale() const { return m_scale; }
 	void setScale(Vec3f scale) { m_scale = scale; }
+
+	float getRadius() const { return radius; }
 
 	void setCollisionBehavior(ICollisionBehavior* collisionBehavior) { m_pCollisionBehavior = collisionBehavior; }
 
@@ -48,10 +46,12 @@ protected:
 	Vec3f m_rotation;
 	/// current scale of the object
 	Vec3f m_scale;
+	/// game object's radius
+	float radius;
 
 private:
-	/// object id assigned by the player class which is unique per player
-	unsigned m_uiId;
+	/// unique id identifying the game object within the process
+	const unsigned m_uiId;
 	
 	/// all children in the scene graph
 	vector<GameObject*> m_children;

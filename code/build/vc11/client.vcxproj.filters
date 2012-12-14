@@ -70,9 +70,6 @@
     <ClCompile Include="..\..\src\common\Logger.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\common\IdCellMap.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\client\managers\AssetManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
@@ -111,11 +108,14 @@
     </ClCompile>
     <ClCompile Include="..\..\src\client\rendering\Cam.cpp">
       <Filter>Rendering</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\src\client\actors\behaviors\MessagingBehavior.cpp">
       <Filter>Actors\Behaviors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
+    <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.h">
@@ -187,22 +187,10 @@
     <ClInclude Include="..\..\src\common\Logger.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\Population.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\PositionCellMap.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\common\Config.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\Helper.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\ICellMap.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\IdCellMap.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\client\managers\AssetManager.h">
@@ -261,11 +249,23 @@
     </ClInclude>
     <ClInclude Include="..\..\src\client\rendering\Cam.h">
       <Filter>Rendering</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\src\client\actors\behaviors\MessagingBehavior.h">
       <Filter>Actors\Behaviors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\client\ClientMain.h" />
+    <ClInclude Include="..\..\src\common\IGameObjectMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\IdGameObjectMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\PositionGameObjectMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\GameObjectContainer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">

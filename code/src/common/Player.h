@@ -7,7 +7,6 @@
 #include <map>
 
 #include "StemCell.h"
-#include "Population.h"
 
 using namespace std;
 
@@ -17,7 +16,6 @@ class Player
 private:
 	unsigned int m_uiId;
 	string m_strName;
-	Population m_population;
 	
 public:
 
@@ -31,6 +29,4 @@ public:
 
 	unsigned int getId() const { return m_uiId; }
 	const string& getName() const { return m_strName; }
-	Population& getPopulation() { return m_population; }
-	const Population& getConstPopulation() const { return m_population; }
 };

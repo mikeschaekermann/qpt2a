@@ -13,7 +13,7 @@ class Cell :
 	virtual public GameObject
 {
 public:
-	Cell();
+	Cell(unsigned id);
 
 	void init(const Vec2f position, float angle);
 
@@ -36,5 +36,5 @@ protected:
 	bool m_bIsComplete;
 	Player * m_pOwner;
 
-	Cell(float radius);
+	///Cell(float radius);
 };

@@ -1,13 +1,13 @@
 #include "Cell.h"
 
-Cell::Cell() :
-	GameObject(), // warum rufst du den leeren ctor von der oberklasse auf?
+Cell::Cell(unsigned id) :
+	GameObject(id),
 	m_fHealthPoints(HEALTH_POINTS),
 	m_bIsInitialized(false)
 {
 	setCollisionBehavior(new CellCollisionBehavior());
 }
-
+/*
 // warum ein protected ctor nur um den radius zu setzen? der radius ist eh schon selber protected und kann von jeder unterklasse gestzt werden.
 Cell::Cell(float radius) : m_fRadius(radius) 
 {
@@ -15,6 +15,7 @@ Cell::Cell(float radius) : m_fRadius(radius)
 	// delegation funktioniert erst ab C++11 und zwar wird ein anderer ctor in der init liste aufgerufen
 	Cell();
 }
+*/
 
 // warum eine init methode?
 void Cell::init(const Vec2f position, float angle)
