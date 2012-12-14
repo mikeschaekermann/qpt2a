@@ -23,8 +23,6 @@ public:
 	  m_uiId(id),
 	  m_strName(name)
 	{
-		Cell* stemcell = new StemCell();
-		m_population.createCell(stemcell, position, 0.f);
 	}
 
 	unsigned int getId() const { return m_uiId; }
