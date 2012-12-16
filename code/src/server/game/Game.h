@@ -87,7 +87,7 @@ public:
 			}
 		}
 
-		PlayerServer *p = new PlayerServer(PlayerServer::getNewId(), playerName, request.endpoint, startPositions[m_players.size()]);
+		PlayerServer *p = new PlayerServer(playerName, request.endpoint, startPositions[m_players.size()]);
 
 		m_players.push_back(p);
 

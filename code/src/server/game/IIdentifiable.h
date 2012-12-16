@@ -6,6 +6,8 @@ public:
 	{
 		return nextId++;
 	}
+protected:
+	IIdentifiable() {}
 private:
 	static unsigned int nextId;
 };

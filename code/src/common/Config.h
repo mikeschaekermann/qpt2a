@@ -19,7 +19,6 @@ using namespace cinder::app;
 
 
 
-
 /*
  * logger
  *

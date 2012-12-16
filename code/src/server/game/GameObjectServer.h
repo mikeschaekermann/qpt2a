@@ -8,10 +8,7 @@ class GameObjectServer :
 	public IIdentifiable
 {
 public:
-	bool intersects() const
-	{
-		return m_pCollisionBehavior->intersects();
-	}
-protected:
-	ICollisionBehavior* m_pCollisionBehavior;
+	GameObjectServer() :
+		GameObject(IIdentifiable::getNewId())
+	{}
 };

@@ -14,10 +14,10 @@ class PlayerServer :
 	public Player,
 	public ConnectionEndpoint,
 	public IIdentifiable
-{	
+{
 public:
-	PlayerServer(unsigned int id, string name, boost::asio::ip::udp::endpoint endpoint, Vec3f position) :
-		Player(id, name),  
+	PlayerServer(string name, boost::asio::ip::udp::endpoint endpoint, Vec3f position) :
+		Player(IIdentifiable::getNewId(), name),  
 		ConnectionEndpoint(endpoint),
 		stemCell(new StemCell(GameObjectServer::getNewId()))
 	{
