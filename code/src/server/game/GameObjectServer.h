@@ -1,8 +1,11 @@
 #pragma once
 
-#include "../../common/ICollisionBehavior.h"
+#include "../../common/GameObject.h"
+#include "IIdentifiable.h"
 
-class GameObject : public ICollisionBehavior
+class GameObjectServer : 
+	virtual public GameObject,
+	public IIdentifiable
 {
 public:
 	bool intersects() const

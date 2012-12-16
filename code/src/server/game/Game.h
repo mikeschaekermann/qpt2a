@@ -19,10 +19,10 @@
 #include "../event/EventQueue.h"
 
 #include "EventCreator.h"
-#include "Cell.h"
-#include "StemCell.h"
-#include "StandardCell.h"
-#include "Player.h"
+#include "../../common/Cell.h"
+#include "../../common/StemCell.h"
+#include "../../common/StandardCell.h"
+#include "PlayerServer.h"
 
 using namespace std;
 
@@ -39,13 +39,15 @@ public:
 	{
 		m_fWorldRadius = WORLD_RADIUS;
 
-		m_pafStartPositions = new float[MAX_PLAYER_SIZE][2];
+		startPositions.reserve(MAX_PLAYER_SIZE);
 		for (unsigned int i = 0; i < MAX_PLAYER_SIZE; ++i)
 		{
-			m_pafStartPositions[i][0] = cosf(i * (360.f / MAX_PLAYER_SIZE) * (float)M_PI / 180.f) * PLAYER_START_DISTANCE;
-			m_pafStartPositions[i][1] = sinf(i * (360.f / MAX_PLAYER_SIZE) * (float)M_PI / 180.f) * PLAYER_START_DISTANCE;
+			startPositions[i] = Vec3f(
+				cosf(i * (360.f / MAX_PLAYER_SIZE) * (float)M_PI / 180.f) * PLAYER_START_DISTANCE,
+				sinf(i * (360.f / MAX_PLAYER_SIZE) * (float)M_PI / 180.f) * PLAYER_START_DISTANCE,
+				0
+			);
 		}
-
 
 		cout << "Game created" << endl;
 	}
@@ -73,7 +75,7 @@ public:
 			return;
 		}
 
-		vector<Player*>::const_iterator it = m_players.begin();
+		auto it = m_players.begin();
 		for (; it != m_players.end(); ++it)
 		{
 			if ((*it)->getName() == playerName)
@@ -85,7 +87,7 @@ public:
 			}
 		}
 
-		Player *p = new Player(createPlayerId(), playerName, request.endpoint, m_pafStartPositions[m_players.size()]);
+		PlayerServer *p = new PlayerServer(PlayerServer::getNewId(), playerName, request.endpoint, startPositions[m_players.size()]);
 
 		m_players.push_back(p);
 
@@ -115,8 +117,8 @@ public:
 				startgame->startCellIds[i] = 0;
 
 				startgame->startPositions[i] = new float[2];
-				startgame->startPositions[i][0] = m_players[i]->getPopulation().find((unsigned int)0)->getPosition()[0];
-				startgame->startPositions[i][1] = m_players[i]->getPopulation().find((unsigned int)0)->getPosition()[1];
+				startgame->startPositions[i][0] = m_players[i]->getStemCell.getPoition().x;
+				startgame->startPositions[i][1] = m_players[i]->getStemCell.getPoition().y;
 			}
 
 			m_pNetworkManager->send(startgame);
@@ -168,16 +170,11 @@ public:
 		}
 	}
 
-	vector<Player*> m_players;
+	vector<PlayerServer*> m_players;
 private:
 	NetworkManager* m_pNetworkManager;
 	EventQueue* m_pEventQueue;
 
-	float (*m_pafStartPositions)[2]; ///< pointer of arrays
+	vector<Vec3f> startPositions;
 	float m_fWorldRadius;
-
-	unsigned int createPlayerId()
-	{
-		return m_players.size();
-	}
 };

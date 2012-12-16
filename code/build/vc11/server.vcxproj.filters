@@ -1,16 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="..\..\src\Server\game\Cell.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Server\game\Game.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\GameObject.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\Player.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\event\BuildingEvent.h">
@@ -21,9 +12,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\Server\event\EventQueue.h">
       <Filter>Eventlogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\StemCell.h">
-      <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\game\StandardCell.h">
       <Filter>Gamelogic</Filter>
@@ -97,7 +85,7 @@
     <ClInclude Include="..\..\src\Server\game\EventCreator.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\PositionCellMap.h">
+    <ClInclude Include="..\..\src\common\Cell.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h">
@@ -106,23 +94,56 @@
     <ClInclude Include="..\..\src\common\Config.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\ICellMap.h">
+    <ClInclude Include="..\..\src\common\GameObject.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\GameObjectContainer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Helper.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\ICollisionBehavior.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\IdGameObjectMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\IGameObjectMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\common\Logger.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\Population.h">
+    <ClInclude Include="..\..\src\common\Player.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\PositionGameObjectMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\StandardCell.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\StemCell.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\GameObject.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="..\..\src\Server\game\CellServer.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\GameObjectServer.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\StemCellServer.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\PlayerServer.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\game\IIdentifiable.h">
+      <Filter>Gamelogic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -162,5 +183,22 @@
     <Filter Include="Common">
       <UniqueIdentifier>{a4fb2bda-a748-4b28-b6f6-af4050e87560}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\common\Cell.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\GameObject.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\Logger.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\StandardCell.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

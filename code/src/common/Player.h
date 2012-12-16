@@ -12,19 +12,17 @@ using namespace std;
 
 class Player
 {
-
-private:
-	unsigned int m_uiId;
-	string m_strName;
-	
 public:
-
-	Player(unsigned int id, string name, Vec2f position) :
-	  m_uiId(id),
-	  m_strName(name)
+	Player(unsigned int id, string name) :
+		id(id),
+		name(name)
 	{
 	}
 
-	unsigned int getId() const { return m_uiId; }
-	const string& getName() const { return m_strName; }
+	unsigned int getId() const { return id; }
+	const string& getName() const { return name; }
+
+private:
+	unsigned int id;
+	string name;
 };

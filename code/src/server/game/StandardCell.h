@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Cell.h"
+#include "../../common/StandardCell.h"
+#include "CellServer.h"
 
-class StandardCell : public Cell
+class StandardCellServer :
+	virtual public StandardCell,
+	virtual public CellServer
 {
-public:
-	static const float m_fAttackRadius;
-	StandardCell() : Cell(5.f) { }
 };
