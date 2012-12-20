@@ -7,8 +7,9 @@ class GameObjectServer :
 	virtual public GameObject,
 	public IIdentifiable
 {
-public:
-	GameObjectServer() :
-		GameObject(IIdentifiable::getNewId())
-	{}
+protected:
+	GameObjectServer()
+	{
+		id = IIdentifiable::getNewId();
+	}
 };

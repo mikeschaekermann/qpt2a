@@ -13,9 +13,6 @@
     <ClInclude Include="..\..\src\Server\event\EventQueue.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\StandardCell.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
@@ -145,6 +142,12 @@
     <ClInclude Include="..\..\src\server\game\IIdentifiable.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\ConfigurationDataHandler.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\StandardCellServer.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -199,6 +202,13 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\StandardCell.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\Main.cpp" />
+    <ClCompile Include="..\..\src\server\game\EventCreator.cpp">
+      <Filter>Gamelogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp">
+      <Filter>Eventlogic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,9 +1,8 @@
 #pragma once
 #include <string>
+#include <sstream>
 #include <vector>
 #include <cmath>
-
-#include "cinder/Vector.h"
 
 #include "../../common/network/NetworkManager.h"
 #include "../../common/network/messages/game/outgame/JoinRequest.h"
@@ -16,165 +15,193 @@
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CellNew.h"
 
+#include "../../common/Config.h"
+#include "../../common/Helper.h"
+#include "../../common/ConfigurationDataHandler.h"
+#include "../../common/GameObjectContainer.h"
+
 #include "../event/EventQueue.h"
 
 #include "EventCreator.h"
-#include "../../common/Cell.h"
-#include "../../common/StemCell.h"
-#include "../../common/StandardCell.h"
+#include "CellServer.h"
+#include "StemCellServer.h"
+#include "StandardCellServer.h"
 #include "PlayerServer.h"
 
 using namespace std;
 
-#define MAX_PLAYER_SIZE 4
-#define WORLD_RADIUS 100.f
-#define PLAYER_START_DISTANCE 70.f
-
 class Game
 {
 public:
-	Game() :
-		m_pNetworkManager(0),
-		m_fWorldRadius(WORLD_RADIUS)
+	Game()
 	{
-		m_fWorldRadius = WORLD_RADIUS;
+		LOG_INFO("Game created");
 
-		startPositions.reserve(MAX_PLAYER_SIZE);
-		for (unsigned int i = 0; i < MAX_PLAYER_SIZE; ++i)
-		{
-			startPositions[i] = Vec3f(
-				cosf(i * (360.f / MAX_PLAYER_SIZE) * (float)M_PI / 180.f) * PLAYER_START_DISTANCE,
-				sinf(i * (360.f / MAX_PLAYER_SIZE) * (float)M_PI / 180.f) * PLAYER_START_DISTANCE,
-				0
-			);
-		}
+		ConfigurationDataHandler::getInstance()->readFromXML("C:/randompath/../random.xml");
 
-		cout << "Game created" << endl;
+		players.reserve(CONFIG_INT2("player.max", 4));
+
+		stringstream message;
+		message << "Space for " << players.max_size() << " reserved";
+		LOG_INFO(message.str());
 	}
 
 	void bind(NetworkManager* networkManager, EventQueue* eventQueue)
 	{
-		m_pNetworkManager = networkManager;
-		cout << "NetworkManager bound to Game" << endl;
+		this->networkManager = networkManager;
+		LOG_INFO("NetworkManager bound to game");
 
-		m_pEventQueue = eventQueue;
-		cout << "EventQueue bound to Game" << endl;
+		this->eventQueue = eventQueue;
+		LOG_INFO("EventQueue bound to Game");
 
-		EventCreator::getInstance().bind(m_pNetworkManager, m_pEventQueue, &m_players);
+		//EventCreator::getInstance().bind(m_pNetworkManager, m_pEventQueue, &m_players);
 	}
 
 	void join(JoinRequest request)
 	{
+		stringstream message;
 		string playerName = request.name;
 		
-		if(m_players.size() >= MAX_PLAYER_SIZE)
+		if(players.size() == players.max_size())
 		{
 			JoinFailure *failure = new JoinFailure();
 			failure->errorCode = JoinErrorCode::GameIsFull;
-			m_pNetworkManager->send(failure);
+			networkManager->send(failure);
+
+			message.clear();
+			message << "Player " << playerName << " tried to join the game. But game is full";
+			LOG_INFO(message.str());
+
 			return;
 		}
 
-		auto it = m_players.begin();
-		for (; it != m_players.end(); ++it)
+		for (auto it = players.begin(); it != players.end(); ++it)
 		{
 			if ((*it)->getName() == playerName)
 			{
 				JoinFailure *failure = new JoinFailure();
 				failure->errorCode = JoinErrorCode::NameAlreadyTaken;
-				m_pNetworkManager->send(failure);
+				networkManager->send(failure);
+
+				message.clear();
+				message << "Playername " << playerName << " already exists";
+				LOG_INFO(message.str());
+
 				return;
 			}
 		}
 
-		PlayerServer *p = new PlayerServer(playerName, request.endpoint, startPositions[m_players.size()]);
+		vector<float> xPositions = ConfigurationDataHandler::getInstance()->getChildrenDataVector<float>("players", "player.startposition.x");
+		vector<float> yPositions = ConfigurationDataHandler::getInstance()->getChildrenDataVector<float>("players", "player.startposition.y");
+		Vec3f startPosition(xPositions[players.size()], yPositions[players.size()], 0.f);
+		float stemcellRadius = CONFIG_FLOAT1("cell.stemcell.radius");
+		float worldRadius = CONFIG_FLOAT1("world.radius");
 
-		m_players.push_back(p);
+		if (!isInRadiusOf(startPosition, stemcellRadius, Vec3f(0.f, 0.f, 0.f), worldRadius))
+		{
+			LOG_ERROR("Startposition of next player does not lie within the world");
+			return;
+		}
+		PlayerServer *p = new PlayerServer(playerName, request.endpoint, startPosition);
+
+		players.push_back(p);
 
 		JoinSuccess *success = new JoinSuccess();
 		success->playerId = p->getId();
-		m_pNetworkManager->send(success);
+		networkManager->send(success);
 
-		if (m_players.size() == MAX_PLAYER_SIZE)
+		message.clear();
+		message << "Player " << playerName << " joined the game";
+		LOG_INFO(message.str());
+
+		if (players.size() == players.max_size())
 		{
 			StartGame *startgame = new StartGame();
-			startgame->worldRadius = m_fWorldRadius;
-			startgame->playerCount = m_players.size();
-			startgame->playerIds = new unsigned int[m_players.size()];
-			startgame->playerNames = new char*[m_players.size()];
-			startgame->playerNameSizes = new unsigned int[m_players.size()];
-			startgame->startCellIds = new unsigned int[m_players.size()];
-			startgame->startPositions = new float*[m_players.size()];
-			for (unsigned int i = 0; i < m_players.size(); ++i)
+			startgame->worldRadius = worldRadius;
+			startgame->playerCount = players.size();
+			startgame->playerIds = new unsigned int[players.size()];
+			startgame->playerNames = new char*[players.size()];
+			startgame->playerNameSizes = new unsigned int[players.size()];
+			startgame->startCellIds = new unsigned int[players.size()];
+			startgame->startPositions = new float*[players.size()];
+			for (unsigned int i = 0; i < players.size(); ++i)
 			{
-				startgame->playerIds[i] = m_players[i]->getId();
-				startgame->playerNameSizes[i] = m_players[i]->getName().length();
+				startgame->playerIds[i] = players[i]->getId();
+				startgame->playerNameSizes[i] = players[i]->getName().length();
 				for (unsigned int j = 0; j < startgame->playerNameSizes[i]; ++j)
 				{
-					startgame->playerNames[i][j] = m_players[i]->getName()[j];
+					startgame->playerNames[i][j] = players[i]->getName()[j];
 				}
 
 				startgame->startCellIds[i] = 0;
 
 				startgame->startPositions[i] = new float[2];
-				startgame->startPositions[i][0] = m_players[i]->getStemCell.getPoition().x;
-				startgame->startPositions[i][1] = m_players[i]->getStemCell.getPoition().y;
+				startgame->startPositions[i][0] = players[i]->getStemCell().getPosition().x;
+				startgame->startPositions[i][1] = players[i]->getStemCell().getPosition().y;
 			}
 
-			m_pNetworkManager->send(startgame);
+			networkManager->send(startgame);
+
+			LOG_INFO("Game started");
 		}
 	}
 
 	void createCell(CreateCellRequest request)
 	{
+		stringstream message;
 		unsigned int playerId = request.playerId;
 		unsigned int cellId = request.cellId;
 		float angle = request.angle;
 		CellType type = request.type;
 
-		if (playerId < m_players.size())
+		if (playerId < players.size())
 		{
-			Player& player = *(m_players[playerId]);
-			Cell* parentCell = player.getPopulation().find(cellId);
+			PlayerServer & player = *(players[playerId]);
+			CellServer * parentCell = dynamic_cast<CellServer *>(gameObjectContainer.find(cellId));
 			if (parentCell == 0)
 			{
-				/// cell does not exist
+				message.clear();
+				message << "Cell with the id " << cellId << " does not exist";
+				LOG_INFO(message.str());
 				return;
 			}
 			
-			Cell* cell = 0;
+			CellServer * cell = 0;
+			Vec3f position;
 			switch (type.getType())
 			{
 			case CellType::StemCell:
-				cell = new StemCell();
+				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("cell.stemcell.radius"), position);
+				cell = new StemCellServer(position, angle);
 			case CellType::StandardCell:
-				cell = new StandardCell();
+				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("cell.standardcell.radius"), position);
+				cell = new StandardCellServer(position, angle);
 			default:
 				cell = 0;
 			}
 
 			/// get current time
-			double time = m_pEventQueue->getTime();
+			double time = eventQueue->getTime();
 
-			if (!EventCreator::getInstance().createBuildEvent(time, request.requestId, type.getType(), angle, player, *cell))
+			if (!EventCreator::getInstance()->createBuildEvent(time, request.requestId, type.getType(), angle, player, *cell))
 			{
 				/// creation failed
 				return;
 			}
 
-			if (EventCreator::getInstance().createAttackEvent(time, false, player, *cell))
+			if (EventCreator::getInstance()->createAttackEvent(time, false, player, *cell))
 			{
 				/// no attacks are performed
 				return;
 			}
 		}
+		LOG_INFO("Players Id is invalid");
 	}
 
-	vector<PlayerServer*> m_players;
+	
 private:
-	NetworkManager* m_pNetworkManager;
-	EventQueue* m_pEventQueue;
-
-	vector<Vec3f> startPositions;
-	float m_fWorldRadius;
+	NetworkManager* networkManager;
+	EventQueue* eventQueue;
+	vector<PlayerServer*> players;
+	GameObjectContainer gameObjectContainer;
 };

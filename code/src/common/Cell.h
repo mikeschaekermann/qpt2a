@@ -1,11 +1,9 @@
 #pragma once
 
 #include <vector>
+#include <stdexcept>
 
 #include "GameObject.h"
-#include "CellCollisionBehavior.h"
-
-#define HEALTH_POINTS 100.f
 
 class Player;
 
@@ -13,28 +11,29 @@ class Cell :
 	virtual public GameObject
 {
 public:
-	Cell(unsigned id);
-
-	void init(const Vec2f position, float angle);
-
 	void decreaseHealthPointsBy(float damage);
 
 	void completeCell();
 
-	float getHealthPoints() const;
-	float getAngle() const;
-	float getRadius() const;
-	bool isComplete() const;
-	void setOwner( Player * owner);
-	Player * getPlayer();
-protected:
-	float m_fHealthPoints;
-	bool m_bIdSet;
-	float m_fAngle;
-	bool m_bIsInitialized;
-	float m_fRadius;
-	bool m_bIsComplete;
-	Player * m_pOwner;
+	float getHealthPoints() const { return healthPoints; };
 
-	///Cell(float radius);
+	float getAngle() const { return angle; };
+
+	bool getIsComplete() const { return isComplete; };
+
+	const Player * getOwner() const { return owner; };
+	void setOwner( const Player * owner) { this->owner = owner; };
+protected:
+	float healthPoints;
+	float angle;
+	bool isComplete;
+	const Player * owner;
+
+	Cell(void);
+	Cell(Vec3f position, float radius, float angle, float healthPoints);
+private:
+	virtual void setPosition(Vec3f position) { throw logic_error("Not implemented exception"); }
+	virtual void setRotation(Vec3f rotation) { throw logic_error("Not implemented exception"); }
+	virtual void setScale(Vec3f scale) { throw logic_error("Not implemented exception"); }
+	virtual void setRadius(float radius) { throw logic_error("Not implemented exception"); }
 };

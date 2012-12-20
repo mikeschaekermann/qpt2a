@@ -9,4 +9,18 @@ class CellServer :
 	virtual public Cell,
 	virtual public GameObjectServer
 {
+public:
+	void getNextCellPositionByAngle(float angle, float nextCellRadius, Vec3f & outPosition) const
+	{
+		outPosition = position;
+		outPosition.x += cosf(angle * (float)M_PI / 180.f) * nextCellRadius;
+		outPosition.y += sinf(angle * (float)M_PI / 180.f) * nextCellRadius;
+	}
+protected:
+	CellServer(void);
+	CellServer(Vec3f position, float radius, float angle, float healthPoints) :
+		Cell(position, radius, angle, healthPoints)
+	{ }
+private:
+	virtual void setId(unsigned int id) { throw logic_error("Not implemented exception"); }
 };

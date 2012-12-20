@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ConfigurationDataHandler.h"
 #include "Cell.h"
 
 class StandardCell :
@@ -8,10 +9,7 @@ class StandardCell :
 public:
 	static const float m_fAttackRadius;
 
-	StandardCell(unsigned id) :
-		GameObject(id),
-		Cell(id)
-	{
-		m_fRadius = 5.f;
-	}
+	StandardCell(Vec3f position, float angle) :
+		Cell(position, CONFIG_FLOAT1("cell.standardcell.radius"), angle, CONFIG_FLOAT1("cell.standardcell.healthpoints"))
+	{ }
 };

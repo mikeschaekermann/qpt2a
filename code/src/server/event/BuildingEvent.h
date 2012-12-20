@@ -5,22 +5,20 @@
 #include "Event.h"
 
 #include "../game/EventCreator.h"
-#include "../game/Cell.h"
-#include "../game/Player.h"
+#include "../game/CellServer.h"
+#include "../game/PlayerServer.h"
 
 #include "../../common/network/NetworkManager.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellComplete.h"
 
-#define BUILDING_EVENT_DURATION 30.f
-
-class BuildingEvent : public Event
+class BuildingEvent : public GameEvent
 {
 public:
-	BuildingEvent(double startTime, NetworkManager& manager, Cell& cell, const vector<Player*>& players);
+	BuildingEvent(double startTime, NetworkManager & manager, CellServer & cell, const vector<PlayerServer *> & players);
 
 	virtual void trigger();
 private:
-	NetworkManager& m_rManager;
-	Cell& m_rCell;
-	const vector<Player*>& m_rPlayers;
+	NetworkManager & manager;
+	CellServer & cell;
+	const vector<PlayerServer *> & players;
 };

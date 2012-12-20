@@ -1,27 +1,29 @@
 #include "BuildingEvent.h"
 
-BuildingEvent::BuildingEvent(double startTime, NetworkManager& manager, Cell& cell, const vector<Player*>& players) :
-	m_rManager(manager),
-	m_rCell(cell),
-	m_rPlayers(players),
-	Event(startTime, BUILDING_EVENT_DURATION)
+#include "../../common/ConfigurationDataHandler.h"
+
+BuildingEvent::BuildingEvent(double startTime, NetworkManager & manager, CellServer & cell, const vector<PlayerServer *> & players) :
+	manager(manager),
+	cell(cell),
+	players(players),
+	GameEvent(startTime, CONFIG_INT1("event.building.time"))
 	{ }
 
 void BuildingEvent::trigger()
 {
-	m_rCell.completeCell();
-	Player* current = 0;
-	for (vector<Player*>::const_iterator it = m_rPlayers.begin(); it != m_rPlayers.end(); ++it)
+	cell.completeCell();
+	PlayerServer * current = 0;
+	for (vector<PlayerServer *>::const_iterator it = players.begin(); it != players.end(); ++it)
 	{
 		CreateCellComplete *complete = new CreateCellComplete();
-		complete->cellId = m_rCell.getId();
+		complete->cellId = cell.getId();
 		complete->endpoint = (*it)->getEndpoint();
-		m_rManager.send(complete);
+		manager.send(complete);
 
-		if ((*it)->getConstPopulation().find(m_rCell.getId()))
+		if ((*it)->getId() == cell.getOwner()->getId())
 		{
 			current = *it;
 		}
 	}
-	EventCreator::getInstance().createAttackEvent(m_dDeadTime, true, *current, m_rCell);
+	EventCreator::getInstance()->createAttackEvent(m_dDeadTime, true, *current, cell);
 }
