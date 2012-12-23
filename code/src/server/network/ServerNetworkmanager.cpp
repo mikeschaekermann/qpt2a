@@ -7,7 +7,7 @@ using namespace std;
 
 ConnectionEndpoint* ServerNetworkManager::getConnectionEndpoint(boost::asio::ip::udp::endpoint endpoint)
 {
-	for (std::vector<Player*>::iterator it = m_game->m_players.begin(); it != m_game->m_players.end(); ++it)
+	for (std::vector<PlayerServer*>::iterator it = m_game->players.begin(); it != m_game->players.end(); ++it)
 	{
 		if ((*it)->getEndpoint() == endpoint)
 		{
@@ -66,9 +66,9 @@ void ServerNetworkManager::handleMessage(NetworkMessage* message)
 vector<ConnectionEndpoint> ServerNetworkManager::getConnectionEndpoints()
 {
 	vector<ConnectionEndpoint> endpoints;
-	for (unsigned i = 0; i < m_game->m_players.size(); ++i)
+	for (unsigned i = 0; i < m_game->players.size(); ++i)
 	{
-		endpoints.push_back(*m_game->m_players[i]);
+		endpoints.push_back(*m_game->players[i]);
 	}
 		
 	return endpoints;

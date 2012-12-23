@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "../../common/network/NetworkManager.h"
+#include "../network/ServerNetworkManager.h"
 #include "../../common/network/messages/game/outgame/JoinRequest.h"
 #include "../../common/network/messages/game/outgame/JoinFailure.h"
 #include "../../common/network/messages/game/outgame/JoinSuccess.h"
@@ -33,6 +34,7 @@ using namespace std;
 class Game
 {
 public:
+	friend class ServerNetworkManager;
 	Game()
 	{
 		LOG_INFO("Game created");

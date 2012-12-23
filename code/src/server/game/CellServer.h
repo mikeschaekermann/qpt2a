@@ -17,7 +17,7 @@ public:
 		outPosition.y += sinf(angle * (float)M_PI / 180.f) * nextCellRadius;
 	}
 protected:
-	CellServer(void);
+	CellServer(void) { }
 	CellServer(Vec3f position, float radius, float angle, float healthPoints) :
 		Cell(position, radius, angle, healthPoints)
 	{ }
