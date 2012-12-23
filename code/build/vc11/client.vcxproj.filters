@@ -116,6 +116,12 @@
     <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\sound\SoundPlayer.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\assets\ModelBufferData.cpp">
+      <Filter>Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.h">
@@ -266,6 +272,12 @@
     <ClInclude Include="..\..\src\common\GameObjectContainer.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\client\sound\SoundPlayer.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\assets\ModelBufferData.h">
+      <Filter>Assets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -294,6 +306,12 @@
     </Filter>
     <Filter Include="Rendering">
       <UniqueIdentifier>{7d5d5b5c-d78b-4738-8662-a26403340421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{39b52f4d-25ad-489f-a5e1-114cbb64e465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{4284d13e-b99e-4968-928a-753dc4e376fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

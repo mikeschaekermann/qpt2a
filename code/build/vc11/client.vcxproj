@@ -20,6 +20,7 @@
     <ClCompile Include="..\..\src\client\actors\GameObjectClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\PlayerClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\StemCellClient.cpp" />
+    <ClCompile Include="..\..\src\client\assets\ModelBufferData.cpp" />
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
     <ClCompile Include="..\..\src\Client\input\TouchWay.cpp" />
     <ClCompile Include="..\..\src\client\managers\AssetManager.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="..\..\src\client\rendering\Cam.cpp" />
     <ClCompile Include="..\..\src\client\screens\GameScreen.cpp" />
     <ClCompile Include="..\..\src\client\screens\Screen.cpp" />
+    <ClCompile Include="..\..\src\client\sound\SoundPlayer.cpp" />
     <ClCompile Include="..\..\src\common\Cell.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
     <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp" />
@@ -61,6 +63,7 @@
     <ClInclude Include="..\..\src\client\actors\GameObjectClient.h" />
     <ClInclude Include="..\..\src\client\actors\PlayerClient.h" />
     <ClInclude Include="..\..\src\client\actors\StemCellClient.h" />
+    <ClInclude Include="..\..\src\client\assets\ModelBufferData.h" />
     <ClInclude Include="..\..\src\client\ClientMain.h" />
     <ClInclude Include="..\..\src\Client\input\TouchWay.h" />
     <ClInclude Include="..\..\src\client\managers\AssetManager.h" />
@@ -71,6 +74,7 @@
     <ClInclude Include="..\..\src\client\screens\GameScreen.h" />
     <ClInclude Include="..\..\src\client\screens\IScreenItem.h" />
     <ClInclude Include="..\..\src\client\screens\Screen.h" />
+    <ClInclude Include="..\..\src\client\sound\SoundPlayer.h" />
     <ClInclude Include="..\..\src\common\Cell.h" />
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h" />
     <ClInclude Include="..\..\src\common\Config.h" />
@@ -173,7 +177,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows;$(FMOD_DIR)\api\inc;$(ASSIMP_DIR)\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>Cdecl</CallingConvention>
       <IntrinsicFunctions>false</IntrinsicFunctions>
@@ -183,8 +187,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;$(OPENCV_DIR)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;$(OPENCV_DIR);$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib;$(QUICKTIMESDK_DIR)\Libraries</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmodex_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;assimp32d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <OptimizeReferences>
       </OptimizeReferences>
@@ -208,7 +212,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows;$(FMOD_DIR)\api\inc;$(ASSIMP_DIR)\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -219,8 +223,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;;$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib;$(QUICKTIMESDK_DIR)\Libraries</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp32d.lib;fmodex_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -233,7 +237,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_LOG;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows;$(FMOD_DIR)\api\inc;$(ASSIMP_DIR)\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -244,8 +248,8 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cinder.lib;opencv_core242.lib;opencv_imgproc242.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;;$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib;$(QUICKTIMESDK_DIR)\Libraries</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp32.lib;fmodex_vc.lib;cinder.lib;opencv_core242.lib;opencv_imgproc242.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
     </Link>
   </ItemDefinitionGroup>
