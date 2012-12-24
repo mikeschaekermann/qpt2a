@@ -181,24 +181,28 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>Cdecl</CallingConvention>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <FunctionLevelLinking>
-      </FunctionLevelLinking>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;$(OPENCV_DIR);$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib;$(QUICKTIMESDK_DIR)\Libraries</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmodex_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;assimp32d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;$(OPENCV_DIR);$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib;$(QUICKTIMESDK_DIR)\Libraries;C:\Users\Daniel\Desktop\Repo\qpt2a\Code\libs</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp32d.lib;fmodexL_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OptimizeReferences>
-      </OptimizeReferences>
-      <EnableCOMDATFolding>
-      </EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
       <LinkStatus>
       </LinkStatus>
       <ShowProgress>NotSet</ShowProgress>
-      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
@@ -224,7 +228,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;;$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib;$(QUICKTIMESDK_DIR)\Libraries</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp32d.lib;fmodex_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
+      <AdditionalDependencies>assimp32d.lib;fmodexL_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>

@@ -14,6 +14,7 @@ string concatenate(string str, T value)
 {
 	return (str += static_cast<ostringstream*>( &(ostringstream() << value) )->str());
 }
+
 /**
  * Is true if the two hulls of the objects intersect
  */
