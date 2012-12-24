@@ -1,16 +1,12 @@
 #pragma once
+
 class IIdentifiable
 {
 public:
-	static unsigned int getNewId()
-	{
-		return nextId++;
-	}
+	static unsigned int getNewId();
 protected:
-	IIdentifiable() {}
+	IIdentifiable();
 private:
 	static unsigned int nextId;
 };
-
-unsigned int IIdentifiable::nextId = 0;
 

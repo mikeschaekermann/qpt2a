@@ -1,30 +1,29 @@
 #pragma once
 
-#include "../common/Config.h"
-#include "ICollisionBehavior.h"
-
 #include <vector>
+
+#include "../common/Config.h"
+
 
 class GameObject
 {
 public:
-	GameObject(const unsigned id);
 	virtual ~GameObject(void);
 
-	unsigned getId() const { return m_uiId; }
+	unsigned getId() const { return id; }
+	virtual void setId(unsigned int id) { this->id = id; }
 	
-	Vec3f getPosition() const { return m_position; }
-	void setPosition(Vec3f position) { m_position = position; }
+	Vec3f getPosition() const { return position; }
+	virtual void setPosition(Vec3f position) { this->position = position; }
 
-	Vec3f getRotation() const { return m_rotation; }
-	void setRotation(Vec3f rotation) { m_rotation = rotation; }
+	Vec3f getRotation() const { return rotation; }
+	virtual void setRotation(Vec3f rotation) { this->rotation = rotation; }
 
-	Vec3f getScale() const { return m_scale; }
-	void setScale(Vec3f scale) { m_scale = scale; }
+	Vec3f getScale() const { return scale; }
+	virtual void setScale(Vec3f scale) { this->scale = scale; }
 
 	float getRadius() const { return radius; }
-
-	void setCollisionBehavior(ICollisionBehavior* collisionBehavior) { m_pCollisionBehavior = collisionBehavior; }
+	virtual void setRadius(float radius) { this->radius = radius; }
 
 	void update(float frameTime);
 
@@ -40,24 +39,23 @@ public:
 	void addParent(GameObject* parent);
 
 protected:
+	/// unique id identifying the game object within the process
+	unsigned int id;
 	/// current position in the game
-	Vec3f m_position;
+	Vec3f position;
 	/// current rotation of the object
-	Vec3f m_rotation;
+	Vec3f rotation;
 	/// current scale of the object
-	Vec3f m_scale;
+	Vec3f scale;
 	/// game object's radius
 	float radius;
 
+	GameObject(void);
 private:
-	/// unique id identifying the game object within the process
-	const unsigned m_uiId;
-	
 	/// all children in the scene graph
-	vector<GameObject*> m_children;
+	vector<GameObject*> children;
 	/// all parents in the scene graph
-	vector<GameObject*> m_parents;
-
-	/// game object's collision behavior
-	ICollisionBehavior* m_pCollisionBehavior;
+	vector<GameObject*> parents;
+	
+	GameObject(const GameObject & cpy);
 };

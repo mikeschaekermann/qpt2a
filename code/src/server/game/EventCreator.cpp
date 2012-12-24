@@ -1,55 +1,56 @@
 #include "EventCreator.h"
 
-EventCreator* EventCreator::m_pInstance = 0;
+#include "../../common/Helper.h"
 
-EventCreator& EventCreator::getInstance()
+EventCreator* EventCreator::instance = 0;
+
+EventCreator * EventCreator::getInstance()
 {
-	if (m_pInstance == 0)
+	if (!instance)
 	{
-		m_pInstance = new EventCreator();
+		instance = new EventCreator();
 	}
-	return *m_pInstance;
+	return instance;
 }
 
-void EventCreator::bind(NetworkManager* networkmanager, EventQueue* eventqueue, vector<Player*>* players)
+void EventCreator::bind(NetworkManager * networkManager, EventQueue * eventQueue, GameObjectContainer * gameObjectContainer, vector<PlayerServer *> * players)
 {
-	m_pNetworkManager = networkmanager;
-	m_pEventQueue = eventqueue;
-	m_pPlayers = players;
+	this->networkManager = networkManager;
+	this->eventQueue = eventQueue;
+	this->gameObjectContainer = gameObjectContainer;
+	this->players = players;
 }
 
-bool EventCreator::createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, Player& currentPlayer, Cell& cell)
+bool EventCreator::createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & cell)
 {
-	const float* const position = currentPlayer.getPopulation().getRelativePosition(cell.getId(), angle);
-
-	for (unsigned int i = 0; i < m_pPlayers->size(); ++i)
+	if (!isInRadiusOf<float>(cell.getPosition(), cell.getRadius(), Vec3f::zero(), CONFIG_FLOAT1("world.radius")))
 	{
-		const vector<Cell*>& cells = 
-			(*m_pPlayers)[i]->getPopulation().findInRadiusOf(position, cell.getRadius());
-		if (cells.size() > 0)
+		CreateCellFailure *failure = new CreateCellFailure();
+		failure->requestId = requestId;
+		failure->errorCode = CreateCellErrorCode::OutsideGameArea;
+		networkManager->send(failure);
+		return false;
+	}
+
+	auto it = players->begin();
+	for (; it != players->end(); ++it)
+	{
+		const vector<GameObject *> & gameObjects = gameObjectContainer->findInRadiusOf(cell.getPosition(), cell.getRadius());
+		if (gameObjects.size() > 0)
 		{
 			/// collision detected
 			CreateCellFailure *failure = new CreateCellFailure();
 			failure->requestId = requestId;
 			failure->errorCode = CreateCellErrorCode::SpotAlreadyTaken;
-			m_pNetworkManager->send(failure);
+			networkManager->send(failure);
 			return false;
 		}
 	}
 
-	currentPlayer.getPopulation().createCell(&cell, position, angle);
+	gameObjectContainer->createGameObject(&cell);
 
-	if (cell.getId() < 0)
-	{
-		/**
-			* TODO: add enum for creation errors
-			* NOW:  -1 for all creation errors
-			*/
-		return false;
-	}
-
-	BuildingEvent* be = new BuildingEvent(time, *m_pNetworkManager, cell, *m_pPlayers);
-	m_pEventQueue->addEvent(be);
+	BuildingEvent * be = new BuildingEvent(time, *networkManager, cell, *players);
+	eventQueue->addEvent(be);
 		
 	CreateCellSuccess *success = new CreateCellSuccess();
 	success->requestId = requestId;
@@ -57,93 +58,100 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	success->position[0] = cell.getPosition()[0];
 	success->position[1] = cell.getPosition()[1];
 	success->angle = cell.getAngle();
-	m_pNetworkManager->send(success);
+	networkManager->send(success);
 
-	for (unsigned int i = 0; i < m_pPlayers->size(); ++i)
+	for (unsigned int i = 0; i < players->size(); ++i)
 	{
-		if ((*m_pPlayers)[i]->getId() != currentPlayer.getId())
+		if ((*players)[i]->getId() != currentPlayer.getId())
 		{
-			CellNew cellnew;
-			cellnew.playerId = currentPlayer.getId();
-			cellnew.cellId = cell.getId();
-			cellnew.position[0] = cell.getPosition()[0];
-			cellnew.position[1] = cell.getPosition()[1];
-			cellnew.type = type;
-			cellnew.endpoint = (*m_pPlayers)[i]->getEndpoint();
+			CellNew cellNew;
+			cellNew.playerId = currentPlayer.getId();
+			cellNew.cellId = cell.getId();
+			cellNew.position[0] = cell.getPosition()[0];
+			cellNew.position[1] = cell.getPosition()[1];
+			cellNew.type = type;
+			cellNew.endpoint = (*players)[i]->getEndpoint();
 		}
 	}
-
-	delete position;
 
 	return true;
 }
 
-bool EventCreator::createAttackEvent(const double time, const bool isAttacker, const Player& currentPlayer, Cell& currentCell)
+bool EventCreator::createAttackEvent(const double time, const bool isAttacker, const PlayerServer & currentPlayer, CellServer & currentCell)
 {
-	if (!(m_pNetworkManager && m_pEventQueue && m_pPlayers))
+	if (!(networkManager && eventQueue && players))
 	{
 		/// call bind first
 		return false;
 	}
 
-	if (isAttacker && (!currentCell.isComplete() || dynamic_cast<StandardCell*>(&currentCell) == 0))
+	if (isAttacker && (!currentCell.getIsComplete() || dynamic_cast<StandardCellServer *>(&currentCell) == 0))
 	{
 		/// cell could not be an attacker
 		return false;
 	}
 
-	for (unsigned int i = 0; i < m_pPlayers->size(); ++i)
+	auto playersIt = players->begin();
+	for (; playersIt != players->end(); ++playersIt)
 	{
-		if ((*m_pPlayers)[i]->getId() != currentPlayer.getId())
+		if ((*playersIt)->getId() != currentPlayer.getId())
 		{
 			/** 
 				* search for all cells that would be in its attack radius
-				* reversely all the other cells that are attackers have the current cell in its attack radius
+				* reversely all the other cell that are attackers have the current cell in its attack radius
 				*/
-			const vector<Cell*>& cells =
-				(*m_pPlayers)[i]->getPopulation().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + StandardCell::m_fAttackRadius);
+			const vector<GameObject *> & gameObjects =
+				gameObjectContainer->findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("cell.standardcell.attackradius"));
 					
-			ci::Vec2f attacker;
-			ci::Vec2f victim;
+			ci::Vec3f attacker;
+			ci::Vec3f victim;
 			/// those assignments are true for all iterations
 			if (isAttacker)
 			{
-				attacker = ci::Vec2f(currentCell.getPosition());
+				attacker = ci::Vec3f(currentCell.getPosition());
 			}
 			else
 			{
-				ci::Vec2f victim(currentCell.getPosition());
+				ci::Vec3f victim(currentCell.getPosition());
 			}
-			for (vector<Cell*>::const_iterator it = cells.begin(); it != cells.end(); ++it)
+			for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 			{
-				if ((*it)->isComplete())
+				CellServer * actualCell = dynamic_cast<CellServer *>(*it);
+				if (actualCell != 0 && actualCell->getIsComplete())
 				{
 					/// those assignments depend on the iterator
 					if (isAttacker)
 					{
-						victim = ci::Vec2f((*it)->getPosition());
+						victim = ci::Vec3f(actualCell->getPosition());
 					}
 					else
 					{
-						if ((*it)->isComplete() && dynamic_cast<StandardCell*>(*it) == 0) continue;
-						ci::Vec2f attacker((*it)->getPosition());
+						if (actualCell->getIsComplete() && dynamic_cast<StandardCellServer*>(actualCell) == 0) continue;
+						ci::Vec3f attacker(actualCell->getPosition());
 					}
 
-					ci::Vec2f attackerDir;
-					attackerDir.rotate((*it)->getAngle() * (float)M_PI / 180.f);
+					ci::Vec3f attackerDir(Vec3f::xAxis());
+					attackerDir.rotate(Vec3f::zAxis(), actualCell->getAngle() * (float)M_PI / 180.f);
 					attackerDir.normalize();
 
-					ci::Vec2f attacker2victim = victim - attacker;
-					attacker2victim.normalize();
+					ci::Vec3f attacker2VictimDir;
+					attacker2VictimDir = victim - attacker;
+					attacker2VictimDir.normalize();
 
-					float dot = abs(attackerDir.dot(attacker2victim));
+					float modifier = attackerDir.dot(attacker2VictimDir);
+					float distanceDropOffDegree = CONFIG_FLOAT1("cell.standardcell.distanceDropOffDegree");
+					float cosOfDDOD = cosf(distanceDropOffDegree * (float)M_PI / 180.f);
+					if (modifier >= cosOfDDOD)
+					{
+						modifier -= cosOfDDOD;
+						modifier /= (1.f + cosOfDDOD);
 
-					/// damage modifier 10.f
-					float damage = 1.f - dot * 10.f;
-					damage = damage < 0.2f ? 0.2f : damage;
+						float damage = CONFIG_FLOAT1("cell.standardcell.damage") * modifier;
 
-					AttackEvent* ae = new AttackEvent(time, *m_pNetworkManager, *m_pEventQueue, *(*it), currentCell, damage, *m_pPlayers);
-					m_pEventQueue->addEvent(ae);
+						CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
+						CellServer * victimCell = isAttacker ? actualCell : &currentCell;
+						AttackEvent * ae = new AttackEvent(time, *networkManager, *eventQueue, *gameObjectContainer, *attackerCell, *victimCell, damage, *players);
+					}
 
 					/// attack message is sent in event
 				}
@@ -153,5 +161,4 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 	return true;
 }
 
-EventCreator::EventCreator()
-{ }
+EventCreator::EventCreator() { }

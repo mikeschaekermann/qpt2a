@@ -7,4 +7,8 @@ class StandardCellServer :
 	virtual public StandardCell,
 	virtual public CellServer
 {
+public:
+	StandardCellServer(Vec3f position, float angle) :
+		StandardCell(position, angle)
+	{ }
 };

@@ -1,15 +1,15 @@
 #pragma once
 
-class Event
+class GameEvent
 {
 protected:
 	double m_dDeadTime;
 public:
-	Event(double startTime, double duration) :
+	GameEvent(double startTime, double duration) :
 	  m_dDeadTime(startTime + duration)
 	{ }
 
-	bool operator<(Event& other)
+	bool operator<(GameEvent & other)
 	{
 		return m_dDeadTime < other.m_dDeadTime;
 	}

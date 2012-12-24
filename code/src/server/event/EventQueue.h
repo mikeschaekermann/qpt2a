@@ -23,7 +23,7 @@ public:
 		return m_timer.getSeconds();
 	}
 
-	void addEvent(Event* e)
+	void addEvent(GameEvent * e)
 	{
 		m_events.push(e);
 	}
@@ -47,5 +47,5 @@ public:
 private:
 	ci::Timer m_timer;
 	bool m_bRun;
-	priority_queue<Event*> m_events;
+	priority_queue<GameEvent *> m_events;
 };

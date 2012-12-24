@@ -23,7 +23,7 @@ int main(int argc, char argv[])
 
 	EventQueue eq;
 	
-	ServerNetworkManager nm(port, &game);
+	ServerNetworkManager nm(port, 0);
 
 	boost::thread networkThread(boost::bind(&NetworkManager::operator(), &nm));
 	//boost::thread eventQueueThread(boost::bind(&EventQueue::operator(), &eq));
