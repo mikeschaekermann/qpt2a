@@ -1,6 +1,9 @@
 #pragma once
+#include <vector>
 
 #include "../../NetworkMessage.h"
+
+#include "Player.h"
 
 class StartGame : public NetworkMessage
 {
@@ -8,16 +11,7 @@ public:
 	/* Fields */
 	float worldRadius;
 
-	unsigned playerCount;
-	unsigned *playerIds;
-
-	unsigned *playerNameSizes;
-	char **playerNames;
-
-	unsigned *startCellIds;
-	float **startPositions;
-	
-	
+	std::vector<Player> players;
 
 	/* Constructor / Destructor */
 	StartGame();														/// Default constructor

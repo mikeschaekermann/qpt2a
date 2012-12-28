@@ -51,7 +51,7 @@ unsigned NetworkMessage::writeToArray(char* data, unsigned start)
 	index += sizeof(networkMessageType);
 
 	int networkMessageId = htonl(messageId);
-	memcpy(&data[index], &messageId, sizeof(messageId));
+	memcpy(&data[index], &networkMessageId, sizeof(messageId));
 	index += sizeof(messageId);
 
 	return index;

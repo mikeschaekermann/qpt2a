@@ -2,12 +2,13 @@
 
 #include "NetworkMessage.h"
 
+#include <vector>
+
 class ConnectionMessage : public NetworkMessage
 {
 public:
 	/* Fields */
-	unsigned int missingMessageCount;
-	unsigned int *missingMessageIds;
+	std::vector<unsigned int> missingMessageIds;
 
 	/* Constructor / Destructor */
 	ConnectionMessage();												/// Default constructor

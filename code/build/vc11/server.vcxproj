@@ -43,6 +43,7 @@
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinFailure.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinRequest.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\Player.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\StartGame.h" />
     <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h" />
     <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
@@ -88,6 +89,7 @@
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinFailure.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinRequest.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\Player.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />

@@ -15,8 +15,14 @@ CreateCellSuccess::CreateCellSuccess(char* data, unsigned &index) : NetworkMessa
 	cellId = ntohl(cellId);
 	index += sizeof(cellId);
 
-	memcpy(&position, &data[index], sizeof(position));
-	index += sizeof(position);
+	memcpy(&position.x, &data[index], sizeof(position.x));
+	index += sizeof(position.x);
+
+	memcpy(&position.y, &data[index], sizeof(position.y));
+	index += sizeof(position.y);
+
+	memcpy(&position.z, &data[index], sizeof(position.z));
+	index += sizeof(position.z);
 
 	memcpy(&angle, &data[index], sizeof(angle));
 	index += sizeof(angle);
@@ -25,8 +31,6 @@ CreateCellSuccess::CreateCellSuccess(char* data, unsigned &index) : NetworkMessa
 CreateCellSuccess::CreateCellSuccess(const CreateCellSuccess &other) : NetworkMessage(other), requestId(other.requestId), cellId(other.cellId), angle(other.angle)
 {
 	messageType = MessageType::CreateCellSuccess;
-	position[0] = other.position[0];
-	position[1] = other.position[1];
 }
 
 CreateCellSuccess::CreateCellSuccess(const NetworkMessage &other) : NetworkMessage(other), requestId(0), cellId(0), angle(0.f)
@@ -49,8 +53,14 @@ unsigned CreateCellSuccess::writeToArray(char* data, unsigned start)
 	memcpy(&data[index], &networkcellId, sizeof(networkcellId));
 	index += sizeof(networkcellId);
 
-	memcpy(&data[index], &position, sizeof(position));
-	index += sizeof(position);
+	memcpy(&data[index], &position.x, sizeof(position.x));
+	index += sizeof(position.x);
+	
+	memcpy(&data[index], &position.y, sizeof(position.y));
+	index += sizeof(position.y);
+	
+	memcpy(&data[index], &position.z, sizeof(position.z));
+	index += sizeof(position.z);
 
 	memcpy(&data[index], &angle, sizeof(angle));
 	index += sizeof(angle);
@@ -63,6 +73,6 @@ unsigned CreateCellSuccess::calculateSize()
 	return NetworkMessage::calculateSize() 
 		+ sizeof(requestId)
 		+ sizeof(cellId)
-		+ sizeof(position)
+		+ sizeof(float) * 3
 		+ sizeof(angle);
 }

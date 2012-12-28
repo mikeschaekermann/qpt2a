@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../../../NetworkMessage.h"
+#include "cinder/Vector.h"
 
 class CreateCellSuccess : public NetworkMessage
 {
@@ -8,7 +9,7 @@ public:
 	/* Fields */
 	unsigned int requestId;
 	unsigned int cellId;
-	float position[2];
+	ci::Vec3f position;
 	float angle;
 
 	/* Constructor / Destructor */

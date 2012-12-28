@@ -3,13 +3,15 @@
 #include "../../../../NetworkMessage.h"
 #include "../../../../enum/CellType.h"
 
+#include "cinder/Vector.h"
+
 class CellNew : public NetworkMessage
 {
 public:
 	/* Fields */
 	unsigned int playerId;
 	unsigned int cellId;
-	float position[2];
+	ci::Vec3f position;
 	float angle;
 	CellType type;
 

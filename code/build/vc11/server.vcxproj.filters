@@ -16,69 +16,6 @@
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h">
-      <Filter>Network\Messages</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h">
-      <Filter>Network\Messages</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\NetworkManager.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.h">
-      <Filter>Network\Messages\Enum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\enum\JoinErrorCode.h">
-      <Filter>Network\Messages\Enum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\enum\MessageType.h">
-      <Filter>Network\Messages\Enum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\enum\CellType.h">
-      <Filter>Network\Messages\Enum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\GameOver.h">
-      <Filter>Network\Messages\Game\OutGame</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinFailure.h">
-      <Filter>Network\Messages\Game\OutGame</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinRequest.h">
-      <Filter>Network\Messages\Game\OutGame</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.h">
-      <Filter>Network\Messages\Game\OutGame</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\StartGame.h">
-      <Filter>Network\Messages\Game\OutGame</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.h">
-      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.h">
-      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellFailure.h">
-      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.h">
-      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.h">
-      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.h">
-      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellComplete.h">
-      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\server\network\ServerNetworkManager.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Server\game\EventCreator.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
@@ -148,6 +85,72 @@
     <ClInclude Include="..\..\src\Server\game\StandardCellServer.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\NetworkManager.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\network\ServerNetworkManager.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellComplete.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellFailure.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.h">
+      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\GameOver.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinFailure.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinRequest.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\StartGame.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\CellType.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\JoinErrorCode.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\MessageType.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\Player.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -156,35 +159,35 @@
     <Filter Include="Eventlogic">
       <UniqueIdentifier>{6f568755-2dbb-4475-b441-4ae79a524778}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Network">
-      <UniqueIdentifier>{c06c558b-b90e-455a-90d4-be057f25197e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Messages">
-      <UniqueIdentifier>{3e97783b-24e7-4ecd-a085-93b0d3e3d647}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Messages\Game">
-      <UniqueIdentifier>{21a27db7-1ed2-4eb7-80b5-c04dbd587bc5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Messages\Enum">
-      <UniqueIdentifier>{2dc556ee-d5d0-413d-9831-e530ac4c0d07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Messages\Game\InGame">
-      <UniqueIdentifier>{85879178-9e4b-4ffd-a149-44297ab1bfa0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Messages\Game\OutGame">
-      <UniqueIdentifier>{1cb4711a-8f06-4007-958a-a556dd723cc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Messages\Game\InGame\Cell">
-      <UniqueIdentifier>{f578fe47-0481-42a3-a2f1-84ae9d21f287}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Messages\Game\InGame\Cell\Creation">
-      <UniqueIdentifier>{4faa3d2c-a0a5-4d22-b0d1-82f81f529536}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Messages\Game\InGame\Cell\Combat">
-      <UniqueIdentifier>{483f6d08-a6af-4dae-b360-9088f2677fc5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{a4fb2bda-a748-4b28-b6f6-af4050e87560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{003dc54d-ea0c-4a7c-8301-1c2ee7316d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages">
+      <UniqueIdentifier>{4cf0bf47-308e-4f0f-9cd8-dc3962b873d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game">
+      <UniqueIdentifier>{65c01a6c-0db2-4596-b9b5-b79be59a5917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame">
+      <UniqueIdentifier>{000440fd-ce6c-4d51-93c7-ffe19f204a84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Cell">
+      <UniqueIdentifier>{52f02096-b393-496e-9747-ea4a616d8b87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Cell\Creation">
+      <UniqueIdentifier>{2fb8558d-7b31-4800-abc1-3fa8e7cc42c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Cell\Combat">
+      <UniqueIdentifier>{10cde739-0592-4565-bc7b-be838d4e48de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\OutGame">
+      <UniqueIdentifier>{2cae8900-7d23-4a3b-ab70-0bd4166c6222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Enum">
+      <UniqueIdentifier>{ef932a5a-1507-4621-8293-a7c857650865}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -210,9 +213,6 @@
     <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp">
       <Filter>Eventlogic</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\common\network\NetworkManager.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -222,32 +222,17 @@
     <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\common\network\NetworkManager.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\network\ServerNetworkmanager.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp">
       <Filter>Network\Messages</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp">
       <Filter>Network\Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\network\messages\enum\MessageType.cpp">
-      <Filter>Network\Messages\Enum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\network\messages\enum\CellType.cpp">
-      <Filter>Network\Messages\Enum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.cpp">
-      <Filter>Network\Messages\Enum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\network\messages\enum\JoinErrorCode.cpp">
-      <Filter>Network\Messages\Enum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.cpp">
-      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.cpp">
-      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.cpp">
-      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.cpp">
       <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
@@ -261,8 +246,14 @@
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.cpp">
       <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp">
-      <Filter>Network\Messages\Game\OutGame</Filter>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.cpp">
+      <Filter>Network\Messages\Game\InGame\Cell\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.cpp">
+      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.cpp">
+      <Filter>Network\Messages\Game\InGame\Cell\Combat</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\GameOver.cpp">
       <Filter>Network\Messages\Game\OutGame</Filter>
@@ -276,8 +267,23 @@
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.cpp">
       <Filter>Network\Messages\Game\OutGame</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\server\network\ServerNetworkmanager.cpp">
-      <Filter>Network</Filter>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\CellType.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\JoinErrorCode.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\MessageType.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\Player.cpp">
+      <Filter>Network\Messages\Game\OutGame</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
