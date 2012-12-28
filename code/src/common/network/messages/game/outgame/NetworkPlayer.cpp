@@ -3,13 +3,13 @@
 #endif
 #include <boost/asio.hpp>
 
-#include "Player.h"
-Player::Player()
+#include "NetworkPlayer.h"
+NetworkPlayer::NetworkPlayer()
 {
 	
 }
 
-Player::Player(char* data, unsigned &index)
+NetworkPlayer::NetworkPlayer(char* data, unsigned &index)
 {
 	memcpy(&playerId, &data[index], sizeof(playerId));
 	playerId = ntohl(playerId);
@@ -40,15 +40,15 @@ Player::Player(char* data, unsigned &index)
 	index += sizeof(startPosition.z);
 }
 
-Player::Player(const Player &other) : playerId(other.playerId), playerName(other.playerName), startCellId(other.startCellId), startPosition(other.startPosition)
+NetworkPlayer::NetworkPlayer(const NetworkPlayer &other) : playerId(other.playerId), playerName(other.playerName), startCellId(other.startCellId), startPosition(other.startPosition)
 {
 }
 
-Player::~Player() 
+NetworkPlayer::~NetworkPlayer() 
 { 
 }
 
-unsigned Player::writeToArray(char* data, unsigned start)
+unsigned NetworkPlayer::writeToArray(char* data, unsigned start)
 {
 	unsigned index = start;
 	
@@ -80,7 +80,7 @@ unsigned Player::writeToArray(char* data, unsigned start)
 	return index;
 }
 
-unsigned Player::calculateSize()
+unsigned NetworkPlayer::calculateSize()
 {
 	unsigned size = sizeof(playerId) +
 		   sizeof(unsigned) +

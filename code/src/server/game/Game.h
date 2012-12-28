@@ -120,26 +120,16 @@ public:
 		{
 			StartGame *startgame = new StartGame();
 			startgame->worldRadius = worldRadius;
-			startgame->playerCount = players.size();
-			startgame->playerIds = new unsigned int[players.size()];
-			startgame->playerNames = new char*[players.size()];
-			startgame->playerNameSizes = new unsigned int[players.size()];
-			startgame->startCellIds = new unsigned int[players.size()];
-			startgame->startPositions = new float*[players.size()];
 			for (unsigned int i = 0; i < players.size(); ++i)
 			{
-				startgame->playerIds[i] = players[i]->getId();
-				startgame->playerNameSizes[i] = players[i]->getName().length();
-				for (unsigned int j = 0; j < startgame->playerNameSizes[i]; ++j)
-				{
-					startgame->playerNames[i][j] = players[i]->getName()[j];
-				}
+				NetworkPlayer networkPlayer;
+				networkPlayer.playerId = players[i]->getId();
+				networkPlayer.playerName = players[i]->getName();
 
-				startgame->startCellIds[i] = 0;
+				networkPlayer.startCellId = 0;
+				networkPlayer.startPosition = players[i]->getStemCell().getPosition();
 
-				startgame->startPositions[i] = new float[2];
-				startgame->startPositions[i][0] = players[i]->getStemCell().getPosition().x;
-				startgame->startPositions[i][1] = players[i]->getStemCell().getPosition().y;
+				startgame->players.push_back(networkPlayer);
 			}
 
 			networkManager->send(startgame);

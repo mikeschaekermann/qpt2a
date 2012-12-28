@@ -117,7 +117,7 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 	if (connectionEndpoint)
 	{
 		/// Resend all missing messages
-		for (unsigned i = 0; i < message->missingMessageCount; ++i)
+		for (unsigned i = 0; i < message->missingMessageIds.size(); ++i)
 		{
 			if (connectionEndpoint->m_unconfirmedMessages.find(message->missingMessageIds[i]) != connectionEndpoint->m_unconfirmedMessages.end())
 			{
@@ -136,7 +136,7 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 			if (it->first <= message->messageId)
 			{
 				bool obsolete = true;
-				for (unsigned i = 0; i < message->missingMessageCount; ++i)
+				for (unsigned i = 0; i < message->missingMessageIds.size(); ++i)
 				{
 					if (message->missingMessageIds[i] == it->first)
 					{
@@ -174,13 +174,10 @@ void NetworkManager::connectionMaintenance()
 			ConnectionMessage message;
 			message.endpoint = (*it).m_endpoint;
 			message.messageId = (*it).m_uiRemotePacketId;
-			message.missingMessageCount = (*it).m_unreceivedMessages.size();
 
-			message.missingMessageIds = new unsigned[message.missingMessageCount];
-			unsigned i = 0;
 			for (std::list<unsigned>::iterator idIt = (*it).m_unreceivedMessages.begin(); idIt != (*it).m_unreceivedMessages.end(); ++idIt) 
 			{
-				message.missingMessageIds[i++] = *idIt;
+				message.missingMessageIds.push_back(*idIt);
 			}
 
 			// Send the message

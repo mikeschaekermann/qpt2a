@@ -1,8 +1,8 @@
 #pragma once
 
-#define LOG_INFO(message) Logger::getInstance()->log(LogSeverity::logInfo, message)
-#define LOG_WARNING(message) Logger::getInstance()->log(LogSeverity::logWarning, message)
-#define LOG_ERROR(message) Logger::getInstance()->log(LogSeverity::logError, message)
+#define LOG_INFO(message) Logger::getInstance()->log(logInfo, message)
+#define LOG_WARNING(message) Logger::getInstance()->log(logWarning, message)
+#define LOG_ERROR(message) Logger::getInstance()->log(logError, message)
 
 #include <string>
 #include <iostream>

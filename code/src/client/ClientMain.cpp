@@ -20,17 +20,18 @@ void ClientMain::setup()
 	LOG_INFO("\n\n\n");
 	LOG_INFO("Client start up");
 
-	/*boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address_v4::loopback(), 2345);
-	ClientNetworkManager nm(endpoint);
+	/// This is the 
+	boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address_v4::loopback(), 2345);
+	
+	m_pNetworkManager = new ClientNetworkManager(endpoint);
 
-	boost::thread thr(boost::bind(&NetworkManager::operator(), &nm));
+	boost::thread thr(boost::bind(&NetworkManager::operator(), m_pNetworkManager));
 
 	JoinRequest *request = new JoinRequest();
 	request->endpoint = endpoint;
 	string test = "ABCD";
 	request->name = test;
-
-	nm.send(request);*/
+	m_pNetworkManager->send(request);
 	
 	LOG_INFO("PROGRAM START");
 

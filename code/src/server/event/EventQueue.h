@@ -32,7 +32,7 @@ public:
 	{
 		while (m_bRun)
 		{
-			if (m_events.top()->getDeadTime() < m_timer.getSeconds())
+			if (!m_events.empty() && m_events.top()->getDeadTime() < m_timer.getSeconds())
 			{
 				m_events.top()->trigger();
 				delete m_events.top();

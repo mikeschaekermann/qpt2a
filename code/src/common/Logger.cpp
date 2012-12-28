@@ -58,9 +58,8 @@ void Logger::log(LogSeverity lvl, string message)
 	m_streamWriteMutex._Lock();
 	m_file << output.str() << "\n";
 	m_file.flush();
-
 #ifdef _DEBUG
-	cinder::app::console() << output.str() << std::endl;
+	std::cout << output.str() << std::endl;
 #endif
 
 	m_streamWriteMutex._Unlock();

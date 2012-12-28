@@ -11,25 +11,19 @@ using namespace std;
 
 int main(int argc, char argv[])
 {
-	int port;
-	cin >> port;
-
-	if(cin.fail())
-	{
-		cout << "Error: input failes" << endl;
-	}
+	int port = 2345;
+	//cin >> port;
 	
 	Game game;
 
 	EventQueue eq;
 	
-	ServerNetworkManager nm(port, 0);
-
+	ServerNetworkManager nm(port, &game);
 	boost::thread networkThread(boost::bind(&NetworkManager::operator(), &nm));
-	//boost::thread eventQueueThread(boost::bind(&EventQueue::operator(), &eq));
+	boost::thread eventQueueThread(boost::bind(&EventQueue::operator(), &eq));
 	game.bind(&nm, &eq);
 	networkThread.join();
-	//eventQueueThread.join();
+	eventQueueThread.join();
 
 	cout << "test";
 	return 0;

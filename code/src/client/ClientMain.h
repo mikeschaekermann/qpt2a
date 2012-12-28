@@ -2,6 +2,7 @@
 #include "../common/GameObject.h"
 #include "cinder/System.h"
 #include "input/TouchWay.h"
+class ClientNetworkManager;
 
 using namespace ci;
 using namespace ci::app;
@@ -38,5 +39,6 @@ class ClientMain : public AppBasic
 private:
 	float m_fFrameTime;
 	float m_fElapsedGameTimeLastFrame;
+	ClientNetworkManager* m_pNetworkManager;
 	map<uint32_t, TouchWay> m_touchWays;
 };

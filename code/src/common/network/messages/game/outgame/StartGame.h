@@ -3,7 +3,7 @@
 
 #include "../../NetworkMessage.h"
 
-#include "Player.h"
+#include "NetworkPlayer.h"
 
 class StartGame : public NetworkMessage
 {
@@ -11,7 +11,7 @@ public:
 	/* Fields */
 	float worldRadius;
 
-	std::vector<Player> players;
+	std::vector<NetworkPlayer> players;
 
 	/* Constructor / Destructor */
 	StartGame();														/// Default constructor

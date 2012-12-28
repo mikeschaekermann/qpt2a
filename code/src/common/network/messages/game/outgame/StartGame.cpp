@@ -17,7 +17,7 @@ StartGame::StartGame(char* data, unsigned &index) : NetworkMessage(data, index),
 
 	for (unsigned i = 0; i < playerCount; ++i)
 	{
-		Player p(data, index);
+		NetworkPlayer p(data, index);
 		players.push_back(p);
 	}
 	

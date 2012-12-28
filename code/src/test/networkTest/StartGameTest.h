@@ -17,7 +17,7 @@ void testStartGame()
 
 	for (unsigned i = 0; i < 3; ++i)
 	{
-		Player p;
+		NetworkPlayer p;
 		p.playerId = i;
 
 		for (unsigned j = 0; j <  1 + i * 2; ++j)

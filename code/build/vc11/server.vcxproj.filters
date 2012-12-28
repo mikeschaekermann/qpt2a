@@ -148,7 +148,7 @@
     <ClInclude Include="..\..\src\common\network\messages\enum\MessageType.h">
       <Filter>Network\Messages\Enum</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\Player.h">
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.h">
       <Filter>Network\Messages\Game\OutGame</Filter>
     </ClInclude>
   </ItemGroup>
@@ -282,7 +282,7 @@
     <ClCompile Include="..\..\src\common\network\messages\enum\MessageType.cpp">
       <Filter>Network\Messages\Enum</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\common\network\messages\game\outgame\Player.cpp">
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.cpp">
       <Filter>Network\Messages\Game\OutGame</Filter>
     </ClCompile>
   </ItemGroup>

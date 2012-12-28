@@ -3,7 +3,7 @@
 #include <vector>
 #include "cinder/Vector.h"
 
-class Player
+class NetworkPlayer
 {
 public:
 	/* Fields */
@@ -13,10 +13,10 @@ public:
 	ci::Vec3f startPosition;
 
 	/* Constructor / Destructor */
-	Player();														/// Default constructor
-	Player(char *data, unsigned &index);								/// Construct from buffer starting by the given index
-	Player(const Player &other);									/// Copy constructor
-	virtual ~Player();												/// Default Destructor
+	NetworkPlayer();														/// Default constructor
+	NetworkPlayer(char *data, unsigned &index);								/// Construct from buffer starting by the given index
+	NetworkPlayer(const NetworkPlayer &other);									/// Copy constructor
+	virtual ~NetworkPlayer();												/// Default Destructor
 
 	/* Methods */
 	virtual unsigned writeToArray(char* data, unsigned start = 0);		/// Serializes the class to the array
