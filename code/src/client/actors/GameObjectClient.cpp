@@ -4,9 +4,9 @@ void GameObjectClient::draw() const
 {
 	pushMatrices();
 
-	translate(m_position);
-	rotate(m_rotation);
-	scale(m_scale);
+	translate(position);
+	rotate(rotation);
+	gl::scale(scale);
 
 	drawAtTransformation();
 
