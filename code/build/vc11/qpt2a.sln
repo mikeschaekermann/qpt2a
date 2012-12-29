@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server", "server.vcxproj", "{7C072AE6-2637-47ED-A4D2-637EECF59EE7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "server.vcxproj", "{7C072AE6-2637-47ED-A4D2-637EECF59EE7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "client.vcxproj", "{01B47039-3133-407A-944A-3F554A017C2C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "networkTest", "networkTest.vcxproj", "{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,12 @@ Global
 		{01B47039-3133-407A-944A-3F554A017C2C}.Final|Win32.Build.0 = Final|Win32
 		{01B47039-3133-407A-944A-3F554A017C2C}.Release|Win32.ActiveCfg = Release|Win32
 		{01B47039-3133-407A-944A-3F554A017C2C}.Release|Win32.Build.0 = Release|Win32
+		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Debug|Win32.Build.0 = Debug|Win32
+		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Final|Win32.ActiveCfg = Release|Win32
+		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Final|Win32.Build.0 = Release|Win32
+		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Release|Win32.ActiveCfg = Release|Win32
+		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
