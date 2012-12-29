@@ -1,0 +1,50 @@
+<!-- Examples:
+
+key is the identifier
+value is the file path
+vertexShader and fragmentShader are also file paths
+3d, loop and stream are booleans
+
+<sound>
+	<key>backgroundMusic</key>
+	<value>backgroundMusic.ogg</value>
+	<3d>false</3d>
+	<loop>true</loop>
+	<stream>true</stream>
+</sound>
+<guiSound>
+	<key></key>
+	<value></value>
+	<3d>false</3d>
+	<loop>false</loop>
+	<stream>false</stream>
+</guiSound>
+
+<texture>
+	<key></key>
+	<value></value>
+</texture>
+<guiTexture>
+	<key></key>
+	<value></value>
+</guiTexture>
+
+<movie>
+	<key></key>
+	<value></value>
+</movie>
+<guiMovie>
+	<key></key>
+	<value></value>
+</guiMovie>
+
+<model>
+	<key></key>
+	<value></value>
+</model>
+
+<shader>
+	<key></key>
+	<vertexShader></vertexShader>
+	<fragmentShader></fragmentShader>
+</shader>-->
