@@ -23,7 +23,7 @@ void EventCreator::bind(NetworkManager * networkManager, EventQueue * eventQueue
 
 bool EventCreator::createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & cell)
 {
-	if (!isInRadiusOf<float>(cell.getPosition(), cell.getRadius(), Vec3f::zero(), CONFIG_FLOAT1("world.radius")))
+	if (!isInRadiusOf<float>(cell.getPosition(), cell.getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
 	{
 		CreateCellFailure *failure = new CreateCellFailure();
 		failure->requestId = requestId;
@@ -101,7 +101,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 				* reversely all the other cell that are attackers have the current cell in its attack radius
 				*/
 			const vector<GameObject *> & gameObjects =
-				gameObjectContainer->findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("cell.standardcell.attackradius"));
+				gameObjectContainer->findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
 					
 			ci::Vec3f attacker;
 			ci::Vec3f victim;
@@ -139,14 +139,14 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 					attacker2VictimDir.normalize();
 
 					float modifier = attackerDir.dot(attacker2VictimDir);
-					float distanceDropOffDegree = CONFIG_FLOAT1("cell.standardcell.distanceDropOffDegree");
+					float distanceDropOffDegree = CONFIG_FLOAT1("data.cell.standardcell.distanceDropOffDegree");
 					float cosOfDDOD = cosf(distanceDropOffDegree * (float)M_PI / 180.f);
 					if (modifier >= cosOfDDOD)
 					{
 						modifier -= cosOfDDOD;
 						modifier /= (1.f + cosOfDDOD);
 
-						float damage = CONFIG_FLOAT1("cell.standardcell.damage") * modifier;
+						float damage = CONFIG_FLOAT1("data.cell.standardcell.damage") * modifier;
 
 						CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
 						CellServer * victimCell = isAttacker ? actualCell : &currentCell;

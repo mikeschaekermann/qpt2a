@@ -20,7 +20,7 @@ public:
 	  victim(victim),
 	  damage(damage),
 	  players(players),
-	  GameEvent(startTime, CONFIG_INT1("event.attack.time"))
+	  GameEvent(startTime, CONFIG_INT1("data.event.attack.time"))
 	{ }
 
 	virtual void trigger()

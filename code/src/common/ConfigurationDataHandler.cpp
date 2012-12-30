@@ -27,7 +27,9 @@ void ConfigurationDataHandler::readFromXML(std::string fullFilePath)
 	catch (boost::property_tree::xml_parser::xml_parser_error & e)
 	{
 		LOG_ERROR(e.what());
+		throw loadErr;
 	}
+	
 }
 
 ConfigurationDataHandler::ConfigurationDataHandler() { }

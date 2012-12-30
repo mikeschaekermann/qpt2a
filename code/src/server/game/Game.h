@@ -39,9 +39,9 @@ public:
 	{
 		LOG_INFO("Game created");
 
-		ConfigurationDataHandler::getInstance()->readFromXML("C:/randompath/../random.xml");
+		ConfigurationDataHandler::getInstance()->readFromXML("random.xml");
 
-		players.reserve(CONFIG_INT2("player.max", 4));
+		players.reserve(CONFIG_INT2("data.players.max", 4));
 
 		stringstream message;
 		message << "Space for " << players.max_size() << " reserved";
@@ -93,11 +93,11 @@ public:
 			}
 		}
 
-		vector<float> xPositions = ConfigurationDataHandler::getInstance()->getChildrenDataVector<float>("players", "player.startposition.x");
-		vector<float> yPositions = ConfigurationDataHandler::getInstance()->getChildrenDataVector<float>("players", "player.startposition.y");
+		vector<float> xPositions = ConfigurationDataHandler::getInstance()->getChildrenDataVector<float>("data.players", "player.startposition.x");
+		vector<float> yPositions = ConfigurationDataHandler::getInstance()->getChildrenDataVector<float>("data.players", "player.startposition.y");
 		Vec3f startPosition(xPositions[players.size()], yPositions[players.size()], 0.f);
-		float stemcellRadius = CONFIG_FLOAT1("cell.stemcell.radius");
-		float worldRadius = CONFIG_FLOAT1("world.radius");
+		float stemcellRadius = CONFIG_FLOAT1("data.cell.stemcell.radius");
+		float worldRadius = CONFIG_FLOAT1("data.world.radius");
 
 		if (!isInRadiusOf(startPosition, stemcellRadius, Vec3f(0.f, 0.f, 0.f), worldRadius))
 		{
@@ -163,10 +163,10 @@ public:
 			switch (type.getType())
 			{
 			case CellType::StemCell:
-				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("cell.stemcell.radius"), position);
+				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.stemcell.radius"), position);
 				cell = new StemCellServer(position, angle);
 			case CellType::StandardCell:
-				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("cell.standardcell.radius"), position);
+				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.standardcell.radius"), position);
 				cell = new StandardCellServer(position, angle);
 			default:
 				cell = 0;

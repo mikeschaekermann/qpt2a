@@ -21,6 +21,10 @@ protected:
 	CellServer(Vec3f position, float radius, float angle, float healthPoints) :
 		Cell(position, radius, angle, healthPoints)
 	{ }
-private:
-	virtual void setId(unsigned int id) { throw logic_error("Not implemented exception"); }
+
+	virtual void setId(unsigned int id) { GameObjectServer::setId(id); }
+	virtual void setPosition(Vec3f position) { Cell::setPosition(position); }
+	virtual void setRotation(Vec3f rotation) { Cell::setRotation(rotation); }
+	virtual void setScale(Vec3f scale) { Cell::setScale(scale); }
+	virtual void setRadius(float radius) { Cell::setRadius(radius); }
 };

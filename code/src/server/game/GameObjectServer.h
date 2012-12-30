@@ -12,4 +12,6 @@ protected:
 	{
 		id = IIdentifiable::getNewId();
 	}
+
+	virtual void setId(unsigned int id) { throw logic_error("Not implemented exception"); }
 };

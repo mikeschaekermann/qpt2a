@@ -6,6 +6,7 @@
 
 #include <string>
 #include <vector>
+#include <exception>
 
 #include "boost/foreach.hpp"
 #include "boost/property_tree/ptree.hpp"
@@ -23,6 +24,16 @@
 class ConfigurationDataHandler
 {
 public:
+	class load_error : public std::exception
+	{
+		virtual const char * what() const { return "xml file was not correctly loaded"; }
+	} loadErr;
+
+	class data_not_found_error : public std::exception
+	{
+		virtual const char * what() const { return "data was not found"; }
+	} dataNotFoundErr;
+
 	static ConfigurationDataHandler * const getInstance();
 
 	/**
@@ -45,7 +56,7 @@ public:
 		catch (boost::property_tree::ptree_bad_data & e)
 		{
 			LOG_ERROR(e.what());
-			return T(0);
+			throw dataNotFoundErr;
 		}
 	}
 
@@ -79,6 +90,7 @@ public:
 		catch (boost::property_tree::ptree_bad_path & e)
 		{
 			LOG_ERROR(e.what());
+			throw dataNotFoundErr;
 		}
 	}
 private:

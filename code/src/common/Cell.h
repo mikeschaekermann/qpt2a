@@ -31,7 +31,7 @@ protected:
 
 	Cell(void);
 	Cell(Vec3f position, float radius, float angle, float healthPoints);
-private:
+
 	virtual void setPosition(Vec3f position) { throw logic_error("Not implemented exception"); }
 	virtual void setRotation(Vec3f rotation) { throw logic_error("Not implemented exception"); }
 	virtual void setScale(Vec3f scale) { throw logic_error("Not implemented exception"); }

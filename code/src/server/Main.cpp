@@ -11,21 +11,29 @@ using namespace std;
 
 int main(int argc, char argv[])
 {
-	int port = 2345;
-	//cin >> port;
+	try
+	{
+		int port = 2345;
+		//cin >> port;
 	
-	Game game;
+		Game game;
 
-	EventQueue eq;
+		EventQueue eq;
 	
-	ServerNetworkManager nm(port, &game);
-	boost::thread networkThread(boost::bind(&NetworkManager::operator(), &nm));
-	boost::thread eventQueueThread(boost::bind(&EventQueue::operator(), &eq));
-	game.bind(&nm, &eq);
-	networkThread.join();
-	eventQueueThread.join();
+		ServerNetworkManager nm(port, &game);
+		boost::thread networkThread(boost::bind(&NetworkManager::operator(), &nm));
+		boost::thread eventQueueThread(boost::bind(&EventQueue::operator(), &eq));
+		game.bind(&nm, &eq);
+		networkThread.join();
+		eventQueueThread.join();
 
-	cout << "test";
-	return 0;
+		cout << "test";
+		return 0;
+	}
+	catch(exception & e)
+	{
+		LOG_ERROR(e.what());
+		return -1;
+	}
 }
 

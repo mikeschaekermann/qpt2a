@@ -6,7 +6,7 @@ BuildingEvent::BuildingEvent(double startTime, NetworkManager & manager, CellSer
 	manager(manager),
 	cell(cell),
 	players(players),
-	GameEvent(startTime, CONFIG_INT1("event.building.time"))
+	GameEvent(startTime, CONFIG_INT1("data.event.build.time"))
 	{ }
 
 void BuildingEvent::trigger()
