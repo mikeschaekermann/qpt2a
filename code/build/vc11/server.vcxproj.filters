@@ -151,6 +151,24 @@
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.h">
       <Filter>Network\Messages\Game\OutGame</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\environment\Barrier.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\environment\DynamicModificator.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\environment\StaticModificator.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\environment\BarrierServer.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\environment\DynamicModificatorServer.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\environment\StaticModificatorServer.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -188,6 +206,9 @@
     </Filter>
     <Filter Include="Network\Messages\Enum">
       <UniqueIdentifier>{ef932a5a-1507-4621-8293-a7c857650865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Environment">
+      <UniqueIdentifier>{87fc7ff7-2833-473b-9e5a-8b0f039c90bf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +305,24 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.cpp">
       <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\environment\Barrier.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\environment\StaticModificator.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\environment\DynamicModificator.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\environment\DynamicModificatorServer.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\environment\StaticModificatorServer.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\environment\BarrierServer.cpp">
+      <Filter>Environment</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

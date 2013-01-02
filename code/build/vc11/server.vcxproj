@@ -19,6 +19,9 @@
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h" />
     <ClInclude Include="..\..\src\common\Config.h" />
     <ClInclude Include="..\..\src\common\ConfigurationDataHandler.h" />
+    <ClInclude Include="..\..\src\common\environment\Barrier.h" />
+    <ClInclude Include="..\..\src\common\environment\DynamicModificator.h" />
+    <ClInclude Include="..\..\src\common\environment\StaticModificator.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
     <ClInclude Include="..\..\src\common\GameObjectContainer.h" />
     <ClInclude Include="..\..\src\common\Helper.h" />
@@ -52,6 +55,9 @@
     <ClInclude Include="..\..\src\common\StandardCell.h" />
     <ClInclude Include="..\..\src\common\StemCell.h" />
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h" />
+    <ClInclude Include="..\..\src\server\environment\BarrierServer.h" />
+    <ClInclude Include="..\..\src\server\environment\DynamicModificatorServer.h" />
+    <ClInclude Include="..\..\src\server\environment\StaticModificatorServer.h" />
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h" />
     <ClInclude Include="..\..\src\Server\event\BuildingEvent.h" />
     <ClInclude Include="..\..\src\Server\event\Event.h" />
@@ -69,6 +75,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\common\Cell.cpp" />
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp" />
+    <ClCompile Include="..\..\src\common\environment\Barrier.cpp" />
+    <ClCompile Include="..\..\src\common\environment\DynamicModificator.cpp" />
+    <ClCompile Include="..\..\src\common\environment\StaticModificator.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
     <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
@@ -94,6 +103,9 @@
     <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\common\StandardCell.cpp" />
+    <ClCompile Include="..\..\src\server\environment\BarrierServer.cpp" />
+    <ClCompile Include="..\..\src\server\environment\DynamicModificatorServer.cpp" />
+    <ClCompile Include="..\..\src\server\environment\StaticModificatorServer.cpp" />
     <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp" />
     <ClCompile Include="..\..\src\server\game\EventCreator.cpp" />
     <ClCompile Include="..\..\src\server\game\IIdentifiable.cpp" />
