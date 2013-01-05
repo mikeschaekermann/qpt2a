@@ -1,5 +1,7 @@
 #include "ClientNetworkManager.h"
 
+#include "../../common/Config.h"
+
 #include "../../common/network/messages/game/outgame/GameOver.h"
 #include "../../common/network/messages/game/outgame/JoinFailure.h"
 #include "../../common/network/messages/game/outgame/JoinSuccess.h"
@@ -12,6 +14,8 @@
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellComplete.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellFailure.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
+
+#include "../../client/managers/GameManager.h"
 
 using namespace std;
 
@@ -98,64 +102,105 @@ NetworkMessage* ClientNetworkManager::createNetworkMessage(char* data)
 
 void ClientNetworkManager::handleMessage(NetworkMessage* message)
 {
-	GameOver *gameOver = dynamic_cast<GameOver*> (message);
-	if (gameOver)
+	switch (message->messageType.getType())
 	{
-		/// TODO
+	case MessageType::GameOver:
+	{
+		GameOver *gameOver = dynamic_cast<GameOver*> (message);
+		if (gameOver)
+		{
+			/// TODO
+		}
+		break;
 	}
+	case MessageType::JoinFailure:
+	{
+		JoinFailure *joinFailure= dynamic_cast<JoinFailure*> (message);
+		if (joinFailure)
+		{
+			/// TODO
+		}
+		break;
+	}
+	case MessageType::JoinSuccess:
+	{
+		JoinSuccess *joinSuccess = dynamic_cast<JoinSuccess*> (message);
+		if (joinSuccess)
+		{
+			GameManager::getInstance()->setMyPlayerId(joinSuccess->playerId);
 
-	JoinFailure *joinFailure = dynamic_cast<JoinFailure*> (message);
-	if (joinFailure)
-	{
-		/// TODO
+			LOG_INFO("JOIN SUCCESS WITH PLAYER ID: " + joinSuccess->playerId);
+		}
+		break;
 	}
-
-	JoinSuccess *joinSuccess = dynamic_cast<JoinSuccess*> (message);
-	if (joinSuccess)
+	case MessageType::StartGame:
 	{
-		/// TODO
+		StartGame *startGame = dynamic_cast<StartGame*> (message);
+		if (startGame)
+		{
+			/// TODO
+		}
+		break;
 	}
-
-	StartGame *startGame = dynamic_cast<StartGame*> (message);
-	if (startGame)
+	case MessageType::CellAttack:
 	{
-		/// TODO
+		CellAttack *cellAttack = dynamic_cast<CellAttack*> (message);
+		if (cellAttack)
+		{
+			/// TODO
+		}
+		break;
 	}
-
-	CellAttack *cellAttack = dynamic_cast<CellAttack*> (message);
-	if (cellAttack)
+	case MessageType::CellDie:
 	{
-		/// TODO
+		CellDie *cellDie = dynamic_cast<CellDie*> (message);
+		if (cellDie)
+		{
+			/// TODO
+		}
+		break;
 	}
-
-	CellDie *cellDie = dynamic_cast<CellDie*> (message);
-	if (cellDie)
+	case MessageType::CellNew:
 	{
-		/// TODO
+		CellNew *cellNew = dynamic_cast<CellNew*> (message);
+		if (cellNew)
+		{
+			/// TODO
+		}
+		break;
 	}
-
-	CellNew *cellNew = dynamic_cast<CellNew*> (message);
-	if (cellNew)
+	case MessageType::CreateCellComplete:
 	{
-		/// TODO
+		CreateCellComplete *createCellComplete = dynamic_cast<CreateCellComplete*> (message);
+		if (createCellComplete)
+		{
+			/// TODO
+		}
+		break;
 	}
-		
-	CreateCellComplete *createCellComplete = dynamic_cast<CreateCellComplete*> (message);
-	if (createCellComplete)
+	case MessageType::CreateCellSuccess:
 	{
-		/// TODO
+		CreateCellSuccess *createCellSuccess = dynamic_cast<CreateCellSuccess*> (message);
+		if (createCellSuccess)
+		{
+			/// TODO
+		}
+		break;
 	}
-
-	CreateCellSuccess *createCellSuccess = dynamic_cast<CreateCellSuccess*> (message);
-	if (createCellSuccess)
+	case MessageType::CreateCellFailure:
 	{
-		/// TODO
+		CreateCellFailure *createCellFailure = dynamic_cast<CreateCellFailure*> (message);
+		if (createCellFailure)
+		{
+			/// TODO
+		}
+		break;
 	}
-
-	CreateCellFailure *createCellFailure = dynamic_cast<CreateCellFailure*> (message);
-	if (createCellFailure)
+	default:
 	{
-		/// TODO
+		LOG_WARNING("Received message that could not be categorized as a client message.");
+		break;
+	}
 	}
 }
 

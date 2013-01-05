@@ -45,9 +45,6 @@ public:
 	virtual void touchClick(TouchWay touchWay);
 
 private:
-	/// all active players
-	vector<Player*> players;
-
 	/// perspective cam for the game
 	Cam cam;
 

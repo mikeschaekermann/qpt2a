@@ -4,9 +4,6 @@
 #include "../common/Logger.h"
 #include "../common/Config.h"
 #include "managers/GameManager.h"
-#include "network/ClientNetworkManager.h"
-#include "boost/asio.hpp"
-#include "../common/network/messages/game/outgame/JoinRequest.h"
 
 void ClientMain::setup()
 {
@@ -19,19 +16,6 @@ void ClientMain::setup()
 
 	LOG_INFO("\n\n\n");
 	LOG_INFO("Client start up");
-
-	/// This is the 
-	boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address_v4::loopback(), 2345);
-	
-	m_pNetworkManager = new ClientNetworkManager(endpoint);
-
-	boost::thread thr(boost::bind(&NetworkManager::operator(), m_pNetworkManager));
-
-	JoinRequest *request = new JoinRequest();
-	request->endpoint = endpoint;
-	string test = "ABCD";
-	request->name = test;
-	m_pNetworkManager->send(request);
 	
 	LOG_INFO("PROGRAM START");
 
@@ -44,6 +28,8 @@ void ClientMain::setup()
 	{
 		LOG_INFO("The current environment does not support multi-touch events.");
 	}
+
+	GAME_MGR->startGame("Mike");
 }
 
 void ClientMain::prepareSettings( Settings *settings )

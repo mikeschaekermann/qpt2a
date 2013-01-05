@@ -39,6 +39,5 @@ class ClientMain : public AppBasic
 private:
 	float m_fFrameTime;
 	float m_fElapsedGameTimeLastFrame;
-	ClientNetworkManager* m_pNetworkManager;
 	map<uint32_t, TouchWay> m_touchWays;
 };

@@ -26,7 +26,6 @@ void GameScreen::draw()
 
 void GameScreen::loadContent()
 {
-
 	/// if everything was loaded set the isInitialized to true
 	isInitialized = true;
 }
