@@ -4,6 +4,8 @@
 #include <vector>
 #include <cmath>
 
+#include "boost/asio.hpp"
+
 #include "../../common/network/NetworkManager.h"
 #include "../network/ServerNetworkManager.h"
 #include "../../common/network/messages/game/outgame/JoinRequest.h"
@@ -118,7 +120,10 @@ public:
 
 		if (players.size() == players.max_size())
 		{
-			StartGame *startgame = new StartGame();
+			using boost::asio::ip::udp;
+
+			vector<udp::endpoint> endpointArr;
+			StartGame * startgame = new StartGame();
 			startgame->worldRadius = worldRadius;
 			for (unsigned int i = 0; i < players.size(); ++i)
 			{
@@ -130,9 +135,18 @@ public:
 				networkPlayer.startPosition = players[i]->getStemCell().getPosition();
 
 				startgame->players.push_back(networkPlayer);
+
+				endpointArr.push_back(players[i]->getEndpoint());
 			}
 
-			networkManager->send(startgame);
+			/*for (unsigned int i = 0; i < players.size(); ++i)
+			{
+				
+				startgame->endpoint = players[i]->getEndpoint();
+				networkManager->send(startgame);
+			}*/
+			
+			networkManager->sendTo<StartGame>(startgame, endpointArr);
 
 			LOG_INFO("Game started");
 		}
