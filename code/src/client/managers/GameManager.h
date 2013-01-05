@@ -37,7 +37,7 @@ private:
 	PlayerClient* myPlayer;
 
 	boost::asio::ip::udp::endpoint serverEndpoint;
-	ClientNetworkManager networkManager;
+	ClientNetworkManager * networkManager;
 	boost::thread networkManagerThread;
 
 	/// game version

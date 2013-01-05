@@ -209,7 +209,7 @@ vector<ConnectionEndpoint> ClientNetworkManager::getConnectionEndpoints()
 	return m_endpoints;
 }
 
-ClientNetworkManager::ClientNetworkManager(udp::endpoint serverEndpoint) : NetworkManager(), m_serverEndpoint(serverEndpoint)
+ClientNetworkManager::ClientNetworkManager(udp::endpoint serverEndpoint) : NetworkManager(2345), m_serverEndpoint(serverEndpoint)
 {
 	m_endpoints.push_back(ConnectionEndpoint(serverEndpoint));
 }

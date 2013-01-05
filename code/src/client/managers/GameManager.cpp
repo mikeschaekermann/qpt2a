@@ -6,10 +6,11 @@
 GameManager* GameManager::m_pManager = nullptr;
 
 GameManager::GameManager(void):
-	serverEndpoint(boost::asio::ip::address_v4::loopback(), 2345),
-	networkManager(serverEndpoint),
-	networkManagerThread(boost::bind(&NetworkManager::operator(), &networkManager))
+	serverEndpoint(boost::asio::ip::address_v4::loopback(), 2345)
 {
+	networkManager = new ClientNetworkManager(serverEndpoint);
+	boost::thread(boost::bind(&NetworkManager::operator(), networkManager));
+
 	m_screenManager.openScreen(new GameScreen(m_screenManager));
 }
 
@@ -22,6 +23,10 @@ GameManager::~GameManager(void)
 			delete *it;
 		}
 	}
+
+	networkManager->stop();
+	networkManagerThread.join();
+	delete networkManager;
 }
 
 GameManager * const GameManager::getInstance()
@@ -36,14 +41,12 @@ GameManager * const GameManager::getInstance()
 
 void GameManager::startGame(string playerName)
 {
-	delete m_pManager;
-
 	getInstance();
 
 	JoinRequest *request = new JoinRequest();
 	request->endpoint = serverEndpoint;
 	request->name = playerName;
-	networkManager.send(request);
+	networkManager->send(request);
 
 	myPlayer = new PlayerClient(playerName, true);
 }

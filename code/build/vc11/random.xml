@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data>
 	<world>
-		<radius>100.0f</radius>
+		<radius>150.0</radius>
 	</world>
 	<players>
-		<max>4</max>
+		<max>1</max>
 		<player>
 			<startposition>
-				<x>95.0f</x>
-				<y>0.0f</y>
+				<x>95.0</x>
+				<y>0.0</y>
 			</startposition>
 		</player>
 		<player>
 			<startposition>
-				<x>-95.0f</x>
-				<y>0.0f</y>
+				<x>-95.0</x>
+				<y>0.0</y>
 			</startposition>
 		</player>
 		<player>
 			<startposition>
-				<x>0.0f</x>
-				<y>95.0f</y>
+				<x>0.0</x>
+				<y>95.0</y>
 			</startposition>
 		</player>
 		<player>
 			<startposition>
-				<x>0.0f</x>
-				<y>-95.0f</y>
+				<x>0.0</x>
+				<y>-95.0</y>
 			</startposition>
 		</player>
 	</players>
 	<event>
 		<attack>
-			<time>4.0f</time>
+			<time>4.0</time>
 		</attack>
 		<build>
-			<time>4.0f</time>
+			<time>4.0</time>
 		</build>
 	</event>
 	<cell>
 		<stemcell>
-			<radius>15.0f</radius>
-			<healthpoints>100.0f</healthpoints>
+			<radius>15.0</radius>
+			<healthpoints>100.0</healthpoints>
 		</stemcell>
 		<standardcell>
-			<radius>15.0f</radius>
-			<healthpoints>100.0f</healthpoints>
-			<attackradius>10.0f</attackradius>
-			<distanceDropOffDegree>100.0f</distanceDropOffDegree>
-			<damage>5.0f</damage>
+			<radius>15.0</radius>
+			<healthpoints>100.0</healthpoints>
+			<attackradius>10.0</attackradius>
+			<distanceDropOffDegree>100.0</distanceDropOffDegree>
+			<damage>5.0</damage>
 		</standardcell>
 	</cell>
 </data>

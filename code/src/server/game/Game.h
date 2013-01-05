@@ -42,11 +42,10 @@ public:
 		LOG_INFO("Game created");
 
 		ConfigurationDataHandler::getInstance()->readFromXML("random.xml");
-
 		players.reserve(CONFIG_INT2("data.players.max", 4));
-
+		
 		stringstream message;
-		message << "Space for " << players.max_size() << " reserved";
+		message << "Space for " << players.capacity() << " players reserved";
 		LOG_INFO(message.str());
 	}
 
@@ -66,7 +65,7 @@ public:
 		stringstream message;
 		string playerName = request.name;
 		
-		if(players.size() == players.max_size())
+		if(players.size() == players.capacity())
 		{
 			JoinFailure *failure = new JoinFailure();
 			failure->errorCode = JoinErrorCode::GameIsFull;
@@ -118,7 +117,7 @@ public:
 		message << "Player " << playerName << " joined the game";
 		LOG_INFO(message.str());
 
-		if (players.size() == players.max_size())
+		if (players.size() == players.capacity())
 		{
 			using boost::asio::ip::udp;
 
@@ -138,13 +137,6 @@ public:
 
 				endpointArr.push_back(players[i]->getEndpoint());
 			}
-
-			/*for (unsigned int i = 0; i < players.size(); ++i)
-			{
-				
-				startgame->endpoint = players[i]->getEndpoint();
-				networkManager->send(startgame);
-			}*/
 			
 			networkManager->sendTo<StartGame>(startgame, endpointArr);
 

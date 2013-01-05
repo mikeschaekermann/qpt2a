@@ -81,16 +81,24 @@ public:
 		{
 			std::vector<T> childrenData;
 			foreach(boost::property_tree::ptree::value_type const & v, data.get_child(parentPropertyKeyHierachy))
+			{
 				if (v.first == descendantPropertyKeyHierachy.substr(0, descendantPropertyKeyHierachy.find(".")))
 				{
-					childrenData.push_back(v.second.get<T>(descendantPropertyKeyHierachy));
+					auto text = descendantPropertyKeyHierachy.substr(descendantPropertyKeyHierachy.find(".") + 1, descendantPropertyKeyHierachy.size() - 1);
+					auto data = v.second.get<T>(text);
+					childrenData.push_back(data);
 				}
+			}
 			return childrenData;
 		}
 		catch (boost::property_tree::ptree_bad_path & e)
 		{
 			LOG_ERROR(e.what());
 			throw dataNotFoundErr;
+		}
+		catch(...)
+		{
+			LOG_ERROR("rest");
 		}
 	}
 private:
