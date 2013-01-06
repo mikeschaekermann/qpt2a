@@ -1,7 +1,9 @@
 #include "GameManager.h"
+#include "../../common/Config.h"
 #include "boost/asio.hpp"
 #include "../../common/network/messages/game/outgame/JoinRequest.h"
 #include "../../client/actors/PlayerClient.h"
+#include "../../client/actors/StemCellClient.h"
 
 GameManager* GameManager::m_pManager = nullptr;
 
@@ -11,16 +13,16 @@ GameManager::GameManager(void):
 	networkManager = new ClientNetworkManager(serverEndpoint);
 	boost::thread(boost::bind(&NetworkManager::operator(), networkManager));
 
-	m_screenManager.openScreen(new GameScreen(m_screenManager));
+	m_screenManager.openGameScreen(new GameScreen(m_screenManager));
 }
 
 GameManager::~GameManager(void)
 {
 	for (auto it = players.begin(); it != players.end(); ++it)
 	{
-		if (*it != nullptr)
+		if (it->second != nullptr)
 		{
-			delete *it;
+			delete it->second;
 		}
 	}
 
@@ -66,16 +68,33 @@ ScreenManager & GameManager::getScreenManager()
 	return m_screenManager;
 }
 
-void GameManager::addPlayer(unsigned int id, string name, Vec2f position, bool canManipulate)
+void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition)
 {
-	auto newPlayer = new PlayerClient(id, name, canManipulate);
-	
-	for (auto it = players.begin(); it != players.end(); ++it)
+	if (players.find(id) != players.end())
 	{
-		if (**it == *newPlayer) return;
+		stringstream message;
+		message << "player id " << id << " is already in use!";
+		LOG_ERROR(message.str());
+
+		assert(false);
 	}
 
-	players.push_back(newPlayer);
+	/// my own player was passed
+	if (id == myPlayer->getId())
+	{
+		players.insert(make_pair(id, myPlayer));
+	}
+	/// another player was passed
+	else
+	{
+		players.insert(make_pair(id, new PlayerClient(id, name, false)));
+	}
+
+	auto player = players[id];
+
+	/// create stem cell
+	StemCellClient * stemCell = new StemCellClient(stemCellId, Vec3f(0, 0, -30), 0);
+	GAME_SCR.addGameObjectToPick(stemCell, true);
 }
 
 void GameManager::setMyPlayerId(unsigned int id)

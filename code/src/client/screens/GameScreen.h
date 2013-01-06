@@ -6,13 +6,12 @@
 #include "../actors/GameObjectClient.h"
 #include "../../common/Player.h"
 
-
 class GameScreen :
 	public Screen
 {
 public:
-	typedef map<unsigned, GameObjectClient*> IdGameObjectMap;
-
+	typedef map<unsigned int, GameObjectClient*> IdGameObjectMap;
+	
 	GameScreen(ScreenManager& screenManager);
 	virtual ~GameScreen(void);
 
@@ -44,9 +43,16 @@ public:
 	 */
 	virtual void touchClick(TouchWay touchWay);
 
+	void addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable);
+	void addGameObjectToDraw(GameObjectClient * gameObject, bool collidable);
+	void addGameObjectToPick(GameObjectClient * gameObject, bool collidable);
+
 private:
 	/// perspective cam for the game
 	Cam cam;
+
+	/// container for all game objects in the scene
+	/// GameObjectContainer gameObjectContainer;
 
 	/// all game objects registered to be updated
 	IdGameObjectMap		gameObjectsToUpdate;

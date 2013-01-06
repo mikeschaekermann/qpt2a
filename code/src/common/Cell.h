@@ -17,7 +17,7 @@ public:
 
 	float getHealthPoints() const { return healthPoints; };
 
-	float getAngle() const { return angle; };
+	float getAngle() const { return float(rotation.z / M_PI * 180.0f); };
 
 	bool getIsComplete() const { return isComplete; };
 
@@ -25,7 +25,6 @@ public:
 	void setOwner( const Player * owner) { this->owner = owner; };
 protected:
 	float healthPoints;
-	float angle;
 	bool isComplete;
 	const Player * owner;
 

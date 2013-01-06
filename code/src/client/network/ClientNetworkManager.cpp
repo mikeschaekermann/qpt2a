@@ -126,7 +126,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		JoinSuccess *joinSuccess = dynamic_cast<JoinSuccess*> (message);
 		if (joinSuccess)
 		{
-			GameManager::getInstance()->setMyPlayerId(joinSuccess->playerId);
+			GAME_MGR->setMyPlayerId(joinSuccess->playerId);
 
 			stringstream message;
 			message << "join success message from server with player id: " << joinSuccess->playerId;
@@ -149,9 +149,11 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 			for (auto it = startGame->players.begin(); it != startGame->players.end(); ++it)
 			{
-				message << "player " << it->playerName << " with stem cell (" << it->startCellId << ") at position (" << it->startPosition.x << ", " << it->startPosition.y << ", " << it->startPosition.z << ")";
+				message << "player " << it->playerName << "(" << it->playerId << ") with stem cell (" << it->startCellId << ") at position (" << it->startPosition.x << ", " << it->startPosition.y << ", " << it->startPosition.z << ")";
 				LOG_INFO(message.str());
 				message.str("");
+
+				GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition);
 			}
 		}
 		break;
