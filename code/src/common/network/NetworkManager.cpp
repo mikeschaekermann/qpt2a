@@ -21,12 +21,10 @@ NetworkManager::NetworkManager(unsigned short listenPort) : run(true)
 
 NetworkManager::NetworkManager() : run(true)
 {
-	assert(false);
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service);
-    serverSocket->set_option(boost::asio::ip::udp::socket::reuse_address(true));
-	serverSocket->bind(udp::endpoint(udp::v4(), 2345));
 	serverSocket->open(udp::v4());
+    serverSocket->set_option(boost::asio::ip::udp::socket::reuse_address(true));
 }
 
 NetworkManager::NetworkManager(const NetworkManager &other) : run(true)
