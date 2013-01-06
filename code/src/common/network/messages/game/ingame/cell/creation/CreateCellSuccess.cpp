@@ -1,11 +1,11 @@
 #include "CreateCellSuccess.h"
 
-CreateCellSuccess::CreateCellSuccess() : NetworkMessage(), requestId(0), cellId(0)
+CreateCellSuccess::CreateCellSuccess() : NetworkMessage(), requestId(0), cellId(0), angle(0.f)
 {
 	messageType = MessageType::CreateCellSuccess;
 }
 
-CreateCellSuccess::CreateCellSuccess(char* data, unsigned &index) : NetworkMessage(data, index), requestId(0), cellId(0)
+CreateCellSuccess::CreateCellSuccess(char* data, unsigned &index) : NetworkMessage(data, index), requestId(0), cellId(0), angle(0.f)
 {
 	memcpy(&requestId, &data[index], sizeof(requestId));
 	requestId = ntohl(requestId);
@@ -23,23 +23,17 @@ CreateCellSuccess::CreateCellSuccess(char* data, unsigned &index) : NetworkMessa
 
 	memcpy(&position.z, &data[index], sizeof(position.z));
 	index += sizeof(position.z);
-	
-	memcpy(&rotation.x, &data[index], sizeof(rotation.x));
-	index += sizeof(rotation.x);
 
-	memcpy(&rotation.y, &data[index], sizeof(rotation.y));
-	index += sizeof(rotation.y);
-
-	memcpy(&rotation.z, &data[index], sizeof(rotation.z));
-	index += sizeof(rotation.z);
+	memcpy(&angle, &data[index], sizeof(angle));
+	index += sizeof(angle);
 }
 
-CreateCellSuccess::CreateCellSuccess(const CreateCellSuccess &other) : NetworkMessage(other), requestId(other.requestId), cellId(other.cellId), rotation(other.rotation)
+CreateCellSuccess::CreateCellSuccess(const CreateCellSuccess &other) : NetworkMessage(other), requestId(other.requestId), cellId(other.cellId), angle(other.angle)
 {
 	messageType = MessageType::CreateCellSuccess;
 }
 
-CreateCellSuccess::CreateCellSuccess(const NetworkMessage &other) : NetworkMessage(other), requestId(0), cellId(0)
+CreateCellSuccess::CreateCellSuccess(const NetworkMessage &other) : NetworkMessage(other), requestId(0), cellId(0), angle(0.f)
 { 
 	messageType = MessageType::CreateCellSuccess;
 }
@@ -67,15 +61,9 @@ unsigned CreateCellSuccess::writeToArray(char* data, unsigned start)
 	
 	memcpy(&data[index], &position.z, sizeof(position.z));
 	index += sizeof(position.z);
-	
-	memcpy(&data[index], &rotation.x, sizeof(rotation.x));
-	index += sizeof(rotation.x);
-	
-	memcpy(&data[index], &rotation.y, sizeof(rotation.y));
-	index += sizeof(rotation.y);
-	
-	memcpy(&data[index], &rotation.z, sizeof(rotation.z));
-	index += sizeof(rotation.z);
+
+	memcpy(&data[index], &angle, sizeof(angle));
+	index += sizeof(angle);
 	
 	return index;
 }
@@ -86,5 +74,5 @@ unsigned CreateCellSuccess::calculateSize()
 		+ sizeof(requestId)
 		+ sizeof(cellId)
 		+ sizeof(float) * 3
-		+ sizeof(float) * 3;
+		+ sizeof(angle);
 }

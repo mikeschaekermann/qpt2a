@@ -12,7 +12,7 @@ void testCreateCellRequest()
 	CreateCellRequest *message = new CreateCellRequest();
 	message->messageId = 32;
 	message->messageType = MessageType::JoinFailure;
-	message->rotation = ci::Vec3f(123.45f, 32.43f, 0.f);
+	message->angle = 123.45f;
 	message->cellId = 67;
 	message->playerId = 1;
 	message->requestId = 234;
@@ -44,7 +44,7 @@ void testCreateCellRequest()
 	assert(message->requestId == received->requestId);
 
 	cout << "CreateCellRequest Test[Assert 7]" << endl;
-	assert(message->rotation == received->rotation);
+	assert(message->angle == received->angle);
 
 	cout << "CreateCellRequest Test[Assert 8]" << endl;
 	assert(message->playerId == received->playerId);

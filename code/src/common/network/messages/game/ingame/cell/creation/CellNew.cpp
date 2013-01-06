@@ -24,14 +24,8 @@ CellNew::CellNew(char* data, unsigned &index) : NetworkMessage(data, index), pla
 	memcpy(&position.z, &data[index], sizeof(position.z));
 	index += sizeof(position.z);
 
-	memcpy(&rotation.x, &data[index], sizeof(rotation.x));
-	index += sizeof(rotation.x);
-
-	memcpy(&rotation.y, &data[index], sizeof(rotation.y));
-	index += sizeof(rotation.y);
-
-	memcpy(&rotation.z, &data[index], sizeof(rotation.z));
-	index += sizeof(rotation.z);
+	memcpy(&angle, &data[index], sizeof(angle));
+	index += sizeof(angle);
 
 	unsigned networkCellType = 0;
 	memcpy(&networkCellType, &data[index], sizeof(networkCellType));
@@ -39,7 +33,7 @@ CellNew::CellNew(char* data, unsigned &index) : NetworkMessage(data, index), pla
 	index += sizeof(networkCellType);
 }
 
-CellNew::CellNew(const CellNew &other) : NetworkMessage(other), cellId(other.cellId), type(CellType::Invalid), position(other.position), rotation(other.rotation)
+CellNew::CellNew(const CellNew &other) : NetworkMessage(other), cellId(other.cellId), type(CellType::Invalid), position(other.position)
 {
 	messageType = MessageType::CellNew;
 }
@@ -73,14 +67,8 @@ unsigned CellNew::writeToArray(char* data, unsigned start)
 	memcpy(&data[index], &position.z, sizeof(position.z));
 	index += sizeof(position.z);
 
-	memcpy(&data[index], &rotation.x, sizeof(rotation.x));
-	index += sizeof(rotation.x);
-	
-	memcpy(&data[index], &rotation.y, sizeof(rotation.y));
-	index += sizeof(rotation.y);
-	
-	memcpy(&data[index], &rotation.z, sizeof(rotation.z));
-	index += sizeof(rotation.z);
+	memcpy(&data[index], &angle, sizeof(angle));
+	index += sizeof(angle);
 
 	unsigned networkType = type.getNetworkType();
 	memcpy(&data[index], &networkType, sizeof(networkType));
@@ -92,7 +80,7 @@ unsigned CellNew::writeToArray(char* data, unsigned start)
 unsigned CellNew::calculateSize()
 {
 	return NetworkMessage::calculateSize() 
-		+ sizeof(float) * 3
+		+ sizeof(angle)
 		+ sizeof(playerId)
 		+ sizeof(cellId)
 		+ sizeof(float) * 3
