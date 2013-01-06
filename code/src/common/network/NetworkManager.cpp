@@ -65,7 +65,7 @@ void NetworkManager::operator()()
 		maintenanceMutex.lock();
 		if (!run || (error && error != boost::asio::error::message_size))
 		{
-			if (error)
+			if (error && error != boost::system::errc::connection_reset && error != boost::system::errc::operation_would_block)
 			{
 				LOG_ERROR(std::string(error.category().name()) + ": " + error.message());
 			}
