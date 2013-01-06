@@ -3,6 +3,8 @@
 #include "../../../../NetworkMessage.h"
 #include "../../../../enum/CellType.h"
 
+#include "cinder/Vector.h"
+
 class CreateCellRequest : public NetworkMessage
 {
 public:
@@ -10,7 +12,7 @@ public:
 	unsigned int requestId;
 	unsigned int playerId;
 	unsigned int cellId;
-	float angle;
+	ci::Vec3f rotation;
 	CellType type;
 
 	/* Constructor / Destructor */

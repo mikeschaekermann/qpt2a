@@ -12,7 +12,7 @@ void testCellNew()
 	CellNew *message = new CellNew();
 	message->messageId = 32;
 	message->messageType = MessageType::JoinFailure;
-	message->angle = 57.912f;
+	message->rotation = ci::Vec3f(0.f, 57.912f, -0.34f);
 	message->cellId = 398;
 	message->playerId = 1;
 	message->type = CellType::StemCell;
@@ -35,7 +35,7 @@ void testCellNew()
 	assert(message->messageId == received->messageId);
 
 	cout << "CellNew Test[Assert 4]" << endl;
-	assert(message->angle == received->angle);
+	assert(message->rotation == received->rotation);
 	cout << "CellNew Test[Assert 5]" << endl;
 	assert(message->cellId == received->cellId);
 	cout << "CellNew Test[Assert 6]" << endl;
