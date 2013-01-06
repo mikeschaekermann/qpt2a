@@ -10,7 +10,7 @@ public:
 	unsigned int requestId;
 	unsigned int cellId;
 	ci::Vec3f position;
-	float angle;
+	ci::Vec3f rotation;
 
 	/* Constructor / Destructor */
 	CreateCellSuccess();														/// Default constructor

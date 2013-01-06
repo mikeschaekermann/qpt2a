@@ -12,7 +12,7 @@ public:
 	unsigned int playerId;
 	unsigned int cellId;
 	ci::Vec3f position;
-	float angle;
+	ci::Vec3f rotation;
 	CellType type;
 
 	/* Constructor / Destructor */
