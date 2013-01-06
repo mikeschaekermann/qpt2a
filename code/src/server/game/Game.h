@@ -111,6 +111,7 @@ public:
 
 		JoinSuccess *success = new JoinSuccess();
 		success->playerId = p->getId();
+		success->endpoint = request.endpoint;
 		networkManager->send(success);
 
 		message.clear();

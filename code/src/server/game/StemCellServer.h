@@ -9,6 +9,10 @@ class StemCellServer :
 {
 public:
 	StemCellServer(Vec3f position, float angle) :
+		GameObject(),
+		Cell(position, CONFIG_FLOAT1("data.cell.stemcell.radius"), angle, CONFIG_FLOAT1("data.cell.stemcell.healthpoints")),
+		GameObjectServer(),
+		CellServer(),
 		StemCell(position, angle)
 	{ }
 	

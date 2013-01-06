@@ -65,3 +65,8 @@ void Logger::log(LogSeverity lvl, string message)
 	m_streamWriteMutex._Unlock();
 #endif
 }
+
+void Logger::log(LogSeverity lvl, stringstream message)
+{
+	log(lvl, message.str());
+}
