@@ -25,7 +25,6 @@ ConnectionEndpoint* ClientNetworkManager::getConnectionEndpoint(boost::asio::ip:
 	{
 		return &m_endpoints[0];
 	}
-
 	return 0;
 }
 
