@@ -143,6 +143,8 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 			}
 		}
 
+		std::vector<unsigned> toBeDeleted;
+
 		/// Remove obsolete messages
 		for(std::map<unsigned, NetworkMessage*>::iterator it = connectionEndpoint->m_unconfirmedMessages.begin(); it != connectionEndpoint->m_unconfirmedMessages.end(); ++it) 
 		{
@@ -160,10 +162,15 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 
 				if (obsolete)
 				{
-					delete[] it->second;
-					connectionEndpoint->m_unconfirmedMessages.erase(it->first);
+					toBeDeleted.push_back(it->first);
 				}
 			}
+		}
+
+		for (auto it = toBeDeleted.begin(); it != toBeDeleted.end(); ++it)
+		{
+			delete connectionEndpoint->m_unconfirmedMessages[*it];
+			connectionEndpoint->m_unconfirmedMessages.erase(*it);
 		}
 	}
 }
