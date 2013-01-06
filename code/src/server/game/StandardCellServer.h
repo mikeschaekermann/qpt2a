@@ -9,6 +9,10 @@ class StandardCellServer :
 {
 public:
 	StandardCellServer(Vec3f position, float angle) :
+		GameObject(),
+		Cell(position, CONFIG_FLOAT1("data.cell.standardcell.radius"), angle, CONFIG_FLOAT1("data.cell.standardcell.healthpoints")),
+		GameObjectServer(),
+		CellServer(),
 		StandardCell(position, angle)
 	{ }
 

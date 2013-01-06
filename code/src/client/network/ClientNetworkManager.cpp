@@ -128,7 +128,9 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			GameManager::getInstance()->setMyPlayerId(joinSuccess->playerId);
 
-			LOG_INFO("JOIN SUCCESS WITH PLAYER ID: " + joinSuccess->playerId);
+			stringstream message;
+			message << "join success message from server with player id: " << joinSuccess->playerId;
+			LOG_INFO(message.str());
 		}
 		break;
 	}
@@ -137,7 +139,20 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		StartGame *startGame = dynamic_cast<StartGame*> (message);
 		if (startGame)
 		{
-			/// TODO
+			stringstream message;
+
+			LOG_INFO("start game message from server");
+			LOG_INFO("==============================");
+			message << "world radius: " << startGame->worldRadius;
+			LOG_INFO(message.str());
+			message.str("");
+
+			for (auto it = startGame->players.begin(); it != startGame->players.end(); ++it)
+			{
+				message << "player " << it->playerName << " with stem cell (" << it->startCellId << ") at position (" << it->startPosition.x << ", " << it->startPosition.y << ", " << it->startPosition.z << ")";
+				LOG_INFO(message.str());
+				message.str("");
+			}
 		}
 		break;
 	}

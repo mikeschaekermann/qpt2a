@@ -286,4 +286,7 @@
       <Filter>Network\Messages\Game\OutGame</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram21.cd" />
+  </ItemGroup>
 </Project>
