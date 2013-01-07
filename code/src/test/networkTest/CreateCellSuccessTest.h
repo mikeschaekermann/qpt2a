@@ -12,7 +12,7 @@ void testCreateCellSuccess()
 	CreateCellSuccess *message = new CreateCellSuccess();
 	message->messageId = 32;
 	message->messageType = MessageType::JoinFailure;
-	message->rotation = ci::Vec3f(123.5f, 2.f, 3.5f);
+	message->angle = 123.5f;
 	message->cellId = 532;
 	message->position = ci::Vec3f(234.533f, 0.0f, 23.0f);
 	message->requestId = 0;
@@ -34,7 +34,7 @@ void testCreateCellSuccess()
 	assert(message->messageId == received->messageId);
 
 	cout << "CreateCellSuccess Test[Assert 4]" << endl;
-	assert(message->rotation == received->rotation);
+	assert(message->angle == received->angle);
 	cout << "CreateCellSuccess Test[Assert 5]" << endl;
 	assert(message->cellId == received->cellId);
 	cout << "CreateCellSuccess Test[Assert 6]" << endl;
