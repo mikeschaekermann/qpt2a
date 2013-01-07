@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <time.h>
 #include <sstream>
+#include "cinder/app/AppBasic.h"
 
 Logger* Logger::m_pLogger = new Logger();
 
@@ -59,7 +60,11 @@ void Logger::log(LogSeverity lvl, string message)
 	m_file << output.str() << "\n";
 	m_file.flush();
 #ifdef _DEBUG
+	#ifdef _CLIENT
+	ci::app::console() << output.str() << std::endl;
+	#else
 	std::cout << output.str() << std::endl;
+	#endif
 #endif
 
 	m_streamWriteMutex._Unlock();

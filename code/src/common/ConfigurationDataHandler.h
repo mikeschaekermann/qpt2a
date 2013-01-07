@@ -58,6 +58,10 @@ public:
 			LOG_ERROR(e.what());
 			throw dataNotFoundErr;
 		}
+		catch (boost::property_tree::ptree_bad_path & e)
+		{
+			LOG_ERROR(e.what());
+		}
 	}
 
 	/**

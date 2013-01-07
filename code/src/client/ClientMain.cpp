@@ -4,13 +4,14 @@
 #include "../common/Logger.h"
 #include "../common/Config.h"
 #include "managers/GameManager.h"
+#include "../common/ConfigurationDataHandler.h"
 
 void ClientMain::setup()
 {
 	setWindowPos(100, 100);
 
 	m_fFrameTime = 0;
-	m_fElapsedGameTimeLastFrame = getElapsedSeconds();
+	m_fElapsedGameTimeLastFrame = (float)getElapsedSeconds();
 
 	Logger::getInstance()->configure("main.log");
 
@@ -29,6 +30,8 @@ void ClientMain::setup()
 		LOG_INFO("The current environment does not support multi-touch events.");
 	}
 
+	ConfigurationDataHandler::getInstance()->readFromXML("config.xml");
+
 	GAME_MGR->startGame("Mike");
 }
 
@@ -39,15 +42,16 @@ void ClientMain::prepareSettings( Settings *settings )
 
 void ClientMain::update()
 {
-	m_fFrameTime = getElapsedSeconds() - m_fElapsedGameTimeLastFrame;
+	m_fFrameTime = (float)getElapsedSeconds() - m_fElapsedGameTimeLastFrame;
 
 	GameManager::getInstance()->update(m_fFrameTime);
 
-	m_fElapsedGameTimeLastFrame = getElapsedSeconds();
+	m_fElapsedGameTimeLastFrame = (float)getElapsedSeconds();
 }
 
 void ClientMain::draw()
 {
+	gl::clear(Color::black());
 	GameManager::getInstance()->draw();
 }
 

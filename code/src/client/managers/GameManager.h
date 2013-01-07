@@ -9,6 +9,7 @@
 #include "../actors/PlayerClient.h"
 
 #define GAME_MGR GameManager::getInstance()
+#define GAME_SCR GAME_MGR->getScreenManager().getGameScreen()
 
 class GameManager
 {
@@ -22,7 +23,7 @@ public:
 	void draw();
 	ScreenManager & getScreenManager();
 
-	void addPlayer(unsigned int id, string name, Vec2f position, bool canManipulate);
+	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
 	void setMyPlayerId(unsigned int id);
 
 private:
@@ -31,8 +32,8 @@ private:
 
 	ScreenManager m_screenManager;
 
-	/// all active players
-	vector<PlayerClient*> players;
+	/// id map for all active players
+	map<unsigned int, PlayerClient*> players;
 	/// my own player
 	PlayerClient* myPlayer;
 
