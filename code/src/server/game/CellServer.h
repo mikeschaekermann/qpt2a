@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "../../common/Cell.h"
+#include "../../common/ConfigurationDataHandler.h"
 #include "GameObjectServer.h"
 
 class CellServer :
@@ -16,10 +17,22 @@ public:
 		STANDARDCELL
 	};
 
-	CellServer(Vec3f position, float radius, float angle, float healthPoints, Type type) :
-		Cell(position, radius, angle, healthPoints),
+	CellServer(Type type, Vec3f position, float angle) :
+		Cell(position, angle),
 		type(type)
-	{ }
+	{
+		switch(type)
+		{
+			case STEMCELL:
+				this->radius = CONFIG_FLOAT1("data.cell.stemcell.radius");
+				this->healthPoints = CONFIG_FLOAT1("data.cell.stemcell.healthpoints");
+				break;
+			case STANDARDCELL:
+				this->radius = CONFIG_FLOAT1("data.cell.standardcell.radius");
+				this->healthPoints = CONFIG_FLOAT1("data.cell.standardcell.healthpoints");
+				break;
+		}
+	}
 
 	void getNextCellPositionByAngle(float angle, float nextCellRadius, Vec3f & outPosition) const
 	{
@@ -27,6 +40,8 @@ public:
 		outPosition.x += cosf(ci::toRadians(angle)) * nextCellRadius;
 		outPosition.y += sinf(ci::toRadians(angle)) * nextCellRadius;
 	}
+
+	Type getType() const { return type; }
 
 private:
 	virtual void setId(unsigned int id) { GameObjectServer::setId(id); }

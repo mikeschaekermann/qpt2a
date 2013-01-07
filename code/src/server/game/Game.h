@@ -169,10 +169,10 @@ public:
 			{
 			case CellType::StemCell:
 				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.stemcell.radius"), position);
-				cell = new StemCellServer(position, angle);
+				cell = new CellServer(CellServer::STEMCELL, position, angle);
 			case CellType::StandardCell:
 				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.standardcell.radius"), position);
-				cell = new StandardCellServer(position, angle);
+				cell = new CellServer(CellServer::STANDARDCELL, position, angle);
 			default:
 				cell = 0;
 			}

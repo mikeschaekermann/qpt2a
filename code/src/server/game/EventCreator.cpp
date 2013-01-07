@@ -93,7 +93,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 		return false;
 	}
 
-	if (isAttacker && (!currentCell.getIsComplete() || dynamic_cast<StandardCellServer *>(&currentCell) == 0))
+	if (isAttacker && (!currentCell.getIsComplete() || currentCell.getType() == CellServer::STANDARDCELL))
 	{
 		/// cell could not be an attacker
 		return false;
@@ -134,7 +134,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 					}
 					else
 					{
-						if (actualCell->getIsComplete() && dynamic_cast<StandardCellServer*>(actualCell) == 0) continue;
+						if (actualCell->getIsComplete() && actualCell->getType() == CellServer::STANDARDCELL) continue;
 						ci::Vec3f attacker(actualCell->getPosition());
 					}
 

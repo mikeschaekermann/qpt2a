@@ -2,6 +2,12 @@
 
 Cell::Cell() { }
 
+Cell::Cell(Vec3f position, float angle)
+{
+	this->position = position;
+	setAngle(angle);
+}
+
 Cell::Cell(Vec3f position, float radius, float angle, float healthPoints) :
 	healthPoints(healthPoints)
 {
