@@ -62,8 +62,6 @@
     <ClInclude Include="..\..\src\Server\game\GameObjectServer.h" />
     <ClInclude Include="..\..\src\server\game\IIdentifiable.h" />
     <ClInclude Include="..\..\src\Server\game\PlayerServer.h" />
-    <ClInclude Include="..\..\src\Server\game\StandardCellServer.h" />
-    <ClInclude Include="..\..\src\Server\game\StemCellServer.h" />
     <ClInclude Include="..\..\src\server\network\ServerNetworkManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -101,7 +99,7 @@
     <ClCompile Include="..\..\src\server\network\ServerNetworkmanager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram21.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7C072AE6-2637-47ED-A4D2-637EECF59EE7}</ProjectGuid>

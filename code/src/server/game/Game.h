@@ -27,8 +27,6 @@
 
 #include "EventCreator.h"
 #include "CellServer.h"
-#include "StemCellServer.h"
-#include "StandardCellServer.h"
 #include "PlayerServer.h"
 
 using namespace std;
