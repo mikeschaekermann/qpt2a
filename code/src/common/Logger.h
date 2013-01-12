@@ -5,6 +5,7 @@
 #define LOG_ERROR(message) Logger::getInstance()->log(logError, message)
 
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <fstream>
 #include "cinder\app\AppBasic.h"
@@ -34,9 +35,14 @@ public:
 	void configure(string filename);
 
 	/**
-		@brief logs the message in the before configured file
+		@brief logs the message into the file configured before
 	 */
 	void log(LogSeverity lvl, string message);
+
+	/**
+		@brief logs the message into the file configured before
+	 */
+	void log(LogSeverity lvl, stringstream message);
 
 private:
 	/// singleton logger instance
@@ -49,6 +55,6 @@ private:
 
 	/// @brief private constructor as defined for the singleton pattern
 	Logger(void);
-	/// @brief privagte copy constructor
+	/// @brief private copy constructor
 	Logger(const Logger &);
 };

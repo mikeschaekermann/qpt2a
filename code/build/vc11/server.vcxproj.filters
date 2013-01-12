@@ -7,17 +7,8 @@
     <ClInclude Include="..\..\src\Server\event\BuildingEvent.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\event\Event.h">
-      <Filter>Eventlogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\event\EventQueue.h">
-      <Filter>Eventlogic</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h">
       <Filter>Eventlogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\EventCreator.h">
-      <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\Cell.h">
       <Filter>Common</Filter>
@@ -64,15 +55,6 @@
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\CellServer.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\GameObjectServer.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\StemCellServer.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Server\game\PlayerServer.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
@@ -81,9 +63,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\common\ConfigurationDataHandler.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\StandardCellServer.h">
-      <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\network\ConnectionEndpoint.h">
       <Filter>Network</Filter>
@@ -169,6 +148,21 @@
     <ClInclude Include="..\..\src\server\environment\StaticModificatorServer.h">
       <Filter>Environment</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\CellServer.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\GameObjectServer.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\event\EventManager.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\event\GameEvent.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\event\EventCreator.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -210,6 +204,9 @@
     <Filter Include="Environment">
       <UniqueIdentifier>{87fc7ff7-2833-473b-9e5a-8b0f039c90bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{86df9750-77a3-49f5-82e8-bf74993a6433}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\common\Cell.cpp">
@@ -228,9 +225,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\Main.cpp" />
-    <ClCompile Include="..\..\src\server\game\EventCreator.cpp">
-      <Filter>Gamelogic</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp">
       <Filter>Eventlogic</Filter>
     </ClCompile>
@@ -324,5 +318,20 @@
     <ClCompile Include="..\..\src\server\environment\BarrierServer.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\event\EventManager.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\AttackEvent.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\Helper.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\EventCreator.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

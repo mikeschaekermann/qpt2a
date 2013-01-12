@@ -32,6 +32,7 @@
     <ClCompile Include="..\..\src\client\screens\Screen.cpp" />
     <ClCompile Include="..\..\src\client\sound\SoundPlayer.cpp" />
     <ClCompile Include="..\..\src\common\Cell.cpp" />
+    <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
     <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="..\..\src\common\Cell.h" />
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h" />
     <ClInclude Include="..\..\src\common\Config.h" />
+    <ClInclude Include="..\..\src\common\ConfigurationDataHandler.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
     <ClInclude Include="..\..\src\common\Helper.h" />
     <ClInclude Include="..\..\src\common\IGameObjectMap.h" />
@@ -178,7 +180,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_LOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CLIENT;WIN32;_LOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows;$(FMOD_DIR)\api\inc;$(ASSIMP_DIR)\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>Cdecl</CallingConvention>
@@ -192,7 +194,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;$(OPENCV_DIR);$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib;$(QUICKTIMESDK_DIR)\Libraries;C:\Users\Daniel\Desktop\Repo\qpt2a\Code\libs</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;$(OPENCV_DIR);$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib;$(QUICKTIMESDK_DIR)\Libraries</AdditionalLibraryDirectories>
       <AdditionalDependencies>assimp32d.lib;fmodexL_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <OptimizeReferences>true</OptimizeReferences>

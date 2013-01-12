@@ -21,6 +21,7 @@ public:
 
 	unsigned int getId() const { return id; }
 	const string& getName() const { return name; }
+	void setId(unsigned int newId) { id = newId; }
 
 private:
 	unsigned int id;

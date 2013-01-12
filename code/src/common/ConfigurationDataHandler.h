@@ -15,11 +15,15 @@
 
 #define foreach BOOST_FOREACH
 
-#define CONFIG_FLOAT1(key) ConfigurationDataHandler::getInstance()->get<float>(key)
-#define CONFIG_FLOAT2(key, value) ConfigurationDataHandler::getInstance()->get<float>(key, value)
+#define CONFIG_MGR ConfigurationDataHandler::getInstance()
 
-#define CONFIG_INT1(key) ConfigurationDataHandler::getInstance()->get<int>(key)
-#define CONFIG_INT2(key, value) ConfigurationDataHandler::getInstance()->get<int>(key, value)
+#define CONFIG_FLOAT1(key) CONFIG_MGR->get<float>(key)
+#define CONFIG_FLOAT2(key, value) CONFIG_MGR->get<float>(key, value)
+
+#define CONFIG_INT1(key) CONFIG_MGR->get<int>(key)
+#define CONFIG_INT2(key, value) CONFIG_MGR->get<int>(key, value)
+
+#define CONFIG_FLOATS2(path, key) CONFIG_MGR->getChildrenDataVector<float>(path,key)
 
 class ConfigurationDataHandler
 {
@@ -58,6 +62,10 @@ public:
 			LOG_ERROR(e.what());
 			throw dataNotFoundErr;
 		}
+		catch (boost::property_tree::ptree_bad_path & e)
+		{
+			LOG_ERROR(e.what());
+		}
 	}
 
 	/**
@@ -81,16 +89,24 @@ public:
 		{
 			std::vector<T> childrenData;
 			foreach(boost::property_tree::ptree::value_type const & v, data.get_child(parentPropertyKeyHierachy))
+			{
 				if (v.first == descendantPropertyKeyHierachy.substr(0, descendantPropertyKeyHierachy.find(".")))
 				{
-					childrenData.push_back(v.second.get<T>(descendantPropertyKeyHierachy));
+					auto text = descendantPropertyKeyHierachy.substr(descendantPropertyKeyHierachy.find(".") + 1, descendantPropertyKeyHierachy.size() - 1);
+					auto data = v.second.get<T>(text);
+					childrenData.push_back(data);
 				}
+			}
 			return childrenData;
 		}
 		catch (boost::property_tree::ptree_bad_path & e)
 		{
 			LOG_ERROR(e.what());
 			throw dataNotFoundErr;
+		}
+		catch(...)
+		{
+			LOG_ERROR("rest");
 		}
 	}
 private:

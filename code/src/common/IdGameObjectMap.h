@@ -6,7 +6,7 @@ using namespace std;
 
 class IdGameObjectMap : public IGameObjectMap
 {
-public:
+public:	
 	virtual GameObject * addGameObject(GameObject * gameObject)
 	{
 		auto insertResult = gameObjectMap.insert(pair<unsigned int, GameObject *>(gameObject->getId(), gameObject));

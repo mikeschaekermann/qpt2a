@@ -1,22 +1,38 @@
 #include "EventCreator.h"
 
-#include "../../common/Helper.h"
+#include "../../common/Config.h"
 
-EventCreator* EventCreator::instance = 0;
+#include "../../common/network/NetworkManager.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CreateCellFailure.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CellNew.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
+
+#include "../../common/GameObjectContainer.h"
+
+#include "../game/PlayerServer.h"
+#include "../game/CellServer.h"
+
+#include "GameEvent.h"
+#include "EventManager.h"
+#include "AttackEvent.h"
+#include "BuildingEvent.h"
+
+using namespace std;
+
+EventCreator * EventCreator::instance = 0;
 
 EventCreator * EventCreator::getInstance()
 {
-	if (!instance)
+	if (instance == nullptr)
 	{
 		instance = new EventCreator();
 	}
 	return instance;
 }
 
-void EventCreator::bind(NetworkManager * networkManager, EventQueue * eventQueue, GameObjectContainer * gameObjectContainer, vector<PlayerServer *> * players)
+void EventCreator::bind(NetworkManager * networkManager, GameObjectContainer * gameObjectContainer, vector<PlayerServer *> * players)
 {
 	this->networkManager = networkManager;
-	this->eventQueue = eventQueue;
 	this->gameObjectContainer = gameObjectContainer;
 	this->players = players;
 }
@@ -29,6 +45,8 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 		failure->requestId = requestId;
 		failure->errorCode = CreateCellErrorCode::OutsideGameArea;
 		networkManager->send(failure);
+
+		LOG_ERROR("Cell could not be created because it is not in the game area");
 		return false;
 	}
 
@@ -43,16 +61,19 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 			failure->requestId = requestId;
 			failure->errorCode = CreateCellErrorCode::SpotAlreadyTaken;
 			networkManager->send(failure);
+
+			LOG_ERROR("Cell could not be created because an gameobject is already at this spot");
 			return false;
 		}
 	}
 
 	gameObjectContainer->createGameObject(&cell);
 
-	BuildingEvent * be = new BuildingEvent(time, *networkManager, cell, *players);
-	eventQueue->addEvent(be);
+	(*EVENT_MGR) += new BuildingEvent(time, *networkManager, cell, *players);
+
+	EventManager & em = (*EVENT_MGR);
 		
-	CreateCellSuccess *success = new CreateCellSuccess();
+	CreateCellSuccess * success = new CreateCellSuccess();
 	success->requestId = requestId;
 	success->cellId = cell.getId();
 	success->position[0] = cell.getPosition()[0];
@@ -60,34 +81,42 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	success->angle = cell.getAngle();
 	networkManager->send(success);
 
+	
+	CellNew * cellNew = new CellNew();
+	cellNew->playerId = currentPlayer.getId();
+	cellNew->cellId = cell.getId();
+	cellNew->position[0] = cell.getPosition()[0];
+	cellNew->position[1] = cell.getPosition()[1];
+	cellNew->type = type;
+
+	using boost::asio::ip::udp;
+
+	vector<udp::endpoint> endpointArr;
+
 	for (unsigned int i = 0; i < players->size(); ++i)
 	{
 		if ((*players)[i]->getId() != currentPlayer.getId())
 		{
-			CellNew cellNew;
-			cellNew.playerId = currentPlayer.getId();
-			cellNew.cellId = cell.getId();
-			cellNew.position[0] = cell.getPosition()[0];
-			cellNew.position[1] = cell.getPosition()[1];
-			cellNew.type = type;
-			cellNew.endpoint = (*players)[i]->getEndpoint();
+			endpointArr.push_back((*players)[i]->getEndpoint());
 		}
 	}
+
+	networkManager->sendTo<CellNew>(cellNew, endpointArr);
 
 	return true;
 }
 
 bool EventCreator::createAttackEvent(const double time, const bool isAttacker, const PlayerServer & currentPlayer, CellServer & currentCell)
 {
-	if (!(networkManager && eventQueue && players))
+	if (!(networkManager && gameObjectContainer && players))
 	{
-		/// call bind first
+		throw string("call bind first");
 		return false;
 	}
 
-	if (isAttacker && (!currentCell.getIsComplete() || dynamic_cast<StandardCellServer *>(&currentCell) == 0))
+	if (isAttacker && (!currentCell.getIsComplete() || currentCell.getType() == CellServer::STANDARDCELL))
 	{
-		/// cell could not be an attacker
+		LOG_INFO("No attack is performed");
 		return false;
 	}
 
@@ -126,7 +155,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 					}
 					else
 					{
-						if (actualCell->getIsComplete() && dynamic_cast<StandardCellServer*>(actualCell) == 0) continue;
+						if (actualCell->getIsComplete() && actualCell->getType() == CellServer::STANDARDCELL) continue;
 						ci::Vec3f attacker(actualCell->getPosition());
 					}
 
@@ -150,7 +179,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 
 						CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
 						CellServer * victimCell = isAttacker ? actualCell : &currentCell;
-						AttackEvent * ae = new AttackEvent(time, *networkManager, *eventQueue, *gameObjectContainer, *attackerCell, *victimCell, damage, *players);
+						(*EVENT_MGR) += new AttackEvent(time, *networkManager, *gameObjectContainer, *attackerCell, *victimCell, damage, *players);
 					}
 
 					/// attack message is sent in event

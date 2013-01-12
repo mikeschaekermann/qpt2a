@@ -19,6 +19,25 @@ public:
 		
 	void operator()();
 	void send(NetworkMessage *message);
+	
+	template<typename T>
+	void sendTo(T * message, std::vector<boost::asio::ip::udp::endpoint> endpoints)
+	{
+		unsigned size = message->calculateSize();
+
+		char *copyData = new char[size];
+
+		message->writeToArray(copyData);
+		
+		for (auto it = endpoints.begin(); it != endpoints.end(); ++it)
+		{ 
+			unsigned index = 0;
+			T * copy = new T(copyData, index);
+			copy->endpoint = *it;
+			send(copy);
+		}
+		delete message;
+	}
 
 	void stop();
 protected:

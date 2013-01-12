@@ -13,20 +13,26 @@ using namespace std;
 NetworkManager::NetworkManager(unsigned short listenPort) : run(true)
 {
 	io_service = new boost::asio::io_service();
-	serverSocket = new boost::asio::ip::udp::socket(*io_service, udp::endpoint(udp::v4(), listenPort));
+	serverSocket = new boost::asio::ip::udp::socket(*io_service);
+	serverSocket->open(udp::v4());
+	serverSocket->set_option(boost::asio::ip::udp::socket::reuse_address(true));
+	serverSocket->bind(udp::endpoint(udp::v4(), listenPort));
 }
 
 NetworkManager::NetworkManager() : run(true)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service);
-    serverSocket->open(udp::v4());
+	serverSocket->open(udp::v4());
+    serverSocket->set_option(boost::asio::ip::udp::socket::reuse_address(true));
 }
 
 NetworkManager::NetworkManager(const NetworkManager &other) : run(true)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service, udp::endpoint(udp::v4(), other.serverSocket->local_endpoint().port()));
+	serverSocket->set_option(boost::asio::ip::udp::socket::reuse_address(true));
+	assert(false);
 }
 
 NetworkManager::~NetworkManager()
@@ -57,21 +63,26 @@ void NetworkManager::operator()()
 		// Receive the message
 		serverSocket->receive_from(boost::asio::buffer(buffer), remote_endpoint, 0, error);
 		maintenanceMutex.lock();
-
 		if (!run || (error && error != boost::asio::error::message_size))
 		{
-			if (error)
+			if (error && error != boost::system::errc::connection_reset && error != boost::system::errc::operation_would_block)
 			{
-				LOG_ERROR(error.message());
+				LOG_ERROR(std::string(error.category().name()) + ": " + error.message());
 			}
 			maintenanceMutex.unlock();
 			continue;
 		}
 		// Distinguish the messages by their type
 		NetworkMessage *message = createNetworkMessage(buffer.c_array());
-		message->endpoint = remote_endpoint;
 
-		if (!dynamic_cast<JoinRequest*>(message) && !dynamic_cast<ConnectionMessage*>(message))
+		if (!message)
+		{
+			continue;
+		}
+		
+		message->endpoint = remote_endpoint;
+		
+		if (message && !dynamic_cast<JoinRequest*>(message) && !dynamic_cast<ConnectionMessage*>(message))
 		{
 			ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
 			if (connectionEndpoint)
@@ -130,6 +141,8 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 			}
 		}
 
+		std::vector<unsigned> toBeDeleted;
+
 		/// Remove obsolete messages
 		for(std::map<unsigned, NetworkMessage*>::iterator it = connectionEndpoint->m_unconfirmedMessages.begin(); it != connectionEndpoint->m_unconfirmedMessages.end(); ++it) 
 		{
@@ -147,10 +160,15 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 
 				if (obsolete)
 				{
-					delete[] it->second;
-					connectionEndpoint->m_unconfirmedMessages.erase(it->first);
+					toBeDeleted.push_back(it->first);
 				}
 			}
+		}
+
+		for (auto it = toBeDeleted.begin(); it != toBeDeleted.end(); ++it)
+		{
+			delete connectionEndpoint->m_unconfirmedMessages[*it];
+			connectionEndpoint->m_unconfirmedMessages.erase(*it);
 		}
 	}
 }
@@ -231,7 +249,7 @@ void NetworkManager::baseSend(NetworkMessage &message)
 
 void NetworkManager::send(NetworkMessage *message)
 {
-	/// Lock when changes inthe connectionEndpoint are possible
+	/// Lock when changes in the connectionEndpoint are possible
 	maintenanceMutex.lock();
 	ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
 
