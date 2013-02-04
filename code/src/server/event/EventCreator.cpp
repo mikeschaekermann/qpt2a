@@ -62,7 +62,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 			failure->errorCode = CreateCellErrorCode::SpotAlreadyTaken;
 			networkManager->send(failure);
 
-			LOG_ERROR("Cell could not be created because an gameobject is already at this spot");
+			LOG_ERROR("Cell could not be created because a gameobject is already at this spot");
 			return false;
 		}
 	}
