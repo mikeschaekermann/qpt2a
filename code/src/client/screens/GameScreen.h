@@ -17,6 +17,8 @@ public:
 
 	virtual void update(float frameTime);
 	virtual void draw();
+	void setWorldRadius(float radius) { worldRadius = radius; }
+	void zoomToWorld();
 
 	virtual void loadContent();
 
@@ -50,6 +52,8 @@ public:
 private:
 	/// perspective cam for the game
 	Cam cam;
+	/// the world's radius, i.e. the radius of the Petri's dish
+	float worldRadius;
 
 	/// container for all game objects in the scene
 	/// GameObjectContainer gameObjectContainer;

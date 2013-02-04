@@ -5,17 +5,11 @@ GameScreen::GameScreen(ScreenManager& screenManager) :
 	Screen(screenManager)
 {
 	auto screenSize = getWindowSize();
-	cam = Cam(screenSize.x, screenSize.y, toRadians(1.f), 0.1f, 1000.f);
-	
-	CameraPersp mCam;
-	mCam.setPerspective(60.0f, getWindowAspectRatio(), 5.0f, 3000.0f);
+	cam = Cam(screenSize.x, screenSize.y, 60.0f, 5.0f, 3000.f);
 
-	auto eye	= Vec3f( 0.0f, 0.0f, 50.0f );
-	auto center	= Vec3f::zero();
-	auto up		= Vec3f::yAxis();
-	
-	mCam.lookAt(eye, center, up);
-	gl::setMatrices(mCam);
+	cam
+		.setPosition(Vec3f( 0.0f, 0.0f, 0.0f ))
+		.setFocus(Vec3f::zero());
 }
 
 GameScreen::~GameScreen(void)
@@ -28,6 +22,11 @@ void GameScreen::update(float frameTime)
 
 void GameScreen::draw()
 {
+	gl::enableDepthWrite();
+	gl::enableDepthRead();
+
+	gl::setMatrices(cam);
+
 	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
 	{
 		it->second->draw();
@@ -87,4 +86,16 @@ void GameScreen::addGameObjectToPick(GameObjectClient * gameObject, bool collida
 	addGameObjectToDraw(gameObject, collidable);
 
 	gameObjectsToPick.insert(make_pair(gameObject->getId(), gameObject));
+}
+
+void GameScreen::zoomToWorld()
+{
+	/// world radius = sin(camera's fov / 2) * camera's distance
+	/// camera's distance = world radius / sin(camera's fov / 2)
+
+	float camDistance = worldRadius / sin(cam.getFov() / 2 / 180.0 * M_PI);
+
+	cam
+		.setPosition(Vec3f(0, 0, camDistance))
+		.setFocus(Vec3f(0, 0, 0));
 }

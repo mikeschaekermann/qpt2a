@@ -8,12 +8,30 @@ Cam::Cam()
 
 }
 
-Cam::Cam(int width, int height, float fov, float nearPlane, float farPlane) : CameraPersp(width, height, fov, nearPlane, farPlane)
+Cam::Cam(int width, int height, float fov, float nearPlane, float farPlane) :
+	CameraPersp(width, height, fov, nearPlane, farPlane),
+	upDirection(Vec3f::zAxis())
 {
 }
 
 Cam::~Cam(void)
 {
+}
+
+Cam & Cam::setPosition(Vec3f & newPosition)
+{
+	position = newPosition;
+	lookAt(position, focus, upDirection);
+
+	return *this;
+}
+
+Cam & Cam::setFocus(Vec3f & newFocus)
+{
+	focus = newFocus;
+	lookAt(position, focus, upDirection);
+
+	return *this;
 }
 
 Vec3f Cam::screenToWorld(Vec2i screenPoint)

@@ -13,9 +13,13 @@ public:
 	Cam(int width, int height, float fov, float nearPlane, float farPlane);
 	virtual ~Cam(void);
 
+	Cam & setPosition(Vec3f & newPosition);
+	Cam & setFocus(Vec3f & newFocus);
 	Vec3f screenToWorld(Vec2i screenPoint);
 
 private:
 	Vec3f unproject(Vec3f point);
+
+	Vec3f position, focus, upDirection;
 };
 

@@ -128,8 +128,10 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			GAME_MGR->setMyPlayerId(joinSuccess->playerId);
 
+			LOG_INFO("join success message from server");
+			LOG_INFO("================================");
 			stringstream message;
-			message << "join success message from server with player id: " << joinSuccess->playerId;
+			message << "my player id: " << joinSuccess->playerId;
 			LOG_INFO(message.str());
 		}
 		break;
@@ -146,6 +148,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			message << "world radius: " << startGame->worldRadius;
 			LOG_INFO(message.str());
 			message.str("");
+
+			GAME_MGR->addPetriDish(startGame->worldRadius);
 
 			for (auto it = startGame->players.begin(); it != startGame->players.end(); ++it)
 			{

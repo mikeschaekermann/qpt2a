@@ -68,6 +68,17 @@ ScreenManager & GameManager::getScreenManager()
 	return m_screenManager;
 }
 
+void GameManager::addPetriDish(float radius)
+{
+	GameObjectClient * petriDish = new GameObjectClient();
+	petriDish->setRadius(radius);
+	petriDish->setScale(Vec3f(1, 1, 1 / radius / 2));
+	petriDish->setPosition(Vec3f(0, 0, -1));
+	GAME_SCR.addGameObjectToDraw(petriDish, false);
+	GAME_SCR.setWorldRadius(radius);
+	GAME_SCR.zoomToWorld();
+}
+
 void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition)
 {
 	if (players.find(id) != players.end())
@@ -93,7 +104,7 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	auto player = players[id];
 
 	/// create stem cell
-	StemCellClient * stemCell = new StemCellClient(stemCellId, Vec3f(0, 0, -30), 0);
+	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0);
 	GAME_SCR.addGameObjectToPick(stemCell, true);
 }
 

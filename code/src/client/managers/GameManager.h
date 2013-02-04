@@ -23,9 +23,9 @@ public:
 	void draw();
 	ScreenManager & getScreenManager();
 
+	void addPetriDish(float radius);
 	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
 	void setMyPlayerId(unsigned int id);
-
 private:
 	/// singleton instance
 	static GameManager* m_pManager;

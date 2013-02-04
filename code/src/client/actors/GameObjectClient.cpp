@@ -6,7 +6,7 @@ void GameObjectClient::draw() const
 
 	translate(position);
 	rotate(rotation);
-	gl::scale(Vec3f(1, 1, 1));
+	gl::scale(scale);
 
 	drawAtTransformation();
 
@@ -16,5 +16,5 @@ void GameObjectClient::draw() const
 void GameObjectClient::drawAtTransformation() const
 {
 	gl::color(1, 0, 0);
-	drawSphere(Vec3f(0, 0, 0), 15);
+	drawSphere(Vec3f(0, 0, 0), radius, radius);
 }

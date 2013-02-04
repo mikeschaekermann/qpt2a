@@ -23,4 +23,5 @@ private:
 	virtual void setRotation(Vec3f rotation) { CellClient::setRotation(rotation); }
 	virtual void setScale(Vec3f scale) { CellClient::setScale(scale); }
 	virtual void setRadius(float radius) { CellClient::setRadius(radius); }
+	virtual void drawAtTransformation() const;
 };
