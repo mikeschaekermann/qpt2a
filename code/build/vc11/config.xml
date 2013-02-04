@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data>
+	<rendering>
+		<camera>
+			<fieldOfView>30</fieldOfView>
+			<nearPlane>5.0</nearPlane>
+			<farPlane>3000.0</farPlane>
+		</camera>
+	</rendering>
 	<world>
 		<radius>500.0</radius>
 	</world>

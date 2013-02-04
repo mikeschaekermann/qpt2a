@@ -41,6 +41,8 @@ public:
 	 */
 	void touchEnded(TouchWay touchWay);
 
+	void resize(ResizeEvent event);
+
 private:
 	std::stack<Screen*> m_screenStack;
 	Screen* m_backgroundScreen;

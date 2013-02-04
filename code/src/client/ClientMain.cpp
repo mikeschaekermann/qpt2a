@@ -107,4 +107,9 @@ void ClientMain::keyDown( KeyEvent event )
 
 }
 
+void ClientMain::resize( ResizeEvent event )
+{
+	GAME_MGR->getScreenManager().resize(event);
+}
+
 CINDER_APP_BASIC( ClientMain, RendererGl )

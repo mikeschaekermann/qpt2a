@@ -86,3 +86,8 @@ void ScreenManager::touchEnded(TouchWay touchWay)
 		m_screenStack.top()->touchClick(touchWay);
 	}
 }
+
+void ScreenManager::resize(ResizeEvent event)
+{
+	m_screenStack.top()->resize(event);
+}

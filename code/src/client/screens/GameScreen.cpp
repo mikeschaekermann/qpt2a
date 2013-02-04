@@ -5,7 +5,7 @@ GameScreen::GameScreen(ScreenManager& screenManager) :
 	Screen(screenManager)
 {
 	auto screenSize = getWindowSize();
-	cam = Cam(screenSize.x, screenSize.y, 60.0f, 5.0f, 3000.f);
+	cam = Cam(screenSize.x, screenSize.y, CONFIG_FLOAT1("data.rendering.camera.fieldOfView"), CONFIG_FLOAT1("data.rendering.camera.nearPlane"), CONFIG_FLOAT1("data.rendering.camera.farPlane"));
 
 	cam
 		.setPosition(Vec3f( 0.0f, 0.0f, 0.0f ))
@@ -63,6 +63,11 @@ void GameScreen::touchClick(TouchWay touchWay)
 	LOG_INFO(concatenate(concatenate("Point on Screen: ", touchWay.getCurrentPos().x), touchWay.getCurrentPos().y));
 	LOG_INFO(concatenate(concatenate(concatenate("Point in 3D: ", pointInWorld.x), pointInWorld.y), pointInWorld.z));
 };
+
+void GameScreen::resize(ResizeEvent event)
+{
+	cam.setAspectRatio(getWindowAspectRatio());
+}
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable)
 {

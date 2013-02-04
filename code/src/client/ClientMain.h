@@ -36,6 +36,8 @@ class ClientMain : public AppBasic
 
 	void	keyDown( KeyEvent event );
 
+	void	resize( ResizeEvent );
+
 private:
 	float m_fFrameTime;
 	float m_fElapsedGameTimeLastFrame;

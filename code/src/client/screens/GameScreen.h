@@ -45,6 +45,8 @@ public:
 	 */
 	virtual void touchClick(TouchWay touchWay);
 
+	virtual void resize(ResizeEvent event);
+
 	void addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable);
 	void addGameObjectToDraw(GameObjectClient * gameObject, bool collidable);
 	void addGameObjectToPick(GameObjectClient * gameObject, bool collidable);
