@@ -52,7 +52,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	BuildingEvent * be = new BuildingEvent(time, *networkManager, cell, *players);
 	eventQueue->addEvent(be);
 		
-	CreateCellSuccess *success = new CreateCellSuccess();
+	CreateCellSuccess * success = new CreateCellSuccess();
 	success->requestId = requestId;
 	success->cellId = cell.getId();
 	success->position[0] = cell.getPosition()[0];
@@ -60,19 +60,27 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	success->angle = cell.getAngle();
 	networkManager->send(success);
 
+	
+	CellNew * cellNew = new CellNew();
+	cellNew->playerId = currentPlayer.getId();
+	cellNew->cellId = cell.getId();
+	cellNew->position[0] = cell.getPosition()[0];
+	cellNew->position[1] = cell.getPosition()[1];
+	cellNew->type = type;
+
+	using boost::asio::ip::udp;
+
+	vector<udp::endpoint> endpointArr;
+
 	for (unsigned int i = 0; i < players->size(); ++i)
 	{
 		if ((*players)[i]->getId() != currentPlayer.getId())
 		{
-			CellNew cellNew;
-			cellNew.playerId = currentPlayer.getId();
-			cellNew.cellId = cell.getId();
-			cellNew.position[0] = cell.getPosition()[0];
-			cellNew.position[1] = cell.getPosition()[1];
-			cellNew.type = type;
-			cellNew.endpoint = (*players)[i]->getEndpoint();
+			endpointArr.push_back((*players)[i]->getEndpoint());
 		}
 	}
+
+	networkManager->sendTo<CellNew>(cellNew, endpointArr);
 
 	return true;
 }
@@ -85,7 +93,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 		return false;
 	}
 
-	if (isAttacker && (!currentCell.getIsComplete() || dynamic_cast<StandardCellServer *>(&currentCell) == 0))
+	if (isAttacker && (!currentCell.getIsComplete() || currentCell.getType() == CellServer::STANDARDCELL))
 	{
 		/// cell could not be an attacker
 		return false;
@@ -126,7 +134,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 					}
 					else
 					{
-						if (actualCell->getIsComplete() && dynamic_cast<StandardCellServer*>(actualCell) == 0) continue;
+						if (actualCell->getIsComplete() && actualCell->getType() == CellServer::STANDARDCELL) continue;
 						ci::Vec3f attacker(actualCell->getPosition());
 					}
 

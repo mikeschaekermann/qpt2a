@@ -10,10 +10,11 @@ void GameObjectClient::draw() const
 
 	drawAtTransformation();
 
-	popMatrices();
+	popMatrices();	
 }
 
 void GameObjectClient::drawAtTransformation() const
 {
-	drawSphere(Vec3f(0, 0, 0), 15);
+	gl::color(1, 0, 0);
+	drawSphere(Vec3f(0, 0, 0), radius, radius);
 }

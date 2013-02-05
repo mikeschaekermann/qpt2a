@@ -13,17 +13,22 @@ void BuildingEvent::trigger()
 {
 	cell.completeCell();
 	PlayerServer * current = 0;
+
+	CreateCellComplete * complete = new CreateCellComplete();
+	complete->cellId = cell.getId();
+
+	using boost::asio::ip::udp;
+	vector<udp::endpoint> endpointArr;
+
 	for (vector<PlayerServer *>::const_iterator it = players.begin(); it != players.end(); ++it)
 	{
-		CreateCellComplete *complete = new CreateCellComplete();
-		complete->cellId = cell.getId();
-		complete->endpoint = (*it)->getEndpoint();
-		manager.send(complete);
-
+		endpointArr.push_back((*it)->getEndpoint());
 		if ((*it)->getId() == cell.getOwner()->getId())
 		{
 			current = *it;
 		}
 	}
+	manager.sendTo<CreateCellComplete>(complete, endpointArr);
+
 	EventCreator::getInstance()->createAttackEvent(m_dDeadTime, true, *current, cell);
 }

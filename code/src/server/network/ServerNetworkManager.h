@@ -2,6 +2,7 @@
 
 class Game;
 #include "../../common/network/NetworkManager.h"
+#include <vector>
 
 class ServerNetworkManager : public NetworkManager
 {

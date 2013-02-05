@@ -4,6 +4,8 @@
 #include <vector>
 #include <cmath>
 
+#include "boost/asio.hpp"
+
 #include "../../common/network/NetworkManager.h"
 #include "../network/ServerNetworkManager.h"
 #include "../../common/network/messages/game/outgame/JoinRequest.h"
@@ -25,8 +27,6 @@
 
 #include "EventCreator.h"
 #include "CellServer.h"
-#include "StemCellServer.h"
-#include "StandardCellServer.h"
 #include "PlayerServer.h"
 
 using namespace std;
@@ -39,12 +39,11 @@ public:
 	{
 		LOG_INFO("Game created");
 
-		ConfigurationDataHandler::getInstance()->readFromXML("random.xml");
-
+		ConfigurationDataHandler::getInstance()->readFromXML("config.xml");
 		players.reserve(CONFIG_INT2("data.players.max", 4));
-
+		
 		stringstream message;
-		message << "Space for " << players.max_size() << " reserved";
+		message << "Space for " << players.capacity() << " players reserved";
 		LOG_INFO(message.str());
 	}
 
@@ -64,7 +63,7 @@ public:
 		stringstream message;
 		string playerName = request.name;
 		
-		if(players.size() == players.max_size())
+		if(players.size() == players.capacity())
 		{
 			JoinFailure *failure = new JoinFailure();
 			failure->errorCode = JoinErrorCode::GameIsFull;
@@ -110,15 +109,19 @@ public:
 
 		JoinSuccess *success = new JoinSuccess();
 		success->playerId = p->getId();
+		success->endpoint = request.endpoint;
 		networkManager->send(success);
 
 		message.clear();
 		message << "Player " << playerName << " joined the game";
 		LOG_INFO(message.str());
 
-		if (players.size() == players.max_size())
+		if (players.size() == players.capacity())
 		{
-			StartGame *startgame = new StartGame();
+			using boost::asio::ip::udp;
+
+			vector<udp::endpoint> endpointArr;
+			StartGame * startgame = new StartGame();
 			startgame->worldRadius = worldRadius;
 			for (unsigned int i = 0; i < players.size(); ++i)
 			{
@@ -130,9 +133,11 @@ public:
 				networkPlayer.startPosition = players[i]->getStemCell().getPosition();
 
 				startgame->players.push_back(networkPlayer);
-			}
 
-			networkManager->send(startgame);
+				endpointArr.push_back(players[i]->getEndpoint());
+			}
+			
+			networkManager->sendTo<StartGame>(startgame, endpointArr);
 
 			LOG_INFO("Game started");
 		}
@@ -164,10 +169,10 @@ public:
 			{
 			case CellType::StemCell:
 				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.stemcell.radius"), position);
-				cell = new StemCellServer(position, angle);
+				cell = new CellServer(CellServer::STEMCELL, position, angle);
 			case CellType::StandardCell:
 				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.standardcell.radius"), position);
-				cell = new StandardCellServer(position, angle);
+				cell = new CellServer(CellServer::STANDARDCELL, position, angle);
 			default:
 				cell = 0;
 			}

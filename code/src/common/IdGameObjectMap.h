@@ -6,7 +6,7 @@ using namespace std;
 
 class IdGameObjectMap : public IGameObjectMap
 {
-public:
+public:	
 	virtual GameObject * addGameObject(GameObject * gameObject)
 	{
 		auto insertResult = gameObjectMap.insert(pair<unsigned int, GameObject *>(gameObject->getId(), gameObject));
@@ -38,6 +38,16 @@ public:
 	virtual unsigned int getSize() const
 	{
 		return gameObjectMap.size();
+	}
+
+	virtual map<unsigned int, GameObject*>::iterator begin()
+	{
+		return gameObjectMap.begin();
+	}
+
+	virtual map<unsigned int, GameObject*>::iterator end()
+	{
+		return gameObjectMap.end();
 	}
 private:
 	map<unsigned int, GameObject *> gameObjectMap;

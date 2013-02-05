@@ -30,11 +30,16 @@ public:
 		attack->attackerCellId = attacker.getId();
 		attack->attackedCellId = victim.getId();
 		attack->damage = damage;
+		
+		using boost::asio::ip::udp;
+		vector<udp::endpoint> endpointArr;
+
 		for (auto it = players.begin(); it != players.end(); ++it)
 		{
-			attack->endpoint = (*it)->getEndpoint();
-			manager.send(attack);
+			endpointArr.push_back((*it)->getEndpoint());
 		}
+
+		manager.sendTo<CellAttack>(attack, endpointArr);
 
 		if (victim.getHealthPoints() < 0.f)
 		{
@@ -47,9 +52,10 @@ public:
 				{
 					player = *it;
 				}
-				die->endpoint = (*it)->getEndpoint();
-				manager.send(die);
 			}
+			
+			manager.sendTo<CellDie>(die, endpointArr);
+
 			gameObjectContainer.removeGameObject(victim.getId());
 		}
 		else

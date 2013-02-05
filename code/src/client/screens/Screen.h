@@ -46,6 +46,7 @@ public:
 	 */
 	virtual void touchClick(TouchWay touchWay) = 0;
 
+	virtual void resize(ResizeEvent event) = 0;
 protected:
 	float transitionOnTime;
 	float transitionOffTime;

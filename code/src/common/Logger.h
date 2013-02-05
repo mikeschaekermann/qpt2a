@@ -5,6 +5,7 @@
 #define LOG_ERROR(message) Logger::getInstance()->log(logError, message)
 
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <fstream>
 #include "cinder\app\AppBasic.h"
@@ -34,10 +35,9 @@ public:
 	void configure(string filename);
 
 	/**
-		@brief logs the message in the before configured file
+		@brief logs the message into the file configured before
 	 */
-	void log(LogSeverity lvl, string message);
-
+	template<typename T> void log(LogSeverity lvl, T message);
 private:
 	/// singleton logger instance
 	static Logger* m_pLogger;
@@ -49,6 +49,54 @@ private:
 
 	/// @brief private constructor as defined for the singleton pattern
 	Logger(void);
-	/// @brief privagte copy constructor
+	/// @brief private copy constructor
 	Logger(const Logger &);
 };
+
+template<typename T> void Logger::log(LogSeverity lvl, T message)
+{
+#ifdef _LOG
+
+	if(!m_file.is_open())
+	{
+		configure("main.log");
+	}
+
+	stringstream output;
+
+	// set line prefix
+	if(lvl == logInfo)
+	{
+		output << "INFO\t";
+	}
+	else if(lvl == logWarning)
+	{
+		output << "WARNING\t";
+	}
+	else
+	{
+		output << "ERROR\t";
+	}
+
+	// write the current time in the line
+	time_t t = time(0);
+	struct tm * now = localtime(&t);
+	output << now->tm_hour << ":" << now->tm_min << ":" << now->tm_sec << " " << now->tm_mday << "." << (now->tm_mon + 1) << "." << (now->tm_year + 1900) << "\t";
+
+	// append the message
+	output << message;
+
+	m_streamWriteMutex._Lock();
+	m_file << output.str() << "\n";
+	m_file.flush();
+#ifdef _DEBUG
+#ifdef _CLIENT
+	ci::app::console() << output.str() << std::endl;
+#else
+	std::cout << output.str() << std::endl;
+#endif
+#endif
+
+	m_streamWriteMutex._Unlock();
+#endif
+}

@@ -18,7 +18,6 @@
 
 #include "PlayerServer.h"
 #include "CellServer.h"
-#include "StandardCellServer.h"
 
 class EventCreator
 {

@@ -1,6 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject(void) { }
+GameObject::GameObject(void):
+	scale(1, 1, 1)
+{}
 
 GameObject::~GameObject(void)
 {

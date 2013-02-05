@@ -19,7 +19,7 @@ public:
 	CellNew();														/// Default constructor
 	CellNew(char *data, unsigned &index);							/// Construct from buffer starting by the given index
 	CellNew(const NetworkMessage &other);							/// Copy constructor which copies the network address
-	CellNew(const CellNew &other);								/// Copy constructor
+	CellNew(const CellNew &other);									/// Copy constructor
 	virtual ~CellNew();												/// Default Destructor
 
 	/* Methods */

@@ -6,6 +6,8 @@
 #include "../input/TouchWay.h"
 
 class Screen;
+class GameScreen;
+class MenuScreen;
 
 class ScreenManager
 {
@@ -17,6 +19,9 @@ public:
 	void draw();
 
 	void openScreen(Screen* screen);
+	void openMenuScreen(MenuScreen * menuScreen);
+	void openGameScreen(GameScreen* gameScreen);
+	GameScreen & getGameScreen() const;
 	void closeScreen();
 	void exit();
 	void fadeToBlack(float alpha);
@@ -38,7 +43,11 @@ public:
 	 */
 	void touchEnded(TouchWay touchWay);
 
+	void resize(ResizeEvent event);
+
 private:
 	std::stack<Screen*> m_screenStack;
 	Screen* m_backgroundScreen;
+	MenuScreen * menuScreen;
+	GameScreen * gameScreen;
 };

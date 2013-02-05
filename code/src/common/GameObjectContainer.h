@@ -23,6 +23,8 @@
 
 using namespace std;
 
+class GameObject;
+
 class GameObjectContainer
 {
 public:
@@ -70,6 +72,11 @@ public:
 		return positionMap.findInRadiusOf(position, radius);
 	}
 
+	const vector<GameObject *> pick(const Vec3f & pickPosition) const
+	{
+		return positionMap.pick(pickPosition);
+	}
+
 	unsigned int getSize() const
 	{
 		if (idMap.getSize() != positionMap.getSize())
@@ -78,6 +85,16 @@ public:
 			LOG_ERROR("Problem with the maps");
 		}
 		return idMap.getSize();
+	}
+
+	map<unsigned int, GameObject*>::iterator begin()
+	{
+		return idMap.begin();
+	}
+
+	map<unsigned int, GameObject*>::iterator end()
+	{
+		return idMap.end();
 	}
 private:
 	IdGameObjectMap idMap;

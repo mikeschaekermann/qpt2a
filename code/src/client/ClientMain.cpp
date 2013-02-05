@@ -4,34 +4,20 @@
 #include "../common/Logger.h"
 #include "../common/Config.h"
 #include "managers/GameManager.h"
-#include "network/ClientNetworkManager.h"
-#include "boost/asio.hpp"
-#include "../common/network/messages/game/outgame/JoinRequest.h"
+#include "managers/AssetManager.h"
+#include "../common/ConfigurationDataHandler.h"
 
 void ClientMain::setup()
 {
 	setWindowPos(100, 100);
 
 	m_fFrameTime = 0;
-	m_fElapsedGameTimeLastFrame = getElapsedSeconds();
+	m_fElapsedGameTimeLastFrame = (float)getElapsedSeconds();
 
 	Logger::getInstance()->configure("main.log");
 
 	LOG_INFO("\n\n\n");
 	LOG_INFO("Client start up");
-
-	/// This is the 
-	boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address_v4::loopback(), 2345);
-	
-	m_pNetworkManager = new ClientNetworkManager(endpoint);
-
-	boost::thread thr(boost::bind(&NetworkManager::operator(), m_pNetworkManager));
-
-	JoinRequest *request = new JoinRequest();
-	request->endpoint = endpoint;
-	string test = "ABCD";
-	request->name = test;
-	m_pNetworkManager->send(request);
 	
 	LOG_INFO("PROGRAM START");
 
@@ -44,6 +30,11 @@ void ClientMain::setup()
 	{
 		LOG_INFO("The current environment does not support multi-touch events.");
 	}
+
+	ConfigurationDataHandler::getInstance()->readFromXML("config.xml");
+	AssetManager::getInstance()->loadAssets("assets.xml");
+
+	GAME_MGR->startGame("Mike");
 }
 
 void ClientMain::prepareSettings( Settings *settings )
@@ -53,15 +44,16 @@ void ClientMain::prepareSettings( Settings *settings )
 
 void ClientMain::update()
 {
-	m_fFrameTime = getElapsedSeconds() - m_fElapsedGameTimeLastFrame;
+	m_fFrameTime = (float)getElapsedSeconds() - m_fElapsedGameTimeLastFrame;
 
 	GameManager::getInstance()->update(m_fFrameTime);
 
-	m_fElapsedGameTimeLastFrame = getElapsedSeconds();
+	m_fElapsedGameTimeLastFrame = (float)getElapsedSeconds();
 }
 
 void ClientMain::draw()
 {
+	gl::clear(Color::black());
 	GameManager::getInstance()->draw();
 }
 
@@ -115,6 +107,11 @@ void ClientMain::touchesEnded( TouchEvent event )
 void ClientMain::keyDown( KeyEvent event )
 {
 
+}
+
+void ClientMain::resize( ResizeEvent event )
+{
+	GAME_MGR->getScreenManager().resize(event);
 }
 
 CINDER_APP_BASIC( ClientMain, RendererGl )

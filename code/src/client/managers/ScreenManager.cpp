@@ -1,4 +1,6 @@
 #include "ScreenManager.h"
+#include "../screens/MenuScreen.h"
+#include "../screens/GameScreen.h"
 
 ScreenManager::ScreenManager(void):
 	m_backgroundScreen(nullptr)
@@ -42,6 +44,25 @@ void ScreenManager::openScreen(Screen* screen)
 	m_screenStack.push(screen);
 }
 
+void ScreenManager::openMenuScreen(MenuScreen * menuScreen)
+{
+	this->menuScreen = menuScreen;
+
+	openScreen(menuScreen);
+}
+
+void ScreenManager::openGameScreen(GameScreen* gameScreen)
+{
+	this->gameScreen = gameScreen;
+
+	openScreen(gameScreen);
+}
+
+GameScreen & ScreenManager::getGameScreen() const
+{
+	return *gameScreen;
+}
+
 void ScreenManager::closeScreen()
 {
 	m_screenStack.pop();
@@ -51,7 +72,7 @@ void ScreenManager::fadeToBlack(float alpha)
 {
 	auto windowSize = getWindowSize();
 	color(cinder::ColorA(0, 0, 0, alpha));
-	drawSolidRect(cinder::Rectf(0, 0, windowSize.x, windowSize.y));
+	drawSolidRect(cinder::Rectf(0.0f, 0.0f, (float)windowSize.x, (float)windowSize.y));
 }
 
 void ScreenManager::touchBegan(const TouchWay & touchWay)
@@ -72,4 +93,9 @@ void ScreenManager::touchEnded(TouchWay touchWay)
 	{
 		m_screenStack.top()->touchClick(touchWay);
 	}
+}
+
+void ScreenManager::resize(ResizeEvent event)
+{
+	m_screenStack.top()->resize(event);
 }

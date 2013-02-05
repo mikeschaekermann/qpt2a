@@ -5,23 +5,23 @@
 #include "../../common/Config.h"
 #include "../actors/GameObjectClient.h"
 #include "../../common/Player.h"
-#include "../../common/GameObjectContainer.h"
-#include <unordered_map>
 
+#include "cinder/Vector.h"
+#include "cinder/gl/Texture.h"
 
-class GameScreen :
+#include <vector>
+
+class MenuScreen :
 	public Screen
 {
 public:
-	typedef unordered_map<unsigned, GameObjectClient*> IdGameObjectClientMap;
+	typedef map<unsigned int, GameObjectClient*> IdGameObjectMap;
 	
-	GameScreen(ScreenManager& screenManager);
-	virtual ~GameScreen(void);
+	MenuScreen(ScreenManager& screenManager);
+	virtual ~MenuScreen(void);
 
 	virtual void update(float frameTime);
 	virtual void draw();
-	void setWorldRadius(float radius) { worldRadius = radius; }
-	void zoomToWorld();
 
 	virtual void loadContent();
 
@@ -50,25 +50,13 @@ public:
 
 	virtual void resize(ResizeEvent event);
 
-	void addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable);
-	void addGameObjectToDraw(GameObjectClient * gameObject, bool collidable);
-	void addGameObjectToPick(GameObjectClient * gameObject, bool collidable);
-
 private:
-	/// perspective cam for the game
-	Cam cam;
-	/// the world's radius, i.e. the radius of the Petri's dish
-	float worldRadius;
+	struct MenuItem
+	{
+		gl::Texture tex;
+		ci::Vec2f pos;
+		(void)(*callback)();
+	};
 
-	/// all game objects registered to be updated
-	GameObjectContainer		gameObjectsToUpdate;
-
-	/// all game objects registered to be drawn
-	IdGameObjectClientMap	gameObjectsToDraw;
-
-	/// all game objects registered to collide with each other
-	GameObjectContainer		gameObjectsToCollide;
-
-	/// all game objects registered to be pickable
-	GameObjectContainer		gameObjectsToPick;
+	std::vector<MenuItem *> items;
 };
