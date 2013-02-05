@@ -5,12 +5,13 @@
 #include "../../common/Config.h"
 #include "../actors/GameObjectClient.h"
 #include "../../common/Player.h"
+#include "../../common/GameObjectContainer.h"
 
 class GameScreen :
 	public Screen
 {
 public:
-	typedef map<unsigned int, GameObjectClient*> IdGameObjectMap;
+	typedef map<unsigned int, GameObjectClient*> IdGameObjectClientMap;
 	
 	GameScreen(ScreenManager& screenManager);
 	virtual ~GameScreen(void);
@@ -57,15 +58,15 @@ private:
 	/// the world's radius, i.e. the radius of the Petri's dish
 	float worldRadius;
 
-	/// container for all game objects in the scene
-	/// GameObjectContainer gameObjectContainer;
-
 	/// all game objects registered to be updated
-	IdGameObjectMap		gameObjectsToUpdate;
+	GameObjectContainer		gameObjectsToUpdate;
 
 	/// all game objects registered to be drawn
-	IdGameObjectMap		gameObjectsToDraw;
+	IdGameObjectClientMap	gameObjectsToDraw;
+
+	/// all game objects registered to collide with each other
+	GameObjectContainer		gameObjectsToCollide;
 
 	/// all game objects registered to be pickable
-	IdGameObjectMap		gameObjectsToPick;
+	GameObjectContainer		gameObjectsToPick;
 };

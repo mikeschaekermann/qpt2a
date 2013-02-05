@@ -68,12 +68,12 @@ void GameScreen::resize(ResizeEvent event)
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable)
 {
-	/*if (collidable)
+	if (collidable)
 	{
-		gameObjectContainer.createGameObject(gameObject);
-	}*/
+		gameObjectsToCollide.createGameObject(gameObject);
+	}
 
-	gameObjectsToUpdate.insert(make_pair(gameObject->getId(), gameObject));
+	gameObjectsToUpdate.createGameObject(gameObject);
 }
 
 void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject, bool collidable)
@@ -87,7 +87,7 @@ void GameScreen::addGameObjectToPick(GameObjectClient * gameObject, bool collida
 {
 	addGameObjectToDraw(gameObject, collidable);
 
-	gameObjectsToPick.insert(make_pair(gameObject->getId(), gameObject));
+	gameObjectsToPick.createGameObject(gameObject);
 }
 
 void GameScreen::zoomToWorld()

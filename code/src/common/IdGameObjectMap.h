@@ -39,6 +39,16 @@ public:
 	{
 		return gameObjectMap.size();
 	}
+
+	virtual map<unsigned int, GameObject*>::iterator begin()
+	{
+		return gameObjectMap.begin();
+	}
+
+	virtual map<unsigned int, GameObject*>::iterator end()
+	{
+		return gameObjectMap.end();
+	}
 private:
 	map<unsigned int, GameObject *> gameObjectMap;
 };
