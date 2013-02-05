@@ -1,4 +1,5 @@
 #include "ScreenManager.h"
+#include "../screens/MenuScreen.h"
 #include "../screens/GameScreen.h"
 
 ScreenManager::ScreenManager(void):
@@ -41,6 +42,13 @@ void ScreenManager::openScreen(Screen* screen)
 	screen->loadContent();
 
 	m_screenStack.push(screen);
+}
+
+void ScreenManager::openMenuScreen(MenuScreen * menuScreen)
+{
+	this->menuScreen = menuScreen;
+
+	openScreen(menuScreen);
 }
 
 void ScreenManager::openGameScreen(GameScreen* gameScreen)

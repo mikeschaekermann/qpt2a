@@ -4,6 +4,7 @@
 #include "../common/Logger.h"
 #include "../common/Config.h"
 #include "managers/GameManager.h"
+#include "managers/AssetManager.h"
 #include "../common/ConfigurationDataHandler.h"
 
 void ClientMain::setup()
@@ -31,6 +32,7 @@ void ClientMain::setup()
 	}
 
 	ConfigurationDataHandler::getInstance()->readFromXML("config.xml");
+	AssetManager::getInstance()->loadAssets("assets.xml");
 
 	GAME_MGR->startGame("Mike");
 }

@@ -29,6 +29,7 @@
     <ClCompile Include="..\..\src\client\network\ClientNetworkManager.cpp" />
     <ClCompile Include="..\..\src\client\rendering\Cam.cpp" />
     <ClCompile Include="..\..\src\client\screens\GameScreen.cpp" />
+    <ClCompile Include="..\..\src\client\screens\MenuScreen.cpp" />
     <ClCompile Include="..\..\src\client\screens\Screen.cpp" />
     <ClCompile Include="..\..\src\client\sound\SoundPlayer.cpp" />
     <ClCompile Include="..\..\src\common\Cell.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="..\..\src\client\rendering\Cam.h" />
     <ClInclude Include="..\..\src\client\screens\GameScreen.h" />
     <ClInclude Include="..\..\src\client\screens\IScreenItem.h" />
+    <ClInclude Include="..\..\src\client\screens\MenuScreen.h" />
     <ClInclude Include="..\..\src\client\screens\Screen.h" />
     <ClInclude Include="..\..\src\client\sound\SoundPlayer.h" />
     <ClInclude Include="..\..\src\common\Cell.h" />

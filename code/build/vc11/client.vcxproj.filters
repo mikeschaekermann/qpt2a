@@ -128,6 +128,9 @@
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\MenuScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\common\ConfigurationDataHandler.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\MenuScreen.h">
+      <Filter>Screens</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 #include <stack>
 #include "../../common/GameObject.h"
 #include "../screens/Screen.h"
+#include "../screens/MenuScreen.h"
 #include "../screens/GameScreen.h"
 #include "ScreenManager.h"
 #include "../network/ClientNetworkManager.h"
