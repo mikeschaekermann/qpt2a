@@ -6,12 +6,14 @@
 #include "../actors/GameObjectClient.h"
 #include "../../common/Player.h"
 
+#include <unordered_map>
+
 
 class GameScreen :
 	public Screen
 {
 public:
-	typedef map<unsigned, GameObjectClient*> IdGameObjectMap;
+	typedef unordered_map<unsigned, GameObjectClient*> IdGameObjectMap;
 
 	GameScreen(ScreenManager& screenManager);
 	virtual ~GameScreen(void);
