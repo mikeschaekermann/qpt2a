@@ -15,11 +15,9 @@ public:
 
 	Cam & setPosition(Vec3f & newPosition);
 	Cam & setFocus(Vec3f & newFocus);
-	Vec3f screenToWorld(Vec2i screenPoint);
+	Vec2f screenToWorldPlane(Vec2i screenPoint);
 
 private:
-	Vec3f unproject(Vec3f point);
-
 	Vec3f position, focus, upDirection;
 };
 

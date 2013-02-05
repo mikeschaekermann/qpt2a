@@ -42,6 +42,8 @@ void GameScreen::loadContent()
 void GameScreen::touchBegan(const TouchWay & touchWay)
 {
 	LOG_INFO("touch way started");
+
+	auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
 };
 
 void GameScreen::touchMoved(const TouchWay & touchWay)
@@ -57,11 +59,6 @@ void GameScreen::touchEnded(TouchWay touchWay)
 void GameScreen::touchClick(TouchWay touchWay)
 {
 	LOG_INFO("touch click!");
-
-	auto pointInWorld = cam.screenToWorld(touchWay.getCurrentPos());
-
-	LOG_INFO(concatenate(concatenate("Point on Screen: ", touchWay.getCurrentPos().x), touchWay.getCurrentPos().y));
-	LOG_INFO(concatenate(concatenate(concatenate("Point in 3D: ", pointInWorld.x), pointInWorld.y), pointInWorld.z));
 };
 
 void GameScreen::resize(ResizeEvent event)
@@ -102,5 +99,5 @@ void GameScreen::zoomToWorld()
 
 	cam
 		.setPosition(Vec3f(0, 0, camDistance))
-		.setFocus(Vec3f(0, 0, 0));
+		.setFocus(Vec3f::zero());
 }
