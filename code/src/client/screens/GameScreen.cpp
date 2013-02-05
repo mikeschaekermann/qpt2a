@@ -42,6 +42,16 @@ void GameScreen::loadContent()
 void GameScreen::touchBegan(const TouchWay & touchWay)
 {
 	LOG_INFO("touch way started");
+
+	auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
+
+	auto objectsPicked = gameObjectsToPick.pick(pointInWorldPlane);
+
+	if (objectsPicked.size() > 0)
+	{
+		LOG_INFO("number of objects picked:");
+		LOG_INFO(objectsPicked.size());
+	}
 };
 
 void GameScreen::touchMoved(const TouchWay & touchWay)
@@ -57,11 +67,6 @@ void GameScreen::touchEnded(TouchWay touchWay)
 void GameScreen::touchClick(TouchWay touchWay)
 {
 	LOG_INFO("touch click!");
-
-	auto pointInWorld = cam.screenToWorld(touchWay.getCurrentPos());
-
-	LOG_INFO(concatenate(concatenate("Point on Screen: ", touchWay.getCurrentPos().x), touchWay.getCurrentPos().y));
-	LOG_INFO(concatenate(concatenate(concatenate("Point in 3D: ", pointInWorld.x), pointInWorld.y), pointInWorld.z));
 };
 
 void GameScreen::resize(ResizeEvent event)
@@ -71,12 +76,12 @@ void GameScreen::resize(ResizeEvent event)
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable)
 {
-	/*if (collidable)
+	if (collidable)
 	{
-		gameObjectContainer.createGameObject(gameObject);
-	}*/
+		gameObjectsToCollide.createGameObject(gameObject);
+	}
 
-	gameObjectsToUpdate.insert(make_pair(gameObject->getId(), gameObject));
+	gameObjectsToUpdate.createGameObject(gameObject);
 }
 
 void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject, bool collidable)
@@ -90,7 +95,7 @@ void GameScreen::addGameObjectToPick(GameObjectClient * gameObject, bool collida
 {
 	addGameObjectToDraw(gameObject, collidable);
 
-	gameObjectsToPick.insert(make_pair(gameObject->getId(), gameObject));
+	gameObjectsToPick.createGameObject(gameObject);
 }
 
 void GameScreen::zoomToWorld()
@@ -102,5 +107,5 @@ void GameScreen::zoomToWorld()
 
 	cam
 		.setPosition(Vec3f(0, 0, camDistance))
-		.setFocus(Vec3f(0, 0, 0));
+		.setFocus(Vec3f::zero());
 }

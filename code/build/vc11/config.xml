@@ -14,8 +14,8 @@
 		<max>1</max>
 		<player>
 			<startposition>
-				<x>0.0</x>
-				<y>0.0</y>
+				<x>35.0</x>
+				<y>90.0</y>
 			</startposition>
 		</player>
 		<player>
