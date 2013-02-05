@@ -44,6 +44,14 @@ void GameScreen::touchBegan(const TouchWay & touchWay)
 	LOG_INFO("touch way started");
 
 	auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
+
+	auto objectsPicked = gameObjectsToPick.pick(pointInWorldPlane);
+
+	if (objectsPicked.size() > 0)
+	{
+		LOG_INFO("number of objects picked:");
+		LOG_INFO(objectsPicked.size());
+	}
 };
 
 void GameScreen::touchMoved(const TouchWay & touchWay)

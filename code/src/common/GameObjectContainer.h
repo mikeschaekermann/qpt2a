@@ -72,6 +72,11 @@ public:
 		return positionMap.findInRadiusOf(position, radius);
 	}
 
+	const vector<GameObject *> pick(const Vec3f & pickPosition) const
+	{
+		return positionMap.pick(pickPosition);
+	}
+
 	unsigned int getSize() const
 	{
 		if (idMap.getSize() != positionMap.getSize())

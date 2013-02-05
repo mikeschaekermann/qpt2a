@@ -35,7 +35,7 @@ Cam & Cam::setFocus(Vec3f & newFocus)
 	return *this;
 }
 
-Vec2f Cam::screenToWorldPlane(Vec2i screenPoint)
+Vec3f Cam::screenToWorldPlane(Vec2i screenPoint)
 {
 	float u = (float)screenPoint.x / (float)getWindowWidth();
 	float v = 1.0 - (float)screenPoint.y / (float)getWindowHeight();
@@ -57,5 +57,5 @@ Vec2f Cam::screenToWorldPlane(Vec2i screenPoint)
 	float x = ray.getDirection().x / abs(ray.getDirection().z) * ray.getOrigin().z + ray.getOrigin().x;
 	float y = ray.getDirection().y / abs(ray.getDirection().z) * ray.getOrigin().z + ray.getOrigin().y;
 
-	return Vec2f(x, y);
+	return Vec3f(x, y, 0);
 }
