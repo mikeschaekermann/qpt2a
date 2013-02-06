@@ -109,14 +109,14 @@ void AssetManager::loadAssets(string filePath)
 		}
 		else if(it->getTag() == "model")
 		{
-			ModelBufferData model;
+			TriMesh model;
 			string key;
 
 			try
 			{
 				key = it->getChild("key").getValue();
 				model = createModel(it->getChild("value").getValue());
-				modelMap.insert(pair<string, ModelBufferData>(key, model));	
+				modelMap.insert(pair<string, TriMesh>(key, model));	
 			}
 			catch(...)
 			{
@@ -145,8 +145,13 @@ void AssetManager::loadAssets(string filePath)
 	}
 }
 
-ModelBufferData AssetManager::createModel(string filePath)
+TriMesh AssetManager::createModel(string filePath)
 {
+	TriMesh mesh;
+	ObjLoader loader(loadFile(filePath));
+	loader.load(&mesh);
+	return mesh;
+/*
 	/// import model
 	Assimp::Importer imp;
 	/// this tells assimp to remove point & line primitives, so that
@@ -220,7 +225,7 @@ ModelBufferData AssetManager::createModel(string filePath)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	return ModelBufferData(normalBufferObject, vertexBufferObject, indexBufferObject, indicesCounter);
+	return ModelBufferData(normalBufferObject, vertexBufferObject, indexBufferObject, indicesCounter);*/
 }
 
 string AssetManager::readShaderFile(string filePath)
