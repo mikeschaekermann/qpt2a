@@ -3,18 +3,19 @@
 using namespace ci;
 using namespace std;
 
-GUIItem::GUIItem(void (*callback)(), ci::Vec2f position, const ci::gl::Texture & texture, const ci::gl::Texture & hoverTexture, const ci::gl::Texture & clickTexture) :
+GUIItem::GUIItem(std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture) :
 	callback(callback),
 	position(position),
 	texture(texture),
 	hoverTexture(hoverTexture),
 	clickTexture(clickTexture),
 	isVisible(true),
-	parentItem(nullptr)
+	parentItem(nullptr),
+	currentTexture(texture)
 {
 }
 
-GUIItem * GUIItem::addSubItem(void (*callback)(), ci::Vec2f position, const ci::gl::Texture & texture, const ci::gl::Texture & hoverTexture, const ci::gl::Texture & clickTexture)
+GUIItem * GUIItem::addSubItem(std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture)
 {
 	subItems.push_back(GUIItem(callback, position, texture, hoverTexture, clickTexture));
 	subItems.back().parentItem = this;
@@ -30,13 +31,13 @@ bool GUIItem::isMouseOverItem(Vec2f position)
 {
 	if (isPositionInItem(position))
 	{
-		currentTexture = &hoverTexture;
+		currentTexture = hoverTexture;
 		return true;
 	}
 	else
 	{
 		bool isOver = false;
-		currentTexture = &texture;
+		currentTexture = texture;
 		for (auto it = subItems.begin(); it != subItems.end(); ++it)
 		{
 			isOver |= it->isMouseOverItem(position - this->position);
@@ -49,7 +50,7 @@ bool GUIItem::isMouseDownOnItem(Vec2f position)
 {
 	if (isPositionInItem(position))
 	{
-		currentTexture = &clickTexture;
+		currentTexture = clickTexture;
 		if (callback != nullptr)
 		{
 			callback();
@@ -58,7 +59,7 @@ bool GUIItem::isMouseDownOnItem(Vec2f position)
 	}
 	else
 	{
-		currentTexture = &texture;
+		currentTexture = texture;
 	}
 	bool isClicked = false;
 	for (auto it = subItems.begin(); it != subItems.end(); ++it)
@@ -70,7 +71,7 @@ bool GUIItem::isMouseDownOnItem(Vec2f position)
 
 void GUIItem::isMouseUp()
 {
-	currentTexture = &texture;
+	currentTexture = texture;
 	for (auto it = subItems.begin(); it != subItems.end(); ++it)
 	{
 		it->isMouseUp();
@@ -99,7 +100,7 @@ void GUIItem::draw()
 	gl::pushMatrices();
 	{
 		gl::translate(position);
-		if (isVisible)
+		if (isVisible && currentTexture != nullptr)
 		{
 			gl::draw(*currentTexture);
 		}
@@ -113,5 +114,10 @@ void GUIItem::draw()
 
 bool GUIItem::isPositionInItem(Vec2f position)
 {
-	return currentTexture->getBounds().contains(position);
+	if (currentTexture != nullptr)
+	{
+		return currentTexture->getBounds().contains(position);
+	}
+
+	return false;
 }

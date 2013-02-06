@@ -7,9 +7,9 @@
 class GUIItem
 {
 public:
-	GUIItem(void (*callback)(), ci::Vec2f position = ci::Vec2f::zero(), const ci::gl::Texture & texture = ci::gl::Texture(), const ci::gl::Texture & hoverTexture = ci::gl::Texture(), const ci::gl::Texture & clickTexture = ci::gl::Texture());
+	GUIItem(std::function<void()> callback, ci::Vec2f position = ci::Vec2f::zero(), const ci::gl::Texture * texture = nullptr, const ci::gl::Texture * hoverTexture = nullptr, const ci::gl::Texture * clickTexture = nullptr);
 
-	GUIItem * addSubItem(void (*callback)(), ci::Vec2f position, const ci::gl::Texture & texture, const ci::gl::Texture & hoverTexture, const ci::gl::Texture & clickTexture);
+	GUIItem * addSubItem(std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture = nullptr, const ci::gl::Texture * hoverTexture = nullptr, const ci::gl::Texture * clickTexture = nullptr);
 	GUIItem * parent();
 
 	bool isMouseOverItem(ci::Vec2f position);
@@ -23,14 +23,14 @@ public:
 protected:
 	bool isPositionInItem(ci::Vec2f position);
 
-	void (*callback)();
+	std::function<void()> callback;
 
 	ci::Vec2f position;
 
 	const ci::gl::Texture * currentTexture;
-	const ci::gl::Texture & texture;
-	const ci::gl::Texture & hoverTexture;
-	const ci::gl::Texture & clickTexture;
+	const ci::gl::Texture * const texture;
+	const ci::gl::Texture * const hoverTexture;
+	const ci::gl::Texture * const clickTexture;
 
 	bool isVisible;
 

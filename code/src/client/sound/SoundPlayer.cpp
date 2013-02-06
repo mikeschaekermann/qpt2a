@@ -30,19 +30,31 @@ SoundPlayer * const SoundPlayer::getInstance()
 			LOG_WARNING(concatenate("Error! You are using an old version of FMOD", version) +
 						concatenate(". This program requires ", FMOD_VERSION));
 		}
+
+		instance->system->init(2, 0, nullptr);
 	}
 
 	return instance;
 }
 
-void SoundPlayer::playSound(string& key, bool loop, bool sound3d, bool stream)
+void SoundPlayer::playSound(string& key)
 {
 	system->playSound(FMOD_CHANNEL_FREE, AssetManager::getInstance()->getSound(key), false, &soundChannel);
 }
 
-void SoundPlayer::playMusic(string& key, bool loop, bool sound3d, bool stream)
+void SoundPlayer::playMusic(string& key)
 {
 	system->playSound(FMOD_CHANNEL_FREE, AssetManager::getInstance()->getSound(key), false, &musicChannel);
+}
+
+void SoundPlayer::playSoundGui(string& key)
+{
+	system->playSound(FMOD_CHANNEL_FREE, AssetManager::getInstance()->getGuiSound(key), false, &soundChannel);
+}
+
+void SoundPlayer::playMusicGui(string& key)
+{
+	system->playSound(FMOD_CHANNEL_FREE, AssetManager::getInstance()->getGuiSound(key), false, &musicChannel);
 }
 
 void SoundPlayer::update()

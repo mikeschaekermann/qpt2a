@@ -28,6 +28,13 @@ vertexShader and fragmentShader are also file paths
 	<key></key>
 	<value></value>
 </guiTexture>
+!!!!!!!!!!!!!!!!! Note, svg needs a width and height tag
+<guiTexture>
+	<key></key>
+	<value></value>
+	<width></width>
+	<height></height>
+</guiTexture>
 
 <movie>
 	<key></key>
@@ -51,17 +58,17 @@ vertexShader and fragmentShader are also file paths
 
 <guiTexture>
 	<key>button</key>
-	<value>..\\..\\resources\\textures\\button.png</value>
+	<value>..\..\resources\textures\button.png</value>
 </guiTexture>
 
 <model>
 	<key>stemcell</key>
-	<value>..\\..\\resources\\models\\stemcell.obj</value>
+	<value>..\..\resources\models\stemcell.obj</value>
 </model>
 
 <guiSound>
 	<key>song</key>
-	<value>..\\..\\resources\\sounds\\song.ogg</value>
+	<value>..\..\resources\sounds\song.ogg</value>
 	<3d>false</3d>
 	<loop>true</loop>
 	<stream>false</stream>
