@@ -47,24 +47,22 @@ void AssetManager::loadAssets(string filePath)
 				{
 					auto asset = loadFile(value);
 					auto doc = svg::Doc::create(asset);
-					cairo::SurfaceImage srf(atoi(it->getChild("width").getValue().c_str()), atoi(it->getChild("height").getValue().c_str()), true);
+
+					auto width = atoi(it->getChild("width").getValue().c_str());
+					auto height = atoi(it->getChild("height").getValue().c_str());
+
+					cairo::SurfaceImage srf(width, height, true);
 					cairo::Context ctx( srf );
 					
-					auto boundingBox = doc->getBoundingBox();
-					auto b1 = doc->getBoundingBoxAbsolute();
-					auto b2 = doc->getBounds();
-					auto s = doc->getSize();
-					auto ding = doc->getWidth();
-					auto dang = doc->getHeight();
-					auto rootNode = doc->findNode("svg", false);
-					auto t = rootNode->getTransform();
-
-					auto inverseMatrix = ctx.getMatrix();
-					inverseMatrix.invert();
+					auto size = doc->getSize();
 					
-					
+					if (size.x != 0 && size.y != 0)
+					{
+						auto scaleMatrix = ci::cairo::Matrix();
+						scaleMatrix.initScale((float)width / (float)size.x, (float)height / (float)size.y);
+						ctx.setMatrix(scaleMatrix);
+					}
 
-					ctx.setMatrix(inverseMatrix);
 					ctx.render(*doc);
 					srf.flush();
 					tex = gl::Texture(srf.getSurface());
@@ -73,6 +71,9 @@ void AssetManager::loadAssets(string filePath)
 				{
 					tex = Texture(loadImage(value));
 				}
+
+				tex.setFlipped(true);
+				
 				guiTextureMap.insert(pair<string, Texture>(key, tex));
 			}
 			catch(...)
