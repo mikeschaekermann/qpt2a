@@ -12,6 +12,15 @@
 #include "cinder/qtime/QuickTime.h"
 #include "cinder/Xml.h"
 #include "cinder/ImageIo.h"
+#include "cinder/cairo/Cairo.h"
+#include "cinder/svg/Svg.h"
+#include "cinder/app/AppBasic.h"
+#include "cinder/gl/gl.h"
+#include "cinder/gl/Texture.h"
+#include "cinder/gl/TextureFont.h"
+#include "cinder/svg/Svg.h"
+#include "cinder/cairo/Cairo.h"
+#include "cinder/Timeline.h"
 
 #include "fmod.hpp"
 
@@ -21,6 +30,8 @@
 #include "ASSIMP/scene.h"
 
 using namespace std;
+using namespace ci;
+using namespace ci::app;
 using namespace cinder::gl;
 using namespace cinder::qtime;
 
