@@ -19,9 +19,9 @@ public:
 	void update(float frameTime);
 	void draw();
 
-	void openScreen(Screen* screen);
-	void openMenuScreen(MenuScreen * menuScreen);
-	void openGameScreen(GameScreen* gameScreen);
+	void openScreen();
+	void openMenuScreen();
+	void openGameScreen();
 	GameScreen & getGameScreen() const;
 	void closeScreen();
 	void exit();
@@ -57,8 +57,9 @@ private:
 	ScreenManager(const ScreenManager &) {}
 	static ScreenManager * instance;
 
-	std::stack<Screen*> m_screenStack;
+	//std::stack<Screen*> m_screenStack;
 	Screen* m_backgroundScreen;
 	MenuScreen * menuScreen;
 	GameScreen * gameScreen;
+	Screen * currentScreen;
 };
