@@ -37,7 +37,8 @@ proj/osx/DerivedData/
 xcuserdata
 
 #Visual Studio files
-*.[Oo]bj
+/bin*.[Oo]bj
+/build*.[Oo]bj
 *.pdb
 *.user
 *.aps

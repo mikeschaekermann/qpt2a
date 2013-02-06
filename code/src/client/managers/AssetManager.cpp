@@ -88,7 +88,7 @@ void AssetManager::loadAssets(string filePath)
 		}
 		else if(it->getTag() == "guiSound")
 		{
-			auto sound = createSound(it->createDoc());
+			auto sound = createSound(*it);
 			if(sound)
 			{
 				guiSoundMap.insert(pair<string, FMOD::Sound*>(it->getChild("key").getValue(), sound));
@@ -96,21 +96,19 @@ void AssetManager::loadAssets(string filePath)
 		}
 		else if(it->getTag() == "model")
 		{
-			ModelBufferData* model = nullptr;
+			ModelBufferData model;
 			string key;
 
 			try
 			{
 				key = it->getChild("key").getValue();
-				*model = createModel(it->getChild("value").getValue());
-				modelMap.insert(pair<string, ModelBufferData>(key, *model));	
+				model = createModel(it->getChild("value").getValue());
+				modelMap.insert(pair<string, ModelBufferData>(key, model));	
 			}
 			catch(...)
 			{
 				LOG_ERROR("Model could not be loaded. Model name: " + it->getChild("key").getValue());
 			}
-
-			delete model;
 		}
 		else if(it->getTag() == "shader")
 		{
@@ -185,8 +183,6 @@ ModelBufferData AssetManager::createModel(string filePath)
 		}
 	}
 
-	delete mesh;
-
 	unsigned indicesCounter = indices.size();
 
 	GLuint indexBufferObject;
@@ -239,7 +235,7 @@ void AssetManager::clearGuiAssets()
 FMOD::Sound* AssetManager::createSound(XmlTree xml)
 {
 	string filePath = xml.getChild("value").getValue();
-	bool sound3d = (xml.getChild("sound3d").getValue() == "true" ? true : false);
+	bool sound3d = (xml.getChild("3d").getValue() == "true" ? true : false);
 	bool loop = (xml.getChild("loop").getValue() == "true" ? true : false);
 	bool stream = (xml.getChild("stream").getValue() == "true" ? true : false);
 	
