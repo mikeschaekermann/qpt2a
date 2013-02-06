@@ -15,7 +15,7 @@ class GameScreen :
 public:
 	typedef unordered_map<unsigned, GameObjectClient*> IdGameObjectClientMap;
 	
-	GameScreen(ScreenManager& screenManager);
+	GameScreen();
 	virtual ~GameScreen(void);
 
 	virtual void update(float frameTime);

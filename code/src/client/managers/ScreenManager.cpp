@@ -99,3 +99,10 @@ void ScreenManager::resize(ResizeEvent event)
 {
 	m_screenStack.top()->resize(event);
 }
+
+ScreenManager * ScreenManager::getInstance()
+{
+	return instance;
+}
+
+ScreenManager * ScreenManager::instance = new ScreenManager();

@@ -13,8 +13,8 @@ GameManager::GameManager(void):
 	networkManager = new ClientNetworkManager(serverEndpoint);
 	boost::thread(boost::bind(&NetworkManager::operator(), networkManager));
 
-	m_screenManager.openMenuScreen(new MenuScreen(m_screenManager));
-	m_screenManager.openGameScreen(new GameScreen(m_screenManager));
+	SCREEN_MGR->openMenuScreen(new MenuScreen());
+	SCREEN_MGR->openGameScreen(new GameScreen());
 }
 
 GameManager::~GameManager(void)
@@ -56,17 +56,12 @@ void GameManager::startGame(string playerName)
 
 void GameManager::update(float frameTime)
 {
-	m_screenManager.update(frameTime);
+	SCREEN_MGR->update(frameTime);
 }
 
 void GameManager::draw()
 {
-	m_screenManager.draw();
-}
-
-ScreenManager & GameManager::getScreenManager()
-{
-	return m_screenManager;
+	SCREEN_MGR->draw();
 }
 
 void GameManager::addPetriDish(float radius)
@@ -105,7 +100,7 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	auto player = players[id];
 
 	/// create stem cell
-	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0);
+	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0, myPlayer);
 	GAME_SCR.addGameObjectToPick(stemCell, true);
 }
 

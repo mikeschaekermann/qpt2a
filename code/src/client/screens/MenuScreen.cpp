@@ -4,8 +4,7 @@
 
 using namespace ci;
 
-MenuScreen::MenuScreen(ScreenManager& screenManager) :
-	Screen(screenManager)
+MenuScreen::MenuScreen()
 {
 }
 
@@ -19,19 +18,10 @@ void MenuScreen::update(float frameTime)
 
 void MenuScreen::draw()
 {
-	for (auto it = items.begin(); it != items.end(); ++it)
-	{
-		gl::draw((*it)->tex, (*it)->pos);
-	}
 }
 
 void MenuScreen::loadContent()
 {
-	MenuItem * m = new MenuItem();
-	m->pos = Vec2f(0.f, 0.f);
-	m->tex = AssetManager::getInstance()->getGuiTexture(string("img"));
-	m->callback = nullptr;
-	items.push_back(m);
 	/// if everything was loaded set the isInitialized to true
 	isInitialized = true;
 }

@@ -1,8 +1,7 @@
 #include "GameScreen.h"
 #include "../../common/network/NetworkManager.h"
 
-GameScreen::GameScreen(ScreenManager& screenManager) :
-	Screen(screenManager)
+GameScreen::GameScreen()
 {
 	auto screenSize = getWindowSize();
 	cam = Cam(screenSize.x, screenSize.y, CONFIG_FLOAT1("data.rendering.camera.fieldOfView"), CONFIG_FLOAT1("data.rendering.camera.nearPlane"), CONFIG_FLOAT1("data.rendering.camera.farPlane"));

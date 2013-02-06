@@ -9,10 +9,11 @@ class Screen;
 class GameScreen;
 class MenuScreen;
 
+#define SCREEN_MGR ScreenManager::getInstance()
+
 class ScreenManager
 {
 public:
-	ScreenManager(void);
 	~ScreenManager(void);
 
 	void update(float frameTime);
@@ -45,7 +46,12 @@ public:
 
 	void resize(ResizeEvent event);
 
+	static ScreenManager * getInstance();
 private:
+	ScreenManager();
+	ScreenManager(const ScreenManager &) {}
+	static ScreenManager * instance;
+
 	std::stack<Screen*> m_screenStack;
 	Screen* m_backgroundScreen;
 	MenuScreen * menuScreen;

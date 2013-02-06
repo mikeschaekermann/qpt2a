@@ -1,8 +1,7 @@
 #include "Screen.h"
 #include "../managers/ScreenManager.h"
 
-Screen::Screen(ScreenManager& screenManager) :
-	screenManager(screenManager),
+Screen::Screen() :
 	screenState(ScreenState::TransitionOn),
 	transitionOnTime(1),
 	transitionOffTime(1),

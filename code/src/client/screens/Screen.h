@@ -15,7 +15,7 @@ class ScreenManager;
 class Screen
 {
 public:
-	Screen(ScreenManager& screenManager);
+	Screen();
 	virtual ~Screen(void);
 
 	virtual void update(float frameTime);
@@ -58,8 +58,6 @@ protected:
 
 private:
 	bool isExiting;
-
-	ScreenManager& screenManager;
 
 	bool updateTransition(float frameTime, float time);
 };

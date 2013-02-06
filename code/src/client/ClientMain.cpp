@@ -4,6 +4,7 @@
 #include "../common/Logger.h"
 #include "../common/Config.h"
 #include "managers/GameManager.h"
+#include "managers/ScreenManager.h"
 #include "managers/AssetManager.h"
 #include "../common/ConfigurationDataHandler.h"
 
@@ -46,7 +47,7 @@ void ClientMain::update()
 {
 	m_fFrameTime = (float)getElapsedSeconds() - m_fElapsedGameTimeLastFrame;
 
-	GameManager::getInstance()->update(m_fFrameTime);
+	GAME_MGR->update(m_fFrameTime);
 
 	m_fElapsedGameTimeLastFrame = (float)getElapsedSeconds();
 }
@@ -54,25 +55,25 @@ void ClientMain::update()
 void ClientMain::draw()
 {
 	gl::clear(Color::black());
-	GameManager::getInstance()->draw();
+	GAME_MGR->draw();
 }
 
 void ClientMain::mouseDown( MouseEvent event )
 {
 	m_touchWays.insert(make_pair(-1, TouchWay(-1, event.getPos(), m_fElapsedGameTimeLastFrame)));
-	GAME_MGR->getScreenManager().touchBegan(m_touchWays[-1]);
+	SCREEN_MGR->touchBegan(m_touchWays[-1]);
 }
 
 void ClientMain::mouseDrag( MouseEvent event )
 {
 	m_touchWays[-1].addPoint(event.getPos(), m_fElapsedGameTimeLastFrame);
-	GAME_MGR->getScreenManager().touchMoved(m_touchWays[-1]);
+	SCREEN_MGR->touchMoved(m_touchWays[-1]);
 }
 
 void ClientMain::mouseUp( MouseEvent event )
 {
 	m_touchWays[-1].addPoint(event.getPos(), m_fElapsedGameTimeLastFrame);
-	GAME_MGR->getScreenManager().touchEnded(m_touchWays[-1]);
+	SCREEN_MGR->touchEnded(m_touchWays[-1]);
 	m_touchWays.erase(-1);
 }
 
@@ -81,7 +82,7 @@ void ClientMain::touchesBegan( TouchEvent event )
 	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
 	{
 		m_touchWays.insert(make_pair(touchIt->getId(), TouchWay(touchIt->getId(), touchIt->getPos(), m_fElapsedGameTimeLastFrame)));
-		GAME_MGR->getScreenManager().touchBegan(m_touchWays[touchIt->getId()]);
+		SCREEN_MGR->touchBegan(m_touchWays[touchIt->getId()]);
 	}
 }
 
@@ -90,7 +91,7 @@ void ClientMain::touchesMoved( TouchEvent event )
 	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
 	{
 		m_touchWays[touchIt->getId()].addPoint(touchIt->getPos(), m_fElapsedGameTimeLastFrame);
-		GAME_MGR->getScreenManager().touchMoved(m_touchWays[touchIt->getId()]);
+		SCREEN_MGR->touchMoved(m_touchWays[touchIt->getId()]);
 	}
 }
 
@@ -99,7 +100,7 @@ void ClientMain::touchesEnded( TouchEvent event )
 	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
 	{
 		m_touchWays[touchIt->getId()].addPoint(touchIt->getPos(), m_fElapsedGameTimeLastFrame);
-		GAME_MGR->getScreenManager().touchMoved(m_touchWays[touchIt->getId()]);
+		SCREEN_MGR->touchMoved(m_touchWays[touchIt->getId()]);
 		m_touchWays.erase(touchIt->getId());
 	}
 }
@@ -111,7 +112,7 @@ void ClientMain::keyDown( KeyEvent event )
 
 void ClientMain::resize( ResizeEvent event )
 {
-	GAME_MGR->getScreenManager().resize(event);
+	SCREEN_MGR->resize(event);
 }
 
 CINDER_APP_BASIC( ClientMain, RendererGl )

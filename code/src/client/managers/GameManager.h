@@ -10,7 +10,7 @@
 #include "../actors/PlayerClient.h"
 
 #define GAME_MGR GameManager::getInstance()
-#define GAME_SCR GAME_MGR->getScreenManager().getGameScreen()
+#define GAME_SCR SCREEN_MGR->getGameScreen()
 
 class GameManager
 {
@@ -22,7 +22,6 @@ public:
 	void startGame(string playerName);
 	void update(float frameTime);
 	void draw();
-	ScreenManager & getScreenManager();
 
 	void addPetriDish(float radius);
 	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
@@ -30,8 +29,6 @@ public:
 private:
 	/// singleton instance
 	static GameManager* m_pManager;
-
-	ScreenManager m_screenManager;
 
 	/// id map for all active players
 	map<unsigned int, PlayerClient*> players;

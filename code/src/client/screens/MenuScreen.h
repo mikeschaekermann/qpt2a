@@ -9,15 +9,13 @@
 #include "cinder/Vector.h"
 #include "cinder/gl/Texture.h"
 
-#include <vector>
-
 class MenuScreen :
 	public Screen
 {
 public:
 	typedef map<unsigned int, GameObjectClient*> IdGameObjectMap;
 	
-	MenuScreen(ScreenManager& screenManager);
+	MenuScreen();
 	virtual ~MenuScreen(void);
 
 	virtual void update(float frameTime);
@@ -51,12 +49,4 @@ public:
 	virtual void resize(ResizeEvent event);
 
 private:
-	struct MenuItem
-	{
-		gl::Texture tex;
-		ci::Vec2f pos;
-		(void)(*callback)();
-	};
-
-	std::vector<MenuItem *> items;
 };
