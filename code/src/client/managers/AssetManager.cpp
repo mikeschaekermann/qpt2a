@@ -36,23 +36,42 @@ void AssetManager::loadAssets(string filePath)
 		}
 		else if(it->getTag() == "guiTexture")
 		{
-			string key;
+			string key,
+				   value;
 			Texture tex;
 			try
 			{
 				key = it->getChild("key").getValue();
-				if(key.substr(key.length() - 3) == "svg")
+				value = it->getChild("value").getValue();
+				if(value.substr(value.length() - 3) == "svg")
 				{
-					auto doc = svg::Doc::create(loadAsset(key));
-					cairo::SurfaceImage srf(atoi(it->getChild("width").getValue().c_str()), atoi(it->getChild("height").getValue().c_str()), false);
+					auto asset = loadFile(value);
+					auto doc = svg::Doc::create(asset);
+					cairo::SurfaceImage srf(atoi(it->getChild("width").getValue().c_str()), atoi(it->getChild("height").getValue().c_str()), true);
 					cairo::Context ctx( srf );
+					
+					auto boundingBox = doc->getBoundingBox();
+					auto b1 = doc->getBoundingBoxAbsolute();
+					auto b2 = doc->getBounds();
+					auto s = doc->getSize();
+					auto ding = doc->getWidth();
+					auto dang = doc->getHeight();
+					auto rootNode = doc->findNode("svg", false);
+					auto t = rootNode->getTransform();
+
+					auto inverseMatrix = ctx.getMatrix();
+					inverseMatrix.invert();
+					
+					
+
+					ctx.setMatrix(inverseMatrix);
 					ctx.render(*doc);
 					srf.flush();
 					tex = gl::Texture(srf.getSurface());
 				}
 				else
 				{
-					tex = Texture(loadImage(it->getChild("value").getValue()));
+					tex = Texture(loadImage(value));
 				}
 				guiTextureMap.insert(pair<string, Texture>(key, tex));
 			}
