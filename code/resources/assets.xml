@@ -58,9 +58,9 @@ vertexShader and fragmentShader are also file paths
 
 <guiTexture>
 	<key>button</key>
-	<value>..\..\resources\images\Europe.svg</value>
-	<width>1000</width>
-	<height>1000</height>
+	<value>..\..\resources\images\createStandardCell.svg</value>
+	<width>200</width>
+	<height>200</height>
 </guiTexture>
 <guiTexture>
 	<key>connect</key>
