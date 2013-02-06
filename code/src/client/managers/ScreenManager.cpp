@@ -3,23 +3,26 @@
 #include "../screens/GameScreen.h"
 
 ScreenManager::ScreenManager(void):
-	m_backgroundScreen(nullptr)
+	m_backgroundScreen(nullptr),
+	menuScreen(new MenuScreen()),
+	gameScreen(new GameScreen())
 {
+	this->currentScreen = menuScreen;
+	m_backgroundScreen->loadContent();
+	menuScreen->loadContent();
+	gameScreen->loadContent();
 }
 
 ScreenManager::~ScreenManager(void)
 {
-	while (!m_screenStack.empty())
-	{
-		auto tmp = m_screenStack.top();
-		m_screenStack.pop();
-		delete tmp;
-	}
+	delete menuScreen;
+	delete gameScreen;
+	delete currentScreen;
 }
 
 void ScreenManager::update(float frameTime)
 {
-	m_screenStack.top()->update(frameTime);
+	currentScreen->update(frameTime);
 	
 	if(m_backgroundScreen)
 	{
@@ -29,7 +32,7 @@ void ScreenManager::update(float frameTime)
 
 void ScreenManager::draw()
 {
-	m_screenStack.top()->draw();
+	currentScreen->draw();
 
 	if(m_backgroundScreen)
 	{
@@ -37,35 +40,24 @@ void ScreenManager::draw()
 	}
 }
 
-void ScreenManager::openScreen(Screen* screen)
+void ScreenManager::openScreen()
 {
-	screen->loadContent();
-
-	m_screenStack.push(screen);
+	currentScreen = m_backgroundScreen;
 }
 
-void ScreenManager::openMenuScreen(MenuScreen * menuScreen)
+void ScreenManager::openMenuScreen()
 {
-	this->menuScreen = menuScreen;
-
-	openScreen(menuScreen);
+	currentScreen = menuScreen;
 }
 
-void ScreenManager::openGameScreen(GameScreen* gameScreen)
+void ScreenManager::openGameScreen()
 {
-	this->gameScreen = gameScreen;
-
-	openScreen(gameScreen);
+	currentScreen = gameScreen;
 }
 
 GameScreen & ScreenManager::getGameScreen() const
 {
 	return *gameScreen;
-}
-
-void ScreenManager::closeScreen()
-{
-	m_screenStack.pop();
 }
 
 void ScreenManager::fadeToBlack(float alpha)
@@ -77,32 +69,32 @@ void ScreenManager::fadeToBlack(float alpha)
 
 void ScreenManager::touchBegan(const TouchWay & touchWay)
 {
-	m_screenStack.top()->touchBegan(touchWay);
+	currentScreen->touchBegan(touchWay);
 }
 
 void ScreenManager::touchMoved(const TouchWay & touchWay)
 {
-	m_screenStack.top()->touchMoved(touchWay);
+	currentScreen->touchMoved(touchWay);
 }
 
 void ScreenManager::mouseMove( MouseEvent event )
 {
-	m_screenStack.top()->mouseMove(event);
+	currentScreen->mouseMove(event);
 }
 
 void ScreenManager::touchEnded(TouchWay touchWay)
 {
-	m_screenStack.top()->touchEnded(touchWay);
+	currentScreen->touchEnded(touchWay);
 
 	if (touchWay.isClick())
 	{
-		m_screenStack.top()->touchClick(touchWay);
+		currentScreen->touchClick(touchWay);
 	}
 }
 
 void ScreenManager::resize(ResizeEvent event)
 {
-	m_screenStack.top()->resize(event);
+	currentScreen->resize(event);
 }
 
 ScreenManager * ScreenManager::getInstance()

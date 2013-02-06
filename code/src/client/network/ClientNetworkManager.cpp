@@ -159,6 +159,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 				GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition);
 			}
+			SCREEN_MGR->openGameScreen();
 		}
 		break;
 	}

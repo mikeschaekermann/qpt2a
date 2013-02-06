@@ -1,11 +1,24 @@
 #include "MenuScreen.h"
 #include "../../common/network/NetworkManager.h"
 #include "../managers/AssetManager.h"
+#include "../managers/GameManager.h"
 
 using namespace ci;
 
 MenuScreen::MenuScreen()
 {
+	rootItem.addSubItem([]()
+	{
+		GAME_MGR->startGame("Mike");
+	}, Vec2f::zero(), &(ASSET_MGR->getGuiTexture(string("connect"))),  &(ASSET_MGR->getGuiTexture(string("connect"))), &(ASSET_MGR->getGuiTexture(string("connect"))));
+	rootItem.addSubItem([]()
+	{
+		system("server.exe");
+	}, Vec2f::zero(), &(ASSET_MGR->getGuiTexture(string("start_server"))),  &(ASSET_MGR->getGuiTexture(string("start_server"))), &(ASSET_MGR->getGuiTexture(string("start_server"))));
+	rootItem.addSubItem([]()
+	{
+		/// exit application
+	}, Vec2f::zero(), &(ASSET_MGR->getGuiTexture(string("exit"))),  &(ASSET_MGR->getGuiTexture(string("exit"))), &(ASSET_MGR->getGuiTexture(string("exit"))));
 }
 
 MenuScreen::~MenuScreen(void)

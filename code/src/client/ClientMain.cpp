@@ -34,8 +34,6 @@ void ClientMain::setup()
 
 	ConfigurationDataHandler::getInstance()->readFromXML("config.xml");
 	AssetManager::getInstance()->loadAssets("..\\..\\resources\\assets.xml");
-
-	GAME_MGR->startGame("Mike");
 }
 
 void ClientMain::prepareSettings( Settings *settings )
