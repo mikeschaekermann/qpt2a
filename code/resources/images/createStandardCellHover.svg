@@ -21,7 +21,7 @@
 	</g>
 </g>
 <g id="Ebene_1_Kopie">
-	<circle fill="#2DE081" stroke="#DBFF4A" stroke-width="0.5" stroke-miterlimit="10" cx="20" cy="20" r="19.75"/>
+	<circle fill="#26BD6C" stroke="#DBFF4A" stroke-width="0.5" stroke-miterlimit="10" cx="20" cy="20" r="19.75"/>
 	<polygon points="19.093,3.417 19.757,15.859 23.034,4.168 21.031,16.355 26.656,6.364 22.146,17.307 29.663,9.826 23.017,18.64 
 		31.814,14.271 23.568,20.242 32.937,19.343 23.756,21.986 28.411,24.049 23.568,23.729 27.773,27.694 23.017,25.332 25.691,30.19 
 		22.146,26.665 23.732,32.413 21.031,27.617 21.198,33.254 19.757,28.113 19.093,33.678 18.431,28.113 17.054,33.026 17.157,27.617 
@@ -40,5 +40,10 @@
 				V14z"/>
 		</g>
 	</g>
+</g>
+<g id="Ebene_3">
+	<text transform="matrix(1 0 0 1 -179.6665 86.333)" fill="#26BD6C" font-family="'Yearsupplyoffairycakes'" font-size="44">Connect</text>
+	<text transform="matrix(1 0 0 1 -176.9995 163)" fill="#26BD6C" font-family="'Yearsupplyoffairycakes'" font-size="44">start server</text>
+	<text transform="matrix(1 0 0 1 -176.9995 239.333)" fill="#26BD6C" font-family="'Yearsupplyoffairycakes'" font-size="44">exit</text>
 </g>
 </svg>
