@@ -101,9 +101,9 @@ void AssetManager::loadAssets(string filePath)
 
 			try
 			{
-				//key = it->getChild("key").getValue();
-				//*model = createModel(it->getChild("value").getValue());
-				//modelMap.insert(pair<string, ModelBufferData>(key, *model));	
+				key = it->getChild("key").getValue();
+				*model = createModel(it->getChild("value").getValue());
+				modelMap.insert(pair<string, ModelBufferData>(key, *model));	
 			}
 			catch(...)
 			{
