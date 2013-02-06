@@ -33,6 +33,7 @@ vertexShader and fragmentShader are also file paths
 	<key></key>
 	<value></value>
 	<width></width>
+	<height></height>
 </guiTexture>
 
 <movie>
