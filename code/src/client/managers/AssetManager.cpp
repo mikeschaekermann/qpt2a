@@ -37,11 +37,24 @@ void AssetManager::loadAssets(string filePath)
 		else if(it->getTag() == "guiTexture")
 		{
 			string key;
-
+			Texture tex;
 			try
 			{
 				key = it->getChild("key").getValue();
-				guiTextureMap.insert(pair<string, Texture>(key, Texture(loadImage(it->getChild("value").getValue()))));
+				if(key.substr(key.length() - 3) == "svg")
+				{
+					auto doc = svg::Doc::create(loadAsset(key));
+					cairo::SurfaceImage srf(atoi(it->getChild("width").getValue().c_str()), atoi(it->getChild("height").getValue().c_str()), false);
+					cairo::Context ctx( srf );
+					ctx.render(*doc);
+					srf.flush();
+					tex = gl::Texture(srf.getSurface());
+				}
+				else
+				{
+					tex = Texture(loadImage(it->getChild("value").getValue()));
+				}
+				guiTextureMap.insert(pair<string, Texture>(key, tex));
 			}
 			catch(...)
 			{

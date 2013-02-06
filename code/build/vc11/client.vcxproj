@@ -199,7 +199,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;$(OPENCV_DIR);$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib\x86;$(QUICKTIMESDK_DIR)\Libraries;C:\Users\Daniel\Desktop\Repo\qpt2a\Code\libs</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp.lib;fmodexL_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
+      <AdditionalDependencies>cairo-static.lib;assimp.lib;fmodexL_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -236,7 +236,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;;$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib\x86;$(QUICKTIMESDK_DIR)\Libraries</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp.lib;fmodexL_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
+      <AdditionalDependencies>cairo-static.lib;assimp.lib;fmodexL_vc.lib;cinder_d.lib;opencv_core242d.lib;opencv_imgproc242d.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -261,7 +261,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(OPENCV_DIR)\build\x86\vc10\staticlib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw;$(OPENNI_DIR)\lib;$(_2REALKINECTWRAPPER_DIR)\lib;;$(FMOD_DIR)\api\lib;$(ASSIMP_DIR)\lib\x86;$(QUICKTIMESDK_DIR)\Libraries</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp.lib;fmodex_vc.lib;cinder.lib;opencv_core242.lib;opencv_imgproc242.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
+      <AdditionalDependencies>cairo-static.lib;assimp.lib;fmodex_vc.lib;cinder.lib;opencv_core242.lib;opencv_imgproc242.lib;%(AdditionalDependencies);QTMLClient.lib;CVClient.lib</AdditionalDependencies>
       <DataExecutionPrevention>false</DataExecutionPrevention>
     </Link>
   </ItemDefinitionGroup>
