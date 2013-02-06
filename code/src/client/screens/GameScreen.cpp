@@ -24,6 +24,8 @@ void GameScreen::update(float frameTime)
 
 void GameScreen::draw()
 {
+	gl::color(1, 1, 1, 1);
+
 	gl::enableDepthWrite();
 	gl::enableDepthRead();
 
@@ -33,6 +35,14 @@ void GameScreen::draw()
 	{
 		it->second->draw();
 	}
+
+	gl::color(ColorA(1, 1, 1, 1));
+
+	gl::disableDepthWrite();
+	gl::disableDepthRead();
+	gl::enableAlphaBlending();
+
+	Screen::draw();
 }
 
 void GameScreen::loadContent()
