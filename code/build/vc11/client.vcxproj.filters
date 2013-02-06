@@ -131,6 +131,9 @@
     <ClCompile Include="..\..\src\client\screens\MenuScreen.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\GUIItem.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -294,6 +297,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\client\screens\MenuScreen.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GUIItem.h">
       <Filter>Screens</Filter>
     </ClInclude>
   </ItemGroup>

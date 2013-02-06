@@ -77,6 +77,11 @@ void ClientMain::mouseUp( MouseEvent event )
 	m_touchWays.erase(-1);
 }
 
+void ClientMain::mouseMove( MouseEvent event )
+{
+	SCREEN_MGR->mouseMove(event);
+}
+
 void ClientMain::touchesBegan( TouchEvent event )
 {
 	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
