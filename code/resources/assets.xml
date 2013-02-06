@@ -48,3 +48,21 @@ vertexShader and fragmentShader are also file paths
 	<vertexShader></vertexShader>
 	<fragmentShader></fragmentShader>
 </shader>-->
+
+<guiTexture>
+	<key>button</key>
+	<value>..\\..\\resources\\textures\\button.png</value>
+</guiTexture>
+
+<model>
+	<key>stemcell</key>
+	<value>..\\..\\resources\\models\\stemcell.obj</value>
+</model>
+
+<guiSound>
+	<key>song</key>
+	<value>..\\..\\resources\\sounds\\song.ogg</value>
+	<3d>false</3d>
+	<loop>true</loop>
+	<stream>false</stream>
+</guiSound>

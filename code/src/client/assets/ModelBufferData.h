@@ -5,6 +5,7 @@
 class ModelBufferData
 {
 public:
+	ModelBufferData();
 	ModelBufferData(GLuint normalBufferObject, GLuint vertexBufferObject, 
 					GLuint indexBufferObject, unsigned indicesCounter);
 	~ModelBufferData(void);
