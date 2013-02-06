@@ -85,6 +85,11 @@ void ScreenManager::touchMoved(const TouchWay & touchWay)
 	m_screenStack.top()->touchMoved(touchWay);
 }
 
+void ScreenManager::mouseMove( MouseEvent event )
+{
+	m_screenStack.top()->mouseMove(event);
+}
+
 void ScreenManager::touchEnded(TouchWay touchWay)
 {
 	m_screenStack.top()->touchEnded(touchWay);

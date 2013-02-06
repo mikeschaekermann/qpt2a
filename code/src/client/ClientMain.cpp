@@ -33,7 +33,7 @@ void ClientMain::setup()
 	}
 
 	ConfigurationDataHandler::getInstance()->readFromXML("config.xml");
-	AssetManager::getInstance()->loadAssets("assets.xml");
+	AssetManager::getInstance()->loadAssets("..\\..\\resources\\assets.xml");
 
 	GAME_MGR->startGame("Mike");
 }
@@ -75,6 +75,11 @@ void ClientMain::mouseUp( MouseEvent event )
 	m_touchWays[-1].addPoint(event.getPos(), m_fElapsedGameTimeLastFrame);
 	SCREEN_MGR->touchEnded(m_touchWays[-1]);
 	m_touchWays.erase(-1);
+}
+
+void ClientMain::mouseMove( MouseEvent event )
+{
+	SCREEN_MGR->mouseMove(event);
 }
 
 void ClientMain::touchesBegan( TouchEvent event )

@@ -1,5 +1,6 @@
 #include "ModelBufferData.h"
 
+ModelBufferData::ModelBufferData() {}
 
 ModelBufferData::ModelBufferData(GLuint normalBufferObject, GLuint vertexBufferObject, 
 								 GLuint indexBufferObject, unsigned indicesCounter) :

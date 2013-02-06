@@ -29,6 +29,7 @@ class ClientMain : public AppBasic
 	void	mouseDown( MouseEvent event );
 	void	mouseDrag( MouseEvent event );
 	void	mouseUp( MouseEvent event );
+	void	mouseMove( MouseEvent event );
 
 	void	touchesBegan( TouchEvent event );
 	void	touchesMoved( TouchEvent event );

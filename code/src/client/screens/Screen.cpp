@@ -7,7 +7,8 @@ Screen::Screen() :
 	transitionOffTime(1),
 	isInitialized(false),
 	coveredByOtherScreen(false),
-	isExiting(false)
+	isExiting(false),
+	rootItem(nullptr)
 {
 }
 
@@ -39,7 +40,27 @@ void Screen::update(float frameTime)
 	}*/
 }
 
+void Screen::draw()
+{
+	rootItem.draw();
+}
+
 bool Screen::updateTransition(float frameTime, float time)
 {
 	return true;
+}
+
+void Screen::mouseMove( MouseEvent event )
+{
+	rootItem.isMouseOverItem(event.getPos());
+}
+
+void Screen::touchBegan(const TouchWay & touchWay)
+{
+	rootItem.isMouseDownOnItem(touchWay.getCurrentPos());
+}
+
+void Screen::touchEnded(TouchWay touchWay)
+{
+	rootItem.isMouseUp();
 }

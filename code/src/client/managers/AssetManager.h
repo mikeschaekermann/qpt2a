@@ -24,6 +24,8 @@ using namespace std;
 using namespace cinder::gl;
 using namespace cinder::qtime;
 
+#define ASSET_MGR AssetManager::getInstance()
+
 class AssetManager
 {
 public:

@@ -38,6 +38,11 @@ public:
 	 */
 	void touchMoved(const TouchWay & touchWay);
 	/**
+		@brief event method called when the mouse has moved
+		@param event			mouse event for mouse motion
+	 */
+	virtual void mouseMove( MouseEvent event );
+	/**
 		@brief event method called when an existing touch has ended
 		@param touchWay			touch way of the touch, concerned; must be called by copy,
 								because touch way object will be destroyed after call to this method
