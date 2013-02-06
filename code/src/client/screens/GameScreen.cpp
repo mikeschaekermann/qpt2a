@@ -1,5 +1,6 @@
 #include "GameScreen.h"
 #include "../../common/network/NetworkManager.h"
+#include "../managers/AssetManager.h"
 
 GameScreen::GameScreen()
 {
@@ -9,6 +10,8 @@ GameScreen::GameScreen()
 	cam
 		.setPosition(Vec3f( 0.0f, 0.0f, 0.0f ))
 		.setFocus(Vec3f::zero());
+
+	rootItem.addSubItem([](){ LOG_INFO("CLICK ON BUTTON!"); }, Vec2f::zero(), &(ASSET_MGR->getGuiTexture(string("button"))), &(ASSET_MGR->getGuiTexture(string("button"))), &(ASSET_MGR->getGuiTexture(string("button"))));
 }
 
 GameScreen::~GameScreen(void)
