@@ -62,6 +62,24 @@ vertexShader and fragmentShader are also file paths
 	<width>1000</width>
 	<height>1000</height>
 </guiTexture>
+<guiTexture>
+	<key>connect</key>
+	<value>..\..\resources\images\connect.svg</value>
+	<width>1000</width>
+	<height>1000</height>
+</guiTexture>
+<guiTexture>
+	<key>start_server</key>
+	<value>..\..\resources\images\start_server.svg</value>
+	<width>1000</width>
+	<height>1000</height>
+</guiTexture>
+<guiTexture>
+	<key>exit</key>
+	<value>..\..\resources\images\exit.svg</value>
+	<width>1000</width>
+	<height>1000</height>
+</guiTexture>
 
 <model>
 	<key>stemcell</key>
