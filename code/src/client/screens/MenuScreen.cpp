@@ -10,7 +10,7 @@ MenuScreen::MenuScreen()
 	rootItem.addSubItem([]()
 	{
 		GAME_MGR->startGame("Mike");
-	}, Vec2f::zero(), &(ASSET_MGR->getGuiTexture(string("connect"))),  &(ASSET_MGR->getGuiTexture(string("connect"))), &(ASSET_MGR->getGuiTexture(string("connect"))));
+	}, Vec2f(300, 300), &(ASSET_MGR->getGuiTexture(string("connect"))),  &(ASSET_MGR->getGuiTexture(string("connect"))), &(ASSET_MGR->getGuiTexture(string("connect"))));
 	rootItem.addSubItem([]()
 	{
 		system("server.exe");
@@ -31,6 +31,7 @@ void MenuScreen::update(float frameTime)
 
 void MenuScreen::draw()
 {
+	Screen::draw();
 }
 
 void MenuScreen::loadContent()
@@ -41,8 +42,14 @@ void MenuScreen::loadContent()
 
 void MenuScreen::touchBegan(const TouchWay & touchWay)
 {
+	Screen::touchBegan(touchWay);
 	LOG_INFO("touch way started");
 };
+
+void MenuScreen::mouseMove( MouseEvent event )
+{
+	Screen::mouseMove(event);
+}
 
 void MenuScreen::touchMoved(const TouchWay & touchWay)
 {
@@ -51,6 +58,7 @@ void MenuScreen::touchMoved(const TouchWay & touchWay)
 
 void MenuScreen::touchEnded(TouchWay touchWay)
 {
+	Screen::touchEnded(touchWay);
 	LOG_INFO("touch way ended");
 };
 

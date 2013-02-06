@@ -12,9 +12,6 @@ GameManager::GameManager(void):
 {
 	networkManager = new ClientNetworkManager(serverEndpoint);
 	boost::thread(boost::bind(&NetworkManager::operator(), networkManager));
-
-	SCREEN_MGR->openMenuScreen();
-	SCREEN_MGR->openGameScreen();
 }
 
 GameManager::~GameManager(void)

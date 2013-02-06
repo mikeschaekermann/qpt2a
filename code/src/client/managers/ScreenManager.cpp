@@ -8,7 +8,6 @@ ScreenManager::ScreenManager(void):
 	gameScreen(new GameScreen())
 {
 	this->currentScreen = menuScreen;
-	m_backgroundScreen->loadContent();
 	menuScreen->loadContent();
 	gameScreen->loadContent();
 }
@@ -99,7 +98,11 @@ void ScreenManager::resize(ResizeEvent event)
 
 ScreenManager * ScreenManager::getInstance()
 {
+	if (instance == nullptr)
+	{
+		instance = new ScreenManager();
+	}
 	return instance;
 }
 
-ScreenManager * ScreenManager::instance = new ScreenManager();
+ScreenManager * ScreenManager::instance = nullptr;
