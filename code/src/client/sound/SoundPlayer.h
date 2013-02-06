@@ -26,10 +26,11 @@ public:
 	float getSoundVolume() { return soundVolume; }
 	
 
-	void playSound(string& key, bool loop = false, bool sound3d = true, bool stream = true);
-	void stopSound(string& key);
-	void playMusic(string& key, bool loop = false, bool sound3d = false, bool stream = true);
-	void stopMusic(string& key);
+	void playSound(string& key);
+	void playMusic(string& key);
+
+	void playSoundGui(string& key);
+	void playMusicGui(string& key);
 
 	void setListener3d(ci::Vec3f pos, ci::Vec3f vel, ci::Vec3f forward, ci::Vec3f up);
 	void set3DSettings(float dopplerFact, float distanceFact, float rollOffFact);

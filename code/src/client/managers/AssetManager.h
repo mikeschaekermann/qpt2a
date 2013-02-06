@@ -21,6 +21,8 @@
 #include "cinder/svg/Svg.h"
 #include "cinder/cairo/Cairo.h"
 #include "cinder/Timeline.h"
+#include "cinder/ObjLoader.h"
+#include "cinder/TriMesh.h"
 
 #include "fmod.hpp"
 
@@ -45,7 +47,7 @@ public:
 	static AssetManager * const getInstance() { return (manager != nullptr ? manager : (manager = new AssetManager())); }
 	void loadAssets(string filePath);
 
-	ModelBufferData const & getModel(string& modelName) const { return modelMap.at(modelName); }
+	TriMesh const & getModel(string& modelName) const { return modelMap.at(modelName); }
 	
 	Texture const & getTexture(string& textureName) const { return textureMap.at(textureName); }
 	Texture const & getGuiTexture(string& textureName) const { return guiTextureMap.at(textureName); }
@@ -65,7 +67,7 @@ public:
 private:
 	static AssetManager*							manager;
 
-	unordered_map<string, ModelBufferData>			modelMap;
+	unordered_map<string, TriMesh>			modelMap;
 	unordered_map<string, Texture>					textureMap;
 	unordered_map<string, Texture>					guiTextureMap;
 	unordered_map<string, MovieGl>					movieMap;
@@ -78,7 +80,7 @@ private:
 	AssetManager(const AssetManager& manager);
 	const AssetManager& operator=(const AssetManager& manager);
 
-	ModelBufferData createModel(string filePath);
+	TriMesh createModel(string filePath);
 	string readShaderFile(string filePath);
 	FMOD::Sound* createSound(XmlTree xml);
 };

@@ -55,6 +55,7 @@ void ClientMain::update()
 void ClientMain::draw()
 {
 	gl::clear(Color::black());
+	gl::color(1,1,1,1);
 	GAME_MGR->draw();
 }
 
