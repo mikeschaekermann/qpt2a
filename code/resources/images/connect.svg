@@ -1,51 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="240px"
-	 height="56px" viewBox="0 0 240 56" enable-background="new 0 0 240 56" xml:space="preserve">
-<g id="Ebene_1">
-	<circle fill="#CFCFCF" stroke="#000000" stroke-width="0.5" stroke-miterlimit="10" cx="143.333" cy="-24" r="14.75"/>
-	<g>
-		<circle cx="141.146" cy="-22.729" r="6.979"/>
-		<circle fill="#D2FFBD" cx="141.291" cy="-23.083" r="5.042"/>
-	</g>
-	<g>
-		<g>
-			<path fill="#FF5C5C" d="M144.333-23c0,0.553,0.448,1,1,1h2c0.552,0,1-0.447,1-1v-10c0-0.552-0.448-1-1-1h-2c-0.552,0-1,0.448-1,1
-				V-23z"/>
-		</g>
-		<g>
-			<path fill="#FF5C5C" d="M140.333-27c0,0.552,0.448,1,1,1h10c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1h-10
-				c-0.552,0-1,0.448-1,1V-27z"/>
-		</g>
-	</g>
-</g>
-<g id="Ebene_1_Kopie">
-	<circle fill="#26BD6C" stroke="#FF5C5C" stroke-width="0.5" stroke-miterlimit="10" cx="203.333" cy="-24" r="19.75"/>
-	<polygon points="202.426,-40.583 203.09,-28.141 206.367,-39.832 204.364,-27.645 209.989,-37.636 205.479,-26.693 
-		212.996,-34.174 206.35,-25.36 215.147,-29.729 206.901,-23.758 216.27,-24.657 207.089,-22.014 211.744,-19.951 206.901,-20.271 
-		211.106,-16.306 206.35,-18.668 209.024,-13.81 205.479,-17.335 207.065,-11.587 204.364,-16.383 204.531,-10.746 203.09,-15.887 
-		202.426,-10.322 201.764,-15.887 200.387,-10.974 200.49,-16.383 197.814,-11.63 199.374,-17.335 195.19,-13.17 198.504,-18.668 
-		193.233,-15.679 197.952,-20.271 191.905,-19.69 197.766,-22.014 188.583,-24.657 197.952,-23.758 189.706,-29.729 198.504,-25.36 
-		191.856,-34.174 199.374,-26.693 194.864,-37.636 200.49,-27.645 198.486,-39.832 201.764,-28.141 	"/>
-	<g>
-		<circle cx="202.426" cy="-20.302" r="10.302"/>
-		<circle fill="#D2FFBD" cx="202.641" cy="-20.824" r="7.444"/>
-	</g>
-	<g>
-		<g>
-			<path fill="#FF5C5C" d="M207.333-24c0,0.552,0.447,1,1,1h3c0.553,0,1-0.448,1-1v-14c0-0.552-0.447-1-1-1h-3c-0.553,0-1,0.448-1,1
-				V-24z"/>
-		</g>
-		<g>
-			<path fill="#FF5C5C" d="M201.833-30c0,0.552,0.447,1,1,1h14c0.553,0,1-0.448,1-1v-3c0-0.552-0.447-1-1-1h-14
-				c-0.553,0-1,0.448-1,1V-30z"/>
-		</g>
-	</g>
-</g>
-<g id="Ebene_3">
-	<text transform="matrix(1 0 0 1 3.6665 42.333)" fill="#26BD6C" font-family="'Yearsupplyoffairycakes'" font-size="44">Connect</text>
-	<text transform="matrix(1 0 0 1 6.3335 119)" fill="#26BD6C" font-family="'Yearsupplyoffairycakes'" font-size="44">start server</text>
-	<text transform="matrix(1 0 0 1 6.3335 195.333)" fill="#26BD6C" font-family="'Yearsupplyoffairycakes'" font-size="44">exit</text>
-</g>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">
+]>
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+	 x="0px" y="0px" width="240px" height="56px" viewBox="-3.667 -2.529 240 56" enable-background="new -3.667 -2.529 240 56"
+	 xml:space="preserve">
+<defs>
+</defs>
+<text transform="matrix(1 0 0 1 0 39.8037)" fill="#26BD6C" font-family="'Yearsupplyoffairycakes'" font-size="44">Connect</text>
 </svg>
