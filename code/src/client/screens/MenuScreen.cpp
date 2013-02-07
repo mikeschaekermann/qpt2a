@@ -23,7 +23,7 @@ MenuScreen::MenuScreen()
 	rootItem.addSubItem(
 		[]()
 		{
-			system("server.exe");
+			boost::thread([](){ system("..\\..\\server\\Debug\\server.exe"); });
 		},
 		Vec2f(100, 200),
 		startServerTexture,
