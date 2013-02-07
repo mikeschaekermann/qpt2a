@@ -12,6 +12,8 @@ class ClientMain : public AppBasic
  public:
 	/// @brief initializes the app
 	void	setup();
+	/// @brief cleans up the app
+	void	shutdown();
 
 	/**
 		@brief prepares the app for the specific environment (i.e. desktop, mobile, multi-touch table app etc.)

@@ -2,7 +2,7 @@
 #include "../managers/ScreenManager.h"
 
 Screen::Screen() :
-	//rootItem(new GUIItem(this, nullptr)),
+	rootItem(new GUIItem(this, nullptr)),
 	focusedItem(nullptr)
 {
 }

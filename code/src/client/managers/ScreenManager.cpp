@@ -14,9 +14,10 @@ ScreenManager::ScreenManager(void):
 
 ScreenManager::~ScreenManager(void)
 {
-	delete menuScreen;
-	delete gameScreen;
-	delete currentScreen;
+	if (menuScreen != nullptr)
+	{
+		menuScreen->terminateServer();
+	}
 }
 
 void ScreenManager::update(float frameTime)

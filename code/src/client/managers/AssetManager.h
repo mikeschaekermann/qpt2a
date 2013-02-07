@@ -61,7 +61,7 @@ public:
 	
 	void clearGuiAssets();
 	void clearGameAssets();
-	void releaseInstance() { delete manager; }
+	static void releaseInstance() { if (manager != nullptr) delete manager; }
 
 private:
 	static AssetManager*							manager;

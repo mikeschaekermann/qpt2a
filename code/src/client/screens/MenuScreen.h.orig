@@ -43,8 +43,13 @@ public:
 	virtual void touchClick(TouchWay touchWay);
 
 	virtual void resize(ResizeEvent event);
+<<<<<<< HEAD
+=======
+
 	void terminateServer();
 
+private:
 	STARTUPINFO serverStartupInfo;
 	PROCESS_INFORMATION serverProcessInfo;
+>>>>>>> 342cb7b116a0dde6fd313d2373e1831a0a3dcfbd
 };

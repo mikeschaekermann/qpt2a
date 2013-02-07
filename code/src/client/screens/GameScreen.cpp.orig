@@ -12,13 +12,26 @@ GameScreen::GameScreen()
 		.setFocus(Vec3f::zero());
 
 	auto createCellButton = &(ASSET_MGR->getGuiTexture(string("createCell")));
+<<<<<<< HEAD
+
+	rootItem->addSubItem(
+		this,
+		[]()
+		{
+			LOG_INFO("CLICK ON BUTTON!");
+		},
+		Vec2f::zero(),
+		createCellButton,
+		createCellButton,
+		createCellButton
+	);
+=======
 	auto createStandardCellButton = &(ASSET_MGR->getGuiTexture(string("createStandardCell")));
 	auto createStandardCellHoverButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellHover")));
 	auto createStandardCellClickButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellClick")));
 
 	rootItem
-		->addSubItem(
-			this,
+		.addSubItem(
 			[]()
 			{
 				LOG_INFO("CREATE CELL!");
@@ -29,7 +42,6 @@ GameScreen::GameScreen()
 			createCellButton
 		)
 		->addSubItem(
-			this,
 			[]()
 			{
 				LOG_INFO("CREATE STANDARD CELL");
@@ -39,6 +51,7 @@ GameScreen::GameScreen()
 			createStandardCellHoverButton,
 			createStandardCellClickButton
 		);
+>>>>>>> 342cb7b116a0dde6fd313d2373e1831a0a3dcfbd
 }
 
 GameScreen::~GameScreen(void)

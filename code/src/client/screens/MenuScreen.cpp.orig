@@ -21,9 +21,15 @@ MenuScreen::MenuScreen()
 	);
 
 	auto startServerTexture = &(ASSET_MGR->getGuiTexture(string("startServer")));
+<<<<<<< HEAD
 	rootItem->addSubItem(
 		this,
+		[]()
+=======
+
+	rootItem.addSubItem(
 		[this]()
+>>>>>>> 342cb7b116a0dde6fd313d2373e1831a0a3dcfbd
 		{
 			MenuScreen * self = this;
 
@@ -52,8 +58,6 @@ MenuScreen::MenuScreen()
 					LOG_INFO("Server started in a thread!");
 				}
 			});
-			sleep(500);
-			GAME_MGR->startGame("Mike");
 		},
 		Vec2f(100, 200),
 		startServerTexture,
