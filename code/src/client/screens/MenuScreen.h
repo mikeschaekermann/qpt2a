@@ -48,5 +48,9 @@ public:
 
 	virtual void resize(ResizeEvent event);
 
+	void terminateServer();
+
 private:
+	STARTUPINFO serverStartupInfo;
+	PROCESS_INFORMATION serverProcessInfo;
 };

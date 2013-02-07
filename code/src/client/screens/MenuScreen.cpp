@@ -20,10 +20,37 @@ MenuScreen::MenuScreen()
 	);
 
 	auto startServerTexture = &(ASSET_MGR->getGuiTexture(string("startServer")));
+
 	rootItem.addSubItem(
-		[]()
+		[this]()
 		{
-			boost::thread([](){ system("..\\..\\server\\Debug\\server.exe"); });
+			MenuScreen * self = this;
+
+			boost::thread([self]()
+			{
+
+				ZeroMemory( &(self->serverStartupInfo), sizeof((self->serverStartupInfo)) );
+				(self->serverStartupInfo).cb = sizeof((self->serverStartupInfo));
+				ZeroMemory( &(self->serverProcessInfo), sizeof((self->serverProcessInfo)) );
+				if (!
+				CreateProcess
+						(
+						TEXT("..\\..\\server\\Debug\\server.exe"),
+						NULL,NULL,NULL,FALSE,
+						CREATE_NEW_CONSOLE,
+						NULL,NULL,
+						&(self->serverStartupInfo),
+						&(self->serverProcessInfo)
+						)
+					)
+				{
+					LOG_ERROR("Could not start server in a thread!");
+				}
+				else
+				{
+					LOG_INFO("Server started in a thread!");
+				}
+			});
 		},
 		Vec2f(100, 200),
 		startServerTexture,
@@ -87,4 +114,9 @@ void MenuScreen::touchClick(TouchWay touchWay)
 
 void MenuScreen::resize(ResizeEvent event)
 {
+}
+
+void MenuScreen::terminateServer()
+{
+	TerminateProcess(serverProcessInfo.hProcess, 0);
 }

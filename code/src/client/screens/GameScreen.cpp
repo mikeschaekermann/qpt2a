@@ -41,6 +41,7 @@ GameScreen::GameScreen()
 
 GameScreen::~GameScreen(void)
 {
+
 }
 
 void GameScreen::update(float frameTime)

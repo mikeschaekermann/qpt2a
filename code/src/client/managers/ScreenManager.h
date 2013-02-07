@@ -52,6 +52,7 @@ public:
 	void resize(ResizeEvent event);
 
 	static ScreenManager * getInstance();
+	static void releaseInstance() { if (instance != nullptr) delete instance; }
 private:
 	ScreenManager();
 	ScreenManager(const ScreenManager &) {}

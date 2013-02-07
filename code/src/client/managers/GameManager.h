@@ -18,6 +18,7 @@ public:
 	~GameManager(void);
 
 	static GameManager * const getInstance();
+	static void releaseInstance() { if (m_pManager != nullptr) delete m_pManager; }
 
 	void startGame(string playerName);
 	void update(float frameTime);

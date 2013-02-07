@@ -36,6 +36,13 @@ void ClientMain::setup()
 	AssetManager::getInstance()->loadAssets("..\\..\\..\\resources\\assets.xml");
 }
 
+void ClientMain::shutdown()
+{
+	AssetManager::releaseInstance();
+	GameManager::releaseInstance();
+	ScreenManager::releaseInstance();
+}
+
 void ClientMain::prepareSettings( Settings *settings )
 {
 	settings->enableMultiTouch();

@@ -58,28 +58,28 @@ vertexShader and fragmentShader are also file paths
 
 <guiTexture>
 	<key>createCell</key>
-	<value>..\..\resources\images\createCell.svg</value>
+	<value>..\..\..\resources\images\createCell.svg</value>
 	<width>100</width>
 	<height>100</height>
 </guiTexture>
 
 <guiTexture>
 	<key>createStandardCell</key>
-	<value>..\..\resources\images\createStandardCell.svg</value>
+	<value>..\..\..\resources\images\createStandardCell.svg</value>
 	<width>200</width>
 	<height>200</height>
 </guiTexture>
 
 <guiTexture>
 	<key>createStandardCellClick</key>
-	<value>..\..\resources\images\createStandardCellClick.svg</value>
+	<value>..\..\..\resources\images\createStandardCellClick.svg</value>
 	<width>200</width>
 	<height>200</height>
 </guiTexture>
 
 <guiTexture>
 	<key>createStandardCellHover</key>
-	<value>..\..\resources\images\createStandardCellHover.svg</value>
+	<value>..\..\..\resources\images\createStandardCellHover.svg</value>
 	<width>200</width>
 	<height>200</height>
 </guiTexture>
