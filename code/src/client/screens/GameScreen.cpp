@@ -12,17 +12,31 @@ GameScreen::GameScreen()
 		.setFocus(Vec3f::zero());
 
 	auto createCellButton = &(ASSET_MGR->getGuiTexture(string("createCell")));
+	auto createStandardCellButton = &(ASSET_MGR->getGuiTexture(string("createStandardCell")));
+	auto createStandardCellHoverButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellHover")));
+	auto createStandardCellClickButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellClick")));
 
-	rootItem.addSubItem(
-		[]()
-		{
-			LOG_INFO("CLICK ON BUTTON!");
-		},
-		Vec2f::zero(),
-		createCellButton,
-		createCellButton,
-		createCellButton
-	);
+	rootItem
+		.addSubItem(
+			[]()
+			{
+				LOG_INFO("CREATE CELL!");
+			},
+			Vec2f::zero(),
+			createCellButton,
+			createCellButton,
+			createCellButton
+		)
+		->addSubItem(
+			[]()
+			{
+				LOG_INFO("CREATE STANDARD CELL");
+			},
+			Vec2f::zero(),
+			createStandardCellButton,
+			createStandardCellHoverButton,
+			createStandardCellClickButton
+		);
 }
 
 GameScreen::~GameScreen(void)
@@ -35,20 +49,24 @@ void GameScreen::update(float frameTime)
 
 void GameScreen::draw()
 {
-	gl::enableDepthWrite();
-	gl::enableDepthRead();
-
-	gl::setMatrices(cam);
-
-	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
+	gl::pushMatrices();
 	{
-		it->second->draw();
+		gl::enableDepthWrite();
+		gl::enableDepthRead();
+
+		gl::setMatrices(cam);
+
+		for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
+		{
+			it->second->draw();
+		}
+
+		gl::color(ColorA(1, 1, 1, 1));
+
+		gl::disableDepthWrite();
+		gl::disableDepthRead();
 	}
-
-	gl::color(ColorA(1, 1, 1, 1));
-
-	gl::disableDepthWrite();
-	gl::disableDepthRead();
+	gl::popMatrices();
 
 	Screen::draw();
 }
@@ -61,6 +79,7 @@ void GameScreen::loadContent()
 
 void GameScreen::touchBegan(const TouchWay & touchWay)
 {
+	Screen::touchBegan(touchWay);
 	LOG_INFO("touch way started");
 
 	auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
@@ -81,6 +100,7 @@ void GameScreen::touchMoved(const TouchWay & touchWay)
 
 void GameScreen::touchEnded(TouchWay touchWay)
 {
+	Screen::touchEnded(touchWay);
 	LOG_INFO("touch way ended");
 };
 

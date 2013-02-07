@@ -32,8 +32,8 @@ void ClientMain::setup()
 		LOG_INFO("The current environment does not support multi-touch events.");
 	}
 
-	ConfigurationDataHandler::getInstance()->readFromXML("config.xml");
-	AssetManager::getInstance()->loadAssets("..\\..\\resources\\assets.xml");
+	ConfigurationDataHandler::getInstance()->readFromXML("..\\..\\config.xml");
+	AssetManager::getInstance()->loadAssets("..\\..\\..\\resources\\assets.xml");
 }
 
 void ClientMain::prepareSettings( Settings *settings )

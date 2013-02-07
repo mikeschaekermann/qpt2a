@@ -39,7 +39,7 @@ public:
 	{
 		LOG_INFO("Game created");
 
-		ConfigurationDataHandler::getInstance()->readFromXML("config.xml");
+		ConfigurationDataHandler::getInstance()->readFromXML("..\\..\\config.xml");
 		players.reserve(CONFIG_INT2("data.players.max", 4));
 		
 		stringstream message;

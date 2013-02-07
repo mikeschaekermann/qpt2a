@@ -86,38 +86,38 @@ vertexShader and fragmentShader are also file paths
 
 <guiTexture>
 	<key>connect</key>
-	<value>..\..\resources\images\connect.svg</value>
+	<value>..\..\..\resources\images\connect.svg</value>
 	<width>500</width>
 	<height>150</height>
 </guiTexture>
 
 <guiTexture>
 	<key>startServer</key>
-	<value>..\..\resources\images\startServer.svg</value>
+	<value>..\..\..\resources\images\startServer.svg</value>
 	<width>500</width>
 	<height>150</height>
 </guiTexture>
 
 <guiTexture>
 	<key>exit</key>
-	<value>..\..\resources\images\exit.svg</value>
+	<value>..\..\..\resources\images\exit.svg</value>
 	<width>500</width>
 	<height>150</height>
 </guiTexture>
 
 <texture>
 	<key>stemcell</key>
-	<value>..\..\resources\textures\stemcell.png</value>
+	<value>..\..\..\resources\textures\stemcell.png</value>
 </texture>
 
 <model>
 	<key>stemcell</key>
-	<value>..\..\resources\models\stemcell.obj</value>
+	<value>..\..\..\resources\models\stemcell.obj</value>
 </model>
 
 <guiSound>
 	<key>song</key>
-	<value>..\..\resources\sounds\song.ogg</value>
+	<value>..\..\..\resources\sounds\song.ogg</value>
 	<3d>false</3d>
 	<loop>true</loop>
 	<stream>false</stream>
