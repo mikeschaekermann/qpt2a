@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../assets/ModelBufferData.h"
 #include "../sound/SoundPlayer.h"
 #include "../../common/Config.h"
 
@@ -47,18 +46,18 @@ public:
 	static AssetManager * const getInstance() { return (manager != nullptr ? manager : (manager = new AssetManager())); }
 	void loadAssets(string filePath);
 
-	TriMesh const & getModel(string& modelName) const { return modelMap.at(modelName); }
+	TriMesh const & getModel(string& modelName) const;
 	
-	Texture const & getTexture(string& textureName) const { return textureMap.at(textureName); }
-	Texture const & getGuiTexture(string& textureName) const { return guiTextureMap.at(textureName); }
+	Texture const & getTexture(string& textureName) const;
+	Texture const & getGuiTexture(string& textureName) const;
 	
-	MovieGl const & getMovie(string& movieName) const { return movieMap.at(movieName); }
-	MovieGl const & getGuiMovie(string& movieName) const { return guiMovieMap.at(movieName); }
+	MovieGl const & getMovie(string& movieName) const;
+	MovieGl const & getGuiMovie(string& movieName) const;
 	
-	FMOD::Sound * getSound(string& soundName) const { return soundMap.at(soundName); }
-	FMOD::Sound * getGuiSound(string& soundName) const { return guiSoundMap.at(soundName); }
+	FMOD::Sound * getSound(string& soundName) const;
+	FMOD::Sound * getGuiSound(string& soundName) const;
 	
-	GlslProg const & getShaderProg(string& shaderName) const { return shaderMap.at(shaderName); }
+	GlslProg const & getShaderProg(string& shaderName) const;
 	
 	void clearGuiAssets();
 	void clearGameAssets();
@@ -67,7 +66,7 @@ public:
 private:
 	static AssetManager*							manager;
 
-	unordered_map<string, TriMesh>			modelMap;
+	unordered_map<string, TriMesh>					modelMap;
 	unordered_map<string, Texture>					textureMap;
 	unordered_map<string, Texture>					guiTextureMap;
 	unordered_map<string, MovieGl>					movieMap;
@@ -83,4 +82,5 @@ private:
 	TriMesh createModel(string filePath);
 	string readShaderFile(string filePath);
 	FMOD::Sound* createSound(XmlTree xml);
+	void assetErrorOutput(exception& ex, string& assetName, string methodName) const;
 };

@@ -215,3 +215,107 @@ FMOD::Sound* AssetManager::createSound(XmlTree xml)
 		return sound;
 	}
 }
+
+
+TriMesh const & AssetManager::getModel(string& modelName) const
+{
+	try
+	{
+		return modelMap.at(modelName);
+	}
+	catch(std::exception& ex)
+	{
+		manager->assetErrorOutput(ex, modelName, "getModel");
+	}
+}
+
+Texture const & AssetManager::getTexture(string& textureName) const
+{
+	try
+	{
+		return textureMap.at(textureName);
+	}
+	catch(std::exception& ex)
+	{
+		manager->assetErrorOutput(ex, textureName, "getTexture");
+	}
+}
+
+Texture const & AssetManager::getGuiTexture(string& textureName) const
+{
+	try
+	{
+		return guiTextureMap.at(textureName);
+	}
+	catch(std::exception& ex)
+	{
+		manager->assetErrorOutput(ex, textureName, "getGuiTexture");
+	}
+}
+	
+MovieGl const & AssetManager::getMovie(string& movieName) const
+{
+	try
+	{
+		return movieMap.at(movieName);
+	}
+	catch(std::exception& ex)
+	{
+		manager->assetErrorOutput(ex, movieName, "getMovie");
+	}
+}
+
+MovieGl const & AssetManager::getGuiMovie(string& movieName) const
+{
+	try
+	{
+		return guiMovieMap.at(movieName);
+	}
+	catch(std::exception& ex)
+	{
+		manager->assetErrorOutput(ex, movieName, "getGuiMovie");
+	}
+}
+	
+FMOD::Sound * AssetManager::getSound(string& soundName) const
+{
+	try
+	{
+		return soundMap.at(soundName);
+	}
+	catch(std::exception& ex)
+	{
+		manager->assetErrorOutput(ex, soundName, "getSound");
+	}
+}
+
+FMOD::Sound * AssetManager::getGuiSound(string& soundName) const
+{
+	try
+	{
+		return guiSoundMap.at(soundName);
+	}
+	catch(std::exception& ex)
+	{
+		manager->assetErrorOutput(ex, soundName, "getGuiSound");
+	}
+}
+	
+GlslProg const & AssetManager::getShaderProg(string& shaderName) const
+{
+	try
+	{
+		return shaderMap.at(shaderName);
+	}
+	catch(std::exception& ex)
+	{
+		manager->assetErrorOutput(ex, shaderName, "getShaderProg");
+	}
+}
+
+void AssetManager::assetErrorOutput(exception& ex, string& assetName, string methodName) const
+{
+	LOG_WARNING("Message: " + string(ex.what()) + "\n" +
+				"Asset name: " + assetName + "\n" +
+				"Method name: " + methodName);
+}
