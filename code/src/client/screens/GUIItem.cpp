@@ -3,7 +3,8 @@
 using namespace ci;
 using namespace std;
 
-GUIItem::GUIItem(std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture) :
+GUIItem::GUIItem(Screen* screen, std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture) :
+	screen(screen),
 	callback(callback),
 	position(position),
 	texture(texture),
@@ -15,11 +16,26 @@ GUIItem::GUIItem(std::function<void()> callback, ci::Vec2f position, const ci::g
 {
 }
 
-GUIItem * GUIItem::addSubItem(std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture)
+GUIItem::~GUIItem()
 {
-	subItems.push_back(GUIItem(callback, position, texture, hoverTexture, clickTexture));
-	subItems.back().parentItem = this;
-	return &subItems.back();
+	for(auto it = subItems.begin(); it != subItems.end(); ++it)
+	{
+		delete (*it);
+	}
+}
+
+GUIItem * GUIItem::addSubItem(Screen* screen, std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture)
+{
+	subItems.push_back(new GUIItem(screen, callback, position, texture, hoverTexture, clickTexture));
+	subItems.back()->parentItem = this;
+	return subItems.back();
+}
+
+GUIItem* GUIItem::addSubItem(GUIItem* item)
+{
+	subItems.push_back(item);
+	subItems.back()->parentItem = this;
+	return subItems.back();
 }
 
 GUIItem * GUIItem::parent()
@@ -40,7 +56,7 @@ bool GUIItem::isMouseOverItem(Vec2f position)
 		currentTexture = texture;
 		for (auto it = subItems.begin(); it != subItems.end(); ++it)
 		{
-			isOver |= it->isMouseOverItem(position - this->position);
+			isOver |= (*it)->isMouseOverItem(position - this->position);
 		}
 		return isOver;
 	}
@@ -54,6 +70,8 @@ bool GUIItem::isMouseDownOnItem(Vec2f position)
 		if (callback != nullptr)
 		{
 			callback();
+			hasFocus = true;
+			screen->focusedItem = this;
 			return true;
 		}
 	}
@@ -64,7 +82,7 @@ bool GUIItem::isMouseDownOnItem(Vec2f position)
 	bool isClicked = false;
 	for (auto it = subItems.begin(); it != subItems.end(); ++it)
 	{
-		isClicked |= it->isMouseDownOnItem(position - this->position);
+		isClicked |= (*it)->isMouseDownOnItem(position - this->position);
 	}
 	return isClicked;
 }
@@ -74,7 +92,7 @@ void GUIItem::isMouseUp()
 	currentTexture = texture;
 	for (auto it = subItems.begin(); it != subItems.end(); ++it)
 	{
-		it->isMouseUp();
+		(*it)->isMouseUp();
 	}
 }
 
@@ -90,7 +108,7 @@ void GUIItem::setVisible(bool visible, bool recursively)
 	{
 		for (auto it = subItems.begin(); it != subItems.end(); ++it)
 		{
-			it->setVisible(visible, true);
+			(*it)->setVisible(visible, true);
 		}
 	}
 }
@@ -100,13 +118,18 @@ void GUIItem::draw()
 	gl::pushMatrices();
 	{
 		gl::translate(position);
-		if (isVisible && currentTexture != nullptr)
+		if(isVisible && currentTexture != nullptr && !hasFocus)
 		{
 			gl::draw(*currentTexture);
 		}
+		else if(isVisible && hasFocus && clickTexture)
+		{
+			gl::draw(*clickTexture);
+		}
+
 		for (auto it = subItems.begin(); it != subItems.end(); ++it)
 		{
-			it->draw();
+			(*it)->draw();
 		}
 	}
 	gl::popMatrices();
@@ -120,4 +143,12 @@ bool GUIItem::isPositionInItem(Vec2f position)
 	}
 
 	return false;
+}
+
+void GUIItem::onKeyInput(KeyEvent& e)
+{
+	for(auto it = subItems.begin(); it != subItems.end(); ++it)
+	{
+		(*it)->onKeyInput(e);
+	}
 }

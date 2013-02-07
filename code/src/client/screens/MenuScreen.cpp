@@ -8,10 +8,11 @@ using namespace ci;
 MenuScreen::MenuScreen()
 {
 	auto connectTexture = &(ASSET_MGR->getGuiTexture(string("connect")));
-	rootItem.addSubItem(
+	rootItem->addSubItem(
+		this,
 		[]()
 		{
-			GAME_MGR->startGame("Mike");
+			SCREEN_MGR->openConnectScreen();
 		},
 		Vec2f(100, 50),
 		connectTexture,
@@ -20,7 +21,8 @@ MenuScreen::MenuScreen()
 	);
 
 	auto startServerTexture = &(ASSET_MGR->getGuiTexture(string("startServer")));
-	rootItem.addSubItem(
+	rootItem->addSubItem(
+		this,
 		[]()
 		{
 			system("server.exe");
@@ -32,7 +34,8 @@ MenuScreen::MenuScreen()
 	);
 
 	auto exitButton = &(ASSET_MGR->getGuiTexture(string("exit")));
-	rootItem.addSubItem(
+	rootItem->addSubItem(
+		this,
 		[]()
 		{
 			/// exit application
@@ -55,12 +58,6 @@ void MenuScreen::update(float frameTime)
 void MenuScreen::draw()
 {
 	Screen::draw();
-}
-
-void MenuScreen::loadContent()
-{
-	/// if everything was loaded set the isInitialized to true
-	isInitialized = true;
 }
 
 void MenuScreen::touchBegan(const TouchWay & touchWay)

@@ -13,7 +13,8 @@ GameScreen::GameScreen()
 
 	auto createCellButton = &(ASSET_MGR->getGuiTexture(string("createCell")));
 
-	rootItem.addSubItem(
+	rootItem->addSubItem(
+		this,
 		[]()
 		{
 			LOG_INFO("CLICK ON BUTTON!");
@@ -51,12 +52,6 @@ void GameScreen::draw()
 	gl::disableDepthRead();
 
 	Screen::draw();
-}
-
-void GameScreen::loadContent()
-{
-	/// if everything was loaded set the isInitialized to true
-	isInitialized = true;
 }
 
 void GameScreen::touchBegan(const TouchWay & touchWay)

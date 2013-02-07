@@ -13,15 +13,11 @@ class MenuScreen :
 	public Screen
 {
 public:
-	typedef map<unsigned int, GameObjectClient*> IdGameObjectMap;
-	
 	MenuScreen();
 	virtual ~MenuScreen(void);
 
 	virtual void update(float frameTime);
 	virtual void draw();
-
-	virtual void loadContent();
 
 	/**
 		@brief event method called when a new touch has begun
@@ -47,6 +43,4 @@ public:
 	virtual void touchClick(TouchWay touchWay);
 
 	virtual void resize(ResizeEvent event);
-
-private:
 };

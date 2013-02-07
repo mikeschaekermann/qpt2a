@@ -5,12 +5,12 @@
 #include <stack>
 #include "../input/TouchWay.h"
 
+#define SCREEN_MGR ScreenManager::getInstance()
+
 class Screen;
 class GameScreen;
 class MenuScreen;
-
-#define SCREEN_MGR ScreenManager::getInstance()
-
+class ConnectScreen;
 class ScreenManager
 {
 public:
@@ -22,6 +22,7 @@ public:
 	void openScreen();
 	void openMenuScreen();
 	void openGameScreen();
+	void openConnectScreen();
 	GameScreen & getGameScreen() const;
 	void closeScreen();
 	void exit();
@@ -61,5 +62,6 @@ private:
 	Screen* m_backgroundScreen;
 	MenuScreen * menuScreen;
 	GameScreen * gameScreen;
+	ConnectScreen* connectScreen;
 	Screen * currentScreen;
 };

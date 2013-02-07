@@ -105,6 +105,11 @@ vertexShader and fragmentShader are also file paths
 	<height>150</height>
 </guiTexture>
 
+<guiTexture>
+	<key>exit</key>
+	<value>..\..\resources\images\textBox.png</value>
+</guiTexture>
+
 <texture>
 	<key>stemcell</key>
 	<value>..\..\resources\textures\stemcell.png</value>

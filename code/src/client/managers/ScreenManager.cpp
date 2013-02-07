@@ -1,16 +1,15 @@
 #include "ScreenManager.h"
 #include "../screens/MenuScreen.h"
 #include "../screens/GameScreen.h"
+#include "../screens/ConnectScreen.h"
 
 ScreenManager::ScreenManager(void):
 	m_backgroundScreen(nullptr),
 	menuScreen(new MenuScreen()),
-	gameScreen(new GameScreen())
+	gameScreen(new GameScreen()),
+	connectScreen(new ConnectScreen())
 {
-	menuScreen->loadContent();
 	openMenuScreen();
-
-	gameScreen->loadContent();
 }
 
 ScreenManager::~ScreenManager(void)
@@ -53,6 +52,11 @@ void ScreenManager::openMenuScreen()
 void ScreenManager::openGameScreen()
 {
 	currentScreen = gameScreen;
+}
+
+void ScreenManager::openConnectScreen()
+{
+	currentScreen = connectScreen;
 }
 
 GameScreen & ScreenManager::getGameScreen() const
