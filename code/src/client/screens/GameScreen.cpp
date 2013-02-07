@@ -11,7 +11,18 @@ GameScreen::GameScreen()
 		.setPosition(Vec3f( 0.0f, 0.0f, 0.0f ))
 		.setFocus(Vec3f::zero());
 
-	rootItem.addSubItem([](){ LOG_INFO("CLICK ON BUTTON!"); }, Vec2f::zero(), &(ASSET_MGR->getGuiTexture(string("button"))), &(ASSET_MGR->getGuiTexture(string("button"))), &(ASSET_MGR->getGuiTexture(string("button"))));
+	auto createCellButton = &(ASSET_MGR->getGuiTexture(string("createCell")));
+
+	rootItem.addSubItem(
+		[]()
+		{
+			LOG_INFO("CLICK ON BUTTON!");
+		},
+		Vec2f::zero(),
+		createCellButton,
+		createCellButton,
+		createCellButton
+	);
 }
 
 GameScreen::~GameScreen(void)
@@ -24,8 +35,6 @@ void GameScreen::update(float frameTime)
 
 void GameScreen::draw()
 {
-	gl::color(1, 1, 1, 1);
-
 	gl::enableDepthWrite();
 	gl::enableDepthRead();
 
@@ -40,7 +49,6 @@ void GameScreen::draw()
 
 	gl::disableDepthWrite();
 	gl::disableDepthRead();
-	gl::enableAlphaBlending();
 
 	Screen::draw();
 }

@@ -116,7 +116,7 @@ bool GUIItem::isPositionInItem(Vec2f position)
 {
 	if (currentTexture != nullptr)
 	{
-		return currentTexture->getBounds().contains(position);
+		return currentTexture->getBounds().contains(position - this->position);
 	}
 
 	return false;

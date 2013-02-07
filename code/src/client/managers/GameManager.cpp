@@ -14,7 +14,6 @@ GameManager::GameManager(void):
 	boost::thread(boost::bind(&NetworkManager::operator(), networkManager));
 
 	SCREEN_MGR->openMenuScreen();
-	SCREEN_MGR->openGameScreen();
 }
 
 GameManager::~GameManager(void)

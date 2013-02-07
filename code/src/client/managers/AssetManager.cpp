@@ -71,8 +71,6 @@ void AssetManager::loadAssets(string filePath)
 				{
 					tex = Texture(loadImage(value));
 				}
-
-				tex.setFlipped(true);
 				
 				guiTextureMap.insert(pair<string, Texture>(key, tex));
 			}

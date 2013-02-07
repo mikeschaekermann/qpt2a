@@ -7,9 +7,9 @@ ScreenManager::ScreenManager(void):
 	menuScreen(new MenuScreen()),
 	gameScreen(new GameScreen())
 {
-	this->currentScreen = menuScreen;
-	//m_backgroundScreen->loadContent();
 	menuScreen->loadContent();
+	openMenuScreen();
+
 	gameScreen->loadContent();
 }
 

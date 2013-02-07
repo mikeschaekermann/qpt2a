@@ -57,11 +57,58 @@ vertexShader and fragmentShader are also file paths
 </shader>-->
 
 <guiTexture>
-	<key>button</key>
+	<key>createCell</key>
+	<value>..\..\resources\images\createCell.svg</value>
+	<width>100</width>
+	<height>100</height>
+</guiTexture>
+
+<guiTexture>
+	<key>createStandardCell</key>
 	<value>..\..\resources\images\createStandardCell.svg</value>
 	<width>200</width>
 	<height>200</height>
 </guiTexture>
+
+<guiTexture>
+	<key>createStandardCellClick</key>
+	<value>..\..\resources\images\createStandardCellClick.svg</value>
+	<width>200</width>
+	<height>200</height>
+</guiTexture>
+
+<guiTexture>
+	<key>createStandardCellHover</key>
+	<value>..\..\resources\images\createStandardCellHover.svg</value>
+	<width>200</width>
+	<height>200</height>
+</guiTexture>
+
+<guiTexture>
+	<key>connect</key>
+	<value>..\..\resources\images\connect.svg</value>
+	<width>500</width>
+	<height>150</height>
+</guiTexture>
+
+<guiTexture>
+	<key>startServer</key>
+	<value>..\..\resources\images\startServer.svg</value>
+	<width>500</width>
+	<height>150</height>
+</guiTexture>
+
+<guiTexture>
+	<key>exit</key>
+	<value>..\..\resources\images\exit.svg</value>
+	<width>500</width>
+	<height>150</height>
+</guiTexture>
+
+<texture>
+	<key>stemcell</key>
+	<value>..\..\resources\textures\stemcell.png</value>
+</texture>
 
 <model>
 	<key>stemcell</key>

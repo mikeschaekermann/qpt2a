@@ -42,6 +42,9 @@ void Screen::update(float frameTime)
 
 void Screen::draw()
 {
+	gl::enableAlphaBlending();
+	gl::color(ColorA(1, 1, 1, 1));
+
 	rootItem.draw();
 }
 
