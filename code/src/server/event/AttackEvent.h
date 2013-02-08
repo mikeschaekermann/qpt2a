@@ -12,7 +12,7 @@
 class AttackEvent : public GameEvent
 {
 public:
-	AttackEvent(double startTime, NetworkManager & manager, EventQueue & queue, GameObjectContainer & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage, vector<PlayerServer *> & players) :
+	AttackEvent(double startTime, NetworkManager & manager, EventQueue & queue, GameObjectContainer<GameObject> & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage, vector<PlayerServer *> & players) :
 	  manager(manager),
 	  queue(queue),
 	  gameObjectContainer(gameObjectContainer),
@@ -67,7 +67,7 @@ public:
 private:
 	NetworkManager & manager;
 	EventQueue & queue;
-	GameObjectContainer & gameObjectContainer;
+	GameObjectContainer<GameObject> & gameObjectContainer;
 	CellServer & attacker;
 	CellServer & victim;
 	float damage;

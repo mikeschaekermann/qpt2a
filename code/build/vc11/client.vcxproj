@@ -37,7 +37,6 @@
     <ClCompile Include="..\..\src\common\Cell.cpp" />
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
-    <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
     <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp" />

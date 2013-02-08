@@ -13,7 +13,7 @@ EventCreator * EventCreator::getInstance()
 	return instance;
 }
 
-void EventCreator::bind(NetworkManager * networkManager, EventQueue * eventQueue, GameObjectContainer * gameObjectContainer, vector<PlayerServer *> * players)
+void EventCreator::bind(NetworkManager * networkManager, EventQueue * eventQueue, GameObjectContainer<GameObject> * gameObjectContainer, vector<PlayerServer *> * players)
 {
 	this->networkManager = networkManager;
 	this->eventQueue = eventQueue;

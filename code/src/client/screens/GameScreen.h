@@ -67,14 +67,14 @@ private:
 	GameObject * pickedCell;
 
 	/// all game objects registered to be updated
-	GameObjectContainer		gameObjectsToUpdate;
+	GameObjectContainer<GameObject>		gameObjectsToUpdate;
 
 	/// all game objects registered to be drawn
 	IdGameObjectClientMap	gameObjectsToDraw;
 
 	/// all game objects registered to collide with each other
-	GameObjectContainer		gameObjectsToCollide;
+	GameObjectContainer<GameObject>		gameObjectsToCollide;
 
 	/// all game objects registered to be pickable
-	GameObjectContainer		gameObjectsToPick;
+	GameObjectContainer<GameObject>		gameObjectsToPick;
 };

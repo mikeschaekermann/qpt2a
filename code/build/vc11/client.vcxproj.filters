@@ -53,9 +53,6 @@
       <Filter>Actors\Behaviors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
-    <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\client\sound\SoundPlayer.cpp">
       <Filter>Sound</Filter>
     </ClCompile>

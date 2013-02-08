@@ -4,12 +4,13 @@
 
 using namespace std;
 
-class IdGameObjectMap : public IGameObjectMap
+template<typename O>
+class IdGameObjectMap : public IGameObjectMap<O>
 {
 public:	
-	virtual GameObject * addGameObject(GameObject * gameObject)
+	virtual O * addGameObject(O * gameObject)
 	{
-		auto insertResult = gameObjectMap.insert(pair<unsigned int, GameObject *>(gameObject->getId(), gameObject));
+		auto insertResult = gameObjectMap.insert(pair<unsigned int, O *>(gameObject->getId(), gameObject));
 		if (insertResult.second)
 		{
 			return insertResult.first->second;
@@ -17,7 +18,7 @@ public:
 		return 0;
 	}
 
-	virtual void removeGameObject(GameObject * gameObject)
+	virtual void removeGameObject(O * gameObject)
 	{
 		if (gameObjectMap.erase(gameObject->getId()))
 		{
@@ -25,9 +26,9 @@ public:
 		}
 	}
 
-	GameObject * find(unsigned int id) const
+	O * find(unsigned int id) const
 	{
-		map<unsigned int, GameObject *>::const_iterator it = gameObjectMap.find(id);
+		map<unsigned int, O *>::const_iterator it = gameObjectMap.find(id);
 		if (it != gameObjectMap.end())
 		{
 			return it->second;
@@ -50,5 +51,5 @@ public:
 		return gameObjectMap.end();
 	}
 private:
-	map<unsigned int, GameObject *> gameObjectMap;
+	map<unsigned int, O *> gameObjectMap;
 };
