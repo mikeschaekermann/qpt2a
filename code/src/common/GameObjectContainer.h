@@ -29,6 +29,8 @@ template<typename O=GameObject>
 class GameObjectContainer
 {
 public:
+	typedef map<unsigned int, typename O *> MapIdPointer;
+
 	void createGameObject(O * gameObject)
 	{
 		if (idMap.addGameObject(gameObject))
@@ -88,12 +90,12 @@ public:
 		return idMap.getSize();
 	}
 
-	map<unsigned int, GameObject*>::iterator begin()
+	typename MapIdPointer::iterator begin()
 	{
 		return idMap.begin();
 	}
 
-	map<unsigned int, GameObject*>::iterator end()
+	typename MapIdPointer::iterator end()
 	{
 		return idMap.end();
 	}

@@ -1,6 +1,7 @@
 #include "GameScreen.h"
 #include "../../common/network/NetworkManager.h"
 #include "../managers/AssetManager.h"
+#include "../actors/CellClient.h"
 
 GameScreen::GameScreen()
 {
@@ -84,14 +85,13 @@ void GameScreen::touchBegan(const TouchWay & touchWay)
 	LOG_INFO("touch way started");
 
 	auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
+	auto cellsPicked = cellsToPick.pick(pointInWorldPlane);
 
-	auto objectsPicked = gameObjectsToPick.pick(pointInWorldPlane);
-
-	if (objectsPicked.size() > 0)
+	if (cellsPicked.size() > 0)
 	{
-		pickCell(objectsPicked[0]);
+		pickCell(cellsPicked[0]);
 		LOG_INFO("number of objects picked:");
-		LOG_INFO(objectsPicked.size());
+		LOG_INFO(cellsPicked.size());
 	}
 	else
 	{
@@ -134,14 +134,14 @@ void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject, bool collida
 {
 	addGameObjectToUpdate(gameObject, collidable);
 
-	gameObjectsToDraw.insert(make_pair(gameObject->getId(), gameObject));
+	gameObjectsToDraw.createGameObject(gameObject);
 }
 
-void GameScreen::addGameObjectToPick(GameObjectClient * gameObject, bool collidable)
+void GameScreen::addCellToPick(CellClient * cell, bool collidable)
 {
-	addGameObjectToDraw(gameObject, collidable);
+	addGameObjectToDraw(cell, collidable);
 
-	gameObjectsToPick.createGameObject(gameObject);
+	cellsToPick.createGameObject(cell);
 }
 
 void GameScreen::zoomToWorld()

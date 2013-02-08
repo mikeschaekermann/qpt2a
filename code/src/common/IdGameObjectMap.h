@@ -5,9 +5,11 @@
 using namespace std;
 
 template<typename O>
-class IdGameObjectMap : public IGameObjectMap<O>
+class IdGameObjectMap : public IGameObjectMap<typename O>
 {
 public:	
+	typedef map<unsigned int, typename O *> MapIdPointer;
+
 	virtual O * addGameObject(O * gameObject)
 	{
 		auto insertResult = gameObjectMap.insert(pair<unsigned int, O *>(gameObject->getId(), gameObject));
@@ -41,15 +43,15 @@ public:
 		return gameObjectMap.size();
 	}
 
-	virtual map<unsigned int, GameObject*>::iterator begin()
+	virtual typename MapIdPointer::iterator begin()
 	{
 		return gameObjectMap.begin();
 	}
 
-	virtual map<unsigned int, GameObject*>::iterator end()
+	virtual typename MapIdPointer::iterator end()
 	{
 		return gameObjectMap.end();
 	}
 private:
-	map<unsigned int, O *> gameObjectMap;
+	MapIdPointer gameObjectMap;
 };

@@ -8,6 +8,7 @@
 #include "../../common/GameObjectContainer.h"
 #include <unordered_map>
 
+class CellClient;
 
 class GameScreen :
 	public Screen
@@ -51,7 +52,7 @@ public:
 
 	void addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable);
 	void addGameObjectToDraw(GameObjectClient * gameObject, bool collidable);
-	void addGameObjectToPick(GameObjectClient * gameObject, bool collidable);
+	void addCellToPick(CellClient * cell, bool collidable);
 
 private:
 	void pickCell(GameObject * cell);
@@ -67,14 +68,14 @@ private:
 	GameObject * pickedCell;
 
 	/// all game objects registered to be updated
-	GameObjectContainer<GameObject>		gameObjectsToUpdate;
+	GameObjectContainer<GameObject>			gameObjectsToUpdate;
 
 	/// all game objects registered to be drawn
-	IdGameObjectClientMap	gameObjectsToDraw;
+	GameObjectContainer<GameObjectClient>	gameObjectsToDraw;
 
 	/// all game objects registered to collide with each other
-	GameObjectContainer<GameObject>		gameObjectsToCollide;
+	GameObjectContainer<GameObject>			gameObjectsToCollide;
 
 	/// all game objects registered to be pickable
-	GameObjectContainer<GameObject>		gameObjectsToPick;
+	GameObjectContainer<CellClient>			cellsToPick;
 };
