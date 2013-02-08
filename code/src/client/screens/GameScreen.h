@@ -3,12 +3,12 @@
 #include "Screen.h"
 #include "../rendering/Cam.h"
 #include "../../common/Config.h"
-#include "../actors/GameObjectClient.h"
 #include "../../common/Player.h"
 #include "../../common/GameObjectContainer.h"
 #include <unordered_map>
 
 class CellClient;
+class GameObjectClient;
 
 class GameScreen :
 	public Screen
@@ -29,7 +29,7 @@ public:
 		@brief event method called when a new touch has begun
 		@param touchWay			touch way of the newly begun touch
 	 */
-	virtual void touchBegan(const TouchWay & touchWay);
+	virtual bool touchBegan(const TouchWay & touchWay);
 	/**
 		@brief event method called when an existing touch has moved
 		@param touchWay			touch way of the touch, concerned

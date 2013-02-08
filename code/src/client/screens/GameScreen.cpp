@@ -2,6 +2,7 @@
 #include "../../common/network/NetworkManager.h"
 #include "../managers/AssetManager.h"
 #include "../actors/CellClient.h"
+#include "../actors/GameObjectClient.h"
 
 GameScreen::GameScreen()
 {
@@ -79,24 +80,34 @@ void GameScreen::draw()
 	Screen::draw();
 }
 
-void GameScreen::touchBegan(const TouchWay & touchWay)
+bool GameScreen::touchBegan(const TouchWay & touchWay)
 {
-	Screen::touchBegan(touchWay);
-	LOG_INFO("touch way started");
+	auto touchedAnything = false;
 
-	auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
-	auto cellsPicked = cellsToPick.pick(pointInWorldPlane);
+	auto touchedGUI = Screen::touchBegan(touchWay);
+	touchedAnything |= touchedGUI;
 
-	if (cellsPicked.size() > 0)
+	if (!touchedGUI)
 	{
-		pickCell(cellsPicked[0]);
-		LOG_INFO("number of objects picked:");
-		LOG_INFO(cellsPicked.size());
+		LOG_INFO("touch way started");
+
+		auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
+		auto cellsPicked = cellsToPick.pick(pointInWorldPlane);
+
+		if (cellsPicked.size() > 0)
+		{
+			touchedAnything = true;
+			pickCell(cellsPicked[0]);
+			LOG_INFO("number of objects picked:");
+			LOG_INFO(cellsPicked.size());
+		}
+		else
+		{
+			unpickCell();
+		}
 	}
-	else
-	{
-		unpickCell();
-	}
+
+	return touchedAnything;
 };
 
 void GameScreen::touchMoved(const TouchWay & touchWay)

@@ -21,7 +21,7 @@ public:
 		@brief event method called when a new touch has begun
 		@param touchWay			touch way of the newly begun touch
 	 */
-	virtual void touchBegan(const TouchWay & touchWay);
+	virtual bool touchBegan(const TouchWay & touchWay);
 	/**
 		@brief event method called when an existing touch has moved
 		@param touchWay			touch way of the touch, concerned
