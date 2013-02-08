@@ -53,6 +53,13 @@ void GameManager::startGame(string playerName)
 	myPlayer = new PlayerClient(playerName, true);
 }
 
+void GameManager::startGame(string playerName, string ip)
+{
+	serverEndpoint = boost::asio::ip::udp::endpoint(boost::asio::ip::address_v4::from_string(ip.c_str()), serverEndpoint.port());
+
+	startGame(playerName);
+}
+
 void GameManager::update(float frameTime)
 {
 	SCREEN_MGR->update(frameTime);

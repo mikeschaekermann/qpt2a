@@ -3,48 +3,62 @@
 #include "../managers/AssetManager.h"
 #include "../managers/GameManager.h"
 #include "TextInput.h"
+#include "IpInput.h"
 
 using namespace ci;
 
 ConnectScreen::ConnectScreen()
 {
-	auto back = &(ASSET_MGR->getGuiTexture(string("back")));
-	rootItem->addSubItem(
+	auto nameBox = &(ASSET_MGR->getGuiTexture(string("textBox")));
+	auto nameBoxItem = rootItem->addSubItem(new TextInput(
 		this,
 		[]()
 		{
-			system("server.exe");
+			
 		},
-		Vec2f(100, 200),
-		back,
-		back,
-		back
+		Vec2f(100, 40),
+		nameBox,
+		nameBox,
+		nameBox)
+	);
+
+	auto ipBox = &(ASSET_MGR->getGuiTexture(string("textBox")));
+	auto ipBoxItem = rootItem->addSubItem(new IpInput(
+		this,
+		[]()
+		{
+			
+		},
+		Vec2f(100, 150),
+		ipBox,
+		ipBox,
+		ipBox)
 	);
 
 	auto connectTexture = &(ASSET_MGR->getGuiTexture(string("connect")));
 	rootItem->addSubItem(
 		this,
-		[]()
+		[ipBoxItem, nameBoxItem]()
 		{
-			GAME_MGR->startGame("Daniel");
+			GAME_MGR->startGame(nameBoxItem->getValue(), ipBoxItem->getValue());
 		},
-		Vec2f(100, 200),
+		Vec2f(100, 220),
 		connectTexture,
 		connectTexture,
 		connectTexture
 	);
 
-	auto textBox = &(ASSET_MGR->getGuiTexture(string("textBox")));
-	rootItem->addSubItem(new TextInput(
+	auto back = &(ASSET_MGR->getGuiTexture(string("back")));
+	rootItem->addSubItem(
 		this,
 		[]()
 		{
-			/// exit application
+			SCREEN_MGR->openMenuScreen();
 		},
-		Vec2f(100, 350),
-		textBox,
-		textBox,
-		textBox)
+		Vec2f(100, 300),
+		back,
+		back,
+		back
 	);
 }
 

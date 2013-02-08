@@ -11,6 +11,7 @@ GUIItem::GUIItem(Screen* screen, std::function<void()> callback, ci::Vec2f posit
 	hoverTexture(hoverTexture),
 	clickTexture(clickTexture),
 	isVisible(true),
+	hasFocus(false),
 	parentItem(nullptr),
 	currentTexture(texture)
 {
@@ -78,6 +79,7 @@ bool GUIItem::isMouseDownOnItem(Vec2f position)
 	else
 	{
 		currentTexture = texture;
+		hasFocus = false;
 	}
 	bool isClicked = false;
 	for (auto it = subItems.begin(); it != subItems.end(); ++it)

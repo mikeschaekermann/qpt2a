@@ -112,4 +112,9 @@ ScreenManager * ScreenManager::getInstance()
 	return instance;
 }
 
+void ScreenManager::onKeyInput(KeyEvent& e) const
+{
+	currentScreen->onKeyInput(e);
+}
+
 ScreenManager * ScreenManager::instance = nullptr;

@@ -28,6 +28,8 @@ public:
 	void exit();
 	void fadeToBlack(float alpha);
 
+	void onKeyInput(KeyEvent& e) const;
+
 	/**
 		@brief event method called when a new touch has begun
 		@param touchWay			touch way of the newly begun touch

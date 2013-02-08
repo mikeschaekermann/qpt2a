@@ -31,7 +31,10 @@ void Screen::mouseMove( MouseEvent event )
 
 void Screen::touchBegan(const TouchWay & touchWay)
 {
-	rootItem->isMouseDownOnItem(touchWay.getCurrentPos());
+	if(!rootItem->isMouseDownOnItem(touchWay.getCurrentPos()))
+	{
+		focusedItem = nullptr;
+	}
 }
 
 void Screen::touchEnded(TouchWay touchWay)
@@ -41,5 +44,8 @@ void Screen::touchEnded(TouchWay touchWay)
 
 void Screen::onKeyInput(KeyEvent& e)
 {
-	rootItem->onKeyInput(e);
+	if(focusedItem)
+	{
+		focusedItem->onKeyInput(e);
+	}
 }

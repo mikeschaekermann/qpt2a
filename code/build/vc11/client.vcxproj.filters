@@ -137,6 +137,12 @@
     <ClCompile Include="..\..\src\client\screens\TextInput.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\CreditsScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\IpInput.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -306,6 +312,12 @@
       <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\client\screens\TextInput.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\IpInput.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\CreditsScreen.h">
       <Filter>Screens</Filter>
     </ClInclude>
   </ItemGroup>

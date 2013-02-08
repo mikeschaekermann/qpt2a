@@ -17,9 +17,19 @@ TextInput::~TextInput(void)
 {
 }
 
+void TextInput::draw()
+{
+	GUIItem::draw();
+	ci::gl::drawString(text, this->position + Vec2f(20, 25), ci::ColorA::black());
+}
+
 void TextInput::onKeyInput(KeyEvent& e)
 {
-	if(isdigit(e.getChar()) || e.getChar() == '.')
+	if(e.getCode() == KeyEvent::KEY_BACKSPACE && text.length() > 0)
+	{
+		text = text.substr(0, text.length() - 1);
+	}
+	else
 	{
 		text += e.getChar();
 	}

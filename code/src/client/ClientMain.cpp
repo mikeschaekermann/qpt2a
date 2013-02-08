@@ -118,7 +118,7 @@ void ClientMain::touchesEnded( TouchEvent event )
 
 void ClientMain::keyDown( KeyEvent event )
 {
-
+	SCREEN_MGR->onKeyInput(event);
 }
 
 void ClientMain::resize( ResizeEvent event )

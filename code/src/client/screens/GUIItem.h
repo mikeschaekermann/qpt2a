@@ -24,7 +24,9 @@ public:
 	void setPosition(ci::Vec2f newPosition);
 	void setVisible(bool visible, bool recursively = false);
 
-	void draw();
+	virtual string const & getValue() { return string(); }
+
+	virtual void draw();
 protected:
 	bool isPositionInItem(ci::Vec2f position);
 

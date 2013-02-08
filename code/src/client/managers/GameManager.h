@@ -21,6 +21,7 @@ public:
 	static void releaseInstance() { if (m_pManager != nullptr) delete m_pManager; }
 
 	void startGame(string playerName);
+	void startGame(string playerName, string ip);
 	void update(float frameTime);
 	void draw();
 
