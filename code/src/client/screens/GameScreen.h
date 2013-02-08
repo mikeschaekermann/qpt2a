@@ -44,7 +44,7 @@ public:
 	void switchToState(GameScreenState * newState);
 
 private:
-	void pickCell(GameObject * cell);
+	void pickCell(CellClient * cell);
 	void unpickCell();
 	
 	/// current state of the screen
@@ -56,7 +56,7 @@ private:
 	/// in-game menu for cell actions
 	GUIItem * cellMenu;
 	/// currently picked cell
-	GameObject * pickedCell;
+	CellClient * pickedCell;
 
 	/// all game objects registered to be updated
 	GameObjectContainer<GameObject>			gameObjectsToUpdate;

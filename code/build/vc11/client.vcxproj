@@ -19,6 +19,7 @@
     <ClCompile Include="..\..\src\client\actors\CellClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\GameObjectClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\PlayerClient.cpp" />
+    <ClCompile Include="..\..\src\client\actors\StandardCellClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\StemCellClient.cpp" />
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
     <ClCompile Include="..\..\src\Client\input\TouchWay.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="..\..\src\client\actors\CellClient.h" />
     <ClInclude Include="..\..\src\client\actors\GameObjectClient.h" />
     <ClInclude Include="..\..\src\client\actors\PlayerClient.h" />
+    <ClInclude Include="..\..\src\client\actors\StandardCellClient.h" />
     <ClInclude Include="..\..\src\client\actors\StemCellClient.h" />
     <ClInclude Include="..\..\src\client\ClientMain.h" />
     <ClInclude Include="..\..\src\Client\input\TouchWay.h" />

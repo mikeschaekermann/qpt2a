@@ -128,6 +128,16 @@ void GameManager::setMyPlayerId(unsigned int id)
 	myPlayer->setId(id);
 }
 
+ClientNetworkManager * GameManager::getNetworkManager()
+{
+	return networkManager;
+}
+
+boost::asio::ip::udp::endpoint GameManager::getServerEndpoint()
+{
+	return serverEndpoint;
+}
+
 void GameManager::quit()
 {
 	exit(0);

@@ -140,6 +140,9 @@
     <ClCompile Include="..\..\src\client\screens\IpInput.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\actors\StandardCellClient.cpp">
+      <Filter>Actors\Cells</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -325,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.h">
       <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\actors\StandardCellClient.h">
+      <Filter>Actors\Cells</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

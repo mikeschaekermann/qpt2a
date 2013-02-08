@@ -5,6 +5,7 @@
 #include "../actors/GameObjectClient.h"
 #include "GameScreenStates/GameScreenStateNeutral.h"
 #include "GameScreenStates/GameScreenStateCreateCell.h"
+#include "../../common/network/messages/enum/CellType.h"
 
 GameScreen::GameScreen():
 	state(new GameScreenStateNeutral(this))
@@ -36,7 +37,7 @@ GameScreen::GameScreen():
 			this,
 			[this]()
 			{
-				switchToState(new GameScreenStateCreateCell(this));
+				switchToState(new GameScreenStateCreateCell(this, CellType::StandardCell));
 			},
 			Vec2f(45, -10),
 			createStandardCellButton,
@@ -176,7 +177,7 @@ void GameScreen::zoomToWorld()
 		.setFocus(Vec3f::zero());
 }
 
-void GameScreen::pickCell(GameObject * cell)
+void GameScreen::pickCell(CellClient * cell)
 {
 	if (cell != nullptr)
 	{
