@@ -24,17 +24,20 @@ void Screen::draw()
 	rootItem->draw();
 }
 
-void Screen::mouseMove( MouseEvent event )
+bool Screen::mouseMove( MouseEvent event )
 {
-	rootItem->isMouseOverItem(event.getPos());
+	return rootItem->isMouseOverItem(event.getPos());
 }
 
-void Screen::touchBegan(const TouchWay & touchWay)
+bool Screen::touchBegan(const TouchWay & touchWay)
 {
 	if(!rootItem->isMouseDownOnItem(touchWay.getCurrentPos()))
 	{
 		focusedItem = nullptr;
+		return false;
 	}
+	
+	return true;
 }
 
 void Screen::touchEnded(TouchWay touchWay)

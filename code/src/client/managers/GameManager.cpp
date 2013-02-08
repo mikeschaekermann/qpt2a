@@ -107,7 +107,7 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 
 	/// create stem cell
 	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0, myPlayer);
-	GAME_SCR.addGameObjectToPick(stemCell, true);
+	GAME_SCR.addCellToPick(stemCell, true);
 }
 
 void GameManager::setMyPlayerId(unsigned int id)

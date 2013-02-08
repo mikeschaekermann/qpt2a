@@ -10,13 +10,14 @@
 
 using namespace std;
 
-class PositionGameObjectMap : public IGameObjectMap
+template<typename O>
+class PositionGameObjectMap : public IGameObjectMap<O>
 {
 public:
-	virtual GameObject * addGameObject(GameObject * gameObject)
+	virtual O * addGameObject(O * gameObject)
 	{
-		auto insertResult = gameObjectMap.insert(pair<float, map<float, GameObject *> >(gameObject->getPosition().x, map<float, GameObject *>()));
-		auto insertResult2 = insertResult.first->second.insert(pair<float, GameObject *>(gameObject->getPosition().y, gameObject));
+		auto insertResult = gameObjectMap.insert(pair<float, map<float, O *> >(gameObject->getPosition().x, map<float, O *>()));
+		auto insertResult2 = insertResult.first->second.insert(pair<float, O *>(gameObject->getPosition().y, gameObject));
 		
 		if (insertResult2.second)
 		{
@@ -26,9 +27,9 @@ public:
 		return 0;
 	}
 
-	virtual void removeGameObject(GameObject * gameObject)
+	virtual void removeGameObject(O * gameObject)
 	{
-		map<float, map<float, GameObject *> >::iterator find = gameObjectMap.find(gameObject->getPosition()[0]);
+		map<float, map<float, O *> >::iterator find = gameObjectMap.find(gameObject->getPosition()[0]);
 		if (find != gameObjectMap.end())
 		{
 			if (find->second.erase(gameObject->getPosition()[1]))
@@ -38,12 +39,12 @@ public:
 		}
 	}
 
-	GameObject * find(const Vec3f & position) const
+	O * find(const Vec3f & position) const
 	{
-		map<float, map<float, GameObject *> >::const_iterator gameObjectXIt = gameObjectMap.find(position.x);
+		map<float, map<float, O *> >::const_iterator gameObjectXIt = gameObjectMap.find(position.x);
 		if (gameObjectXIt != gameObjectMap.end())
 		{
-			map<float, GameObject *>::const_iterator gameObjectYIt = gameObjectXIt->second.find(position.y);
+			map<float, O *>::const_iterator gameObjectYIt = gameObjectXIt->second.find(position.y);
 			if (gameObjectYIt != gameObjectXIt->second.end())
 			{
 				return gameObjectYIt->second;
@@ -52,13 +53,13 @@ public:
 		return 0;
 	}
 
-	const vector<GameObject *> pick(const Vec3f & pickPosition) const
+	const vector<O *> pick(const Vec3f & pickPosition) const
 	{
 		/// NAIVE PICKING IMPLEMENTATION
 		/// IF THERE IS TIME AND THE PERFORMANCE NEED,
 		/// QUADTREE-BASED PICKING COULD BE IMPLEMENTED!
 
-		vector<GameObject *> gameObjectsPicked;
+		vector<O *> gameObjectsPicked;
 
 		for (auto xIt = gameObjectMap.begin(); xIt != gameObjectMap.end(); ++xIt)
 		{
@@ -79,14 +80,14 @@ public:
 		return gameObjectsPicked;
 	}
 
-	const vector<GameObject *> findInRadiusOf(const Vec3f & position, float radius) const
+	const vector<O *> findInRadiusOf(const Vec3f & position, float radius) const
 	{
-		vector<GameObject *> gameObjects;
+		vector<O *> gameObjects;
 
 		/// NEEDS TO BE REFACTORED!!!
 
 		/*
-		map<float, map<float, GameObject *> >::const_iterator startXIt = gameObjectMap.lower_bound(position.x);
+		map<float, map<float, O *> >::const_iterator startXIt = gameObjectMap.lower_bound(position.x);
 		
 		// lower_bound() retrurns container.end() if there is only one element below position.x, so ...
 		if (startXIt == gameObjectMap.end() && gameObjectMap.size() > 0)
@@ -97,10 +98,10 @@ public:
 
 		if (startXIt != gameObjectMap.end())
 		{
-			map<float, map<float, GameObject *> >::const_iterator xIt = startXIt;
+			map<float, map<float, O *> >::const_iterator xIt = startXIt;
 			while(true)
 			{
-				map<float, GameObject *>::const_iterator yIt = xIt->second.lower_bound(position.y);
+				map<float, O *>::const_iterator yIt = xIt->second.lower_bound(position.y);
 				
 				if (yIt == xIt->second.end())
 
@@ -134,9 +135,9 @@ public:
 			}
 
 			++startXIt;
-			for (map<float, map<float, GameObject *> >::const_iterator xIt = startXIt; xIt != gameObjectMap.end(); ++xIt)
+			for (map<float, map<float, O *> >::const_iterator xIt = startXIt; xIt != gameObjectMap.end(); ++xIt)
 			{
-				map<float, GameObject *>::const_iterator yIt = xIt->second.upper_bound(position.y);
+				map<float, O *>::const_iterator yIt = xIt->second.upper_bound(position.y);
 				for (; yIt != xIt->second.end(); ++yIt)
 				{
 					if (sqrtf(xIt->first * xIt->first + yIt->first * yIt->first) <= radius)
@@ -157,7 +158,7 @@ public:
 	virtual unsigned int getSize() const
 	{
 		unsigned int size = 0;
-		map<float, map<float, GameObject *> >::const_iterator it = gameObjectMap.begin();
+		map<float, map<float, O *> >::const_iterator it = gameObjectMap.begin();
 		for (; it != gameObjectMap.end(); ++it)
 		{
 			size += it->second.size();
@@ -165,5 +166,5 @@ public:
 		return size;
 	}
 private:
-	map<float, map<float, GameObject *> > gameObjectMap;
+	map<float, map<float, O *> > gameObjectMap;
 };

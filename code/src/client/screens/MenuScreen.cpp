@@ -88,9 +88,9 @@ void MenuScreen::draw()
 	Screen::draw();
 }
 
-void MenuScreen::touchBegan(const TouchWay & touchWay)
+bool MenuScreen::touchBegan(const TouchWay & touchWay)
 {
-	Screen::touchBegan(touchWay);
+	return Screen::touchBegan(touchWay);
 	LOG_INFO("touch way started");
 };
 

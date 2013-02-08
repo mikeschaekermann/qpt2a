@@ -200,5 +200,5 @@ private:
 	NetworkManager* networkManager;
 	EventQueue* eventQueue;
 	vector<PlayerServer*> players;
-	GameObjectContainer gameObjectContainer;
+	GameObjectContainer<GameObject> gameObjectContainer;
 };

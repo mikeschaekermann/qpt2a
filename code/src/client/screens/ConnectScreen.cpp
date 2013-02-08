@@ -75,9 +75,9 @@ void ConnectScreen::draw()
 	Screen::draw();
 }
 
-void ConnectScreen::touchBegan(const TouchWay & touchWay)
+bool ConnectScreen::touchBegan(const TouchWay & touchWay)
 {
-	Screen::touchBegan(touchWay);
+	return Screen::touchBegan(touchWay);
 	LOG_INFO("touch way started");
 };
 

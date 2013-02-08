@@ -12,7 +12,7 @@ class GUIItem
 public:
 	GUIItem(Screen* screen, std::function<void()> callback, ci::Vec2f position = ci::Vec2f::zero(), const ci::gl::Texture * texture = nullptr, const ci::gl::Texture * hoverTexture = nullptr, const ci::gl::Texture * clickTexture = nullptr);
 	~GUIItem();
-	GUIItem * addSubItem(Screen* screen, std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture = nullptr, const ci::gl::Texture * hoverTexture = nullptr, const ci::gl::Texture * clickTexture = nullptr);
+	GUIItem * addSubItem(Screen* screen, std::function<void()> callback, ci::Vec2f position = ci::Vec2f::zero(), const ci::gl::Texture * texture = nullptr, const ci::gl::Texture * hoverTexture = nullptr, const ci::gl::Texture * clickTexture = nullptr);
 	GUIItem* addSubItem(GUIItem* item);
 	GUIItem * parent();
 
@@ -22,7 +22,7 @@ public:
 	virtual void onKeyInput(KeyEvent& e);
 
 	void setPosition(ci::Vec2f newPosition);
-	void setVisible(bool visible, bool recursively = false);
+	void setVisible(bool visible, bool recursively = true);
 
 	virtual string const & getValue() { return string(); }
 

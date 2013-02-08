@@ -1,6 +1,8 @@
 #include "GameScreen.h"
 #include "../../common/network/NetworkManager.h"
 #include "../managers/AssetManager.h"
+#include "../actors/CellClient.h"
+#include "../actors/GameObjectClient.h"
 
 GameScreen::GameScreen()
 {
@@ -16,7 +18,9 @@ GameScreen::GameScreen()
 	auto createStandardCellHoverButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellHover")));
 	auto createStandardCellClickButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellClick")));
 
-	rootItem
+	cellMenu = rootItem->addSubItem(this, nullptr);
+
+	cellMenu
 		->addSubItem(
 			this,
 			[]()
@@ -34,11 +38,13 @@ GameScreen::GameScreen()
 			{
 				LOG_INFO("CREATE STANDARD CELL");
 			},
-			Vec2f::zero(),
+			Vec2f(45, -10),
 			createStandardCellButton,
 			createStandardCellHoverButton,
 			createStandardCellClickButton
 		);
+
+	cellMenu->setVisible(false);
 }
 
 GameScreen::~GameScreen(void)
@@ -74,20 +80,34 @@ void GameScreen::draw()
 	Screen::draw();
 }
 
-void GameScreen::touchBegan(const TouchWay & touchWay)
+bool GameScreen::touchBegan(const TouchWay & touchWay)
 {
-	Screen::touchBegan(touchWay);
-	LOG_INFO("touch way started");
+	auto touchedAnything = false;
 
-	auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
+	auto touchedGUI = Screen::touchBegan(touchWay);
+	touchedAnything |= touchedGUI;
 
-	auto objectsPicked = gameObjectsToPick.pick(pointInWorldPlane);
-
-	if (objectsPicked.size() > 0)
+	if (!touchedGUI)
 	{
-		LOG_INFO("number of objects picked:");
-		LOG_INFO(objectsPicked.size());
+		LOG_INFO("touch way started");
+
+		auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
+		auto cellsPicked = cellsToPick.pick(pointInWorldPlane);
+
+		if (cellsPicked.size() > 0)
+		{
+			touchedAnything = true;
+			pickCell(cellsPicked[0]);
+			LOG_INFO("number of objects picked:");
+			LOG_INFO(cellsPicked.size());
+		}
+		else
+		{
+			unpickCell();
+		}
 	}
+
+	return touchedAnything;
 };
 
 void GameScreen::touchMoved(const TouchWay & touchWay)
@@ -125,14 +145,14 @@ void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject, bool collida
 {
 	addGameObjectToUpdate(gameObject, collidable);
 
-	gameObjectsToDraw.insert(make_pair(gameObject->getId(), gameObject));
+	gameObjectsToDraw.createGameObject(gameObject);
 }
 
-void GameScreen::addGameObjectToPick(GameObjectClient * gameObject, bool collidable)
+void GameScreen::addCellToPick(CellClient * cell, bool collidable)
 {
-	addGameObjectToDraw(gameObject, collidable);
+	addGameObjectToDraw(cell, collidable);
 
-	gameObjectsToPick.createGameObject(gameObject);
+	cellsToPick.createGameObject(cell);
 }
 
 void GameScreen::zoomToWorld()
@@ -145,4 +165,23 @@ void GameScreen::zoomToWorld()
 	cam
 		.setPosition(Vec3f(0, 0, camDistance))
 		.setFocus(Vec3f::zero());
+}
+
+void GameScreen::pickCell(GameObject * cell)
+{
+	if (cell != nullptr)
+	{
+		pickedCell = cell;
+
+		auto menuPosition3D = pickedCell->getPosition() + Vec3f(pickedCell->getRadius() + 5, 0, 0);
+		auto menuPosition2D = cam.worldToScreen(menuPosition3D, getWindowWidth(), getWindowHeight());
+		cellMenu->setPosition(menuPosition2D);
+		cellMenu->setVisible(true);
+	}
+}
+
+void GameScreen::unpickCell()
+{
+	pickedCell = nullptr;
+	cellMenu->setVisible(false);
 }
