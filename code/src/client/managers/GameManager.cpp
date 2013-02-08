@@ -97,8 +97,10 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 		assert(false);
 	}
 
+	bool ownPlayerAdded = (id == myPlayer->getId());
+
 	/// my own player was passed
-	if (id == myPlayer->getId())
+	if (ownPlayerAdded)
 	{
 		players.insert(make_pair(id, myPlayer));
 	}
@@ -109,10 +111,16 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	}
 
 	auto player = players[id];
-
-	/// create stem cell
-	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0, myPlayer);
-	GAME_SCR.addCellToPick(stemCell, true);
+	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0, player);
+	
+	if (ownPlayerAdded)
+	{
+		GAME_SCR.addCellToPick(stemCell, true);
+	}
+	else
+	{
+		GAME_SCR.addGameObjectToDraw(stemCell, true);
+	}
 }
 
 void GameManager::setMyPlayerId(unsigned int id)

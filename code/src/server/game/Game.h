@@ -129,7 +129,7 @@ public:
 				networkPlayer.playerId = players[i]->getId();
 				networkPlayer.playerName = players[i]->getName();
 
-				networkPlayer.startCellId = 0;
+				networkPlayer.startCellId = players[i]->getStemCell().getId();
 				networkPlayer.startPosition = players[i]->getStemCell().getPosition();
 
 				startgame->players.push_back(networkPlayer);
