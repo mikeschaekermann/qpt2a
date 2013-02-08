@@ -11,6 +11,7 @@ class Screen;
 class GameScreen;
 class MenuScreen;
 class ConnectScreen;
+class CreditsScreen;
 class ScreenManager
 {
 public:
@@ -23,6 +24,7 @@ public:
 	void openMenuScreen();
 	void openGameScreen();
 	void openConnectScreen();
+	void openCreditsScreen();
 	GameScreen & getGameScreen() const;
 	void closeScreen();
 	void exit();
@@ -66,5 +68,6 @@ private:
 	MenuScreen * menuScreen;
 	GameScreen * gameScreen;
 	ConnectScreen* connectScreen;
+	CreditsScreen* creditsScreen;
 	Screen * currentScreen;
 };

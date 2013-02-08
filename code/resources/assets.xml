@@ -92,6 +92,13 @@ vertexShader and fragmentShader are also file paths
 </guiTexture>
 
 <guiTexture>
+	<key>credits</key>
+	<value>..\..\..\resources\images\credits.svg</value>
+	<width>500</width>
+	<height>150</height>
+</guiTexture>
+
+<guiTexture>
 	<key>startServer</key>
 	<value>..\..\..\resources\images\startServer.svg</value>
 	<width>500</width>
