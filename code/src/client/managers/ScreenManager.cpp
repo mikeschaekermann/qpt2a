@@ -2,12 +2,14 @@
 #include "../screens/MenuScreen.h"
 #include "../screens/GameScreen.h"
 #include "../screens/ConnectScreen.h"
+#include "../screens/CreditsScreen.h"
 
 ScreenManager::ScreenManager(void):
 	m_backgroundScreen(nullptr),
 	menuScreen(new MenuScreen()),
 	gameScreen(new GameScreen()),
-	connectScreen(new ConnectScreen())
+	connectScreen(new ConnectScreen()),
+	creditsScreen(new CreditsScreen())
 {
 	openMenuScreen();
 }
@@ -58,6 +60,11 @@ void ScreenManager::openGameScreen()
 void ScreenManager::openConnectScreen()
 {
 	currentScreen = connectScreen;
+}
+
+void ScreenManager::openCreditsScreen()
+{
+	currentScreen = creditsScreen;
 }
 
 GameScreen & ScreenManager::getGameScreen() const

@@ -61,14 +61,27 @@ MenuScreen::MenuScreen()
 		startServerTexture
 	);
 
+	auto creditsTexture = &(ASSET_MGR->getGuiTexture(string("credits")));
+	rootItem->addSubItem(
+		this,
+		[]()
+		{
+			SCREEN_MGR->openCreditsScreen();
+		},
+		Vec2f(100, 300),
+		creditsTexture,
+		creditsTexture,
+		creditsTexture
+	);
+
 	auto exitButton = &(ASSET_MGR->getGuiTexture(string("exit")));
 	rootItem->addSubItem(
 		this,
 		[]()
 		{
-			/// exit application
+			GAME_MGR->quit();
 		},
-		Vec2f(100, 350),
+		Vec2f(100, 400),
 		exitButton,
 		exitButton,
 		exitButton

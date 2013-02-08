@@ -5,6 +5,11 @@
 #include "../../client/actors/PlayerClient.h"
 #include "../../client/actors/StemCellClient.h"
 
+#include "cinder/app/AppBasic.h"
+
+using namespace ci;
+using namespace ci::app;
+
 GameManager* GameManager::m_pManager = nullptr;
 
 GameManager::GameManager(void):
@@ -121,4 +126,9 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 void GameManager::setMyPlayerId(unsigned int id)
 {
 	myPlayer->setId(id);
+}
+
+void GameManager::quit()
+{
+	exit(0);
 }
