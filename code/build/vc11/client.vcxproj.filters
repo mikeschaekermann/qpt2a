@@ -317,6 +317,15 @@
     <ClInclude Include="..\..\src\client\screens\CreditsScreen.h">
       <Filter>Screens</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenState.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -372,6 +381,9 @@
     </Filter>
     <Filter Include="Network\Messages\Enum">
       <UniqueIdentifier>{7e36fa21-5895-4718-b3bf-f10361bf3a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screens\GameScreenStates">
+      <UniqueIdentifier>{2a317f10-862d-494d-9bf8-5cdc5f046aa4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

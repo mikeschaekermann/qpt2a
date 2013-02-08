@@ -3,8 +3,11 @@
 #include "../managers/AssetManager.h"
 #include "../actors/CellClient.h"
 #include "../actors/GameObjectClient.h"
+#include "GameScreenStates/GameScreenStateNeutral.h"
+#include "GameScreenStates/GameScreenStateCreateCell.h"
 
-GameScreen::GameScreen()
+GameScreen::GameScreen():
+	state(new GameScreenStateNeutral(this))
 {
 	auto screenSize = getWindowSize();
 	cam = Cam(screenSize.x, screenSize.y, CONFIG_FLOAT1("data.rendering.camera.fieldOfView"), CONFIG_FLOAT1("data.rendering.camera.nearPlane"), CONFIG_FLOAT1("data.rendering.camera.farPlane"));
@@ -23,10 +26,7 @@ GameScreen::GameScreen()
 	cellMenu
 		->addSubItem(
 			this,
-			[]()
-			{
-				LOG_INFO("CREATE CELL!");
-			},
+			[](){},
 			Vec2f::zero(),
 			createCellButton,
 			createCellButton,
@@ -34,9 +34,9 @@ GameScreen::GameScreen()
 		)
 		->addSubItem(
 			this,
-			[]()
+			[this]()
 			{
-				LOG_INFO("CREATE STANDARD CELL");
+				switchToState(new GameScreenStateCreateCell(this));
 			},
 			Vec2f(45, -10),
 			createStandardCellButton,
@@ -49,11 +49,15 @@ GameScreen::GameScreen()
 
 GameScreen::~GameScreen(void)
 {
-
+	if (state != nullptr)
+	{
+		delete state;
+	}
 }
 
 void GameScreen::update(float frameTime)
 {
+	state->update(frameTime);
 }
 
 void GameScreen::draw()
@@ -70,6 +74,8 @@ void GameScreen::draw()
 			it->second->draw();
 		}
 
+		state->draw3D();
+
 		gl::color(ColorA(1, 1, 1, 1));
 
 		gl::disableDepthWrite();
@@ -78,6 +84,8 @@ void GameScreen::draw()
 	gl::popMatrices();
 
 	Screen::draw();
+
+	state->draw2D();
 }
 
 bool GameScreen::touchBegan(const TouchWay & touchWay)
@@ -89,22 +97,7 @@ bool GameScreen::touchBegan(const TouchWay & touchWay)
 
 	if (!touchedGUI)
 	{
-		LOG_INFO("touch way started");
-
-		auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
-		auto cellsPicked = cellsToPick.pick(pointInWorldPlane);
-
-		if (cellsPicked.size() > 0)
-		{
-			touchedAnything = true;
-			pickCell(cellsPicked[0]);
-			LOG_INFO("number of objects picked:");
-			LOG_INFO(cellsPicked.size());
-		}
-		else
-		{
-			unpickCell();
-		}
+		touchedAnything |= state->touchBegan(touchWay);
 	}
 
 	return touchedAnything;
@@ -112,23 +105,39 @@ bool GameScreen::touchBegan(const TouchWay & touchWay)
 
 void GameScreen::touchMoved(const TouchWay & touchWay)
 {
-	LOG_INFO("touch way moved");
+	return state->touchMoved(touchWay);
 };
+
+bool GameScreen::mouseMove(MouseEvent event)
+{
+	return (state->mouseMove(event) || Screen::mouseMove(event));
+}
 
 void GameScreen::touchEnded(TouchWay touchWay)
 {
+	state->touchEnded(touchWay);
 	Screen::touchEnded(touchWay);
-	LOG_INFO("touch way ended");
 };
 
 void GameScreen::touchClick(TouchWay touchWay)
 {
-	LOG_INFO("touch click!");
+	state->touchClick(touchWay);
 };
 
 void GameScreen::resize(ResizeEvent event)
 {
+	state->resize(event);
 	cam.setAspectRatio(getWindowAspectRatio());
+}
+
+void GameScreen::onKeyInput(KeyEvent& e)
+{
+	if (e.getCode() == KeyEvent::KEY_ESCAPE)
+	{
+		switchToState(new GameScreenStateNeutral(this));
+	}
+
+	state->onKeyInput(e);
 }
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable)
@@ -184,4 +193,14 @@ void GameScreen::unpickCell()
 {
 	pickedCell = nullptr;
 	cellMenu->setVisible(false);
+}
+
+void GameScreen::switchToState(GameScreenState * newState)
+{
+	auto oldState = state;
+	state = newState;
+	if (oldState != nullptr)
+	{
+		delete oldState;
+	}
 }
