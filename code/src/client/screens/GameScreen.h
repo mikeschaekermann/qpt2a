@@ -54,10 +54,17 @@ public:
 	void addGameObjectToPick(GameObjectClient * gameObject, bool collidable);
 
 private:
+	void pickCell(GameObject * cell);
+	void unpickCell();
+	
 	/// perspective cam for the game
 	Cam cam;
 	/// the world's radius, i.e. the radius of the Petri's dish
 	float worldRadius;
+	/// in-game menu for cell actions
+	GUIItem * cellMenu;
+	/// currently picked cell
+	GameObject * pickedCell;
 
 	/// all game objects registered to be updated
 	GameObjectContainer		gameObjectsToUpdate;

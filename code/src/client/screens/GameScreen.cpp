@@ -16,7 +16,9 @@ GameScreen::GameScreen()
 	auto createStandardCellHoverButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellHover")));
 	auto createStandardCellClickButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellClick")));
 
-	rootItem
+	cellMenu = rootItem->addSubItem(this, nullptr);
+
+	cellMenu
 		->addSubItem(
 			this,
 			[]()
@@ -34,11 +36,13 @@ GameScreen::GameScreen()
 			{
 				LOG_INFO("CREATE STANDARD CELL");
 			},
-			Vec2f::zero(),
+			Vec2f(45, -10),
 			createStandardCellButton,
 			createStandardCellHoverButton,
 			createStandardCellClickButton
 		);
+
+	cellMenu->setVisible(false);
 }
 
 GameScreen::~GameScreen(void)
@@ -85,8 +89,13 @@ void GameScreen::touchBegan(const TouchWay & touchWay)
 
 	if (objectsPicked.size() > 0)
 	{
+		pickCell(objectsPicked[0]);
 		LOG_INFO("number of objects picked:");
 		LOG_INFO(objectsPicked.size());
+	}
+	else
+	{
+		unpickCell();
 	}
 };
 
@@ -145,4 +154,23 @@ void GameScreen::zoomToWorld()
 	cam
 		.setPosition(Vec3f(0, 0, camDistance))
 		.setFocus(Vec3f::zero());
+}
+
+void GameScreen::pickCell(GameObject * cell)
+{
+	if (cell != nullptr)
+	{
+		pickedCell = cell;
+
+		auto menuPosition3D = pickedCell->getPosition() + Vec3f(pickedCell->getRadius() + 5, 0, 0);
+		auto menuPosition2D = cam.worldToScreen(menuPosition3D, getWindowWidth(), getWindowHeight());
+		cellMenu->setPosition(menuPosition2D);
+		cellMenu->setVisible(true);
+	}
+}
+
+void GameScreen::unpickCell()
+{
+	pickedCell = nullptr;
+	cellMenu->setVisible(false);
 }
