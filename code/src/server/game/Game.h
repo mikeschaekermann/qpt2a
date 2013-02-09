@@ -55,7 +55,7 @@ public:
 		this->eventQueue = eventQueue;
 		LOG_INFO("EventQueue bound to Game");
 
-		//EventCreator::getInstance().bind(m_pNetworkManager, m_pEventQueue, &m_players);
+		EventCreator::getInstance()->bind(networkManager, eventQueue, &gameObjectContainer, &(this->players));
 	}
 
 	void join(JoinRequest request)
@@ -106,6 +106,8 @@ public:
 		PlayerServer *p = new PlayerServer(playerName, request.endpoint, startPosition);
 
 		players.push_back(p);
+
+		gameObjectContainer.createGameObject(&(p->getStemCell()));
 
 		JoinSuccess *success = new JoinSuccess();
 		success->playerId = p->getId();
@@ -169,12 +171,17 @@ public:
 			{
 			case CellType::StemCell:
 				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.stemcell.radius"), position);
-				cell = new CellServer(CellServer::STEMCELL, position, angle);
+				cell = new CellServer(CellServer::STEMCELL, position, angle, &player);
+				break;
 			case CellType::StandardCell:
 				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.standardcell.radius"), position);
-				cell = new CellServer(CellServer::STANDARDCELL, position, angle);
+				cell = new CellServer(CellServer::STANDARDCELL, position, angle, &player);
+				break;
 			default:
-				cell = 0;
+				message.clear();
+				message << "Unknown CellType: " << type.getType();
+				LOG_INFO(message.str());
+				return;
 			}
 
 			/// get current time

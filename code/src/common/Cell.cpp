@@ -2,7 +2,7 @@
 
 Cell::Cell() { }
 
-Cell::Cell(Vec3f position, float angle)
+Cell::Cell(Vec3f position, float angle, Player * owner) : owner(owner)
 {
  this->position = position;
  setAngle(angle);

@@ -126,8 +126,9 @@ void NetworkManager::operator()()
 			}
 			delete message;
 		}
-		catch(...)
+		catch(std::exception &ex)
 		{
+			LOG_ERROR(ex.what());
 		}
 	}
 }
