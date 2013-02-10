@@ -29,7 +29,7 @@ void TextInput::onKeyInput(KeyEvent& e)
 	{
 		text = text.substr(0, text.length() - 1);
 	}
-	else
+	else if(isalnum((unsigned char)e.getChar()) || e.getChar() == '.')
 	{
 		text += e.getChar();
 	}
