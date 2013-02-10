@@ -14,6 +14,9 @@
 #include "CreateCellFailureTest.h"
 #include "CreateCellRequestTest.h"
 #include "CreateCellSuccessTest.h"
+#include "EnvironmentAttackTest.h"
+#include "EnvironmentMoveTest.h"
+#include "ResourceBonusTest.h"
 
 using namespace std;
 
@@ -59,6 +62,15 @@ int main()
 	cout << endl;
 
 	testCreateCellSuccess();
+	cout << endl;
+
+	testEnvironmentAttack();
+	cout << endl;
+
+	testEnvironmentMove();
+	cout << endl;
+
+	testResourceBonus();
 	cout << endl;
 
 	cout << "All Test ran through! (Have you checked for new fields in the messages?)" << endl;
