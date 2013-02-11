@@ -20,6 +20,10 @@ BuildingEvent::BuildingEvent(double startTime, NetworkManager & manager, CellSer
 void BuildingEvent::trigger()
 {
 	cell.completeCell();
+
+	GAMECONTEXT->getActiveCells().createGameObject(GAMECONTEXT->getInactiveCells().find(cell.getId()));
+	GAMECONTEXT->getInactiveCells().removeGameObject(cell.getId(), false);
+
 	LOG_INFO(stringify(ostringstream() << "Cell with the id " << cell.getId() << " is finished"));
 
 	PlayerServer * current = 0;

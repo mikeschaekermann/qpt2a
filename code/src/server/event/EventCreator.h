@@ -6,7 +6,6 @@ class CellServer;
 
 #include <vector>
 
-#include "../../common/GameObjectContainer.h"
 #include "cinder/Vector.h"
 
 #define EVENT_CRTR EventCreator::getInstance()
@@ -16,7 +15,7 @@ class EventCreator
 public:
 	static EventCreator * getInstance();
 
-	void bind(NetworkManager * networkManager, GameObjectContainer<GameObject> * gameObjectContainer);
+	void bind(NetworkManager * networkManager);
 
 	bool createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & cell);
 
@@ -24,7 +23,6 @@ public:
 private:
 	static EventCreator * instance;
 	NetworkManager * networkManager;
-	GameObjectContainer<GameObject> * gameObjectContainer;
 
 	EventCreator();
 	EventCreator(const EventCreator & cpy);

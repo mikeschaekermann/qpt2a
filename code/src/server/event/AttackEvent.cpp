@@ -8,9 +8,8 @@
 #include "../../common/network/messages/game/ingame/cell/combat/CellAttack.h"
 #include "../../common/network/messages/game/ingame/cell/combat/CellDie.h"
 
-AttackEvent::AttackEvent(double startTime, NetworkManager & manager, GameObjectContainer<GameObject> & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage) :
+AttackEvent::AttackEvent(double startTime, NetworkManager & manager, CellServer & attacker, CellServer & victim, float damage) :
 	manager(manager),
-	gameObjectContainer(gameObjectContainer),
 	attacker(attacker),
 	victim(victim),
 	damage(damage),
@@ -50,10 +49,10 @@ void AttackEvent::trigger()
 			
 		manager.sendTo<CellDie>(die, endpointArr);
 
-		gameObjectContainer.removeGameObject(victim.getId());
+		GAMECONTEXT->getActiveCells().removeGameObject(victim.getId());
 	}
 	else
 	{
-		(*EVENT_MGR) += new AttackEvent(this->m_dDeadTime, manager, gameObjectContainer, attacker, victim, damage);
+		(*EVENT_MGR) += new AttackEvent(this->m_dDeadTime, manager, attacker, victim, damage);
 	}
 }

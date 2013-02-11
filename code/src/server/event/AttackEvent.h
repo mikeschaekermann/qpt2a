@@ -11,12 +11,11 @@ class CellServer;
 class AttackEvent : public GameEvent
 {
 public:
-	AttackEvent(double startTime, NetworkManager & manager, GameObjectContainer<GameObject> & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage);
+	AttackEvent(double startTime, NetworkManager & manager, CellServer & attacker, CellServer & victim, float damage);
 
 	virtual void trigger();
 private:
 	NetworkManager & manager;
-	GameObjectContainer<GameObject> & gameObjectContainer;
 	CellServer & attacker;
 	CellServer & victim;
 	float damage;

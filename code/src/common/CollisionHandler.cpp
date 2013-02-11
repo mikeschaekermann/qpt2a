@@ -58,12 +58,12 @@ CollisionHandler & CollisionHandler::remove(unsigned int id)
 {
 	Circle const & cur = circleBackup[id];
 	unsigned int bucketIdx = getBucketIndex(cur.position);
-	auto bucket = buckets[bucketIdx];
-	for (auto it = bucket.begin(); it != bucket.end(); ++it)
+	auto & bucketSet = buckets[bucketIdx];
+	for (auto it = bucketSet.begin(); it != bucketSet.end(); ++it)
 	{
 		if ((*it)->index == cur.index)
 		{
-			if (bucket.erase(*it))
+			if (bucketSet.erase(*it))
 			{
 				// worked
 			}
