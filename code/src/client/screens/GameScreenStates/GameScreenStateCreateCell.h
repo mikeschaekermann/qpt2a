@@ -3,6 +3,8 @@
 #include "GameScreenState.h"
 #include "../../../common/network/messages/enum/CellType.h"
 #include "../../../common/network/messages/game/ingame/cell/creation/CreateCellRequest.h"
+#include "../../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
+#include "../../../common/network/messages/game/ingame/cell/creation/CreateCellFailure.h"
 #include "../../actors/StandardCellClient.h"
 
 class GameScreenStateCreateCell :
@@ -63,14 +65,24 @@ public:
 
 	virtual bool touchBegan(const TouchWay & touchWay)
 	{
-		auto createCell = new CreateCellRequest();
-		createCell->endpoint = GAME_MGR->getServerEndpoint();
-		createCell->playerId = screen->pickedCell->getOwner()->getId();
-		createCell->cellId = screen->pickedCell->getId();
-		createCell->angle = angle;
-		createCell->type = cellType;
+		auto createCellRequest = new CreateCellRequest();
+		createCellRequest->endpoint = GAME_MGR->getServerEndpoint();
+		createCellRequest->playerId = screen->pickedCell->getOwner()->getId();
+		createCellRequest->cellId = screen->pickedCell->getId();
+		createCellRequest->angle = angle;
+		createCellRequest->type = cellType;
 
-		NETWORK_MGR->send(createCell);
+		NETWORK_MGR->registerCreateCellCallbacks(
+			createCellRequest,
+			[](CreateCellSuccess *){
+				LOG_INFO("CreateCellSuccess received!");
+			},
+			[](CreateCellFailure *){
+				LOG_INFO("CreateCellFailure received!");
+			}
+		);
+
+		NETWORK_MGR->send(createCellRequest);
 
 		return false;	
 	}

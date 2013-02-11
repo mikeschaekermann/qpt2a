@@ -12,6 +12,7 @@
 
 #include "../../common/network/messages/game/ingame/cell/creation/CellNew.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellComplete.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CreateCellRequest.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellFailure.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
 
@@ -204,7 +205,23 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CreateCellSuccess *createCellSuccess = dynamic_cast<CreateCellSuccess*> (message);
 		if (createCellSuccess)
 		{
-			/// TODO
+			unsigned int requestId = createCellSuccess->requestId;
+
+			auto callbacks = createCellCallbacks.find(requestId);
+
+			if (callbacks != createCellCallbacks.end())
+			{
+				auto callback = callbacks->second.first;
+
+				if (callback != nullptr)
+				{
+					callback(createCellSuccess);
+				}
+				else
+				{
+					delete createCellSuccess;
+				}
+			}
 		}
 		break;
 	}
@@ -213,7 +230,23 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CreateCellFailure *createCellFailure = dynamic_cast<CreateCellFailure*> (message);
 		if (createCellFailure)
 		{
-			/// TODO
+			unsigned int requestId = createCellFailure->requestId;
+
+			auto callbacks = createCellCallbacks.find(requestId);
+
+			if (callbacks != createCellCallbacks.end())
+			{
+				auto callback = callbacks->second.second;
+
+				if (callback != nullptr)
+				{
+					callback(createCellFailure);
+				}
+				else
+				{
+					delete createCellFailure;
+				}
+			}
 		}
 		break;
 	}
@@ -230,7 +263,29 @@ vector<ConnectionEndpoint> ClientNetworkManager::getConnectionEndpoints()
 	return m_endpoints;
 }
 
-ClientNetworkManager::ClientNetworkManager(udp::endpoint serverEndpoint) : NetworkManager(), m_serverEndpoint(serverEndpoint)
+ClientNetworkManager::ClientNetworkManager(udp::endpoint serverEndpoint) :
+	NetworkManager(),
+	m_serverEndpoint(serverEndpoint),
+	nextRequestId(0)
 {
 	m_endpoints.push_back(ConnectionEndpoint(serverEndpoint));
+}
+
+void ClientNetworkManager::registerCreateCellCallbacks(
+	CreateCellRequest * request,
+	std::function<void(CreateCellSuccess *)> successCallback,
+	std::function<void(CreateCellFailure *)> failureCallback
+)
+{
+	createCellCallbacks.insert(make_pair(
+		nextRequestId,
+		make_pair(
+			successCallback,
+			failureCallback
+		)
+	));
+
+	request->requestId = nextRequestId;
+
+	++nextRequestId;
 }
