@@ -57,6 +57,7 @@ private:
 	boost::asio::io_service *io_service;
 
 	bool run;
+	bool bound;
 	boost::mutex maintenanceMutex;
 	boost::thread maintenanceThread;
 };

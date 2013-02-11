@@ -13,8 +13,9 @@ int main(int argc, char argv[])
 	try
 	{
 		int port = 2345;
-		//cin >> port;
-	
+
+		ConfigurationDataHandler::getInstance()->readFromXML("..\\..\\config.xml");
+
 		Game game;
 
 		ServerNetworkManager nm(port, &game);
