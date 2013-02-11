@@ -145,6 +145,15 @@
     <ClInclude Include="..\..\src\Server\game\GameObjectServer.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\CollisionHandler.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Circle.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\AABBCollisionBehavior.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -281,6 +290,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.cpp">
       <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\CollisionHandler.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\AABBCollisionBehavior.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

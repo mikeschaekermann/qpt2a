@@ -350,9 +350,6 @@
     <ClInclude Include="..\..\src\common\Circle.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\Areaf.h">
-      <Filter>Common</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
