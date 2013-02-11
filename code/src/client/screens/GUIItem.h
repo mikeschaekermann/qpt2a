@@ -19,6 +19,7 @@ public:
 	virtual bool isMouseOverItem(ci::Vec2f position);
 	virtual bool isMouseDownOnItem(ci::Vec2f position);
 	virtual void isMouseUp();
+	virtual bool hasMouseClickedOnItem(ci::Vec2f position);
 	virtual void onKeyInput(KeyEvent& e);
 
 	void setPosition(ci::Vec2f newPosition);

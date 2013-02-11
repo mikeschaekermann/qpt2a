@@ -53,11 +53,6 @@ void CreditsScreen::touchEnded(TouchWay touchWay)
 	LOG_INFO("touch way ended");
 };
 
-void CreditsScreen::touchClick(TouchWay touchWay)
-{
-	LOG_INFO("touch click!");
-};
-
 void CreditsScreen::resize(ResizeEvent event)
 {
 }

@@ -92,46 +92,6 @@ MenuScreen::~MenuScreen(void)
 {
 }
 
-void MenuScreen::update(float frameTime)
-{
-}
-
-void MenuScreen::draw()
-{
-	Screen::draw();
-}
-
-bool MenuScreen::touchBegan(const TouchWay & touchWay)
-{
-	return Screen::touchBegan(touchWay);
-	LOG_INFO("touch way started");
-};
-
-bool MenuScreen::mouseMove( MouseEvent event )
-{
-	return Screen::mouseMove(event);
-}
-
-void MenuScreen::touchMoved(const TouchWay & touchWay)
-{
-	LOG_INFO("touch way moved");
-};
-
-void MenuScreen::touchEnded(TouchWay touchWay)
-{
-	Screen::touchEnded(touchWay);
-	LOG_INFO("touch way ended");
-};
-
-void MenuScreen::touchClick(TouchWay touchWay)
-{
-	LOG_INFO("touch click!");
-};
-
-void MenuScreen::resize(ResizeEvent event)
-{
-}
-
 void MenuScreen::terminateServer()
 {
 	TerminateProcess(serverProcessInfo.hProcess, 0);

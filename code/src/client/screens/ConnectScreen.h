@@ -33,12 +33,6 @@ public:
 								because touch way object will be destroyed after call to this method
 	 */
 	virtual void touchEnded(TouchWay touchWay);
-	/**
-		@brief event method called when an touch was released as a click (i.e. no drag!)
-		@param touchWay			touch way of the touch, concerned; must be called by copy,
-								because touch way object will be destroyed after call to this method
-	 */
-	virtual void touchClick(TouchWay touchWay);
-
+	
 	virtual void resize(ResizeEvent event);
 };

@@ -82,6 +82,8 @@ public:
 				screen->pickedCell->addChild(cell);
 
 				GAME_SCR.addIncompleteCell(cell);
+
+				screen->switchToState(new GameScreenStateNeutral(screen));
 			},
 			[this](CreateCellFailure * response){
 				delete cell;
