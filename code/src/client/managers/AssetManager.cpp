@@ -155,9 +155,10 @@ void AssetManager::loadAssets(string filePath)
 
 				shaderMap.insert(pair<string, GlslProg>(key, prog));
 			}
-			catch(...)
+			catch(exception& ex)
 			{
-				LOG_ERROR("Shader file \"" + key + "\" could nod be loaded or linked.\n" + prog.getShaderLog(prog.getHandle()));
+				LOG_ERROR("Shader file: " + key);
+				LOG_ERROR("Exception: " + string(ex.what()));
 			}
 		}
 	}
@@ -166,8 +167,8 @@ void AssetManager::loadAssets(string filePath)
 TriMesh AssetManager::createModel(string filePath)
 {
 	TriMesh mesh;
-	ObjLoader loader(loadFile(filePath));
-	loader.load(&mesh);
+	ObjLoader loader(loadFile(filePath));;
+	loader.load(&mesh, boost::logic::tribool::true_value, boost::logic::tribool::false_value);
 	return mesh;
 }
 

@@ -22,6 +22,7 @@
 #include "cinder/Timeline.h"
 #include "cinder/ObjLoader.h"
 #include "cinder/TriMesh.h"
+#include "cinder/gl/Vbo.h"
 
 #include "fmod.hpp"
 
@@ -47,7 +48,7 @@ public:
 	void loadAssets(string filePath);
 
 	TriMesh const & getModel(string& modelName) const;
-	
+
 	Texture const & getTexture(string& textureName) const;
 	Texture const & getGuiTexture(string& textureName) const;
 	

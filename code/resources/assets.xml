@@ -141,3 +141,9 @@ vertexShader and fragmentShader are also file paths
 	<loop>true</loop>
 	<stream>false</stream>
 </guiSound>
+
+<shader>
+	<key>test</key>
+	<vertexShader>..\..\..\resources\shader\test.vert</vertexShader>
+	<fragmentShader>..\..\..\resources\shader\test.frag</fragmentShader>
+</shader>
