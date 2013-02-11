@@ -32,6 +32,8 @@ public:
 
 	void onKeyInput(KeyEvent& e) const;
 
+	void mouseWheel(MouseEvent & e) const;
+
 	/**
 		@brief event method called when a new touch has begun
 		@param touchWay			touch way of the newly begun touch

@@ -49,6 +49,8 @@ public:
 
 	virtual void onKeyInput(KeyEvent& e);
 
+	virtual void mouseWheel(MouseEvent & e);
+
 protected:
 	GUIItem* rootItem;
 };
