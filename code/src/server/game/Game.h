@@ -54,7 +54,7 @@ public:
 		this->networkManager = networkManager;
 		LOG_INFO("NetworkManager bound to game");
 
-		EventCreator::getInstance()->bind(networkManager, &gameObjectContainer);
+		EventCreator::getInstance()->bind(networkManager);
 	}
 
 	void join(JoinRequest request)
@@ -108,7 +108,7 @@ public:
 
 		GAMECONTEXT->addPlayer(p);
 
-		gameObjectContainer.createGameObject(&(p->getStemCell()));
+		GAMECONTEXT->getActiveCells().createGameObject(&(p->getStemCell()));
 
 		JoinSuccess *success = new JoinSuccess();
 		success->playerId = p->getId();
@@ -144,12 +144,21 @@ public:
 				{
 					throw string("Barrier could not be created because it is not in the game area");
 				}
-				const vector<GameObject *> & gameObjects = gameObjectContainer.findInRadiusOf(b->getPosition(), b->getRadius());
+				vector<GameObject *> gameObjects;
+
+				const vector<GameObject *> & activeCells = GAMECONTEXT->getActiveCells().findInRadiusOf(b->getPosition(), b->getRadius());
+				const vector<GameObject *> & inactiveCells = GAMECONTEXT->getInactiveCells().findInRadiusOf(b->getPosition(), b->getRadius());
+				const vector<GameObject *> & environment = GAMECONTEXT->getEnvironment().findInRadiusOf(b->getPosition(), b->getRadius());
+				
+				gameObjects.insert(gameObjects.end(), activeCells.begin(), activeCells.end());
+				gameObjects.insert(gameObjects.end(), inactiveCells.begin(), inactiveCells.end());
+				gameObjects.insert(gameObjects.end(), environment.begin(), environment.end());
+
 				if (gameObjects.size() > 0)
 				{
 					throw string("Barrier could not be created because a gameobject is already on this spot");
 				}
-				gameObjectContainer.createGameObject(b);
+				GAMECONTEXT->getEnvironment().createGameObject(b);
 			}
 
 			vector<float> xPosStatics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "antibiotic.position.x");
@@ -239,12 +248,22 @@ public:
 				{
 					throw string("Static modifier could not be created because it is not in the game area");
 				}
-				const vector<GameObject *> & gameObjects = gameObjectContainer.findInRadiusOf(s->getPosition(), s->getRadius());
+				
+				vector<GameObject *> gameObjects;
+
+				const vector<GameObject *> & activeCells = GAMECONTEXT->getActiveCells().findInRadiusOf(s->getPosition(), s->getRadius());
+				const vector<GameObject *> & inactiveCells = GAMECONTEXT->getInactiveCells().findInRadiusOf(s->getPosition(), s->getRadius());
+				const vector<GameObject *> & environment = GAMECONTEXT->getEnvironment().findInRadiusOf(s->getPosition(), s->getRadius());
+				
+				gameObjects.insert(gameObjects.end(), activeCells.begin(), activeCells.end());
+				gameObjects.insert(gameObjects.end(), inactiveCells.begin(), inactiveCells.end());
+				gameObjects.insert(gameObjects.end(), environment.begin(), environment.end());
+
 				if (gameObjects.size() > 0)
 				{
 					throw string("Static modifier could not be created because a gameobject is already on this spot");
 				}
-				gameObjectContainer.createGameObject(s);
+				GAMECONTEXT->getEnvironment().createGameObject(s);
 			}
 
 			vector<float> xPosDynamics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "viriswarm.position.x");
@@ -334,12 +353,22 @@ public:
 				{
 					throw string("Dynamic modifier could not be created because it is not in the game area");
 				}
-				const vector<GameObject *> & gameObjects = gameObjectContainer.findInRadiusOf(d->getPosition(), d->getRadius());
+				
+				vector<GameObject *> gameObjects;
+
+				const vector<GameObject *> & activeCells = GAMECONTEXT->getActiveCells().findInRadiusOf(d->getPosition(), d->getRadius());
+				const vector<GameObject *> & inactiveCells = GAMECONTEXT->getInactiveCells().findInRadiusOf(d->getPosition(), d->getRadius());
+				const vector<GameObject *> & environment = GAMECONTEXT->getEnvironment().findInRadiusOf(d->getPosition(), d->getRadius());
+				
+				gameObjects.insert(gameObjects.end(), activeCells.begin(), activeCells.end());
+				gameObjects.insert(gameObjects.end(), inactiveCells.begin(), inactiveCells.end());
+				gameObjects.insert(gameObjects.end(), environment.begin(), environment.end());
+
 				if (gameObjects.size() > 0)
 				{
 					throw string("Dynamic modifier could not be created because a gameobject is already on this spot");
 				}
-				gameObjectContainer.createGameObject(d);
+				GAMECONTEXT->getEnvironment().createGameObject(d);
 			}
 
 			vector<udp::endpoint> endpointArr;
@@ -379,7 +408,7 @@ public:
 		if (GAMECONTEXT->getPlayer(playerId))
 		{
 			PlayerServer & player = *(GAMECONTEXT->getPlayer(playerId));
-			CellServer * parentCell = dynamic_cast<CellServer *>(gameObjectContainer.find(cellId));
+			CellServer * parentCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
 			if (parentCell == 0)
 			{
 				LOG_INFO(stringify(ostringstream() << "Cell with the id " << cellId << " does not exist"));
@@ -444,5 +473,4 @@ public:
 	
 private:
 	NetworkManager* networkManager;
-	GameObjectContainer<GameObject> gameObjectContainer;
 };

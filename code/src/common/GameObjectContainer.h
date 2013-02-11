@@ -53,7 +53,7 @@ public:
 		LOG_INFO("Inserting gameobject in id map failed");
 	}
 
-	void removeGameObject(unsigned int id)
+	void removeGameObject(unsigned int id, bool deleteObject = true)
 	{
 		O * gameObject = find(id);
 		if (gameObject != 0)
@@ -61,7 +61,11 @@ public:
 			collisionHandler.remove(id);
 			idMap.removeGameObject(gameObject);
 			positionMap.removeGameObject(gameObject);
-			delete gameObject;
+
+			if (deleteObject)
+			{
+				delete gameObject;
+			}
 		}
 		else
 		{

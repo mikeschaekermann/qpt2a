@@ -31,10 +31,9 @@ EventCreator * EventCreator::getInstance()
 	return instance;
 }
 
-void EventCreator::bind(NetworkManager * networkManager, GameObjectContainer<GameObject> * gameObjectContainer)
+void EventCreator::bind(NetworkManager * networkManager)
 {
 	this->networkManager = networkManager;
-	this->gameObjectContainer = gameObjectContainer;
 }
 
 bool EventCreator::createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & cell)
@@ -53,7 +52,13 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	auto it = GAMECONTEXT->getPlayerMap().begin();
 	for (; it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
-		const vector<GameObject *> & gameObjects = gameObjectContainer->findInRadiusOf(cell.getPosition(), cell.getRadius());
+		const vector<GameObject *> & activeCells = GAMECONTEXT->getActiveCells().findInRadiusOf(cell.getPosition(), cell.getRadius());
+		const vector<GameObject *> & inactivecells =  GAMECONTEXT->getInactiveCells().findInRadiusOf(cell.getPosition(), cell.getRadius());
+
+		vector<GameObject *> gameObjects;
+		gameObjects.insert(gameObjects.end(), activeCells.begin(), activeCells.end());
+		gameObjects.insert(gameObjects.end(), inactivecells.begin(), inactivecells.end());
+
 		if (gameObjects.size() > 0)
 		{
 			/// collision detected
@@ -67,7 +72,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 		}
 	}
 
-	gameObjectContainer->createGameObject(&cell);
+	GAMECONTEXT->getInactiveCells().createGameObject(&cell);
 
 	(*EVENT_MGR) += new BuildingEvent(time, *networkManager, cell);
 
@@ -109,7 +114,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 
 bool EventCreator::createAttackEvent(const double time, const bool isAttacker, const PlayerServer & currentPlayer, CellServer & currentCell)
 {
-	if (!(networkManager && gameObjectContainer))
+	if (!(networkManager))
 	{
 		throw string("call bind first");
 		return false;
@@ -131,7 +136,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 				* reversely all the other cell that are attackers have the current cell in its attack radius
 				*/
 			const vector<GameObject *> & gameObjects =
-				gameObjectContainer->findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
+				GAMECONTEXT->getActiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
 					
 			ci::Vec3f attacker;
 			ci::Vec3f victim;
@@ -180,7 +185,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 
 						CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
 						CellServer * victimCell = isAttacker ? actualCell : &currentCell;
-						(*EVENT_MGR) += new AttackEvent(time, *networkManager, *gameObjectContainer, *attackerCell, *victimCell, damage);
+						(*EVENT_MGR) += new AttackEvent(time, *networkManager, *attackerCell, *victimCell, damage);
 					}
 
 					/// attack message is sent in event

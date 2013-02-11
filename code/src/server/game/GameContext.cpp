@@ -3,6 +3,21 @@
 
 GameContext * GameContext::instance = 0;
 
+GameObjectContainer<GameObject> & GameContext::getActiveCells()
+{
+	return activeCells;
+}
+
+GameObjectContainer<GameObject> & GameContext::getInactiveCells()
+{
+	return inactiveCells;
+}
+
+GameObjectContainer<GameObject> & GameContext::getEnvironment()
+{
+	return environment;
+}
+
 PlayerServer * GameContext::getPlayer(unsigned id)
 {
 	if (playermap.find(id) != playermap.end())

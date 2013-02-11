@@ -85,7 +85,6 @@ void GameScreen::draw()
 	
 	
 		////////////// render test
-		/*
 		gl::color(1,1,1,1);
 		gl::pushMatrices();
 
@@ -112,7 +111,6 @@ void GameScreen::draw()
 		shader.unbind();
 
 		gl::popMatrices();
-		*/
 
 	gl::popMatrices();
 
