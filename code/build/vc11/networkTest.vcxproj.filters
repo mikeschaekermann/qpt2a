@@ -35,6 +35,9 @@
     <Filter Include="Source Files\Test">
       <UniqueIdentifier>{b7ec89a7-332a-4258-bfc4-f9f6b0fb27c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Network\Messages\Game\InGame\Environment">
+      <UniqueIdentifier>{419bc790-c509-412e-9839-42f256ff0ff5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\test\networkTest\networkTest.cpp">
@@ -96,6 +99,30 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\enum\MessageType.cpp">
       <Filter>Source Files\Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\DynamicModifierType.cpp">
+      <Filter>Source Files\Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\StaticModifierType.cpp">
+      <Filter>Source Files\Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkDynamicModifier.cpp">
+      <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkStaticModifier.cpp">
+      <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkBarrier.cpp">
+      <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.cpp">
       <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
@@ -186,9 +213,6 @@
     <ClInclude Include="..\..\src\common\network\messages\enum\MessageType.h">
       <Filter>Source Files\Network\Messages\Enum</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.h">
-      <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.h">
       <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
     </ClInclude>
@@ -203,6 +227,42 @@
     </ClInclude>
     <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h">
       <Filter>Source Files\Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\StaticModifierType.h">
+      <Filter>Source Files\Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\DynamicModifierType.h">
+      <Filter>Source Files\Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkBarrier.h">
+      <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkDynamicModifier.h">
+      <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkStaticModifier.h">
+      <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.h">
+      <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\test\networkTest\EnvironmentMoveTest.h">
+      <Filter>Source Files\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\test\networkTest\ResourceBonusTest.h">
+      <Filter>Source Files\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\test\networkTest\EnvironmentAttackTest.h">
+      <Filter>Source Files\Test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

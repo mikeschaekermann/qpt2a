@@ -9,6 +9,8 @@
 
 using namespace std;
 
+string stringify(ostream & in);
+
 template<typename T>
 string concatenate(string str, T value)
 {

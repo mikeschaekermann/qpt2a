@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <boost/thread/thread.hpp>
-#include "event/EventQueue.h"
+#include "event/EventManager.h"
 #include "network/ServerNetworkManager.h"
 #include "game/Game.h"
 
@@ -17,12 +17,10 @@ int main(int argc, char argv[])
 	
 		Game game;
 
-		EventQueue eq;
-	
 		ServerNetworkManager nm(port, &game);
 		boost::thread networkThread(boost::bind(&NetworkManager::operator(), &nm));
-		boost::thread eventQueueThread(boost::bind(&EventQueue::operator(), &eq));
-		game.bind(&nm, &eq);
+		boost::thread eventQueueThread(boost::bind(&EventManager::operator(), EVENT_MGR));
+		game.bind(&nm);
 		networkThread.join();
 		eventQueueThread.join();
 
@@ -32,6 +30,11 @@ int main(int argc, char argv[])
 	catch(exception & e)
 	{
 		LOG_ERROR(e.what());
+		return -1;
+	}
+	catch(string & e)
+	{
+		LOG_ERROR(e);
 		return -1;
 	}
 }

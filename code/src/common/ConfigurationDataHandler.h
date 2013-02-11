@@ -15,11 +15,15 @@
 
 #define foreach BOOST_FOREACH
 
-#define CONFIG_FLOAT1(key) ConfigurationDataHandler::getInstance()->get<float>(key)
-#define CONFIG_FLOAT2(key, value) ConfigurationDataHandler::getInstance()->get<float>(key, value)
+#define CONFIG_MGR ConfigurationDataHandler::getInstance()
 
-#define CONFIG_INT1(key) ConfigurationDataHandler::getInstance()->get<int>(key)
-#define CONFIG_INT2(key, value) ConfigurationDataHandler::getInstance()->get<int>(key, value)
+#define CONFIG_FLOAT1(key) CONFIG_MGR->get<float>(key)
+#define CONFIG_FLOAT2(key, value) CONFIG_MGR->get<float>(key, value)
+
+#define CONFIG_INT1(key) CONFIG_MGR->get<int>(key)
+#define CONFIG_INT2(key, value) CONFIG_MGR->get<int>(key, value)
+
+#define CONFIG_FLOATS2(path, key) CONFIG_MGR->getChildrenDataVector<float>(path,key)
 
 class ConfigurationDataHandler
 {
