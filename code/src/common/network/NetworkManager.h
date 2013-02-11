@@ -40,6 +40,7 @@ public:
 	}
 
 	void stop();
+
 protected:
 	virtual NetworkMessage* createNetworkMessage(char* data);
 	virtual void handleMessage(NetworkMessage* message) = 0;
