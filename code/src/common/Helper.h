@@ -23,7 +23,7 @@ string concatenate(string str, T value)
 template <class T>
 bool isColliding(ci::Vec3<T> verifyingObjectPosition, float verifyingObjectRadius, ci::Vec3<T> referenceObjectPosition, float referenceObjectRadius)
 {
-	return (referenceObjectPosition - verifyingObjectPosition).length() <= (referenceObjectRadius + verifyingObjectRadius);
+	return (referenceObjectPosition - verifyingObjectPosition).length() < (referenceObjectRadius + verifyingObjectRadius);
 }
 
 /**

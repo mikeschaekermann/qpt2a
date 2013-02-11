@@ -37,8 +37,8 @@ public:
 	void getNextCellPositionByAngle(float angle, float nextCellRadius, Vec3f & outPosition) const
 	{
 		outPosition = position;
-		outPosition.x += cosf(ci::toRadians(angle)) * nextCellRadius;
-		outPosition.y += sinf(ci::toRadians(angle)) * nextCellRadius;
+		outPosition.x += cosf(angle) * (0.1f + nextCellRadius + this->radius);
+		outPosition.y += sinf(angle) * (0.1f + nextCellRadius + this->radius);
 	}
 
 	Type getType() const { return type; }
