@@ -11,6 +11,7 @@
 
 #include "../game/PlayerServer.h"
 #include "../game/CellServer.h"
+#include "../game/GameContext.h"
 
 #include "GameEvent.h"
 #include "EventManager.h"
@@ -30,11 +31,10 @@ EventCreator * EventCreator::getInstance()
 	return instance;
 }
 
-void EventCreator::bind(NetworkManager * networkManager, GameObjectContainer<GameObject> * gameObjectContainer, vector<PlayerServer *> * players)
+void EventCreator::bind(NetworkManager * networkManager, GameObjectContainer<GameObject> * gameObjectContainer)
 {
 	this->networkManager = networkManager;
 	this->gameObjectContainer = gameObjectContainer;
-	this->players = players;
 }
 
 bool EventCreator::createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & cell)
@@ -50,8 +50,8 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 		return false;
 	}
 
-	auto it = players->begin();
-	for (; it != players->end(); ++it)
+	auto it = GAMECONTEXT->getPlayerMap().begin();
+	for (; it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
 		const vector<GameObject *> & gameObjects = gameObjectContainer->findInRadiusOf(cell.getPosition(), cell.getRadius());
 		if (gameObjects.size() > 0)
@@ -69,7 +69,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 
 	gameObjectContainer->createGameObject(&cell);
 
-	(*EVENT_MGR) += new BuildingEvent(time, *networkManager, cell, *players);
+	(*EVENT_MGR) += new BuildingEvent(time, *networkManager, cell);
 
 	EventManager & em = (*EVENT_MGR);
 		
@@ -94,11 +94,11 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 
 	vector<udp::endpoint> endpointArr;
 
-	for (unsigned int i = 0; i < players->size(); ++i)
+	for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
-		if ((*players)[i]->getId() != currentPlayer.getId())
+		if (it->second->getId() != currentPlayer.getId())
 		{
-			endpointArr.push_back((*players)[i]->getEndpoint());
+			endpointArr.push_back(it->second->getEndpoint());
 		}
 	}
 
@@ -109,7 +109,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 
 bool EventCreator::createAttackEvent(const double time, const bool isAttacker, const PlayerServer & currentPlayer, CellServer & currentCell)
 {
-	if (!(networkManager && gameObjectContainer && players))
+	if (!(networkManager && gameObjectContainer))
 	{
 		throw string("call bind first");
 		return false;
@@ -121,10 +121,10 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 		return false;
 	}
 
-	auto playersIt = players->begin();
-	for (; playersIt != players->end(); ++playersIt)
+	auto playersIt = GAMECONTEXT->getPlayerMap().begin();
+	for (; playersIt != GAMECONTEXT->getPlayerMap().end(); ++playersIt)
 	{
-		if ((*playersIt)->getId() != currentPlayer.getId())
+		if (playersIt->second->getId() != currentPlayer.getId())
 		{
 			/** 
 				* search for all cells that would be in its attack radius
@@ -180,7 +180,7 @@ bool EventCreator::createAttackEvent(const double time, const bool isAttacker, c
 
 						CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
 						CellServer * victimCell = isAttacker ? actualCell : &currentCell;
-						(*EVENT_MGR) += new AttackEvent(time, *networkManager, *gameObjectContainer, *attackerCell, *victimCell, damage, *players);
+						(*EVENT_MGR) += new AttackEvent(time, *networkManager, *gameObjectContainer, *attackerCell, *victimCell, damage);
 					}
 
 					/// attack message is sent in event

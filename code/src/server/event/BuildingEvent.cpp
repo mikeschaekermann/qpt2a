@@ -8,12 +8,12 @@
 
 #include "../game/CellServer.h"
 #include "../game/PlayerServer.h"
+#include "../game/GameContext.h"
 #include "EventCreator.h"
 
-BuildingEvent::BuildingEvent(double startTime, NetworkManager & manager, CellServer & cell, const vector<PlayerServer *> & players) :
+BuildingEvent::BuildingEvent(double startTime, NetworkManager & manager, CellServer & cell) :
 	manager(manager),
 	cell(cell),
-	players(players),
 	GameEvent(startTime, CONFIG_FLOAT1("data.event.build.time"))
 	{ }
 
@@ -30,12 +30,12 @@ void BuildingEvent::trigger()
 	using boost::asio::ip::udp;
 	vector<udp::endpoint> endpointArr;
 
-	for (vector<PlayerServer *>::const_iterator it = players.begin(); it != players.end(); ++it)
+	for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
-		endpointArr.push_back((*it)->getEndpoint());
-		if ((*it)->getId() == cell.getOwner()->getId())
+		endpointArr.push_back(it->second->getEndpoint());
+		if (it->second->getId() == cell.getOwner()->getId())
 		{
-			current = *it;
+			current = it->second;
 		}
 	}
 	manager.sendTo<CreateCellComplete>(complete, endpointArr);

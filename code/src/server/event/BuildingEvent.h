@@ -12,11 +12,10 @@ class PlayerServer;
 class BuildingEvent : public GameEvent
 {
 public:
-	BuildingEvent(double startTime, NetworkManager & manager, CellServer & cell, const std::vector<PlayerServer *> & players);
+	BuildingEvent(double startTime, NetworkManager & manager, CellServer & cell);
 
 	virtual void trigger();
 private:
 	NetworkManager & manager;
 	CellServer & cell;
-	const std::vector<PlayerServer *> & players;
 };

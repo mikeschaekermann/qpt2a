@@ -2,18 +2,18 @@
 #include "EventManager.h"
 #include "../game/CellServer.h"
 #include "../game/PlayerServer.h"
+#include "../game/GameContext.h"
 #include "../../common/GameObjectContainer.h"
 #include "../../common/network/NetworkManager.h"
 #include "../../common/network/messages/game/ingame/cell/combat/CellAttack.h"
 #include "../../common/network/messages/game/ingame/cell/combat/CellDie.h"
 
-AttackEvent::AttackEvent(double startTime, NetworkManager & manager, GameObjectContainer<GameObject> & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage, vector<PlayerServer *> & players) :
+AttackEvent::AttackEvent(double startTime, NetworkManager & manager, GameObjectContainer<GameObject> & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage) :
 	manager(manager),
 	gameObjectContainer(gameObjectContainer),
 	attacker(attacker),
 	victim(victim),
 	damage(damage),
-	players(players),
 	GameEvent(startTime, CONFIG_INT1("data.event.attack.time"))
 { }
 
@@ -28,9 +28,9 @@ void AttackEvent::trigger()
 	using boost::asio::ip::udp;
 	vector<udp::endpoint> endpointArr;
 
-	for (auto it = players.begin(); it != players.end(); ++it)
+	for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
-		endpointArr.push_back((*it)->getEndpoint());
+		endpointArr.push_back(it->second->getEndpoint());
 	}
 
 	manager.sendTo<CellAttack>(attack, endpointArr);
@@ -40,11 +40,11 @@ void AttackEvent::trigger()
 		CellDie * die = new CellDie();
 		die->cellId = victim.getId();
 		PlayerServer * player = 0;
-		for (auto it = players.begin(); it != players.end(); ++it)
+		for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 		{
-			if ((*it)->getId() == victim.getOwner()->getId()) 
+			if (it->second->getId() == victim.getOwner()->getId()) 
 			{
-				player = *it;
+				player = it->second;
 			}
 		}
 			
@@ -54,6 +54,6 @@ void AttackEvent::trigger()
 	}
 	else
 	{
-		(*EVENT_MGR) += new AttackEvent(this->m_dDeadTime, manager, gameObjectContainer, attacker, victim, damage, players);
+		(*EVENT_MGR) += new AttackEvent(this->m_dDeadTime, manager, gameObjectContainer, attacker, victim, damage);
 	}
 }

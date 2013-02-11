@@ -2,7 +2,6 @@
 
 class NetworkManager;
 class CellServer;
-class PlayerServer;
 
 #include <vector>
 
@@ -12,7 +11,7 @@ class PlayerServer;
 class AttackEvent : public GameEvent
 {
 public:
-	AttackEvent(double startTime, NetworkManager & manager, GameObjectContainer<GameObject> & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage, std::vector<PlayerServer *> & players);
+	AttackEvent(double startTime, NetworkManager & manager, GameObjectContainer<GameObject> & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage);
 
 	virtual void trigger();
 private:
@@ -21,5 +20,4 @@ private:
 	CellServer & attacker;
 	CellServer & victim;
 	float damage;
-	std::vector<PlayerServer *> & players;
 };

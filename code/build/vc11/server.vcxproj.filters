@@ -196,6 +196,9 @@
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.h">
       <Filter>Network\Messages\Game\InGame\Environment</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\server\game\GameContext.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -395,6 +398,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.cpp">
       <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\game\GameContext.cpp">
+      <Filter>Gamelogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
