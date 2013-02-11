@@ -233,7 +233,7 @@ public:
 					type = StaticModificator::RADIOACTIVITY;
 				}
 
-				StaticModificatorServer * s = new StaticModificatorServer(Vec3f(xPosBarrier[i], yPosBarrier[i], 0.f), Vec3f(xRotBarrier[i], yRotBarrier[i], 0.f), Vec3f::one(), radiusBarrier[i], type);
+				StaticModificatorServer * s = new StaticModificatorServer(Vec3f(xPosStatics[i], yPosStatics[i], 0.f), Vec3f(xRotStatics[i], yRotStatics[i], 0.f), Vec3f::one(), radiusStatics[i], type);
 				if (!isInRadiusOf<float>(s->getPosition(), s->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
 				{
 					throw string("Static modifier could not be created because it is not in the game area");
@@ -328,7 +328,7 @@ public:
 					type = DynamicModificator::LOOSEFATCELL;
 				}
 
-				DynamicModificatorServer * d = new DynamicModificatorServer(Vec3f(xPosBarrier[i], yPosBarrier[i], 0.f), Vec3f(xRotBarrier[i], yRotBarrier[i], 0.f), Vec3f::one(), radiusBarrier[i], type);
+				DynamicModificatorServer * d = new DynamicModificatorServer(Vec3f(xPosDynamics[i], yPosDynamics[i], 0.f), Vec3f(xRotDynamics[i], yRotDynamics[i], 0.f), Vec3f::one(), radiusDynamics[i], type);
 				if (!isInRadiusOf<float>(d->getPosition(), d->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
 				{
 					throw string("Dynamic modifier could not be created because it is not in the game area");

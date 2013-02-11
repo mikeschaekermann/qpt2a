@@ -129,13 +129,9 @@ void NetworkManager::operator()()
 			delete message;
 		}
 	}
-	catch(std::exception &ex)
-	{
-		LOG_ERROR(ex.what());
-	}
 	catch(...)
 	{
-		LOG_ERROR("Something strange");
+		// Display something?
 	}
 }
 
@@ -226,13 +222,9 @@ void NetworkManager::connectionMaintenance()
 			maintenanceMutex.unlock();
 		}
 	}
-	catch(std::exception &ex)
-	{
-		LOG_ERROR(ex.what());
-	}
 	catch(...)
 	{
-		LOG_ERROR("Something strange in connectionMaintenance");
+		
 	}
 }
 
