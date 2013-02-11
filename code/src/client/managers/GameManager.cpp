@@ -81,7 +81,7 @@ void GameManager::addPetriDish(float radius)
 	petriDish->setRadius(radius);
 	petriDish->setScale(Vec3f(1, 1, 1 / radius / 2));
 	petriDish->setPosition(Vec3f(0, 0, -1));
-	GAME_SCR.addGameObjectToDraw(petriDish, false);
+	GAME_SCR.addGameObjectToDraw(petriDish);
 	GAME_SCR.setWorldRadius(radius);
 	GAME_SCR.zoomToWorld();
 }
@@ -115,17 +115,23 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	
 	if (ownPlayerAdded)
 	{
-		GAME_SCR.addCellToPick(stemCell, true);
+		GAME_SCR.addCellToPick(stemCell);
 	}
 	else
 	{
-		GAME_SCR.addGameObjectToDraw(stemCell, true);
+		GAME_SCR.addGameObjectToDraw(stemCell);
+		GAME_SCR.addGameObjectToCollide(stemCell);
 	}
 }
 
 void GameManager::setMyPlayerId(unsigned int id)
 {
 	myPlayer->setId(id);
+}
+
+PlayerClient * GameManager::getMyPlayer() const
+{
+	return myPlayer;
 }
 
 ClientNetworkManager * GameManager::getNetworkManager()

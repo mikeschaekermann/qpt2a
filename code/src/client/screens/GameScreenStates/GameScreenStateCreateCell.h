@@ -22,7 +22,7 @@ public:
 		case CellType::StandardCell:
 		default:
 			{
-				previewCell = new StandardCellClient(0, Vec3f::zero(), 0, nullptr);
+				cell = new StandardCellClient(0, Vec3f::zero(), 0, nullptr);
 				break;
 			}
 		}
@@ -38,11 +38,11 @@ public:
 		direction.normalize();
 		angle = atan2(direction.y, direction.x);
 		
-		if (previewCell != nullptr)
+		if (cell != nullptr)
 		{
-			auto previewCellPosition = pickedCellPosition + direction * (pickedCellRadius + previewCell->getRadius());
-			previewCell->setPosition(previewCellPosition);
-			previewCell->setAngle(angle);
+			auto cellPosition = pickedCellPosition + direction * (pickedCellRadius + cell->getRadius());
+			cell->setPosition(cellPosition);
+			cell->setAngle(angle);
 		}
 
 		arrowStart = pickedCellPosition + direction * (pickedCellRadius + 5);
@@ -53,10 +53,10 @@ public:
 
 	virtual void draw3D()
 	{
-		if (previewCell != nullptr)
+		if (cell != nullptr)
 		{
 			gl::color(1, 1, 1, 0.5);
-			previewCell->draw();
+			cell->draw();
 		}
 
 		gl::color(0, 0, 1);
@@ -74,11 +74,17 @@ public:
 
 		NETWORK_MGR->registerCreateCellCallbacks(
 			createCellRequest,
-			[](CreateCellSuccess *){
-				LOG_INFO("CreateCellSuccess received!");
+			[this](CreateCellSuccess * response){
+				cell->setPosition(response->position);
+				cell->setAngle(response->angle);
+				cell->setId(response->cellId);
+				cell->addParent(screen->pickedCell);
+				screen->pickedCell->addChild(cell);
+
+				GAME_SCR.addIncompleteCell(cell);
 			},
-			[](CreateCellFailure *){
-				LOG_INFO("CreateCellFailure received!");
+			[this](CreateCellFailure * response){
+				delete cell;
 			}
 		);
 
@@ -89,7 +95,7 @@ public:
 
 protected:
 	float angle;
-	CellClient * previewCell;
+	CellClient * cell;
 	Vec3f arrowStart, arrowEnd;
 	CellType::Type cellType;
 };
