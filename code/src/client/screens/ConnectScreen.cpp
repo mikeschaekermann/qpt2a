@@ -85,11 +85,6 @@ void ConnectScreen::touchEnded(TouchWay touchWay)
 	LOG_INFO("touch way ended");
 };
 
-void ConnectScreen::touchClick(TouchWay touchWay)
-{
-	LOG_INFO("touch click!");
-};
-
 void ConnectScreen::resize(ResizeEvent event)
 {
 }

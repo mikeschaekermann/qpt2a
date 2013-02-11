@@ -33,7 +33,7 @@ public:
 	virtual void touchMoved(const TouchWay & touchWay);
 	virtual bool mouseMove(MouseEvent event);
 	virtual void touchEnded(TouchWay touchWay);
-	virtual void touchClick(TouchWay touchWay);
+	virtual bool touchClick(TouchWay touchWay);
 	virtual void resize(ResizeEvent event);
 	virtual void onKeyInput(KeyEvent& e);
 	virtual void mouseWheel(MouseEvent & e);

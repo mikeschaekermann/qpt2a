@@ -21,7 +21,7 @@ public:
 	virtual void touchMoved(const TouchWay & touchWay) {}
 	virtual bool mouseMove(MouseEvent event) { return false; }
 	virtual void touchEnded(TouchWay touchWay) {}
-	virtual void touchClick(TouchWay touchWay) {}
+	virtual bool touchClick(TouchWay touchWay) { return false; }
 	virtual void resize(ResizeEvent event) {}
 	virtual void onKeyInput(KeyEvent& e) {}
 

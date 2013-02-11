@@ -68,6 +68,33 @@ bool GUIItem::isMouseDownOnItem(Vec2f position)
 	if (isPositionInItem(position))
 	{
 		currentTexture = clickTexture;
+		return true;
+	}
+	else
+	{
+		currentTexture = texture;
+	}
+	bool isMouseDown = false;
+	for (auto it = subItems.begin(); it != subItems.end(); ++it)
+	{
+		isMouseDown |= (*it)->isMouseDownOnItem(position - this->position);
+	}
+	return isMouseDown;
+}
+
+void GUIItem::isMouseUp()
+{
+	currentTexture = texture;
+	for (auto it = subItems.begin(); it != subItems.end(); ++it)
+	{
+		(*it)->isMouseUp();
+	}
+}
+
+bool GUIItem::hasMouseClickedOnItem(ci::Vec2f position)
+{
+	if (isPositionInItem(position))
+	{
 		if (callback != nullptr)
 		{
 			callback();
@@ -81,22 +108,14 @@ bool GUIItem::isMouseDownOnItem(Vec2f position)
 		currentTexture = texture;
 		hasFocus = false;
 	}
-	bool isClicked = false;
+	bool hasClicked = false;
 	for (auto it = subItems.begin(); it != subItems.end(); ++it)
 	{
-		isClicked |= (*it)->isMouseDownOnItem(position - this->position);
+		hasClicked |= (*it)->hasMouseClickedOnItem(position - this->position);
 	}
-	return isClicked;
+	return hasClicked;
 }
 
-void GUIItem::isMouseUp()
-{
-	currentTexture = texture;
-	for (auto it = subItems.begin(); it != subItems.end(); ++it)
-	{
-		(*it)->isMouseUp();
-	}
-}
 
 void GUIItem::setPosition(ci::Vec2f newPosition)
 {

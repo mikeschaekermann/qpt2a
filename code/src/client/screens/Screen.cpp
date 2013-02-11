@@ -40,9 +40,24 @@ bool Screen::touchBegan(const TouchWay & touchWay)
 	return true;
 }
 
+void Screen::touchMoved(const TouchWay & touchWay)
+{
+}
+
+
+bool Screen::touchClick(TouchWay touchway)
+{
+	return rootItem->hasMouseClickedOnItem(touchway.getCurrentPos());
+}
+
+
 void Screen::touchEnded(TouchWay touchWay)
 {
 	rootItem->isMouseUp();
+}
+
+void Screen::resize(ResizeEvent event)
+{
 }
 
 void Screen::onKeyInput(KeyEvent& e)
@@ -55,5 +70,4 @@ void Screen::onKeyInput(KeyEvent& e)
 
 void Screen::mouseWheel(MouseEvent & e)
 {
-
 }

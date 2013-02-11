@@ -156,9 +156,19 @@ void GameScreen::touchEnded(TouchWay touchWay)
 	Screen::touchEnded(touchWay);
 };
 
-void GameScreen::touchClick(TouchWay touchWay)
+bool GameScreen::touchClick(TouchWay touchWay)
 {
-	state->touchClick(touchWay);
+	auto touchedAnything = false;
+
+	auto touchedGUI = Screen::touchClick(touchWay);
+	touchedAnything = touchedGUI;
+
+	if (!touchedGUI)
+	{
+		touchedAnything |= state->touchClick(touchWay);
+	}
+
+	return touchedAnything;
 };
 
 void GameScreen::resize(ResizeEvent event)
