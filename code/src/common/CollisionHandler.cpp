@@ -54,6 +54,31 @@ CollisionHandler & CollisionHandler::insert(Circle const & circle)
 	return *this;
 }
 
+CollisionHandler & CollisionHandler::remove(unsigned int id)
+{
+	Circle const & cur = circleBackup[id];
+	unsigned int bucketIdx = getBucketIndex(cur.position);
+	auto bucket = buckets[bucketIdx];
+	for (auto it = bucket.begin(); it != bucket.end(); ++it)
+	{
+		if ((*it)->index == cur.index)
+		{
+			if (bucket.erase(*it))
+			{
+				// worked
+			}
+			break;
+		}
+	}
+
+	if (circleBackup.erase(id))
+	{
+		// worked
+	}
+
+	return *this;
+}
+
 set<unsigned int> CollisionHandler::getCircleIndicesToCheck(Circle const & circle) const
 {
 	set<unsigned int> circleIndices;

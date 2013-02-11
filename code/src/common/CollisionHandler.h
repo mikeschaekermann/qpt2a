@@ -19,6 +19,7 @@ public:
 	CollisionHandler & initialize(ci::Area const & screen);
 	CollisionHandler & clear();
 	CollisionHandler & insert(Circle const & circle);
+	CollisionHandler & remove(unsigned int id);
 	std::set<unsigned int> getCircleIndicesToCheck(Circle const & circle) const;
 private:
 	struct SelectionArea
