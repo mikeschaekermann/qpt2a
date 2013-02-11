@@ -39,7 +39,7 @@ public:
 	{
 		LOG_INFO("Game created");
 
-		ConfigurationDataHandler::getInstance()->readFromXML("config.xml");
+		ConfigurationDataHandler::getInstance()->readFromXML("..\\..\\config.xml");
 		players.reserve(CONFIG_INT2("data.players.max", 4));
 		
 		stringstream message;
@@ -55,7 +55,7 @@ public:
 		this->eventQueue = eventQueue;
 		LOG_INFO("EventQueue bound to Game");
 
-		//EventCreator::getInstance().bind(m_pNetworkManager, m_pEventQueue, &m_players);
+		EventCreator::getInstance()->bind(networkManager, eventQueue, &gameObjectContainer, &(this->players));
 	}
 
 	void join(JoinRequest request)
@@ -107,6 +107,8 @@ public:
 
 		players.push_back(p);
 
+		gameObjectContainer.createGameObject(&(p->getStemCell()));
+
 		JoinSuccess *success = new JoinSuccess();
 		success->playerId = p->getId();
 		success->endpoint = request.endpoint;
@@ -129,7 +131,7 @@ public:
 				networkPlayer.playerId = players[i]->getId();
 				networkPlayer.playerName = players[i]->getName();
 
-				networkPlayer.startCellId = 0;
+				networkPlayer.startCellId = players[i]->getStemCell().getId();
 				networkPlayer.startPosition = players[i]->getStemCell().getPosition();
 
 				startgame->players.push_back(networkPlayer);
@@ -169,12 +171,17 @@ public:
 			{
 			case CellType::StemCell:
 				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.stemcell.radius"), position);
-				cell = new CellServer(CellServer::STEMCELL, position, angle);
+				cell = new CellServer(CellServer::STEMCELL, position, angle, &player);
+				break;
 			case CellType::StandardCell:
 				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.standardcell.radius"), position);
-				cell = new CellServer(CellServer::STANDARDCELL, position, angle);
+				cell = new CellServer(CellServer::STANDARDCELL, position, angle, &player);
+				break;
 			default:
-				cell = 0;
+				message.clear();
+				message << "Unknown CellType: " << type.getType();
+				LOG_INFO(message.str());
+				return;
 			}
 
 			/// get current time
@@ -200,5 +207,5 @@ private:
 	NetworkManager* networkManager;
 	EventQueue* eventQueue;
 	vector<PlayerServer*> players;
-	GameObjectContainer gameObjectContainer;
+	GameObjectContainer<GameObject> gameObjectContainer;
 };

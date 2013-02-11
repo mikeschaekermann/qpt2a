@@ -57,10 +57,10 @@ vertexShader and fragmentShader are also file paths
 </shader>-->
 
 <guiTexture>
-	<key>button</key>
-	<value>..\..\resources\images\createStandardCell.svg</value>
-	<width>200</width>
-	<height>200</height>
+	<key>createCell</key>
+	<value>..\..\..\resources\images\createCell.svg</value>
+	<width>40</width>
+	<height>40</height>
 </guiTexture>
 <guiTexture>
 	<key>connect</key>
@@ -81,14 +81,80 @@ vertexShader and fragmentShader are also file paths
 	<height>56</height>
 </guiTexture>
 
+<guiTexture>
+	<key>createStandardCell</key>
+	<value>..\..\..\resources\images\createStandardCell.svg</value>
+	<width>60</width>
+	<height>60</height>
+</guiTexture>
+
+<guiTexture>
+	<key>createStandardCellClick</key>
+	<value>..\..\..\resources\images\createStandardCellClick.svg</value>
+	<width>60</width>
+	<height>60</height>
+</guiTexture>
+
+<guiTexture>
+	<key>createStandardCellHover</key>
+	<value>..\..\..\resources\images\createStandardCellHover.svg</value>
+	<width>60</width>
+	<height>60</height>
+</guiTexture>
+
+<guiTexture>
+	<key>connect</key>
+	<value>..\..\..\resources\images\connect.svg</value>
+	<width>500</width>
+	<height>150</height>
+</guiTexture>
+
+<guiTexture>
+	<key>credits</key>
+	<value>..\..\..\resources\images\credits.svg</value>
+	<width>500</width>
+	<height>150</height>
+</guiTexture>
+
+<guiTexture>
+	<key>startServer</key>
+	<value>..\..\..\resources\images\startServer.svg</value>
+	<width>500</width>
+	<height>150</height>
+</guiTexture>
+
+<guiTexture>
+	<key>exit</key>
+	<value>..\..\..\resources\images\exit.svg</value>
+	<width>500</width>
+	<height>150</height>
+</guiTexture>
+
+<guiTexture>
+	<key>textBox</key>
+	<value>..\..\..\resources\images\textBox.png</value>
+</guiTexture>
+
+<guiTexture>
+	<key>back</key>
+	<value>..\..\..\resources\images\exit.svg</value>
+	<width>500</width>
+	<height>150</height>
+</guiTexture>
+
+<texture>
+	<key>stemcell</key>
+	<value>..\..\..\resources\textures\stemcell.png</value>
+</texture>
+
 <model>
 	<key>stemcell</key>
-	<value>..\..\resources\models\stemcell.obj</value>
+	<value>..\..\..\resources\models\stemcell.obj</value>
 </model>
 
 <guiSound>
 	<key>song</key>
-	<value>..\..\resources\sounds\song.ogg</value>
+	<value>..\..\..\resources\sounds\song.ogg</value>
 	<3d>false</3d>
 	<loop>true</loop>
 	<stream>false</stream>

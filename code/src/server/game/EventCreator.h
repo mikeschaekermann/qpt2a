@@ -24,7 +24,7 @@ class EventCreator
 public:
 	static EventCreator * getInstance();
 
-	void bind(NetworkManager * networkManager, EventQueue * eventQueue, GameObjectContainer * gameObjectContainer, vector<PlayerServer *> * players);
+	void bind(NetworkManager * networkManager, EventQueue * eventQueue, GameObjectContainer<GameObject> * gameObjectContainer, vector<PlayerServer *> * players);
 
 	bool createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & cell);
 
@@ -33,7 +33,7 @@ private:
 	static EventCreator * instance;
 	NetworkManager * networkManager;
 	EventQueue * eventQueue;
-	GameObjectContainer * gameObjectContainer;
+	GameObjectContainer<GameObject> * gameObjectContainer;
 	vector<PlayerServer *> * players;
 
 	EventCreator();

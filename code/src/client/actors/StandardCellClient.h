@@ -1,19 +1,19 @@
 #pragma once
 #include "CellClient.h"
-#include "../../common/StemCell.h"
+#include "../../common/StandardCell.h"
 #include "../actors/PlayerClient.h"
 
-class StemCellClient :
- virtual public StemCell,
+class StandardCellClient :
+ virtual public StandardCell,
  virtual public CellClient
 {
 public:
- StemCellClient(unsigned int id, Vec3f position, float angle, PlayerClient * owner) :
+ StandardCellClient(unsigned int id, Vec3f position, float angle, PlayerClient * owner) :
   GameObject(),
-  Cell(position, CONFIG_FLOAT1("data.cell.stemcell.radius"), angle, CONFIG_FLOAT1("data.cell.stemcell.healthpoints"), owner),
+  Cell(position, CONFIG_FLOAT1("data.cell.standardcell.radius"), angle, CONFIG_FLOAT1("data.cell.standardcell.healthpoints"), owner),
   GameObjectClient(),
   CellClient(),
-  StemCell(position, angle)
+  StandardCell(position, angle)
  {
   setId(id);
  }

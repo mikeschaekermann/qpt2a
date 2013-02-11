@@ -25,10 +25,13 @@ using namespace std;
 
 class GameObject;
 
+template<typename O=GameObject>
 class GameObjectContainer
 {
 public:
-	void createGameObject(GameObject * gameObject)
+	typedef map<unsigned int, typename O *> MapIdPointer;
+
+	void createGameObject(O * gameObject)
 	{
 		if (idMap.addGameObject(gameObject))
 		{
@@ -44,7 +47,7 @@ public:
 
 	void removeGameObject(unsigned int id)
 	{
-		GameObject * gameObject = find(id);
+		O * gameObject = find(id);
 		if (gameObject != 0)
 		{
 			idMap.removeGameObject(gameObject);
@@ -57,22 +60,22 @@ public:
 		}
 	}
 
-	GameObject * find(unsigned int id) const
+	O * find(unsigned int id) const
 	{
 		return idMap.find(id);
 	}
 
-	GameObject * find(Vec3f const & position) const
+	O * find(Vec3f const & position) const
 	{
 		return positionMap.find(position);
 	}
 
-	const vector<GameObject *> findInRadiusOf(Vec3f const & position, float radius) const
+	const vector<O *> findInRadiusOf(Vec3f const & position, float radius) const
 	{
 		return positionMap.findInRadiusOf(position, radius);
 	}
 
-	const vector<GameObject *> pick(const Vec3f & pickPosition) const
+	const vector<O *> pick(const Vec3f & pickPosition) const
 	{
 		return positionMap.pick(pickPosition);
 	}
@@ -87,16 +90,16 @@ public:
 		return idMap.getSize();
 	}
 
-	map<unsigned int, GameObject*>::iterator begin()
+	typename MapIdPointer::iterator begin()
 	{
 		return idMap.begin();
 	}
 
-	map<unsigned int, GameObject*>::iterator end()
+	typename MapIdPointer::iterator end()
 	{
 		return idMap.end();
 	}
 private:
-	IdGameObjectMap idMap;
-	PositionGameObjectMap positionMap;
+	IdGameObjectMap<O> idMap;
+	PositionGameObjectMap<O> positionMap;
 };

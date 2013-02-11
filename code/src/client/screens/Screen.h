@@ -4,31 +4,24 @@
 #include "../input/TouchWay.h"
 #include "GUIItem.h"
 
-enum ScreenState
-{
-	TransitionOn,
-	Active,
-	TransitionOff,
-	Hidden
-};
-
 class ScreenManager;
+class GUIItem;
 class Screen
 {
 public:
+	GUIItem* focusedItem;
+
 	Screen();
 	virtual ~Screen(void);
 
 	virtual void update(float frameTime);
-	virtual void draw();
-
-	virtual void loadContent() = 0;
+	virtual void draw() = 0;
 
 	/**
 		@brief event method called when a new touch has begun
 		@param touchWay			touch way of the newly begun touch
 	 */
-	virtual void touchBegan(const TouchWay & touchWay);
+	virtual bool touchBegan(const TouchWay & touchWay);
 	/**
 		@brief event method called when an existing touch has moved
 		@param touchWay			touch way of the touch, concerned
@@ -38,7 +31,7 @@ public:
 		@brief event method called when the mouse has moved
 		@param event			mouse event for mouse motion
 	 */
-	virtual void mouseMove( MouseEvent event );
+	virtual bool mouseMove( MouseEvent event );
 	/**
 		@brief event method called when an existing touch has ended
 		@param touchWay			touch way of the touch, concerned; must be called by copy,
@@ -53,19 +46,9 @@ public:
 	virtual void touchClick(TouchWay touchWay) = 0;
 
 	virtual void resize(ResizeEvent event) = 0;
+
+	virtual void onKeyInput(KeyEvent& e);
+
 protected:
-	float transitionOnTime;
-	float transitionOffTime;
-
-	bool isInitialized;
-	bool coveredByOtherScreen;
-
-	ScreenState screenState;
-
-	GUIItem rootItem;
-
-private:
-	bool isExiting;
-
-	bool updateTransition(float frameTime, float time);
+	GUIItem* rootItem;
 };

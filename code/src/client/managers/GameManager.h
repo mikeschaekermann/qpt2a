@@ -11,6 +11,7 @@
 
 #define GAME_MGR GameManager::getInstance()
 #define GAME_SCR SCREEN_MGR->getGameScreen()
+#define NETWORK_MGR GAME_MGR->getNetworkManager()
 
 class GameManager
 {
@@ -18,14 +19,21 @@ public:
 	~GameManager(void);
 
 	static GameManager * const getInstance();
+	static void releaseInstance() { if (m_pManager != nullptr) delete m_pManager; }
 
 	void startGame(string playerName);
+	void startGame(string playerName, string ip);
 	void update(float frameTime);
 	void draw();
 
 	void addPetriDish(float radius);
 	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
 	void setMyPlayerId(unsigned int id);
+	
+	ClientNetworkManager * getNetworkManager();
+	boost::asio::ip::udp::endpoint getServerEndpoint();
+
+	void quit();
 private:
 	/// singleton instance
 	static GameManager* m_pManager;

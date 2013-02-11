@@ -53,14 +53,8 @@
       <Filter>Actors\Behaviors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
-    <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\client\sound\SoundPlayer.cpp">
       <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\client\assets\ModelBufferData.cpp">
-      <Filter>Assets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp">
       <Filter>Network\Messages</Filter>
@@ -134,6 +128,21 @@
     <ClCompile Include="..\..\src\client\screens\GUIItem.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\ConnectScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\TextInput.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\CreditsScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\IpInput.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\actors\StandardCellClient.cpp">
+      <Filter>Actors\Cells</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -202,9 +211,6 @@
     <ClInclude Include="..\..\src\common\StemCell.h">
       <Filter>Actors\Cells</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\client\actors\StemCellClient.h">
-      <Filter>Actors\Cells</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\client\rendering\Cam.h">
       <Filter>Rendering</Filter>
     </ClInclude>
@@ -226,9 +232,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\client\sound\SoundPlayer.h">
       <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\client\assets\ModelBufferData.h">
-      <Filter>Assets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h">
       <Filter>Network\Messages</Filter>
@@ -302,6 +305,33 @@
     <ClInclude Include="..\..\src\client\screens\GUIItem.h">
       <Filter>Screens</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\ConnectScreen.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\TextInput.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\IpInput.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\CreditsScreen.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenState.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\actors\StandardCellClient.h">
+      <Filter>Actors\Cells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\actors\StemCellClient.h">
+      <Filter>Actors\Cells</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -334,9 +364,6 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{39b52f4d-25ad-489f-a5e1-114cbb64e465}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets">
-      <UniqueIdentifier>{4284d13e-b99e-4968-928a-753dc4e376fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network\Messages">
       <UniqueIdentifier>{7bfdc495-f520-4f65-ba12-b491e4517aaa}</UniqueIdentifier>
     </Filter>
@@ -360,6 +387,9 @@
     </Filter>
     <Filter Include="Network\Messages\Enum">
       <UniqueIdentifier>{7e36fa21-5895-4718-b3bf-f10361bf3a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screens\GameScreenStates">
+      <UniqueIdentifier>{2a317f10-862d-494d-9bf8-5cdc5f046aa4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,11 @@
 #include "../../client/actors/PlayerClient.h"
 #include "../../client/actors/StemCellClient.h"
 
+#include "cinder/app/AppBasic.h"
+
+using namespace ci;
+using namespace ci::app;
+
 GameManager* GameManager::m_pManager = nullptr;
 
 GameManager::GameManager(void):
@@ -12,6 +17,8 @@ GameManager::GameManager(void):
 {
 	networkManager = new ClientNetworkManager(serverEndpoint);
 	boost::thread(boost::bind(&NetworkManager::operator(), networkManager));
+
+	SCREEN_MGR->openMenuScreen();
 }
 
 GameManager::~GameManager(void)
@@ -51,6 +58,13 @@ void GameManager::startGame(string playerName)
 	myPlayer = new PlayerClient(playerName, true);
 }
 
+void GameManager::startGame(string playerName, string ip)
+{
+	serverEndpoint = boost::asio::ip::udp::endpoint(boost::asio::ip::address_v4::from_string(ip.c_str()), serverEndpoint.port());
+
+	startGame(playerName);
+}
+
 void GameManager::update(float frameTime)
 {
 	SCREEN_MGR->update(frameTime);
@@ -83,8 +97,10 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 		assert(false);
 	}
 
+	bool ownPlayerAdded = (id == myPlayer->getId());
+
 	/// my own player was passed
-	if (id == myPlayer->getId())
+	if (ownPlayerAdded)
 	{
 		players.insert(make_pair(id, myPlayer));
 	}
@@ -95,13 +111,34 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	}
 
 	auto player = players[id];
-
-	/// create stem cell
-	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0, myPlayer);
-	GAME_SCR.addGameObjectToPick(stemCell, true);
+	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0, player);
+	
+	if (ownPlayerAdded)
+	{
+		GAME_SCR.addCellToPick(stemCell, true);
+	}
+	else
+	{
+		GAME_SCR.addGameObjectToDraw(stemCell, true);
+	}
 }
 
 void GameManager::setMyPlayerId(unsigned int id)
 {
 	myPlayer->setId(id);
+}
+
+ClientNetworkManager * GameManager::getNetworkManager()
+{
+	return networkManager;
+}
+
+boost::asio::ip::udp::endpoint GameManager::getServerEndpoint()
+{
+	return serverEndpoint;
+}
+
+void GameManager::quit()
+{
+	exit(0);
 }

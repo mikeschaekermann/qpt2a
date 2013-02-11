@@ -3,18 +3,24 @@
 #include "Screen.h"
 #include "../rendering/Cam.h"
 #include "../../common/Config.h"
-#include "../actors/GameObjectClient.h"
 #include "../../common/Player.h"
 #include "../../common/GameObjectContainer.h"
 #include <unordered_map>
 
+class CellClient;
+class GameObjectClient;
+class GameScreenState;
+class GameScreenStateNeutral;
+class GameScreenStateCreateCell;
 
 class GameScreen :
 	public Screen
 {
-public:
-	typedef unordered_map<unsigned, GameObjectClient*> IdGameObjectClientMap;
-	
+public:	
+	friend class GameScreenState;
+	friend class GameScreenStateNeutral;
+	friend class GameScreenStateCreateCell;
+
 	GameScreen();
 	virtual ~GameScreen(void);
 
@@ -23,52 +29,44 @@ public:
 	void setWorldRadius(float radius) { worldRadius = radius; }
 	void zoomToWorld();
 
-	virtual void loadContent();
-
-	/**
-		@brief event method called when a new touch has begun
-		@param touchWay			touch way of the newly begun touch
-	 */
-	virtual void touchBegan(const TouchWay & touchWay);
-	/**
-		@brief event method called when an existing touch has moved
-		@param touchWay			touch way of the touch, concerned
-	 */
+	virtual bool touchBegan(const TouchWay & touchWay);
 	virtual void touchMoved(const TouchWay & touchWay);
-	/**
-		@brief event method called when an existing touch has ended
-		@param touchWay			touch way of the touch, concerned; must be called by copy,
-								because touch way object will be destroyed after call to this method
-	 */
+	virtual bool mouseMove(MouseEvent event);
 	virtual void touchEnded(TouchWay touchWay);
-	/**
-		@brief event method called when an touch was released as a click (i.e. no drag!)
-		@param touchWay			touch way of the touch, concerned; must be called by copy,
-								because touch way object will be destroyed after call to this method
-	 */
 	virtual void touchClick(TouchWay touchWay);
-
 	virtual void resize(ResizeEvent event);
+	virtual void onKeyInput(KeyEvent& e);
 
 	void addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable);
 	void addGameObjectToDraw(GameObjectClient * gameObject, bool collidable);
-	void addGameObjectToPick(GameObjectClient * gameObject, bool collidable);
+	void addCellToPick(CellClient * cell, bool collidable);
+
+	void switchToState(GameScreenState * newState);
 
 private:
+	void pickCell(CellClient * cell);
+	void unpickCell();
+	
+	/// current state of the screen
+	GameScreenState * state;
 	/// perspective cam for the game
 	Cam cam;
 	/// the world's radius, i.e. the radius of the Petri's dish
 	float worldRadius;
+	/// in-game menu for cell actions
+	GUIItem * cellMenu;
+	/// currently picked cell
+	CellClient * pickedCell;
 
 	/// all game objects registered to be updated
-	GameObjectContainer		gameObjectsToUpdate;
+	GameObjectContainer<GameObject>			gameObjectsToUpdate;
 
 	/// all game objects registered to be drawn
-	IdGameObjectClientMap	gameObjectsToDraw;
+	GameObjectContainer<GameObjectClient>	gameObjectsToDraw;
 
 	/// all game objects registered to collide with each other
-	GameObjectContainer		gameObjectsToCollide;
+	GameObjectContainer<GameObject>			gameObjectsToCollide;
 
 	/// all game objects registered to be pickable
-	GameObjectContainer		gameObjectsToPick;
+	GameObjectContainer<CellClient>			cellsToPick;
 };

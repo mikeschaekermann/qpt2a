@@ -47,11 +47,11 @@
 	</event>
 	<cell>
 		<stemcell>
-			<radius>15.0</radius>
+			<radius>50.0</radius>
 			<healthpoints>100.0</healthpoints>
 		</stemcell>
 		<standardcell>
-			<radius>15.0</radius>
+			<radius>25.0</radius>
 			<healthpoints>100.0</healthpoints>
 			<attackradius>10.0</attackradius>
 			<distanceDropOffDegree>100.0</distanceDropOffDegree>

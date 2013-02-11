@@ -27,7 +27,7 @@ public:
 	/**
 		@brief returns the single instance of the logger class
 	 */
-	static Logger * const getInstance() { return m_pLogger; }
+	static Logger * const getInstance() { return (m_pLogger != nullptr ? m_pLogger : (m_pLogger = new Logger())); }
 
 	/**
 		@brief sets the filename for logging

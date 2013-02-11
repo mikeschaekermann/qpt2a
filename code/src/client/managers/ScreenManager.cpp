@@ -1,22 +1,25 @@
 #include "ScreenManager.h"
 #include "../screens/MenuScreen.h"
 #include "../screens/GameScreen.h"
+#include "../screens/ConnectScreen.h"
+#include "../screens/CreditsScreen.h"
 
 ScreenManager::ScreenManager(void):
 	m_backgroundScreen(nullptr),
 	menuScreen(new MenuScreen()),
-	gameScreen(new GameScreen())
+	gameScreen(new GameScreen()),
+	connectScreen(new ConnectScreen()),
+	creditsScreen(new CreditsScreen())
 {
-	this->currentScreen = menuScreen;
-	menuScreen->loadContent();
-	gameScreen->loadContent();
+	openMenuScreen();
 }
 
 ScreenManager::~ScreenManager(void)
 {
-	delete menuScreen;
-	delete gameScreen;
-	delete currentScreen;
+	if (menuScreen != nullptr)
+	{
+		menuScreen->terminateServer();
+	}
 }
 
 void ScreenManager::update(float frameTime)
@@ -52,6 +55,16 @@ void ScreenManager::openMenuScreen()
 void ScreenManager::openGameScreen()
 {
 	currentScreen = gameScreen;
+}
+
+void ScreenManager::openConnectScreen()
+{
+	currentScreen = connectScreen;
+}
+
+void ScreenManager::openCreditsScreen()
+{
+	currentScreen = creditsScreen;
 }
 
 GameScreen & ScreenManager::getGameScreen() const
@@ -98,11 +111,17 @@ void ScreenManager::resize(ResizeEvent event)
 
 ScreenManager * ScreenManager::getInstance()
 {
-	if (instance == nullptr)
+	if(!instance)
 	{
 		instance = new ScreenManager();
 	}
+
 	return instance;
+}
+
+void ScreenManager::onKeyInput(KeyEvent& e) const
+{
+	currentScreen->onKeyInput(e);
 }
 
 ScreenManager * ScreenManager::instance = nullptr;

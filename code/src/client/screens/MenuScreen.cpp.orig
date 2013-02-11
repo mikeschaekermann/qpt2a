@@ -21,9 +21,15 @@ MenuScreen::MenuScreen()
 	);
 
 	auto startServerTexture = &(ASSET_MGR->getGuiTexture(string("startServer")));
+<<<<<<< HEAD
 	rootItem->addSubItem(
 		this,
+		[]()
+=======
+
+	rootItem.addSubItem(
 		[this]()
+>>>>>>> 342cb7b116a0dde6fd313d2373e1831a0a3dcfbd
 		{
 			MenuScreen * self = this;
 
@@ -52,8 +58,6 @@ MenuScreen::MenuScreen()
 					LOG_INFO("Server started in a thread!");
 				}
 			});
-			sleep(500);
-			GAME_MGR->startGame("Mike");
 		},
 		Vec2f(100, 200),
 		startServerTexture,
@@ -61,27 +65,14 @@ MenuScreen::MenuScreen()
 		startServerTexture
 	);
 
-	auto creditsTexture = &(ASSET_MGR->getGuiTexture(string("credits")));
-	rootItem->addSubItem(
-		this,
-		[]()
-		{
-			SCREEN_MGR->openCreditsScreen();
-		},
-		Vec2f(100, 300),
-		creditsTexture,
-		creditsTexture,
-		creditsTexture
-	);
-
 	auto exitButton = &(ASSET_MGR->getGuiTexture(string("exit")));
 	rootItem->addSubItem(
 		this,
 		[]()
 		{
-			GAME_MGR->quit();
+			/// exit application
 		},
-		Vec2f(100, 400),
+		Vec2f(100, 350),
 		exitButton,
 		exitButton,
 		exitButton
@@ -101,16 +92,11 @@ void MenuScreen::draw()
 	Screen::draw();
 }
 
-bool MenuScreen::touchBegan(const TouchWay & touchWay)
+void MenuScreen::touchBegan(const TouchWay & touchWay)
 {
-	return Screen::touchBegan(touchWay);
+	Screen::touchBegan(touchWay);
 	LOG_INFO("touch way started");
 };
-
-void MenuScreen::mouseMove( MouseEvent event )
-{
-	Screen::mouseMove(event);
-}
 
 void MenuScreen::touchMoved(const TouchWay & touchWay)
 {

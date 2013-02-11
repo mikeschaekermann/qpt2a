@@ -57,68 +57,79 @@ void NetworkManager::operator()()
 	boost::array<char, 5000> buffer;
 	while (run)
 	{
-		udp::endpoint remote_endpoint;
-		boost::system::error_code error;
-		
-		// Receive the message
-		serverSocket->receive_from(boost::asio::buffer(buffer), remote_endpoint, 0, error);
-		maintenanceMutex.lock();
-		if (!run || (error && error != boost::asio::error::message_size))
+		// On shut down of client.exe, sometimes the function body throws an access violation exception;
+		// therefore the try-catch-block! Please have a look into this!
+		try
 		{
-			if (error && error != boost::system::errc::connection_reset && error != boost::system::errc::operation_would_block)
+			udp::endpoint remote_endpoint;
+			boost::system::error_code error;
+		
+			// Receive the message
+		
+			serverSocket->receive_from(boost::asio::buffer(buffer), remote_endpoint, 0, error);
+		
+			maintenanceMutex.lock();
+			if (!run || (error && error != boost::asio::error::message_size))
 			{
-				LOG_ERROR(std::string(error.category().name()) + ": " + error.message());
-			}
-			maintenanceMutex.unlock();
-			continue;
-		}
-		// Distinguish the messages by their type
-		NetworkMessage *message = createNetworkMessage(buffer.c_array());
-
-		if (!message)
-		{
-			continue;
-		}
-		
-		message->endpoint = remote_endpoint;
-		
-		if (message && !dynamic_cast<JoinRequest*>(message) && !dynamic_cast<ConnectionMessage*>(message))
-		{
-			ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
-			if (connectionEndpoint)
-			{
-				for (unsigned i = connectionEndpoint->m_uiRemotePacketId + 1; i < message->messageId; ++i)
+				if (error && error != boost::system::errc::connection_reset && error != boost::system::errc::operation_would_block)
 				{
-					/// Check whether the messageId is already missing and add it then
-					if(std::find(connectionEndpoint->m_unreceivedMessages.begin(), connectionEndpoint->m_unreceivedMessages.end(), i) 
-						== connectionEndpoint->m_unreceivedMessages.end()) 
-					{
-						connectionEndpoint->m_unreceivedMessages.push_back(i);
-					}
+					LOG_ERROR(std::string(error.category().name()) + ": " + error.message());
 				}
-				connectionEndpoint->m_unreceivedMessages.remove(message->messageId);
-				connectionEndpoint->m_uiRemotePacketId = message->messageId;
+				maintenanceMutex.unlock();
+				continue;
+			}
+			// Distinguish the messages by their type
+			NetworkMessage *message = createNetworkMessage(buffer.c_array());
+
+			if (!message)
+			{
+				continue;
+			}
+		
+			message->endpoint = remote_endpoint;
+		
+			if (message && !dynamic_cast<JoinRequest*>(message) && !dynamic_cast<ConnectionMessage*>(message))
+			{
+				ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
+				if (connectionEndpoint)
+				{
+					for (unsigned i = connectionEndpoint->m_uiRemotePacketId + 1; i < message->messageId; ++i)
+					{
+						/// Check whether the messageId is already missing and add it then
+						if(std::find(connectionEndpoint->m_unreceivedMessages.begin(), connectionEndpoint->m_unreceivedMessages.end(), i) 
+							== connectionEndpoint->m_unreceivedMessages.end()) 
+						{
+							connectionEndpoint->m_unreceivedMessages.push_back(i);
+						}
+					}
+					connectionEndpoint->m_unreceivedMessages.remove(message->messageId);
+					connectionEndpoint->m_uiRemotePacketId = message->messageId;
+				}
+				else
+				{
+					// throw exception
+					assert(false);
+				}
+			}
+		
+			// React to the Message and delete it.
+			ConnectionMessage *connectionMessage = dynamic_cast<ConnectionMessage*> (message);
+			if (connectionMessage)
+			{
+				handleConnectionMessage(connectionMessage);
+				maintenanceMutex.unlock();
 			}
 			else
 			{
-				// throw exception
-				assert(false);
+				maintenanceMutex.unlock();
+				handleMessage(message);
 			}
+			delete message;
 		}
-		
-		// React to the Message and delete it.
-		ConnectionMessage *connectionMessage = dynamic_cast<ConnectionMessage*> (message);
-		if (connectionMessage)
+		catch(std::exception &ex)
 		{
-			handleConnectionMessage(connectionMessage);
-			maintenanceMutex.unlock();
+			LOG_ERROR(ex.what());
 		}
-		else
-		{
-			maintenanceMutex.unlock();
-			handleMessage(message);
-		}
-		delete message;
 	}
 }
 
@@ -177,31 +188,39 @@ void NetworkManager::connectionMaintenance()
 {
 	while (run)
 	{
-		boost::this_thread::sleep(boost::posix_time::milliseconds(100));
-		maintenanceMutex.lock();
+		// On shut down of client.exe, sometimes the function body throws an access violation exception;
+		// therefore the try-catch-block! Please have a look into this!
+		try
+		{
+			boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+			maintenanceMutex.lock();
 		
-		if (!run) 
-		{
-			maintenanceMutex.unlock();
-			continue;
-		}
-
-		std::vector<ConnectionEndpoint> endpoints =  getConnectionEndpoints();
-		for (std::vector<ConnectionEndpoint>::iterator it = endpoints.begin(); it != endpoints.end(); ++it)
-		{
-			ConnectionMessage message;
-			message.endpoint = (*it).m_endpoint;
-			message.messageId = (*it).m_uiRemotePacketId;
-
-			for (std::list<unsigned>::iterator idIt = (*it).m_unreceivedMessages.begin(); idIt != (*it).m_unreceivedMessages.end(); ++idIt) 
+			if (!run) 
 			{
-				message.missingMessageIds.push_back(*idIt);
+				maintenanceMutex.unlock();
+				continue;
 			}
 
-			// Send the message
-			baseSend(message);
+			std::vector<ConnectionEndpoint> endpoints =  getConnectionEndpoints();
+			for (std::vector<ConnectionEndpoint>::iterator it = endpoints.begin(); it != endpoints.end(); ++it)
+			{
+				ConnectionMessage message;
+				message.endpoint = (*it).m_endpoint;
+				message.messageId = (*it).m_uiRemotePacketId;
+
+				for (std::list<unsigned>::iterator idIt = (*it).m_unreceivedMessages.begin(); idIt != (*it).m_unreceivedMessages.end(); ++idIt) 
+				{
+					message.missingMessageIds.push_back(*idIt);
+				}
+
+				// Send the message
+				baseSend(message);
+			}
+			maintenanceMutex.unlock();
 		}
-		maintenanceMutex.unlock();
+		catch(...)
+		{
+		}
 	}
 }
 

@@ -5,12 +5,13 @@
 #include <stack>
 #include "../input/TouchWay.h"
 
+#define SCREEN_MGR ScreenManager::getInstance()
+
 class Screen;
 class GameScreen;
 class MenuScreen;
-
-#define SCREEN_MGR ScreenManager::getInstance()
-
+class ConnectScreen;
+class CreditsScreen;
 class ScreenManager
 {
 public:
@@ -22,10 +23,14 @@ public:
 	void openScreen();
 	void openMenuScreen();
 	void openGameScreen();
+	void openConnectScreen();
+	void openCreditsScreen();
 	GameScreen & getGameScreen() const;
 	void closeScreen();
 	void exit();
 	void fadeToBlack(float alpha);
+
+	void onKeyInput(KeyEvent& e) const;
 
 	/**
 		@brief event method called when a new touch has begun
@@ -52,6 +57,7 @@ public:
 	void resize(ResizeEvent event);
 
 	static ScreenManager * getInstance();
+	static void releaseInstance() { if (instance != nullptr) delete instance; }
 private:
 	ScreenManager();
 	ScreenManager(const ScreenManager &) {}
@@ -61,5 +67,7 @@ private:
 	Screen* m_backgroundScreen;
 	MenuScreen * menuScreen;
 	GameScreen * gameScreen;
+	ConnectScreen* connectScreen;
+	CreditsScreen* creditsScreen;
 	Screen * currentScreen;
 };

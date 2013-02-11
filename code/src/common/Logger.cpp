@@ -4,7 +4,7 @@
 #include <sstream>
 #include "cinder/app/AppBasic.h"
 
-Logger* Logger::m_pLogger = new Logger();
+Logger* Logger::m_pLogger = nullptr;
 
 Logger::Logger(void)
 {

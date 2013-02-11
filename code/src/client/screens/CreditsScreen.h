@@ -1,20 +1,11 @@
 #pragma once
-
 #include "Screen.h"
-#include "../rendering/Cam.h"
-#include "../../common/Config.h"
-#include "../actors/GameObjectClient.h"
-#include "../../common/Player.h"
-
-#include "cinder/Vector.h"
-#include "cinder/gl/Texture.h"
-
-class MenuScreen :
+class CreditsScreen :
 	public Screen
 {
 public:
-	MenuScreen();
-	virtual ~MenuScreen(void);
+	CreditsScreen(void);
+	~CreditsScreen(void);
 
 	virtual void update(float frameTime);
 	virtual void draw();
@@ -25,15 +16,9 @@ public:
 	 */
 	virtual bool touchBegan(const TouchWay & touchWay);
 	/**
-		@brief event method called when the mouse has moved
-		@param event			mouse event for mouse motion
-	 */
-	virtual void mouseMove( MouseEvent event );
-	/**
 		@brief event method called when an existing touch has moved
 		@param touchWay			touch way of the touch, concerned
 	 */
-
 	virtual void touchMoved(const TouchWay & touchWay);
 	/**
 		@brief event method called when an existing touch has ended
@@ -49,8 +34,5 @@ public:
 	virtual void touchClick(TouchWay touchWay);
 
 	virtual void resize(ResizeEvent event);
-	void terminateServer();
-
-	STARTUPINFO serverStartupInfo;
-	PROCESS_INFORMATION serverProcessInfo;
 };
+
