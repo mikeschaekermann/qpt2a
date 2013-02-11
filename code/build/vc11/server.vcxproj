@@ -76,6 +76,7 @@
     <ClInclude Include="..\..\src\Server\event\EventManager.h" />
     <ClInclude Include="..\..\src\Server\game\CellServer.h" />
     <ClInclude Include="..\..\src\Server\game\Game.h" />
+    <ClInclude Include="..\..\src\server\game\GameContext.h" />
     <ClInclude Include="..\..\src\Server\game\GameObjectServer.h" />
     <ClInclude Include="..\..\src\server\game\IIdentifiable.h" />
     <ClInclude Include="..\..\src\Server\game\PlayerServer.h" />
@@ -130,6 +131,7 @@
     <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp" />
     <ClCompile Include="..\..\src\server\event\EventCreator.cpp" />
     <ClCompile Include="..\..\src\server\event\EventManager.cpp" />
+    <ClCompile Include="..\..\src\server\game\GameContext.cpp" />
     <ClCompile Include="..\..\src\server\game\IIdentifiable.cpp" />
     <ClCompile Include="..\..\src\server\Main.cpp" />
     <ClCompile Include="..\..\src\server\network\ServerNetworkmanager.cpp" />

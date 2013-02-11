@@ -1,5 +1,7 @@
 #include "ServerNetworkManager.h"
+#include "../game/GameContext.h"
 #include "../game/Game.h"
+#include "../game/PlayerServer.h"
 #include "../../common/network/messages/game/outgame/JoinRequest.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellRequest.h"
 
@@ -7,11 +9,11 @@ using namespace std;
 
 ConnectionEndpoint* ServerNetworkManager::getConnectionEndpoint(boost::asio::ip::udp::endpoint endpoint)
 {
-	for (std::vector<PlayerServer*>::iterator it = m_game->players.begin(); it != m_game->players.end(); ++it)
+	for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
-		if ((*it)->getEndpoint() == endpoint)
+		if (it->second->getEndpoint() == endpoint)
 		{
-			return *it;
+			return it->second;
 		}
 	}
 
@@ -66,9 +68,9 @@ void ServerNetworkManager::handleMessage(NetworkMessage* message)
 vector<ConnectionEndpoint> ServerNetworkManager::getConnectionEndpoints()
 {
 	vector<ConnectionEndpoint> endpoints;
-	for (unsigned i = 0; i < m_game->players.size(); ++i)
+	for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
-		endpoints.push_back(*m_game->players[i]);
+		endpoints.push_back(*(it->second));
 	}
 		
 	return endpoints;

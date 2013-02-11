@@ -32,6 +32,7 @@
 
 #include "CellServer.h"
 #include "PlayerServer.h"
+#include "GameContext.h"
 
 using namespace std;
 
@@ -42,10 +43,9 @@ public:
 	Game()
 	{
 		LOG_INFO("Game created");
-		players.reserve(CONFIG_INT2("data.players.max", 4));
 		
 		stringstream message;
-		message << "Space for " << players.capacity() << " players reserved";
+		message << "Space for " << CONFIG_INT2("data.players.max", 4) << " players.";
 		LOG_INFO(message.str());
 	}
 
@@ -54,14 +54,14 @@ public:
 		this->networkManager = networkManager;
 		LOG_INFO("NetworkManager bound to game");
 
-		EventCreator::getInstance()->bind(networkManager, &gameObjectContainer, &(this->players));
+		EventCreator::getInstance()->bind(networkManager, &gameObjectContainer);
 	}
 
 	void join(JoinRequest request)
 	{
 		string playerName = request.name;
 		
-		if(players.size() == players.capacity())
+		if(GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
 		{
 			JoinFailure * failure = new JoinFailure();
 			failure->errorCode = JoinErrorCode::GameIsFull;
@@ -72,9 +72,9 @@ public:
 			return;
 		}
 
-		for (auto it = players.begin(); it != players.end(); ++it)
+		for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 		{
-			if ((*it)->getName() == playerName)
+			if (it->second->getName() == playerName)
 			{
 				JoinFailure * failure = new JoinFailure();
 				failure->errorCode = JoinErrorCode::NameAlreadyTaken;
@@ -89,7 +89,7 @@ public:
 		/// get the players startposition
 		vector<float> xPositions = CONFIG_FLOATS2("data.players", "player.startposition.x");
 		vector<float> yPositions = CONFIG_FLOATS2("data.players", "player.startposition.y");
-		Vec3f startPosition(xPositions[players.size()], yPositions[players.size()], 0.f);
+		Vec3f startPosition(xPositions[GAMECONTEXT->getPlayerMap().size()], yPositions[GAMECONTEXT->getPlayerMap().size()], 0.f);
 
 		/// get the stemcell- and world-radius information
 		float stemcellRadius = CONFIG_FLOAT1("data.cell.stemcell.radius");
@@ -102,10 +102,11 @@ public:
 		}
 
 		PlayerServer * p = new PlayerServer(playerName, request.endpoint, startPosition);
-		LOG_INFO(stringify(ostringstream() << "Player " << players.size() << "(" << playerName << 
+		LOG_INFO(stringify(ostringstream() << "Player " << GAMECONTEXT->getPlayerMap().size() <<
+			" with ID: " << p->getId() << " (" << playerName << 
 			") joined the game at the position: (" << startPosition.x << "/" << startPosition.y << ")"));
 
-		players.push_back(p);
+		GAMECONTEXT->addPlayer(p);
 
 		gameObjectContainer.createGameObject(&(p->getStemCell()));
 
@@ -114,7 +115,7 @@ public:
 		success->endpoint = request.endpoint;
 		networkManager->send(success);
 
-		if (players.size() == players.capacity())
+		if (GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
 		{
 			using boost::asio::ip::udp;
 
@@ -344,18 +345,18 @@ public:
 			vector<udp::endpoint> endpointArr;
 			StartGame * startgame = new StartGame();
 			startgame->worldRadius = worldRadius;
-			for (unsigned int i = 0; i < players.size(); ++i)
+			for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 			{
 				NetworkPlayer networkPlayer;
-				networkPlayer.playerId = players[i]->getId();
-				networkPlayer.playerName = players[i]->getName();
+				networkPlayer.playerId = it->second->getId();
+				networkPlayer.playerName = it->second->getName();
 
-				networkPlayer.startCellId = players[i]->getStemCell().getId();
-				networkPlayer.startPosition = players[i]->getStemCell().getPosition();
+				networkPlayer.startCellId = it->second->getStemCell().getId();
+				networkPlayer.startPosition = it->second->getStemCell().getPosition();
 
 				startgame->players.push_back(networkPlayer);
 
-				endpointArr.push_back(players[i]->getEndpoint());
+				endpointArr.push_back(it->second->getEndpoint());
 			}
 
 			/**
@@ -375,9 +376,9 @@ public:
 		float angle = request.angle;
 		CellType type = request.type;
 
-		if (playerId < players.size())
+		if (GAMECONTEXT->getPlayer(playerId))
 		{
-			PlayerServer & player = *(players[playerId]);
+			PlayerServer & player = *(GAMECONTEXT->getPlayer(playerId));
 			CellServer * parentCell = dynamic_cast<CellServer *>(gameObjectContainer.find(cellId));
 			if (parentCell == 0)
 			{
@@ -434,12 +435,14 @@ public:
 				return;
 			}
 		}
-		LOG_INFO("Players Id is invalid");
+		else
+		{
+			LOG_INFO("Players Id is invalid");
+		}
 	}
 
 	
 private:
 	NetworkManager* networkManager;
-	vector<PlayerServer*> players;
 	GameObjectContainer<GameObject> gameObjectContainer;
 };
