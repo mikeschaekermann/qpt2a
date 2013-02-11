@@ -1,6 +1,7 @@
 #include "NetworkManager.h"
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
+#include <iostream>
 
 #include "messages/game/outgame/JoinRequest.h"
 #include "messages/ConnectionMessage.h"
@@ -129,9 +130,17 @@ void NetworkManager::operator()()
 			delete message;
 		}
 	}
+	catch(std::exception &ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
+	catch(std::string &ex)
+	{
+		std::cout << ex << std::endl;
+	}
 	catch(...)
 	{
-		// Display something?
+		// Don't know what else would be here
 	}
 }
 
@@ -222,9 +231,17 @@ void NetworkManager::connectionMaintenance()
 			maintenanceMutex.unlock();
 		}
 	}
+	catch(std::exception &ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
+	catch(std::string &ex)
+	{
+		std::cout << ex << std::endl;
+	}
 	catch(...)
 	{
-		
+		// Don't know what else would be here
 	}
 }
 

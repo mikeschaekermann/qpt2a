@@ -10,6 +10,7 @@ IpInput::IpInput(Screen* screen, std::function<void()> callback, ci::Vec2f posit
 			  clickTexture
 	)
 {
+	this->text = "127.0.0.1";
 }
 
 IpInput::~IpInput(void)

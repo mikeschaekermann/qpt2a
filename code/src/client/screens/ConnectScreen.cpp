@@ -10,17 +10,10 @@ using namespace ci;
 ConnectScreen::ConnectScreen()
 {
 	auto nameBox = &(ASSET_MGR->getGuiTexture(string("textBox")));
-	auto nameBoxItem = rootItem->addSubItem(new TextInput(
-		this,
-		[]()
-		{
-			
-		},
-		Vec2f(100, 40),
-		nameBox,
-		nameBox,
-		nameBox)
-	);
+
+	TextInput *nameTextBox = new TextInput(this, []() { }, Vec2f(100, 40), nameBox, nameBox, nameBox);
+	auto nameBoxItem = rootItem->addSubItem(nameTextBox);
+	nameTextBox->text = "test";
 
 	auto ipBox = &(ASSET_MGR->getGuiTexture(string("textBox")));
 	auto ipBoxItem = rootItem->addSubItem(new IpInput(
