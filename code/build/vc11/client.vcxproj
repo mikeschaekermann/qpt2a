@@ -95,7 +95,6 @@
     <ClInclude Include="..\..\src\client\screens\TextInput.h" />
     <ClInclude Include="..\..\src\client\sound\SoundPlayer.h" />
     <ClInclude Include="..\..\src\common\AABBCollisionBehavior.h" />
-    <ClInclude Include="..\..\src\common\Areaf.h" />
     <ClInclude Include="..\..\src\common\Cell.h" />
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h" />
     <ClInclude Include="..\..\src\common\Circle.h" />

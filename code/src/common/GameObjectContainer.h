@@ -48,6 +48,7 @@ public:
 			}
 			LOG_INFO("Inserting gameobject in position map failed");
 			idMap.removeGameObject(gameObject);
+			collisionHandler.insert(Circle(gameObject->getId(), Vec2f(gameObject->getPosition().x, gameObject->getPosition().y), gameObject->getRadius()));
 		}
 		LOG_INFO("Inserting gameobject in id map failed");
 	}
@@ -77,9 +78,31 @@ public:
 		return positionMap.find(position);
 	}
 
-	const vector<O *> findInRadiusOf(Vec3f const & position, float radius) const
+	const vector<O *> getGameObjectsToCheck(Vec3f const & position, float radius) const
 	{
-		return positionMap.findInRadiusOf(position, radius);
+		// return positionMap.findInRadiusOf(position, radius);
+		set<unsigned int> ids = collisionHandler.getCircleIndicesToCheck(Circle(0, Vec2f(position.x, position.y), radius));
+		vector<O *> objects;
+		for (auto it = ids.begin(); it != ids.end(); ++it)
+		{
+			objects.push_back(idMap.find(*it));
+		}
+		return objects;
+	}
+
+	const vector<O *> findInRadisOf(Vec3f const & position, float radius) const
+	{
+		vector<O *> resObjects;
+		const vector<O *> objects = getGameObjectsToCheck(position, radius);
+		for (auto it = objects.begin(); it != objects.end(); ++it)
+		{
+			if (isColliding((*it)->getPosition(), (*it)->getRadius(), position, radius))
+			{
+				resObjects.push_back(*it);
+			}
+		}
+
+		return resObjects;
 	}
 
 	const vector<O *> pick(const Vec3f & pickPosition) const
