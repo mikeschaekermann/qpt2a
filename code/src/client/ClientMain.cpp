@@ -66,7 +66,20 @@ void ClientMain::draw()
 
 void ClientMain::mouseDown( MouseEvent event )
 {
-	m_touchWays.insert(make_pair(-1, TouchWay(-1, event.getPos(), m_fElapsedGameTimeLastFrame)));
+	TouchWay::TRIGGER trigger;
+	if (event.isLeftDown())
+	{
+		trigger = TouchWay::LEFT;
+	}
+	else if (event.isRightDown())
+	{
+		trigger = TouchWay::RIGHT;
+	}
+	else if (event.isMiddleDown())
+	{
+		trigger = TouchWay::MIDDLE;
+	}
+	m_touchWays.insert(make_pair(-1, TouchWay(-1, event.getPos(), m_fElapsedGameTimeLastFrame, trigger)));
 	SCREEN_MGR->touchBegan(m_touchWays[-1]);
 }
 
@@ -88,11 +101,16 @@ void ClientMain::mouseMove( MouseEvent event )
 	SCREEN_MGR->mouseMove(event);
 }
 
+void ClientMain::mouseWheel( MouseEvent event )
+{
+	SCREEN_MGR->mouseWheel(event);
+}
+
 void ClientMain::touchesBegan( TouchEvent event )
 {
 	for (auto touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt)
 	{
-		m_touchWays.insert(make_pair(touchIt->getId(), TouchWay(touchIt->getId(), touchIt->getPos(), m_fElapsedGameTimeLastFrame)));
+		m_touchWays.insert(make_pair(touchIt->getId(), TouchWay(touchIt->getId(), touchIt->getPos(), m_fElapsedGameTimeLastFrame, TouchWay::FINGER)));
 		SCREEN_MGR->touchBegan(m_touchWays[touchIt->getId()]);
 	}
 }

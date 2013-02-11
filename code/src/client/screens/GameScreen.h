@@ -36,6 +36,7 @@ public:
 	virtual void touchClick(TouchWay touchWay);
 	virtual void resize(ResizeEvent event);
 	virtual void onKeyInput(KeyEvent& e);
+	virtual void mouseWheel(MouseEvent & e);
 
 	void addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable);
 	void addGameObjectToDraw(GameObjectClient * gameObject, bool collidable);

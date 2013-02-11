@@ -94,7 +94,7 @@ bool GameScreen::touchBegan(const TouchWay & touchWay)
 	auto touchedAnything = false;
 
 	auto touchedGUI = Screen::touchBegan(touchWay);
-	touchedAnything |= touchedGUI;
+	touchedAnything = touchedGUI;
 
 	if (!touchedGUI)
 	{
@@ -106,6 +106,7 @@ bool GameScreen::touchBegan(const TouchWay & touchWay)
 
 void GameScreen::touchMoved(const TouchWay & touchWay)
 {
+	cam.setEyePoint(cam.getEyePoint() + Vec3f(-touchWay.getLastDeltaVector().x, touchWay.getLastDeltaVector().y, 0));
 	return state->touchMoved(touchWay);
 };
 
@@ -137,8 +138,29 @@ void GameScreen::onKeyInput(KeyEvent& e)
 	{
 		switchToState(new GameScreenStateNeutral(this));
 	}
+	else if(e.getCode() == KeyEvent::KEY_LEFT)
+	{
+		cam.setEyePoint(cam.getEyePoint() + Vec3f(10.f, 0.f, 0.f));
+	}
+	else if(e.getCode() == KeyEvent::KEY_RIGHT)
+	{
+		cam.setEyePoint(cam.getEyePoint() + Vec3f(-10.f, 0.f, 0.f));
+	}
+	else if(e.getCode() == KeyEvent::KEY_UP)
+	{
+		cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, -10.f, 0.f));
+	}
+	else if(e.getCode() == KeyEvent::KEY_DOWN)
+	{
+		cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 10.f, 0.f));
+	}
 
 	state->onKeyInput(e);
+}
+
+void GameScreen::mouseWheel(MouseEvent & e)
+{
+	cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 0.f, -e.getWheelIncrement() * 100.f));
 }
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable)
