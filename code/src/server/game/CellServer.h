@@ -17,8 +17,8 @@ public:
 		STANDARDCELL
 	};
 
-	CellServer(Type type, Vec3f position, float angle) :
-		Cell(position, angle),
+	CellServer(Type type, Vec3f position, float angle, Player * owner) :
+		Cell(position, angle, owner),
 		type(type)
 	{
 		switch(type)

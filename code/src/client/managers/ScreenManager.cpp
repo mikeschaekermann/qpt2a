@@ -124,4 +124,9 @@ void ScreenManager::onKeyInput(KeyEvent& e) const
 	currentScreen->onKeyInput(e);
 }
 
+void ScreenManager::mouseWheel(MouseEvent & e) const
+{
+	currentScreen->mouseWheel(e);
+}
+
 ScreenManager * ScreenManager::instance = nullptr;

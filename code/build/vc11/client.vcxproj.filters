@@ -140,6 +140,42 @@
     <ClCompile Include="..\..\src\client\screens\IpInput.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\actors\StandardCellClient.cpp">
+      <Filter>Actors\Cells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\AABBCollisionBehavior.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\CollisionHandler.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\main.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkStaticModifier.cpp">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkBarrier.cpp">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkDynamicModifier.cpp">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.cpp">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.cpp">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.cpp">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\DynamicModifierType.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\StaticModifierType.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -206,9 +242,6 @@
       <Filter>Actors\Cells</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\StemCell.h">
-      <Filter>Actors\Cells</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\client\actors\StemCellClient.h">
       <Filter>Actors\Cells</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\client\rendering\Cam.h">
@@ -317,6 +350,54 @@
     <ClInclude Include="..\..\src\client\screens\CreditsScreen.h">
       <Filter>Screens</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenState.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\actors\StandardCellClient.h">
+      <Filter>Actors\Cells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\actors\StemCellClient.h">
+      <Filter>Actors\Cells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\AABBCollisionBehavior.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\CollisionHandler.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Circle.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkDynamicModifier.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkStaticModifier.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkBarrier.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.h">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.h">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.h">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\DynamicModifierType.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\StaticModifierType.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -372,6 +453,12 @@
     </Filter>
     <Filter Include="Network\Messages\Enum">
       <UniqueIdentifier>{7e36fa21-5895-4718-b3bf-f10361bf3a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screens\GameScreenStates">
+      <UniqueIdentifier>{2a317f10-862d-494d-9bf8-5cdc5f046aa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Environment">
+      <UniqueIdentifier>{fc0cb6cd-74ef-42b2-9c54-b751e834bb47}</UniqueIdentifier>
     </Filter>
     <Filter Include="Rendering\Shader">
       <UniqueIdentifier>{d260840e-6c95-46e7-9ba0-7b3fafed03f4}</UniqueIdentifier>

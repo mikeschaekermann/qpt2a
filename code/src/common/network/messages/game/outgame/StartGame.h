@@ -4,6 +4,9 @@
 #include "../../NetworkMessage.h"
 
 #include "NetworkPlayer.h"
+#include "NetworkBarrier.h"
+#include "NetworkStaticModifier.h"
+#include "NetworkDynamicModifier.h"
 
 class StartGame : public NetworkMessage
 {
@@ -12,6 +15,9 @@ public:
 	float worldRadius;
 
 	std::vector<NetworkPlayer> players;
+	std::vector<NetworkBarrier> barriers;
+	std::vector<NetworkStaticModifier> staticModifiers;
+	std::vector<NetworkDynamicModifier> dynamicModifiers;
 
 	/* Constructor / Destructor */
 	StartGame();														/// Default constructor

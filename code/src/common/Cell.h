@@ -30,7 +30,7 @@ protected:
  const Player * owner;
 
  Cell(void);
- Cell(Vec3f position, float angle);
+ Cell(Vec3f position, float angle, Player * owner);
  Cell(Vec3f position, float radius, float angle, float healthPoints);
  Cell(Vec3f position, float radius, float angle, float healthPoints, Player * owner);
 

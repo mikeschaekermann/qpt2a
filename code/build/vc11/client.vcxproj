@@ -19,6 +19,7 @@
     <ClCompile Include="..\..\src\client\actors\CellClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\GameObjectClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\PlayerClient.cpp" />
+    <ClCompile Include="..\..\src\client\actors\StandardCellClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\StemCellClient.cpp" />
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
     <ClCompile Include="..\..\src\Client\input\TouchWay.cpp" />
@@ -36,16 +37,21 @@
     <ClCompile Include="..\..\src\client\screens\Screen.cpp" />
     <ClCompile Include="..\..\src\client\screens\TextInput.cpp" />
     <ClCompile Include="..\..\src\client\sound\SoundPlayer.cpp" />
+    <ClCompile Include="..\..\src\common\AABBCollisionBehavior.cpp" />
     <ClCompile Include="..\..\src\common\Cell.cpp" />
+    <ClCompile Include="..\..\src\common\CollisionHandler.cpp" />
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
+    <ClCompile Include="..\..\src\common\main.cpp" />
     <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\CellType.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\enum\DynamicModifierType.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\JoinErrorCode.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\MessageType.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\enum\StaticModifierType.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.cpp" />
@@ -53,11 +59,17 @@
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellFailure.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\GameOver.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinFailure.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinRequest.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkBarrier.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkDynamicModifier.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkStaticModifier.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
@@ -68,6 +80,7 @@
     <ClInclude Include="..\..\src\client\actors\CellClient.h" />
     <ClInclude Include="..\..\src\client\actors\GameObjectClient.h" />
     <ClInclude Include="..\..\src\client\actors\PlayerClient.h" />
+    <ClInclude Include="..\..\src\client\actors\StandardCellClient.h" />
     <ClInclude Include="..\..\src\client\actors\StemCellClient.h" />
     <ClInclude Include="..\..\src\client\ClientMain.h" />
     <ClInclude Include="..\..\src\Client\input\TouchWay.h" />
@@ -79,6 +92,9 @@
     <ClInclude Include="..\..\src\client\screens\ConnectScreen.h" />
     <ClInclude Include="..\..\src\client\screens\CreditsScreen.h" />
     <ClInclude Include="..\..\src\client\screens\GameScreen.h" />
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenState.h" />
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.h" />
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.h" />
     <ClInclude Include="..\..\src\client\screens\GUIItem.h" />
     <ClInclude Include="..\..\src\client\screens\IpInput.h" />
     <ClInclude Include="..\..\src\client\screens\IScreenItem.h" />
@@ -86,8 +102,11 @@
     <ClInclude Include="..\..\src\client\screens\Screen.h" />
     <ClInclude Include="..\..\src\client\screens\TextInput.h" />
     <ClInclude Include="..\..\src\client\sound\SoundPlayer.h" />
+    <ClInclude Include="..\..\src\common\AABBCollisionBehavior.h" />
     <ClInclude Include="..\..\src\common\Cell.h" />
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h" />
+    <ClInclude Include="..\..\src\common\Circle.h" />
+    <ClInclude Include="..\..\src\common\CollisionHandler.h" />
     <ClInclude Include="..\..\src\common\Config.h" />
     <ClInclude Include="..\..\src\common\ConfigurationDataHandler.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
@@ -100,8 +119,10 @@
     <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\CellType.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.h" />
+    <ClInclude Include="..\..\src\common\network\messages\enum\DynamicModifierType.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\JoinErrorCode.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\MessageType.h" />
+    <ClInclude Include="..\..\src\common\network\messages\enum\StaticModifierType.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CellNew.h" />
@@ -109,11 +130,17 @@
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellFailure.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellRequest.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\creation\CreateCellSuccess.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\GameOver.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinFailure.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinRequest.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinSuccess.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkBarrier.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkDynamicModifier.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkStaticModifier.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\StartGame.h" />
     <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h" />
     <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
@@ -193,7 +220,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CLIENT;WIN32;_LOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows;$(FMOD_DIR)\api\inc;$(ASSIMP_DIR)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(OPENCV_DIR)\build\include;$(CINDER_DIR)\include;$(_2REALKINECTWRAPPER_DIR)\include;$(CINDER_DIR)\boost;$(SolutionDir)\..\..\libs\glog-0.3.2\src\windows;$(FMOD_DIR)\api\inc;$(ASSIMP_DIR)\include;$(BOOST_DIR)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>Cdecl</CallingConvention>
       <IntrinsicFunctions>false</IntrinsicFunctions>

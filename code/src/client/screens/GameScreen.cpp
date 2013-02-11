@@ -3,8 +3,12 @@
 #include "../managers/AssetManager.h"
 #include "../actors/CellClient.h"
 #include "../actors/GameObjectClient.h"
+#include "GameScreenStates/GameScreenStateNeutral.h"
+#include "GameScreenStates/GameScreenStateCreateCell.h"
+#include "../../common/network/messages/enum/CellType.h"
 
-GameScreen::GameScreen()
+GameScreen::GameScreen():
+	state(new GameScreenStateNeutral(this))
 {
 	auto screenSize = getWindowSize();
 	cam = Cam(screenSize.x, screenSize.y, CONFIG_FLOAT1("data.rendering.camera.fieldOfView"), CONFIG_FLOAT1("data.rendering.camera.nearPlane"), CONFIG_FLOAT1("data.rendering.camera.farPlane"));
@@ -23,10 +27,7 @@ GameScreen::GameScreen()
 	cellMenu
 		->addSubItem(
 			this,
-			[]()
-			{
-				LOG_INFO("CREATE CELL!");
-			},
+			[](){},
 			Vec2f::zero(),
 			createCellButton,
 			createCellButton,
@@ -34,9 +35,9 @@ GameScreen::GameScreen()
 		)
 		->addSubItem(
 			this,
-			[]()
+			[this]()
 			{
-				LOG_INFO("CREATE STANDARD CELL");
+				switchToState(new GameScreenStateCreateCell(this, CellType::StandardCell));
 			},
 			Vec2f(45, -10),
 			createStandardCellButton,
@@ -49,11 +50,15 @@ GameScreen::GameScreen()
 
 GameScreen::~GameScreen(void)
 {
-
+	if (state != nullptr)
+	{
+		delete state;
+	}
 }
 
 void GameScreen::update(float frameTime)
 {
+	state->update(frameTime);
 }
 
 void GameScreen::draw()
@@ -69,6 +74,8 @@ void GameScreen::draw()
 		{
 			it->second->draw();
 		}
+
+		state->draw3D();
 
 		gl::color(ColorA(1, 1, 1, 1));
 
@@ -108,6 +115,8 @@ void GameScreen::draw()
 	gl::popMatrices();
 
 	Screen::draw();
+
+	state->draw2D();
 }
 
 bool GameScreen::touchBegan(const TouchWay & touchWay)
@@ -115,26 +124,11 @@ bool GameScreen::touchBegan(const TouchWay & touchWay)
 	auto touchedAnything = false;
 
 	auto touchedGUI = Screen::touchBegan(touchWay);
-	touchedAnything |= touchedGUI;
+	touchedAnything = touchedGUI;
 
 	if (!touchedGUI)
 	{
-		LOG_INFO("touch way started");
-
-		auto pointInWorldPlane = cam.screenToWorldPlane(touchWay.getCurrentPos());
-		auto cellsPicked = cellsToPick.pick(pointInWorldPlane);
-
-		if (cellsPicked.size() > 0)
-		{
-			touchedAnything = true;
-			pickCell(cellsPicked[0]);
-			LOG_INFO("number of objects picked:");
-			LOG_INFO(cellsPicked.size());
-		}
-		else
-		{
-			unpickCell();
-		}
+		touchedAnything |= state->touchBegan(touchWay);
 	}
 
 	return touchedAnything;
@@ -142,23 +136,61 @@ bool GameScreen::touchBegan(const TouchWay & touchWay)
 
 void GameScreen::touchMoved(const TouchWay & touchWay)
 {
-	LOG_INFO("touch way moved");
+	cam.setEyePoint(cam.getEyePoint() + Vec3f(-touchWay.getLastDeltaVector().x, touchWay.getLastDeltaVector().y, 0));
+	return state->touchMoved(touchWay);
 };
+
+bool GameScreen::mouseMove(MouseEvent event)
+{
+	return (state->mouseMove(event) || Screen::mouseMove(event));
+}
 
 void GameScreen::touchEnded(TouchWay touchWay)
 {
+	state->touchEnded(touchWay);
 	Screen::touchEnded(touchWay);
-	LOG_INFO("touch way ended");
 };
 
 void GameScreen::touchClick(TouchWay touchWay)
 {
-	LOG_INFO("touch click!");
+	state->touchClick(touchWay);
 };
 
 void GameScreen::resize(ResizeEvent event)
 {
+	state->resize(event);
 	cam.setAspectRatio(getWindowAspectRatio());
+}
+
+void GameScreen::onKeyInput(KeyEvent& e)
+{
+	if (e.getCode() == KeyEvent::KEY_ESCAPE)
+	{
+		switchToState(new GameScreenStateNeutral(this));
+	}
+	else if(e.getCode() == KeyEvent::KEY_LEFT)
+	{
+		cam.setEyePoint(cam.getEyePoint() + Vec3f(10.f, 0.f, 0.f));
+	}
+	else if(e.getCode() == KeyEvent::KEY_RIGHT)
+	{
+		cam.setEyePoint(cam.getEyePoint() + Vec3f(-10.f, 0.f, 0.f));
+	}
+	else if(e.getCode() == KeyEvent::KEY_UP)
+	{
+		cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, -10.f, 0.f));
+	}
+	else if(e.getCode() == KeyEvent::KEY_DOWN)
+	{
+		cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 10.f, 0.f));
+	}
+
+	state->onKeyInput(e);
+}
+
+void GameScreen::mouseWheel(MouseEvent & e)
+{
+	cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 0.f, -e.getWheelIncrement() * 100.f));
 }
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable)
@@ -197,7 +229,7 @@ void GameScreen::zoomToWorld()
 		.setFocus(Vec3f::zero());
 }
 
-void GameScreen::pickCell(GameObject * cell)
+void GameScreen::pickCell(CellClient * cell)
 {
 	if (cell != nullptr)
 	{
@@ -214,4 +246,14 @@ void GameScreen::unpickCell()
 {
 	pickedCell = nullptr;
 	cellMenu->setVisible(false);
+}
+
+void GameScreen::switchToState(GameScreenState * newState)
+{
+	auto oldState = state;
+	state = newState;
+	if (oldState != nullptr)
+	{
+		delete oldState;
+	}
 }

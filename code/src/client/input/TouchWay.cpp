@@ -5,9 +5,10 @@ double TouchWay::TouchPoint::getTime() const { return m_dTime; }
 
 TouchWay::TouchWay(): m_iId(0), m_way() {};
 
-TouchWay::TouchWay(int32_t id, const Vec2f& startPos, double startTime):
+TouchWay::TouchWay(int32_t id, const Vec2f& startPos, double startTime, TRIGGER trigger):
 	m_way(),
-	m_iId(id)
+	m_iId(id),
+	trigger(trigger)
 {
 	m_way.push_back(TouchPoint(startPos, startTime));
 }
@@ -47,4 +48,9 @@ Vec2f TouchWay::getLastDeltaVector() const
 bool TouchWay::isClick() const
 {
 	return (m_way.size() == 2 && getStartPos() == getCurrentPos());
+}
+
+TouchWay::TRIGGER TouchWay::getTrigger() const
+{
+	return trigger;
 }

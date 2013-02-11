@@ -10,6 +10,9 @@ using namespace app;
 class TouchWay
 {
 public:
+	/// @brief different ways to trigger touchway event
+	enum TRIGGER { FINGER, LEFT, RIGHT, MIDDLE };
+
 	/// @brief nested helper class representing one point within a touch way
 	class TouchPoint
 	{
@@ -23,7 +26,7 @@ public:
 	};
 
 	TouchWay();
-	TouchWay(int32_t id, const Vec2f& startPos, double startTime);
+	TouchWay(int32_t id, const Vec2f& startPos, double startTime, TRIGGER trigger);
 
 	/// @brief gets the touch way's id
 	int32_t getId() const;
@@ -41,10 +44,14 @@ public:
 	Vec2f getLastDeltaVector() const;
 	/// @brief gets a flag indicating whether this touch way is a simple click (i.e. no drag in between)
 	bool isClick() const;
+	/// @brief gets the trigger method
+	TRIGGER getTrigger() const;
 
 private:
 	/// touch way's id
 	const int32_t			m_iId;
 	/// touch way consisting of a list of touch points
 	vector<TouchPoint>		m_way;
+	/// touch way trigger
+	TRIGGER trigger;
 };

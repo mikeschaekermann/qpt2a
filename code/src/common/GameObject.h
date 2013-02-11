@@ -4,7 +4,6 @@
 
 #include "../common/Config.h"
 
-
 class GameObject
 {
 public:

@@ -52,3 +52,8 @@ void Screen::onKeyInput(KeyEvent& e)
 		focusedItem->onKeyInput(e);
 	}
 }
+
+void Screen::mouseWheel(MouseEvent & e)
+{
+
+}

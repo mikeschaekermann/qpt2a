@@ -22,8 +22,9 @@ public:
 		CellAttack,					/// Is sent by the server when a cell attacks another
 		CellDie,					/// Is sent by the server when a cell dies
 		GameOver,					/// Is sent by the server when the game is over
-
-
+		EnvironmentAttack,			/// Is sent by the server when the environment attacks a cell
+		EnvironmentMove,			/// Is sent by the server when a dynamic element of the environment moves
+		ResourceBonus,				/// Is sent by the server when a cell is granted a resourcebonus
 		Last_Value					/// Is the last valid messagetype
 	};
 	

@@ -7,17 +7,8 @@
     <ClInclude Include="..\..\src\Server\event\BuildingEvent.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\event\Event.h">
-      <Filter>Eventlogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\event\EventQueue.h">
-      <Filter>Eventlogic</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h">
       <Filter>Eventlogic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\EventCreator.h">
-      <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\Cell.h">
       <Filter>Common</Filter>
@@ -139,11 +130,71 @@
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.h">
       <Filter>Network\Messages\Game\OutGame</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\environment\Barrier.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\environment\DynamicModificator.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\environment\StaticModificator.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\environment\BarrierServer.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\environment\DynamicModificatorServer.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\environment\StaticModificatorServer.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\Server\game\CellServer.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\game\GameObjectServer.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\CollisionHandler.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Circle.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\AABBCollisionBehavior.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\event\EventManager.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\event\GameEvent.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\event\EventCreator.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\DynamicModifierType.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\StaticModifierType.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkDynamicModifier.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkStaticModifier.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\outgame\NetworkBarrier.h">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.h">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.h">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.h">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -183,8 +234,14 @@
     <Filter Include="Network\Messages\Enum">
       <UniqueIdentifier>{ef932a5a-1507-4621-8293-a7c857650865}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Environment">
+      <UniqueIdentifier>{87fc7ff7-2833-473b-9e5a-8b0f039c90bf}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Objects">
-      <UniqueIdentifier>{b587d357-6b5f-467c-8c1b-6bb17fd2be07}</UniqueIdentifier>
+      <UniqueIdentifier>{86df9750-77a3-49f5-82e8-bf74993a6433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Environment">
+      <UniqueIdentifier>{d80b3f3a-02ab-4a19-a445-ecc0600e5826}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,9 +261,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\Main.cpp" />
-    <ClCompile Include="..\..\src\server\game\EventCreator.cpp">
-      <Filter>Gamelogic</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp">
       <Filter>Eventlogic</Filter>
     </ClCompile>
@@ -281,6 +335,66 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.cpp">
       <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\CollisionHandler.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\AABBCollisionBehavior.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\environment\Barrier.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\environment\StaticModificator.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\environment\DynamicModificator.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\environment\DynamicModificatorServer.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\environment\StaticModificatorServer.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\environment\BarrierServer.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\EventManager.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\AttackEvent.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\Helper.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\EventCreator.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\StaticModifierType.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\DynamicModifierType.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkDynamicModifier.cpp">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkStaticModifier.cpp">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkBarrier.cpp">
+      <Filter>Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.cpp">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.cpp">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.cpp">
+      <Filter>Network\Messages\Game\InGame\Environment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

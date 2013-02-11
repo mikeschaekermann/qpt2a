@@ -25,9 +25,15 @@ public:
 	 */
 	virtual bool touchBegan(const TouchWay & touchWay);
 	/**
+		@brief event method called when the mouse has moved
+		@param event			mouse event for mouse motion
+	 */
+	virtual bool mouseMove( MouseEvent event );
+	/**
 		@brief event method called when an existing touch has moved
 		@param touchWay			touch way of the touch, concerned
 	 */
+
 	virtual void touchMoved(const TouchWay & touchWay);
 	/**
 		@brief event method called when an existing touch has ended

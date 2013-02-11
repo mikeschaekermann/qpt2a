@@ -17,10 +17,10 @@ public:
  {
   setId(id);
  }
-
+ virtual void setPosition(Vec3f position) { CellClient::setPosition(position); }
+ 
 private:
  virtual void setId(unsigned int id) { CellClient::setId(id); }
- virtual void setPosition(Vec3f position) { CellClient::setPosition(position); }
  virtual void setRotation(Vec3f rotation) { CellClient::setRotation(rotation); }
  virtual void setScale(Vec3f scale) { CellClient::setScale(scale); }
  virtual void setRadius(float radius) { CellClient::setRadius(radius); }

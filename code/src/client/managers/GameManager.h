@@ -11,6 +11,7 @@
 
 #define GAME_MGR GameManager::getInstance()
 #define GAME_SCR SCREEN_MGR->getGameScreen()
+#define NETWORK_MGR GAME_MGR->getNetworkManager()
 
 class GameManager
 {
@@ -28,6 +29,9 @@ public:
 	void addPetriDish(float radius);
 	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
 	void setMyPlayerId(unsigned int id);
+	
+	ClientNetworkManager * getNetworkManager();
+	boost::asio::ip::udp::endpoint getServerEndpoint();
 
 	void quit();
 private:
