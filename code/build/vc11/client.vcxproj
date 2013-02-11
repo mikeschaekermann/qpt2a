@@ -37,10 +37,13 @@
     <ClCompile Include="..\..\src\client\screens\Screen.cpp" />
     <ClCompile Include="..\..\src\client\screens\TextInput.cpp" />
     <ClCompile Include="..\..\src\client\sound\SoundPlayer.cpp" />
+    <ClCompile Include="..\..\src\common\AABBCollisionBehavior.cpp" />
     <ClCompile Include="..\..\src\common\Cell.cpp" />
+    <ClCompile Include="..\..\src\common\CollisionHandler.cpp" />
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
+    <ClCompile Include="..\..\src\common\main.cpp" />
     <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\CellType.cpp" />
@@ -91,8 +94,12 @@
     <ClInclude Include="..\..\src\client\screens\Screen.h" />
     <ClInclude Include="..\..\src\client\screens\TextInput.h" />
     <ClInclude Include="..\..\src\client\sound\SoundPlayer.h" />
+    <ClInclude Include="..\..\src\common\AABBCollisionBehavior.h" />
+    <ClInclude Include="..\..\src\common\Areaf.h" />
     <ClInclude Include="..\..\src\common\Cell.h" />
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h" />
+    <ClInclude Include="..\..\src\common\Circle.h" />
+    <ClInclude Include="..\..\src\common\CollisionHandler.h" />
     <ClInclude Include="..\..\src\common\Config.h" />
     <ClInclude Include="..\..\src\common\ConfigurationDataHandler.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />

@@ -55,12 +55,13 @@ void NetworkManager::operator()()
 	maintenanceThread = boost::thread(boost::bind(&NetworkManager::connectionMaintenance, this));
 	
 	boost::array<char, 5000> buffer;
-	while (run)
+	try
 	{
-		// On shut down of client.exe, sometimes the function body throws an access violation exception;
-		// therefore the try-catch-block! Please have a look into this!
-		try
+		while (run)
 		{
+			// On shut down of client.exe, sometimes the function body throws an access violation exception;
+			// therefore the try-catch-block! Please have a look into this!
+		
 			udp::endpoint remote_endpoint;
 			boost::system::error_code error;
 		
@@ -126,10 +127,10 @@ void NetworkManager::operator()()
 			}
 			delete message;
 		}
-		catch(std::exception &ex)
-		{
-			LOG_ERROR(ex.what());
-		}
+	}
+	catch(...)
+	{
+		/// LOG_ERROR(ex.what());
 	}
 }
 
@@ -186,12 +187,13 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 
 void NetworkManager::connectionMaintenance()
 {
-	while (run)
+	try
 	{
-		// On shut down of client.exe, sometimes the function body throws an access violation exception;
-		// therefore the try-catch-block! Please have a look into this!
-		try
+		while (run)
 		{
+			// On shut down of client.exe, sometimes the function body throws an access violation exception;
+			// therefore the try-catch-block! Please have a look into this!
+		
 			boost::this_thread::sleep(boost::posix_time::milliseconds(100));
 			maintenanceMutex.lock();
 		
@@ -218,9 +220,9 @@ void NetworkManager::connectionMaintenance()
 			}
 			maintenanceMutex.unlock();
 		}
-		catch(...)
-		{
-		}
+	}
+	catch(...)
+	{
 	}
 }
 

@@ -28,7 +28,7 @@ public:
 		@brief event method called when the mouse has moved
 		@param event			mouse event for mouse motion
 	 */
-	virtual void mouseMove( MouseEvent event );
+	virtual bool mouseMove( MouseEvent event );
 	/**
 		@brief event method called when an existing touch has moved
 		@param touchWay			touch way of the touch, concerned

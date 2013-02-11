@@ -143,6 +143,15 @@
     <ClCompile Include="..\..\src\client\actors\StandardCellClient.cpp">
       <Filter>Actors\Cells</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\common\AABBCollisionBehavior.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\CollisionHandler.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\main.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -331,6 +340,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\client\actors\StemCellClient.h">
       <Filter>Actors\Cells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\AABBCollisionBehavior.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\CollisionHandler.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Circle.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Areaf.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

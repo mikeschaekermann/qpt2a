@@ -107,9 +107,9 @@ bool MenuScreen::touchBegan(const TouchWay & touchWay)
 	LOG_INFO("touch way started");
 };
 
-void MenuScreen::mouseMove( MouseEvent event )
+bool MenuScreen::mouseMove( MouseEvent event )
 {
-	Screen::mouseMove(event);
+	return Screen::mouseMove(event);
 }
 
 void MenuScreen::touchMoved(const TouchWay & touchWay)

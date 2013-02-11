@@ -20,6 +20,8 @@
 
 #include "IdGameObjectMap.h"
 #include "PositionGameObjectMap.h"
+#include "CollisionHandler.h"
+#include "ConfigurationDataHandler.h"
 
 using namespace std;
 
@@ -30,6 +32,11 @@ class GameObjectContainer
 {
 public:
 	typedef map<unsigned int, typename O *> MapIdPointer;
+
+	GameObjectContainer()
+	{
+		collisionHandler.initialize(ci::Area(0, 0, CONFIG_FLOAT1("data.world.radius") * 2, CONFIG_FLOAT1("data.world.radius") * 2));
+	}
 
 	void createGameObject(O * gameObject)
 	{
@@ -102,4 +109,5 @@ public:
 private:
 	IdGameObjectMap<O> idMap;
 	PositionGameObjectMap<O> positionMap;
+	CollisionHandler collisionHandler;
 };
