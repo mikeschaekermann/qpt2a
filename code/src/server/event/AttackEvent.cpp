@@ -7,7 +7,7 @@
 #include "../../common/network/messages/game/ingame/cell/combat/CellAttack.h"
 #include "../../common/network/messages/game/ingame/cell/combat/CellDie.h"
 
-AttackEvent::AttackEvent(double startTime, NetworkManager & manager, GameObjectContainer & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage, vector<PlayerServer *> & players) :
+AttackEvent::AttackEvent(double startTime, NetworkManager & manager, GameObjectContainer<GameObject> & gameObjectContainer, CellServer & attacker, CellServer & victim, float damage, vector<PlayerServer *> & players) :
 	manager(manager),
 	gameObjectContainer(gameObjectContainer),
 	attacker(attacker),

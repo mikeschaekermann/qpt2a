@@ -1,12 +1,12 @@
 #pragma once
 
 class NetworkManager;
-class GameObjectContainer;
 class PlayerServer;
 class CellServer;
 
 #include <vector>
 
+#include "../../common/GameObjectContainer.h"
 #include "cinder/Vector.h"
 
 #define EVENT_CRTR EventCreator::getInstance()
@@ -16,7 +16,7 @@ class EventCreator
 public:
 	static EventCreator * getInstance();
 
-	void bind(NetworkManager * networkManager, GameObjectContainer * gameObjectContainer, std::vector<PlayerServer *> * players);
+	void bind(NetworkManager * networkManager, GameObjectContainer<GameObject> * gameObjectContainer, std::vector<PlayerServer *> * players);
 
 	bool createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & cell);
 
@@ -24,7 +24,7 @@ public:
 private:
 	static EventCreator * instance;
 	NetworkManager * networkManager;
-	GameObjectContainer * gameObjectContainer;
+	GameObjectContainer<GameObject> * gameObjectContainer;
 	std::vector<PlayerServer *> * players;
 
 	EventCreator();

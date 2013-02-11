@@ -56,10 +56,7 @@ public:
 		this->networkManager = networkManager;
 		LOG_INFO("NetworkManager bound to game");
 
-		this->eventQueue = eventQueue;
-		LOG_INFO("EventQueue bound to Game");
-
-		EventCreator::getInstance()->bind(networkManager, eventQueue, &gameObjectContainer, &(this->players));
+		EventCreator::getInstance()->bind(networkManager, &gameObjectContainer, &(this->players));
 	}
 
 	void join(JoinRequest request)
@@ -403,7 +400,7 @@ public:
 				cell = new CellServer(CellServer::STANDARDCELL, position, angle, &player);
 				break;
 			default:
-				message.clear();
+				stringstream message;
 				message << "Unknown CellType: " << type.getType();
 				LOG_INFO(message.str());
 				return;

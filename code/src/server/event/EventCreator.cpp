@@ -30,11 +30,7 @@ EventCreator * EventCreator::getInstance()
 	return instance;
 }
 
-<<<<<<< HEAD:code/src/server/game/EventCreator.cpp
-void EventCreator::bind(NetworkManager * networkManager, EventQueue * eventQueue, GameObjectContainer<GameObject> * gameObjectContainer, vector<PlayerServer *> * players)
-=======
-void EventCreator::bind(NetworkManager * networkManager, GameObjectContainer * gameObjectContainer, vector<PlayerServer *> * players)
->>>>>>> remotes/origin/protoEnvironment:code/src/server/event/EventCreator.cpp
+void EventCreator::bind(NetworkManager * networkManager, GameObjectContainer<GameObject> * gameObjectContainer, vector<PlayerServer *> * players)
 {
 	this->networkManager = networkManager;
 	this->gameObjectContainer = gameObjectContainer;
