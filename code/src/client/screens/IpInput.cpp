@@ -18,7 +18,7 @@ IpInput::~IpInput(void)
 
 void IpInput::onKeyInput(KeyEvent& e)
 {
-	if(isdigit(e.getChar()) || e.getChar() == '.' || e.getCode() == KeyEvent::KEY_BACKSPACE)
+	if(isdigit((unsigned char)e.getChar()) || e.getChar() == '.' || e.getCode() == KeyEvent::KEY_BACKSPACE)
 	{
 		TextInput::onKeyInput(e);
 	}

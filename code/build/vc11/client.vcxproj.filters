@@ -460,10 +460,25 @@
     <Filter Include="Network\Messages\Game\InGame\Environment">
       <UniqueIdentifier>{fc0cb6cd-74ef-42b2-9c54-b751e834bb47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Rendering\Shader">
+      <UniqueIdentifier>{d260840e-6c95-46e7-9ba0-7b3fafed03f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{bae7d18c-0568-42e2-bfd0-caee06877532}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram11.cd" />
     <None Include="ClassDiagram12.cd" />
+    <None Include="..\..\resources\shader\test.vert">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\test.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\assets.xml">
+      <Filter>Config</Filter>
+    </None>
   </ItemGroup>
 </Project>

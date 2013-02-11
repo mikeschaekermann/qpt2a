@@ -82,6 +82,36 @@ void GameScreen::draw()
 		gl::disableDepthWrite();
 		gl::disableDepthRead();
 	}
+	
+	
+	////////////// render test
+	//gl::color(1,1,1,1);
+	//gl::pushMatrices();
+
+	//gl::translate(100, -100, 20);
+	//gl::scale(100, 100, 100);
+	//string name("stemcell");
+	//auto model = ASSET_MGR->getModel(name);
+	//auto shader = ASSET_MGR->getShaderProg(string("test"));
+	//
+	//shader.bind();
+
+	//shader.uniform("viewPos", cam.getEyePoint());
+	//shader.uniform("lightPos", Vec3f(0, 0, 100));
+
+	//shader.uniform("matModelView", cam.getModelViewMatrix());
+	//shader.uniform("matProjection", cam.getProjectionMatrix());
+	//
+	//shader.uniform("ambientColor", Vec3f(0.1, 0.1, 0.1));
+	//shader.uniform("diffuseColor", Vec3f(0.1, 0.1, 0.1));
+	//shader.uniform("specularColor", Vec3f(0.1, 0.1, 0.1));
+	//shader.uniform("shininess", 2);
+
+	//gl::draw(model);
+	//shader.unbind();
+
+	//gl::popMatrices();
+
 	gl::popMatrices();
 
 	Screen::draw();
