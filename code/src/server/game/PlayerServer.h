@@ -7,6 +7,7 @@
 #include "../../common/network/ConnectionEndpoint.h"
 #include "../../common/Player.h"
 #include "IIdentifiable.h"
+#include "CellServer.h"
 
 using namespace std;
 

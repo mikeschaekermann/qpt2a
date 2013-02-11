@@ -31,6 +31,41 @@ void testStartGame()
 		message->players.push_back(p);
 	}
 
+	for (unsigned i = 0; i < 3; ++i)
+	{
+		NetworkBarrier p;
+		p.modifierId = i;
+		p.position = ci::Vec3f(4.33f, 5.66f, 2.f * i);
+		p.rotation = ci::Vec3f(5.33f, 6.66f, 3.f * i);
+		p.scale = ci::Vec3f(6.33f, 7.66f, 4.f * i);
+		p.radius = i * 2.4f;
+		message->barriers.push_back(p);
+	}
+
+	for (unsigned i = 0; i < 3; ++i)
+	{
+		NetworkDynamicModifier p;
+		p.modifierId = i;
+		p.position = ci::Vec3f(9.33f, 15.66f, 232.f * i);
+		p.rotation = ci::Vec3f(523.33f, 2346.66f, 3.f * i);
+		p.scale = ci::Vec3f(6.33f, 7.23466f, 4.f * i);
+		p.radius = i * 2.4f;
+		p.type = DynamicModifierType::VirusSwarm;
+		message->dynamicModifiers.push_back(p);
+	}
+
+	for (unsigned i = 0; i < 3; ++i)
+	{
+		NetworkStaticModifier p;
+		p.modifierId = i;
+		p.position = ci::Vec3f(4.33f, 5.66f, 2234.f * i);
+		p.rotation = ci::Vec3f(5234.33f, 6.23466f, 3.f * i);
+		p.scale = ci::Vec3f(6.33f, 7.62346f, 4.f * i);
+		p.radius = i * 2.2344f;
+		p.type = StaticModifierType::RadioActivity;
+		message->staticModifiers.push_back(p);
+	}
+
 
 	message->messageSize = message->calculateSize();
 	
@@ -75,6 +110,113 @@ void testStartGame()
 	for (unsigned i = 0; i < message->players.size(); ++i)
 	{
 		assert(message->players[i].playerName == received->players[i].playerName);
+	}
+
+	// Barrier
+	cout << "StartGame Test[Assert 10]" << endl;
+	for (unsigned i = 0; i < message->barriers.size(); ++i)
+	{
+		assert(message->barriers[i].modifierId == received->barriers[i].modifierId);
+	}
+
+	cout << "StartGame Test[Assert 11]" << endl;
+	for (unsigned i = 0; i < message->barriers.size(); ++i)
+	{
+		assert(message->barriers[i].position == received->barriers[i].position);
+	}
+
+	cout << "StartGame Test[Assert 12]" << endl;
+	for (unsigned i = 0; i < message->barriers.size(); ++i)
+	{
+		assert(message->barriers[i].rotation == received->barriers[i].rotation);
+	}
+
+	cout << "StartGame Test[Assert 13]" << endl;
+	for (unsigned i = 0; i < message->barriers.size(); ++i)
+	{
+		assert(message->barriers[i].scale == received->barriers[i].scale);
+	}
+
+	cout << "StartGame Test[Assert 14]" << endl;
+	for (unsigned i = 0; i < message->barriers.size(); ++i)
+	{
+		assert(message->barriers[i].radius == received->barriers[i].radius);
+	}
+
+
+	// Static
+	cout << "StartGame Test[Assert 15]" << endl;
+	for (unsigned i = 0; i < message->staticModifiers.size(); ++i)
+	{
+		assert(message->staticModifiers[i].modifierId == received->staticModifiers[i].modifierId);
+	}
+
+	cout << "StartGame Test[Assert 16]" << endl;
+	for (unsigned i = 0; i < message->staticModifiers.size(); ++i)
+	{
+		assert(message->staticModifiers[i].position == received->staticModifiers[i].position);
+	}
+
+	cout << "StartGame Test[Assert 17]" << endl;
+	for (unsigned i = 0; i < message->staticModifiers.size(); ++i)
+	{
+		assert(message->staticModifiers[i].rotation == received->staticModifiers[i].rotation);
+	}
+
+	cout << "StartGame Test[Assert 18]" << endl;
+	for (unsigned i = 0; i < message->staticModifiers.size(); ++i)
+	{
+		assert(message->staticModifiers[i].scale == received->staticModifiers[i].scale);
+	}
+
+	cout << "StartGame Test[Assert 19]" << endl;
+	for (unsigned i = 0; i < message->staticModifiers.size(); ++i)
+	{
+		assert(message->staticModifiers[i].radius == received->staticModifiers[i].radius);
+	}
+
+	cout << "StartGame Test[Assert 20]" << endl;
+	for (unsigned i = 0; i < message->staticModifiers.size(); ++i)
+	{
+		assert(message->staticModifiers[i].type.getType() == received->staticModifiers[i].type.getType());
+	}
+
+
+	// Dynamic
+	cout << "StartGame Test[Assert 21]" << endl;
+	for (unsigned i = 0; i < message->dynamicModifiers.size(); ++i)
+	{
+		assert(message->dynamicModifiers[i].modifierId == received->dynamicModifiers[i].modifierId);
+	}
+
+	cout << "StartGame Test[Assert 22]" << endl;
+	for (unsigned i = 0; i < message->dynamicModifiers.size(); ++i)
+	{
+		assert(message->dynamicModifiers[i].position == received->dynamicModifiers[i].position);
+	}
+
+	cout << "StartGame Test[Assert 23]" << endl;
+	for (unsigned i = 0; i < message->dynamicModifiers.size(); ++i)
+	{
+		assert(message->dynamicModifiers[i].rotation == received->dynamicModifiers[i].rotation);
+	}
+
+	cout << "StartGame Test[Assert 24]" << endl;
+	for (unsigned i = 0; i < message->dynamicModifiers.size(); ++i)
+	{
+		assert(message->dynamicModifiers[i].scale == received->dynamicModifiers[i].scale);
+	}
+
+	cout << "StartGame Test[Assert 25]" << endl;
+	for (unsigned i = 0; i < message->dynamicModifiers.size(); ++i)
+	{
+		assert(message->dynamicModifiers[i].radius == received->dynamicModifiers[i].radius);
+	}
+
+	cout << "StartGame Test[Assert 26]" << endl;
+	for (unsigned i = 0; i < message->dynamicModifiers.size(); ++i)
+	{
+		assert(message->dynamicModifiers[i].type.getType() == received->dynamicModifiers[i].type.getType());
 	}
 
 	delete message;

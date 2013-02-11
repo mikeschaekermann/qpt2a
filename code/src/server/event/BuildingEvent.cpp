@@ -1,6 +1,14 @@
 #include "BuildingEvent.h"
 
+#include "../../common/Config.h"
 #include "../../common/ConfigurationDataHandler.h"
+
+#include "../../common/network/NetworkManager.h"
+#include "../../common/network/messages/game/ingame/cell/creation/CreateCellComplete.h"
+
+#include "../game/CellServer.h"
+#include "../game/PlayerServer.h"
+#include "EventCreator.h"
 
 BuildingEvent::BuildingEvent(double startTime, NetworkManager & manager, CellServer & cell, const vector<PlayerServer *> & players) :
 	manager(manager),
@@ -12,6 +20,8 @@ BuildingEvent::BuildingEvent(double startTime, NetworkManager & manager, CellSer
 void BuildingEvent::trigger()
 {
 	cell.completeCell();
+	LOG_INFO(stringify(ostringstream() << "Cell with the id " << cell.getId() << " is finished"));
+
 	PlayerServer * current = 0;
 
 	CreateCellComplete * complete = new CreateCellComplete();
@@ -30,5 +40,5 @@ void BuildingEvent::trigger()
 	}
 	manager.sendTo<CreateCellComplete>(complete, endpointArr);
 
-	EventCreator::getInstance()->createAttackEvent(m_dDeadTime, true, *current, cell);
+	EVENT_CRTR->createAttackEvent(m_dDeadTime, true, *current, cell);
 }
