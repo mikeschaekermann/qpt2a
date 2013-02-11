@@ -65,20 +65,20 @@ vertexShader and fragmentShader are also file paths
 <guiTexture>
 	<key>connect</key>
 	<value>..\..\resources\images\connect.svg</value>
-	<width>1000</width>
-	<height>1000</height>
+	<width>240</width>
+	<height>65</height>
 </guiTexture>
 <guiTexture>
 	<key>start_server</key>
 	<value>..\..\resources\images\start_server.svg</value>
-	<width>1000</width>
-	<height>1000</height>
+	<width>382</width>
+	<height>56</height>
 </guiTexture>
 <guiTexture>
 	<key>exit</key>
 	<value>..\..\resources\images\exit.svg</value>
-	<width>1000</width>
-	<height>1000</height>
+	<width>130</width>
+	<height>56</height>
 </guiTexture>
 
 <model>

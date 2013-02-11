@@ -72,7 +72,7 @@ void AssetManager::loadAssets(string filePath)
 					tex = Texture(loadImage(value));
 				}
 
-				tex.setFlipped(true);
+				tex.setFlipped(false);
 				
 				guiTextureMap.insert(pair<string, Texture>(key, tex));
 			}
