@@ -1,4 +1,5 @@
 #include "GameScreen.h"
+#include "../managers/GameManager.h"
 #include "../../common/network/NetworkManager.h"
 #include "../managers/AssetManager.h"
 #include "../actors/CellClient.h"
@@ -143,8 +144,8 @@ bool GameScreen::touchBegan(const TouchWay & touchWay)
 
 void GameScreen::touchMoved(const TouchWay & touchWay)
 {
-	cam.setEyePoint(cam.getEyePoint() + Vec3f(-touchWay.getLastDeltaVector().x, touchWay.getLastDeltaVector().y, 0));
-	return state->touchMoved(touchWay);
+	state->touchMoved(touchWay);
+	Screen::touchMoved(touchWay);
 };
 
 bool GameScreen::mouseMove(MouseEvent event)
@@ -181,33 +182,12 @@ void GameScreen::resize(ResizeEvent event)
 
 void GameScreen::onKeyInput(KeyEvent& e)
 {
-	if (e.getCode() == KeyEvent::KEY_ESCAPE)
-	{
-		switchToState(new GameScreenStateNeutral(this));
-	}
-	else if(e.getCode() == KeyEvent::KEY_LEFT)
-	{
-		cam.setEyePoint(cam.getEyePoint() + Vec3f(10.f, 0.f, 0.f));
-	}
-	else if(e.getCode() == KeyEvent::KEY_RIGHT)
-	{
-		cam.setEyePoint(cam.getEyePoint() + Vec3f(-10.f, 0.f, 0.f));
-	}
-	else if(e.getCode() == KeyEvent::KEY_UP)
-	{
-		cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, -10.f, 0.f));
-	}
-	else if(e.getCode() == KeyEvent::KEY_DOWN)
-	{
-		cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 10.f, 0.f));
-	}
-
 	state->onKeyInput(e);
 }
 
 void GameScreen::mouseWheel(MouseEvent & e)
 {
-	cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 0.f, -e.getWheelIncrement() * 100.f));
+	state->mouseWheel(e);
 }
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject)
@@ -275,23 +255,11 @@ void GameScreen::zoomToWorld()
 		.setFocus(Vec3f::zero());
 }
 
-void GameScreen::pickCell(CellClient * cell)
+vector<CellClient *> GameScreen::getCellsPicked(Vec2f position)
 {
-	if (cell != nullptr)
-	{
-		pickedCell = cell;
-
-		auto menuPosition3D = pickedCell->getPosition() + Vec3f(pickedCell->getRadius() + 5, 0, 0);
-		auto menuPosition2D = cam.worldToScreen(menuPosition3D, getWindowWidth(), getWindowHeight());
-		cellMenu->setPosition(menuPosition2D);
-		cellMenu->setVisible(true);
-	}
-}
-
-void GameScreen::unpickCell()
-{
-	pickedCell = nullptr;
-	cellMenu->setVisible(false);
+	auto pointInWorldPlane = cam.screenToWorldPlane(position);
+	
+	return cellsToPick.pick(pointInWorldPlane);
 }
 
 void GameScreen::switchToState(GameScreenState * newState)

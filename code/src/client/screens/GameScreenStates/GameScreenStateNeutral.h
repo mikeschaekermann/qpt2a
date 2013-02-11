@@ -5,34 +5,10 @@ class GameScreenStateNeutral :
 	public GameScreenState
 {
 public:
-	GameScreenStateNeutral(GameScreen * screen):
-		GameScreenState(screen)
-	{
-	}
+	GameScreenStateNeutral(GameScreen * screen);
 
-	virtual bool touchBegan(const TouchWay & touchWay)
-	{
-		auto pointInWorldPlane = screen->cam.screenToWorldPlane(touchWay.getCurrentPos());
-		auto cellsPicked = screen->cellsToPick.pick(pointInWorldPlane);
-
-		if (cellsPicked.size() > 0)
-		{
-			screen->pickCell(cellsPicked[0]);
-			return true;
-		}
-		else
-		{
-			screen->unpickCell();
-			return false;
-		}
-	}
-
-	virtual void onKeyInput(KeyEvent& e)
-	{
-		if (e.getCode() == KeyEvent::KEY_ESCAPE)
-		{
-			screen->cellMenu->setVisible(false);
-		}
-	}
+	virtual bool touchClick(TouchWay touchWay);
+	virtual void touchMoved(const TouchWay & touchWay);
+	virtual void onKeyInput(KeyEvent& e);
+	virtual void mouseWheel(MouseEvent & e);
 };
-

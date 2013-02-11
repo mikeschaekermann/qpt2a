@@ -11,6 +11,7 @@ class CellClient;
 class GameObjectClient;
 class GameScreenState;
 class GameScreenStateNeutral;
+class GameScreenStateInMenu;
 class GameScreenStateCreateCell;
 
 class GameScreen :
@@ -19,6 +20,7 @@ class GameScreen :
 public:	
 	friend class GameScreenState;
 	friend class GameScreenStateNeutral;
+	friend class GameScreenStateInMenu;
 	friend class GameScreenStateCreateCell;
 
 	GameScreen();
@@ -48,8 +50,7 @@ public:
 	void switchToState(GameScreenState * newState);
 
 private:
-	void pickCell(CellClient * cell);
-	void unpickCell();
+	vector<CellClient *> GameScreen::getCellsPicked(Vec2f position);
 	
 	/// current state of the screen
 	GameScreenState * state;
@@ -59,7 +60,7 @@ private:
 	float worldRadius;
 	/// in-game menu for cell actions
 	GUIItem * cellMenu;
-	/// currently picked cell
+	/// cell currently picked
 	CellClient * pickedCell;
 
 	/// all game objects registered to be updated

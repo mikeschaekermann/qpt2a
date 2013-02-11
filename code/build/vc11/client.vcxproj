@@ -31,6 +31,10 @@
     <ClCompile Include="..\..\src\client\screens\ConnectScreen.cpp" />
     <ClCompile Include="..\..\src\client\screens\CreditsScreen.cpp" />
     <ClCompile Include="..\..\src\client\screens\GameScreen.cpp" />
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenState.cpp" />
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.cpp" />
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateInMenu.cpp" />
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.cpp" />
     <ClCompile Include="..\..\src\client\screens\GUIItem.cpp" />
     <ClCompile Include="..\..\src\client\screens\IpInput.cpp" />
     <ClCompile Include="..\..\src\client\screens\MenuScreen.cpp" />
@@ -94,6 +98,7 @@
     <ClInclude Include="..\..\src\client\screens\GameScreen.h" />
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenState.h" />
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.h" />
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateInMenu.h" />
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.h" />
     <ClInclude Include="..\..\src\client\screens\GUIItem.h" />
     <ClInclude Include="..\..\src\client\screens\IpInput.h" />

@@ -176,6 +176,18 @@
     <ClCompile Include="..\..\src\common\network\messages\enum\StaticModifierType.cpp">
       <Filter>Network\Messages\Enum</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.cpp">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateInMenu.cpp">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.cpp">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenState.cpp">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -397,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\common\network\messages\enum\StaticModifierType.h">
       <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateInMenu.h">
+      <Filter>Screens\GameScreenStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
