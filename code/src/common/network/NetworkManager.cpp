@@ -10,7 +10,7 @@
 using boost::asio::ip::udp;
 using namespace std;
 
-NetworkManager::NetworkManager(unsigned short listenPort) : run(true)
+NetworkManager::NetworkManager(unsigned short listenPort) : run(true), bound(true)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service);
@@ -19,7 +19,7 @@ NetworkManager::NetworkManager(unsigned short listenPort) : run(true)
 	serverSocket->bind(udp::endpoint(udp::v4(), listenPort));
 }
 
-NetworkManager::NetworkManager() : run(true)
+NetworkManager::NetworkManager() : run(true), bound(false)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service);
@@ -27,7 +27,7 @@ NetworkManager::NetworkManager() : run(true)
     serverSocket->set_option(boost::asio::ip::udp::socket::reuse_address(true));
 }
 
-NetworkManager::NetworkManager(const NetworkManager &other) : run(true)
+NetworkManager::NetworkManager(const NetworkManager &other) : run(true), bound(false)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service, udp::endpoint(udp::v4(), other.serverSocket->local_endpoint().port()));
@@ -65,8 +65,9 @@ void NetworkManager::operator()()
 			udp::endpoint remote_endpoint;
 			boost::system::error_code error;
 		
-			// Receive the message
-		
+			while (!bound && run);
+
+			// Receive the message		
 			serverSocket->receive_from(boost::asio::buffer(buffer), remote_endpoint, 0, error);
 		
 			maintenanceMutex.lock();
@@ -128,9 +129,13 @@ void NetworkManager::operator()()
 			delete message;
 		}
 	}
+	catch(std::exception &ex)
+	{
+		LOG_ERROR(ex.what());
+	}
 	catch(...)
 	{
-		/// LOG_ERROR(ex.what());
+		LOG_ERROR("Something strange");
 	}
 }
 
@@ -221,8 +226,13 @@ void NetworkManager::connectionMaintenance()
 			maintenanceMutex.unlock();
 		}
 	}
+	catch(std::exception &ex)
+	{
+		LOG_ERROR(ex.what());
+	}
 	catch(...)
 	{
+		LOG_ERROR("Something strange in connectionMaintenance");
 	}
 }
 
@@ -266,6 +276,7 @@ void NetworkManager::baseSend(NetworkMessage &message)
 	message.writeToArray(buffer);
 	serverSocket->send_to(boost::asio::buffer(buffer, message.messageSize), message.endpoint, 0, ignored_error);
 	delete[] buffer;
+	bound = true;
 }
 
 void NetworkManager::send(NetworkMessage *message)
