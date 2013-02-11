@@ -54,6 +54,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 		
 	CreateCellSuccess * success = new CreateCellSuccess();
 	success->requestId = requestId;
+	success->endpoint = currentPlayer.getEndpoint();
 	success->cellId = cell.getId();
 	success->position[0] = cell.getPosition()[0];
 	success->position[1] = cell.getPosition()[1];

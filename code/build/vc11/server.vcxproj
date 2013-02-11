@@ -15,8 +15,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\common\AABBCollisionBehavior.h" />
     <ClInclude Include="..\..\src\common\Cell.h" />
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h" />
+    <ClInclude Include="..\..\src\common\Circle.h" />
+    <ClInclude Include="..\..\src\common\CollisionHandler.h" />
     <ClInclude Include="..\..\src\common\Config.h" />
     <ClInclude Include="..\..\src\common\ConfigurationDataHandler.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
@@ -65,7 +68,9 @@
     <ClInclude Include="..\..\src\server\network\ServerNetworkManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\common\AABBCollisionBehavior.cpp" />
     <ClCompile Include="..\..\src\common\Cell.cpp" />
+    <ClCompile Include="..\..\src\common\CollisionHandler.cpp" />
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
     <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp" />
