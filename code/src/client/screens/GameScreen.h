@@ -38,9 +38,12 @@ public:
 	virtual void onKeyInput(KeyEvent& e);
 	virtual void mouseWheel(MouseEvent & e);
 
-	void addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable);
-	void addGameObjectToDraw(GameObjectClient * gameObject, bool collidable);
-	void addCellToPick(CellClient * cell, bool collidable);
+	void addGameObjectToUpdate(GameObjectClient * gameObject);
+	void addGameObjectToDraw(GameObjectClient * gameObject);
+	void addGameObjectToCollide(GameObject * gameObject);
+	void addCellToPick(CellClient * cell);
+	void addIncompleteCell(CellClient * cell);
+	void completeCellById(unsigned int id);
 
 	void switchToState(GameScreenState * newState);
 
@@ -68,6 +71,9 @@ private:
 	/// all game objects registered to collide with each other
 	GameObjectContainer<GameObject>			gameObjectsToCollide;
 
-	/// all game objects registered to be pickable
+	/// all cells registered to be pickable
 	GameObjectContainer<CellClient>			cellsToPick;
+
+	/// all incomplete cells
+	GameObjectContainer<CellClient>			cellsIncomplete;
 };

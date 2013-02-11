@@ -75,6 +75,11 @@ void GameScreen::draw()
 			it->second->draw();
 		}
 
+		for (auto it = cellsIncomplete.begin(); it != cellsIncomplete.end(); ++it)
+		{
+			it->second->draw();
+		}
+
 		state->draw3D();
 
 		gl::color(ColorA(1, 1, 1, 1));
@@ -193,28 +198,57 @@ void GameScreen::mouseWheel(MouseEvent & e)
 	cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 0.f, -e.getWheelIncrement() * 100.f));
 }
 
-void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject, bool collidable)
+void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject)
 {
-	if (collidable)
-	{
-		gameObjectsToCollide.createGameObject(gameObject);
-	}
-
 	gameObjectsToUpdate.createGameObject(gameObject);
 }
 
-void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject, bool collidable)
+void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject)
 {
-	addGameObjectToUpdate(gameObject, collidable);
+	addGameObjectToUpdate(gameObject);
 
 	gameObjectsToDraw.createGameObject(gameObject);
 }
 
-void GameScreen::addCellToPick(CellClient * cell, bool collidable)
+void GameScreen::addGameObjectToCollide(GameObject * gameObject)
 {
-	addGameObjectToDraw(cell, collidable);
+	gameObjectsToCollide.createGameObject(gameObject);
+}
 
+void GameScreen::addCellToPick(CellClient * cell)
+{
 	cellsToPick.createGameObject(cell);
+
+	addGameObjectToDraw(cell);
+	addGameObjectToCollide(cell);
+}
+
+void GameScreen::addIncompleteCell(CellClient * cell)
+{
+	cellsIncomplete.createGameObject(cell);
+
+	addGameObjectToCollide(cell);
+}
+
+void GameScreen::completeCellById(unsigned int id)
+{
+	auto cell = cellsIncomplete.find(id);
+
+	if (cell != nullptr)
+	{
+		cellsIncomplete.removeGameObject(id);
+		
+		addGameObjectToDraw(cell);
+		
+		if (cell->getOwner() == GAME_MGR->getMyPlayer())
+		{
+			addCellToPick(cell);
+		}
+	}
+	else
+	{
+		LOG_WARNING("Could not find cell to be completed in GameScreen::completeCellById(unsigned int id).");
+	}
 }
 
 void GameScreen::zoomToWorld()

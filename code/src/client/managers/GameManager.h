@@ -29,6 +29,7 @@ public:
 	void addPetriDish(float radius);
 	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
 	void setMyPlayerId(unsigned int id);
+	PlayerClient * getMyPlayer() const;
 	
 	ClientNetworkManager * getNetworkManager();
 	boost::asio::ip::udp::endpoint getServerEndpoint();
