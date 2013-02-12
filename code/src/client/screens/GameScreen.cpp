@@ -85,6 +85,11 @@ void GameScreen::draw()
 			it->second->draw();
 		}
 
+		for (auto it = cellPreviews.begin(); it != cellPreviews.end(); ++it)
+		{
+			(*it)->draw();
+		}
+
 		containerMutex.unlock();
 
 		state->draw3D();
@@ -219,6 +224,13 @@ void GameScreen::addGameObjectToCollide(GameObject * gameObject)
 	containerMutex.unlock();
 }
 
+void GameScreen::removeGameObjectToCollide(GameObject * gameObject)
+{
+	containerMutex.lock();
+	gameObjectsToCollide.removeGameObject(gameObject->getId(), false);
+	containerMutex.unlock();
+}
+
 void GameScreen::addCellToPick(CellClient * cell)
 {
 	containerMutex.lock();
@@ -234,6 +246,16 @@ void GameScreen::addIncompleteCell(CellClient * cell)
 
 	addGameObjectToCollide(cell);
 }
+
+void GameScreen::removeIncompleteCell(CellClient * cell)
+{
+	containerMutex.lock();
+	cellsIncomplete.removeGameObject(cell->getId(), false);
+	containerMutex.unlock();
+
+	removeGameObjectToCollide(cell);
+}
+
 
 void GameScreen::addIncompleteCell(
 	unsigned int playerId, 
@@ -266,8 +288,7 @@ void GameScreen::completeCellById(unsigned int id)
 
 	if (cell != nullptr)
 	{
-		cellsIncomplete.removeGameObject(id, false);
-		
+		removeIncompleteCell(cell);
 		addGameObjectToDraw(cell);
 		
 		auto cellOwner= cell->getOwner();
@@ -287,6 +308,20 @@ void GameScreen::completeCellById(unsigned int id)
 	{
 		LOG_WARNING("Could not find cell to be completed in GameScreen::completeCellById(unsigned int id).");
 	}
+}
+
+void GameScreen::addCellPreview(CellClient * cell)
+{
+	containerMutex.lock();
+	cellPreviews.insert(cell);
+	containerMutex.unlock();
+}
+
+void GameScreen::removeCellPreview(CellClient * cell)
+{
+	containerMutex.lock();
+	cellPreviews.erase(cell);
+	containerMutex.unlock();
 }
 
 void GameScreen::zoomToWorld()
