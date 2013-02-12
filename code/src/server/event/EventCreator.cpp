@@ -91,6 +91,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	cellNew->cellId = cell.getId();
 	cellNew->position[0] = cell.getPosition()[0];
 	cellNew->position[1] = cell.getPosition()[1];
+	cellNew->angle = cell.getAngle();
 	cellNew->type = type;
 
 	using boost::asio::ip::udp;
