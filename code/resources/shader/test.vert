@@ -1,10 +1,10 @@
-#version 110
+#version 330
 
 uniform mat4 matModelView;
 uniform mat4 matProjection;
 
-varying vec4 vertexPositionEye;
-varying vec4 vertexNormalEye;
+out vec4 vertexPositionEye;
+out vec4 vertexNormalEye;
 
 void main(void) {
 	vertexPositionEye = matModelView * vec4(gl_Position.xyz, 1.);
