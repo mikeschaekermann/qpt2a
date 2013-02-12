@@ -4,6 +4,7 @@
 #include "../screens/Screen.h"
 #include <stack>
 #include "../input/TouchWay.h"
+#include "boost/thread/mutex.hpp"
 
 #define SCREEN_MGR ScreenManager::getInstance()
 
@@ -59,11 +60,21 @@ public:
 	void resize(ResizeEvent event);
 
 	static ScreenManager * getInstance();
-	static void releaseInstance() { if (instance != nullptr) delete instance; }
+	static void releaseInstance()
+	{
+		instanceMutex.lock();
+		if (instance != nullptr)
+		{
+			delete instance;
+			instance = nullptr;
+		}
+		instanceMutex.unlock();
+	}
 private:
 	ScreenManager();
 	ScreenManager(const ScreenManager &) {}
 	static ScreenManager * instance;
+	static boost::mutex instanceMutex;
 
 	//std::stack<Screen*> m_screenStack;
 	Screen* m_backgroundScreen;

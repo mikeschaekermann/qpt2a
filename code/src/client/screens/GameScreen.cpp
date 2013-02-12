@@ -131,9 +131,9 @@ void GameScreen::draw()
 	}
 	gl::popMatrices();
 
-	///////////// 2D rendering
+	rootItem->draw();
 
-	Screen::draw();
+	///////////// 2D rendering
 
 	state->draw2D();
 }

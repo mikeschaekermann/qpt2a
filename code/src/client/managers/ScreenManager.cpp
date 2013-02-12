@@ -130,3 +130,4 @@ void ScreenManager::mouseWheel(MouseEvent & e) const
 }
 
 ScreenManager * ScreenManager::instance = nullptr;
+boost::mutex ScreenManager::instanceMutex;

@@ -1,5 +1,6 @@
 #include "GameScreenStateNeutral.h"
 #include "GameScreenStateInMenu.h"
+#include "../../managers/GameManager.h"
 
 GameScreenStateNeutral::GameScreenStateNeutral(GameScreen * screen):
 	GameScreenState(screen)
@@ -27,7 +28,12 @@ void GameScreenStateNeutral::onKeyInput(KeyEvent& e)
 {
 	auto& cam = screen->cam;
 
-	if(e.getCode() == KeyEvent::KEY_LEFT)
+	if (e.getCode() == KeyEvent::KEY_ESCAPE)
+	{
+		SCREEN_MGR->openMenuScreen();
+		GAME_MGR->releaseInstance();
+	}
+	else if(e.getCode() == KeyEvent::KEY_LEFT)
 	{
 		cam.setEyePoint(cam.getEyePoint() + Vec3f(10.f, 0.f, 0.f));
 	}

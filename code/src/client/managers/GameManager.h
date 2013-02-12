@@ -8,6 +8,7 @@
 #include "ScreenManager.h"
 #include "../network/ClientNetworkManager.h"
 #include "../actors/PlayerClient.h"
+#include "boost/thread/mutex.hpp"
 
 #define GAME_MGR GameManager::getInstance()
 #define GAME_SCR SCREEN_MGR->getGameScreen()
@@ -19,7 +20,16 @@ public:
 	~GameManager(void);
 
 	static GameManager * const getInstance();
-	static void releaseInstance() { if (m_pManager != nullptr) delete m_pManager; }
+	static void releaseInstance() 
+	{ 
+		instanceMutex.lock();
+		if (m_pManager != nullptr)
+		{
+			delete m_pManager;
+			m_pManager = nullptr;
+		}
+		instanceMutex.unlock();
+	}
 
 	void startGame(string playerName);
 	void startGame(string playerName, string ip);
@@ -40,6 +50,7 @@ public:
 private:
 	/// singleton instance
 	static GameManager* m_pManager;
+	static boost::mutex	instanceMutex;
 
 	/// id map for all active players
 	map<unsigned int, PlayerClient*> players;

@@ -3,6 +3,8 @@
 #include "../sound/SoundPlayer.h"
 #include "../../common/Config.h"
 
+#include "boost/thread/mutex.hpp"
+
 #include <unordered_map>
 #include <string>
 
@@ -44,7 +46,29 @@ class AssetManager
 public:
 	~AssetManager(void);
 
-	static AssetManager * const getInstance() { return (manager != nullptr ? manager : (manager = new AssetManager())); }
+	static AssetManager * const getInstance()
+	{
+		instanceMutex.lock();
+		if (manager == nullptr)
+		{
+			manager = new AssetManager();
+		}
+		instanceMutex.unlock();
+
+		return manager;
+	}
+
+	static void releaseInstance()
+	{
+		instanceMutex.lock();
+		if (manager != nullptr)
+		{
+			delete manager;
+			manager = nullptr;
+		}
+		instanceMutex.unlock();
+	}
+
 	void loadAssets(string filePath);
 
 	TriMesh const & getModel(string& modelName) const;
@@ -62,10 +86,10 @@ public:
 	
 	void clearGuiAssets();
 	void clearGameAssets();
-	static void releaseInstance() { if (manager != nullptr) delete manager; }
 
 private:
 	static AssetManager*							manager;
+	static boost::mutex								instanceMutex;
 
 	unordered_map<string, TriMesh>					modelMap;
 	unordered_map<string, Texture>					textureMap;
