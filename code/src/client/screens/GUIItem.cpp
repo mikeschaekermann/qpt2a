@@ -158,7 +158,7 @@ void GUIItem::draw()
 
 bool GUIItem::isPositionInItem(Vec2f position)
 {
-	if (currentTexture != nullptr)
+	if (isVisible && currentTexture != nullptr)
 	{
 		return currentTexture->getBounds().contains(position - this->position);
 	}
