@@ -28,7 +28,6 @@
 
 #include "../environment/BarrierServer.h"
 #include "../environment/StaticModificatorServer.h"
-#include "../environment/DynamicModificatorServer.h"
 
 #include "CellServer.h"
 #include "PlayerServer.h"
@@ -157,21 +156,6 @@ public:
 				GAMECONTEXT->getEnvironment().createGameObject(b);
 			}
 
-			vector<float> xPosStatics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "antibiotic.position.x");
-			vector<float> yPosStatics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "antibiotic.position.y");
-			vector<float> xRotStatics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "antibiotic.rotation.x");
-			vector<float> yRotStatics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "antibiotic.rotation.y");
-			vector<float> radiusStatics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "antibiotic.radius");
-
-			if (xPosStatics1.size() != yPosStatics1.size() ||
-				xPosStatics1.size() != xRotStatics1.size() ||
-				xPosStatics1.size() != yRotStatics1.size() ||
-				xPosStatics1.size() != radiusStatics1.size())
-			{
-				throw string("Xml structure of the antibiotics is inconsistent");
-			}
-			unsigned int nrAntibiotics = xPosStatics1.size();
-
 			vector<float> xPosStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.position.x");
 			vector<float> yPosStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.position.y");
 			vector<float> xRotStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.rotation.x");
@@ -203,34 +187,25 @@ public:
 			unsigned int nrRadioactivity = xPosStatics3.size();
 
 			vector<float> xPosStatics;
-			xPosStatics.insert(xPosStatics.begin(), xPosStatics1.begin(), xPosStatics1.end());
 			xPosStatics.insert(xPosStatics.end(), xPosStatics2.begin(), xPosStatics2.end());
 			xPosStatics.insert(xPosStatics.end(), xPosStatics3.begin(), xPosStatics3.end());
 			vector<float> yPosStatics;
-			yPosStatics.insert(yPosStatics.begin(), yPosStatics1.begin(), yPosStatics1.end());
 			yPosStatics.insert(yPosStatics.end(), yPosStatics2.begin(), yPosStatics2.end());
 			yPosStatics.insert(yPosStatics.end(), yPosStatics3.begin(), yPosStatics3.end());
 			vector<float> xRotStatics;
-			xRotStatics.insert(xRotStatics.begin(), xRotStatics1.begin(), xRotStatics1.end());
 			xRotStatics.insert(xRotStatics.end(), xRotStatics2.begin(), xRotStatics2.end());
 			xRotStatics.insert(xRotStatics.end(), xRotStatics3.begin(), xRotStatics3.end());
 			vector<float> yRotStatics;
-			yRotStatics.insert(yRotStatics.begin(), yRotStatics1.begin(), yRotStatics1.end());
 			yRotStatics.insert(yRotStatics.end(), yRotStatics2.begin(), yRotStatics2.end());
 			yRotStatics.insert(yRotStatics.end(), yRotStatics3.begin(), yRotStatics3.end());
 			vector<float> radiusStatics;
-			radiusStatics.insert(radiusStatics.begin(), radiusStatics1.begin(), radiusStatics1.end());
 			radiusStatics.insert(radiusStatics.end(), radiusStatics2.begin(), radiusStatics2.end());
 			radiusStatics.insert(radiusStatics.end(), radiusStatics3.begin(), radiusStatics3.end());
 
 			for (unsigned int i = 0; i < xPosStatics.size(); ++i)
 			{
 				StaticModificator::Type type;
-				if (i < nrAntibiotics)
-				{
-					type = StaticModificator::ANTIBIOTIC;
-				}
-				else if (i < nrAntibiotics + nrNutrientsoil)
+				if (i < nrNutrientsoil)
 				{
 					type = StaticModificator::NUTRIENTSOIL;
 				}
@@ -260,111 +235,6 @@ public:
 					throw string("Static modifier could not be created because a gameobject is already on this spot");
 				}
 				GAMECONTEXT->getEnvironment().createGameObject(s);
-			}
-
-			vector<float> xPosDynamics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "viriswarm.position.x");
-			vector<float> yPosDynamics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "viriswarm.position.y");
-			vector<float> xRotDynamics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "viriswarm.rotation.x");
-			vector<float> yRotDynamics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "viriswarm.rotation.y");
-			vector<float> radiusDynamics1 = CONFIG_FLOATS2("data.environment.modifiers.static", "viriswarm.radius");
-
-			if (xPosDynamics1.size() != yPosDynamics1.size() ||
-				xPosDynamics1.size() != xRotDynamics1.size() ||
-				xPosDynamics1.size() != yRotDynamics1.size() ||
-				xPosDynamics1.size() != radiusDynamics1.size())
-			{
-				throw string("Xml structure of the viriswarm is inconsistent");
-			}
-			unsigned int nrViriswarm = xPosDynamics1.size();
-
-			vector<float> xPosDynamics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "vitamingeyser.position.x");
-			vector<float> yPosDynamics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "vitamingeyser.position.y");
-			vector<float> xRotDynamics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "vitamingeyser.rotation.x");
-			vector<float> yRotDynamics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "vitamingeyser.rotation.y");
-			vector<float> radiusDynamics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "vitamingeyser.radius");
-
-			if (xPosDynamics2.size() != yPosDynamics2.size() ||
-				xPosDynamics2.size() != xRotDynamics2.size() ||
-				xPosDynamics2.size() != yRotDynamics2.size() ||
-				xPosDynamics2.size() != radiusDynamics2.size())
-			{
-				throw string("Xml structure of the vitamingeyser is inconsistent");
-			}
-			unsigned int nrVitamingeyser = xPosDynamics2.size();
-
-			vector<float> xPosDynamics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "loosefatcell.position.x");
-			vector<float> yPosDynamics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "loosefatcell.position.y");
-			vector<float> xRotDynamics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "loosefatcell.rotation.x");
-			vector<float> yRotDynamics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "loosefatcell.rotation.y");
-			vector<float> radiusDynamics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "loosefatcell.radius");
-
-			if (xPosDynamics3.size() != yPosDynamics3.size() ||
-				xPosDynamics3.size() != xRotDynamics3.size() ||
-				xPosDynamics3.size() != yRotDynamics3.size() ||
-				xPosDynamics3.size() != radiusDynamics3.size())
-			{
-				throw string("Xml structure of the loosefatcell is inconsistent");
-			}
-			unsigned int nrLoosefatcell = xPosDynamics3.size();
-
-			vector<float> xPosDynamics;
-			xPosDynamics.insert(xPosDynamics.begin(), xPosDynamics1.begin(), xPosDynamics1.end());
-			xPosDynamics.insert(xPosDynamics.end(), xPosDynamics2.begin(), xPosDynamics2.end());
-			xPosDynamics.insert(xPosDynamics.end(), xPosDynamics3.begin(), xPosDynamics3.end());
-			vector<float> yPosDynamics;
-			yPosDynamics.insert(yPosDynamics.begin(), yPosDynamics1.begin(), yPosDynamics1.end());
-			yPosDynamics.insert(yPosDynamics.end(), yPosDynamics2.begin(), yPosDynamics2.end());
-			yPosDynamics.insert(yPosDynamics.end(), yPosDynamics3.begin(), yPosDynamics3.end());
-			vector<float> xRotDynamics;
-			xRotDynamics.insert(xRotDynamics.begin(), xRotDynamics1.begin(), xRotDynamics1.end());
-			xRotDynamics.insert(xRotDynamics.end(), xRotDynamics2.begin(), xRotDynamics2.end());
-			xRotDynamics.insert(xRotDynamics.end(), xRotDynamics3.begin(), xRotDynamics3.end());
-			vector<float> yRotDynamics;
-			yRotDynamics.insert(yRotDynamics.begin(), yRotDynamics1.begin(), yRotDynamics1.end());
-			yRotDynamics.insert(yRotDynamics.end(), yRotDynamics2.begin(), yRotDynamics2.end());
-			yRotDynamics.insert(yRotDynamics.end(), yRotDynamics3.begin(), yRotDynamics3.end());
-			vector<float> radiusDynamics;
-			radiusDynamics.insert(radiusDynamics.begin(), radiusDynamics1.begin(), radiusDynamics1.end());
-			radiusDynamics.insert(radiusDynamics.end(), radiusDynamics2.begin(), radiusDynamics2.end());
-			radiusDynamics.insert(radiusDynamics.end(), radiusDynamics3.begin(), radiusDynamics3.end());
-
-			for (unsigned int i = 0; i < xPosDynamics.size(); ++i)
-			{
-				DynamicModificator::Type type;
-				if (i < nrViriswarm)
-				{
-					type = DynamicModificator::VIRISWARM;
-				}
-				else if (i < nrViriswarm + nrVitamingeyser)
-				{
-					type = DynamicModificator::VITAMINGEYSER;
-				}
-				else
-				{
-					type = DynamicModificator::LOOSEFATCELL;
-				}
-
-				DynamicModificatorServer * d = new DynamicModificatorServer(Vec3f(xPosDynamics[i], yPosDynamics[i], 0.f), Vec3f(xRotDynamics[i], yRotDynamics[i], 0.f), Vec3f::one(), radiusDynamics[i], type);
-				if (!isInRadiusOf<float>(d->getPosition(), d->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
-				{
-					throw string("Dynamic modifier could not be created because it is not in the game area");
-				}
-				
-				vector<GameObject *> gameObjects;
-
-				const vector<GameObject *> & activeCells = GAMECONTEXT->getActiveCells().findInRadiusOf(d->getPosition(), d->getRadius());
-				const vector<GameObject *> & inactiveCells = GAMECONTEXT->getInactiveCells().findInRadiusOf(d->getPosition(), d->getRadius());
-				const vector<GameObject *> & environment = GAMECONTEXT->getEnvironment().findInRadiusOf(d->getPosition(), d->getRadius());
-				
-				gameObjects.insert(gameObjects.end(), activeCells.begin(), activeCells.end());
-				gameObjects.insert(gameObjects.end(), inactiveCells.begin(), inactiveCells.end());
-				gameObjects.insert(gameObjects.end(), environment.begin(), environment.end());
-
-				if (gameObjects.size() > 0)
-				{
-					throw string("Dynamic modifier could not be created because a gameobject is already on this spot");
-				}
-				GAMECONTEXT->getEnvironment().createGameObject(d);
 			}
 
 			vector<udp::endpoint> endpointArr;
