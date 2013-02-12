@@ -11,6 +11,7 @@
 void ClientMain::setup()
 {
 	setWindowPos(100, 100);
+	
 
 	m_fFrameTime = 0;
 	m_fElapsedGameTimeLastFrame = (float)getElapsedSeconds();
@@ -46,6 +47,8 @@ void ClientMain::shutdown()
 void ClientMain::prepareSettings( Settings *settings )
 {
 	settings->enableMultiTouch();
+	settings->setWindowSize(1024, 768);
+	settings->setResizable(false);
 }
 
 void ClientMain::update()
