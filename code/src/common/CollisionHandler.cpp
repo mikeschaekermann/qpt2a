@@ -18,9 +18,9 @@ CollisionHandler & CollisionHandler::clear()
 {
 	circleBackup.clear();
 	buckets.clear();
+	area.bucketMeasures.x = abs(area.dimensions.x1) + abs(area.dimensions.x2);
+	area.bucketMeasures.y = abs(area.dimensions.y1) + abs(area.dimensions.y2);
 	area.largestRadius = 0;
-	area.bucketMeasures.x = area.dimensions.x2;
-	area.bucketMeasures.y = area.dimensions.y2;
 	initialized = false;
 	backupInsert = false;
 
@@ -36,19 +36,24 @@ CollisionHandler & CollisionHandler::insert(Circle const & circle)
 		calculateBucketMeasures(*current);
 	}
 
+	
+
 	set<unsigned int> bucketIndices = getBucketIndices(*current);
-	for (auto it = bucketIndices.begin(); it != bucketIndices.end(); ++it)
+	if (bucketIndices.size() > 0)
 	{
 		if (!backupInsert)
 		{
 			current = &(circleBackup.insert(make_pair(current->index, *current)).first->second);
 		}
-
-		if (buckets.find(*it) == buckets.end())
+		for (auto it = bucketIndices.begin(); it != bucketIndices.end(); ++it)
 		{
-			buckets.insert(make_pair(*it, set<Circle const *>()));
+
+			if (buckets.find(*it) == buckets.end())
+			{
+				buckets.insert(make_pair(*it, set<Circle const *>()));
+			}
+			buckets[*it].insert(current);
 		}
-		buckets[*it].insert(current);
 	}
 
 	return *this;
@@ -118,9 +123,14 @@ void CollisionHandler::calculateBucketMeasures(Circle const & circle)
 		float & radius = area.largestRadius = circle.radius;
 		float buffer = 1.f;
 
-		float divisor = floor(area.dimensions.x2 / (2 * radius + buffer));
-		area.bucketMeasures.x = area.dimensions.x2 / divisor;
-		area.bucketMeasures.y = area.dimensions.y2 / (float)int(area.dimensions.y2 / (2 * radius + buffer));
+		float width = abs(area.dimensions.x1) + abs(area.dimensions.x2);
+		float height = abs(area.dimensions.y1) + abs(area.dimensions.y2);
+		float divisorX = width / (2 * radius + buffer);
+		divisorX = divisorX >= 1.f ? floor(divisorX) : 1.f;
+		area.bucketMeasures.x = width / divisorX;
+		float divisorY = height / (2 * radius + buffer);
+		divisorY = divisorY >= 1.f ? floor(divisorY) : 1.f;
+		area.bucketMeasures.y = height / divisorY;
 
 		buckets.clear();
 
@@ -135,11 +145,11 @@ void CollisionHandler::calculateBucketMeasures(Circle const & circle)
 
 unsigned int CollisionHandler::getBucketIndex(ci::Vec2f const & position) const
 {
-	int xpos = int(position.x / area.bucketMeasures.x);
-	int ypos = int(position.y / area.bucketMeasures.y);
-	int xs = int(area.dimensions.x2 / area.bucketMeasures.x);
-	int ys = int(area.dimensions.y2 / area.bucketMeasures.y);
-	return (ys - 1 - ypos) * xs + xpos;
+	int xpos = int((position.x - area.dimensions.x1) / area.bucketMeasures.x);
+	int ypos = int((position.y - area.dimensions.y1) / area.bucketMeasures.y);
+	int nrOfColumns = int((abs(area.dimensions.x1) + abs(area.dimensions.x2)) / area.bucketMeasures.x);
+	int nrOfRows = int((abs(area.dimensions.y1) + abs(area.dimensions.y2)) / area.bucketMeasures.y);
+	return ypos * nrOfColumns + xpos;
 }
 
 set<unsigned int> CollisionHandler::getBucketIndices(Circle const & circle) const
@@ -170,13 +180,13 @@ set<unsigned int> CollisionHandler::getBucketIndices(Circle const & circle) cons
 Area CollisionHandler::getBucketSizeFromIndex(unsigned int idx) const
 {
 	Area bucketSize;
-	int nrOfColumns = int(area.dimensions.x2 / area.bucketMeasures.x);
-	int nrOfRows = int(area.dimensions.y2 / area.bucketMeasures.y);
-	int y = nrOfRows - 1 - (idx / nrOfColumns);
+	int nrOfColumns = int((abs(area.dimensions.x1) + abs(area.dimensions.x2)) / area.bucketMeasures.x);
+	int nrOfRows = int((abs(area.dimensions.y1) + abs(area.dimensions.y2)) / area.bucketMeasures.y);
+	int y = idx / nrOfColumns;
 	int x = idx % nrOfColumns;
 
-	bucketSize.x1 = x * area.bucketMeasures.x;
-	bucketSize.y1 = y * area.bucketMeasures.y;
+	bucketSize.x1 = area.dimensions.x1 + x * area.bucketMeasures.x;
+	bucketSize.y1 = area.dimensions.y1 + y * area.bucketMeasures.y;
 	bucketSize.x2 = bucketSize.x1 + area.bucketMeasures.x;
 	bucketSize.y2 = bucketSize.y1 + area.bucketMeasures.y;
 
@@ -185,8 +195,8 @@ Area CollisionHandler::getBucketSizeFromIndex(unsigned int idx) const
 
 bool CollisionHandler::isInScreen(ci::Vec2f const & position) const
 {
-	return position.x >= 0.f && 
+	return position.x >= area.dimensions.x1 && 
 			position.x <= area.dimensions.x2 && 
-			position.y >= 0.f &&
+			position.y >= area.dimensions.y1 &&
 			position.y <= area.dimensions.y2;
 }

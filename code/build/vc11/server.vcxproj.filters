@@ -366,9 +366,6 @@
     <ClCompile Include="..\..\src\server\event\AttackEvent.cpp">
       <Filter>Eventlogic</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\common\Helper.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\server\event\EventCreator.cpp">
       <Filter>Eventlogic</Filter>
     </ClCompile>
@@ -398,6 +395,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\server\game\GameContext.cpp">
       <Filter>Gamelogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\Helper.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
