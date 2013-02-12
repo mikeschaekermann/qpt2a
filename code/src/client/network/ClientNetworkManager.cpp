@@ -188,6 +188,14 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (cellNew)
 		{
 			LOG_INFO("CellNew received");
+
+			GAME_SCR.addIncompleteCell(
+				cellNew->playerId, 
+				cellNew->type.getType(),
+				cellNew->cellId,
+				cellNew->position,
+				cellNew->angle
+			);
 		}
 		break;
 	}

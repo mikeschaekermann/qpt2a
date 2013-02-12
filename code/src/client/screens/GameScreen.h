@@ -6,6 +6,7 @@
 #include "../../common/Player.h"
 #include "../../common/GameObjectContainer.h"
 #include <unordered_map>
+#include "../../common/network/messages/enum/CellType.h"
 
 class CellClient;
 class GameObjectClient;
@@ -44,7 +45,15 @@ public:
 	void addGameObjectToDraw(GameObjectClient * gameObject);
 	void addGameObjectToCollide(GameObject * gameObject);
 	void addCellToPick(CellClient * cell);
+
 	void addIncompleteCell(CellClient * cell);
+	void addIncompleteCell(
+		unsigned int playerId, 
+		CellType::Type type, 
+		unsigned int cellId, 
+		Vec3f position, 
+		float angle
+	);
 	void completeCellById(unsigned int id);
 
 	void switchToState(GameScreenState * newState);

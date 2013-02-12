@@ -132,6 +132,20 @@ PlayerClient * GameManager::getMyPlayer() const
 	return myPlayer;
 }
 
+PlayerClient * GameManager::getPlayerById(unsigned int id)
+{
+	auto player = players.find(id);
+
+	if (player != players.end())
+	{
+		return player->second;
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
 ClientNetworkManager * GameManager::getNetworkManager()
 {
 	return networkManager;
