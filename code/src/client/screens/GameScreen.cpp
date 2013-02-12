@@ -3,6 +3,7 @@
 #include "../../common/network/NetworkManager.h"
 #include "../managers/AssetManager.h"
 #include "../actors/CellClient.h"
+#include "../actors/StandardCellClient.h"
 #include "../actors/GameObjectClient.h"
 #include "GameScreenStates/GameScreenStateNeutral.h"
 #include "GameScreenStates/GameScreenStateCreateCell.h"
@@ -215,6 +216,31 @@ void GameScreen::addIncompleteCell(CellClient * cell)
 	cellsIncomplete.createGameObject(cell);
 
 	addGameObjectToCollide(cell);
+}
+
+void GameScreen::addIncompleteCell(
+	unsigned int playerId, 
+	CellType::Type type, 
+	unsigned int cellId, 
+	Vec3f position, 
+	float angle
+)
+{
+	auto player = GAME_MGR->getPlayerById(playerId);
+
+	CellClient * cell;
+
+	switch (type)
+	{
+	case CellType::Type::StandardCell:
+	default:
+	{
+		cell = new StandardCellClient(cellId, position, angle, player);
+	}
+	break;
+	}
+
+	addIncompleteCell(cell);
 }
 
 void GameScreen::completeCellById(unsigned int id)
