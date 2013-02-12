@@ -11,8 +11,7 @@
 #include "../game/GameContext.h"
 #include "EventCreator.h"
 
-BuildingEvent::BuildingEvent(double startTime, NetworkManager & manager, CellServer & cell) :
-	manager(manager),
+BuildingEvent::BuildingEvent(double startTime, CellServer & cell) :
 	cell(cell),
 	GameEvent(startTime, CONFIG_FLOAT1("data.event.build.time"))
 	{ }
@@ -42,7 +41,7 @@ void BuildingEvent::trigger()
 			current = it->second;
 		}
 	}
-	manager.sendTo<CreateCellComplete>(complete, endpointArr);
+	NETWORKMANAGER->sendTo<CreateCellComplete>(complete, endpointArr);
 	LOG_INFO("CreateCellComplete sent");
 
 	EVENT_CRTR->createAttackEvent(m_dDeadTime, true, *current, cell);

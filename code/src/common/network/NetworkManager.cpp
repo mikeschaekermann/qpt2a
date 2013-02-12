@@ -91,7 +91,7 @@ void NetworkManager::operator()()
 		
 			message->endpoint = remote_endpoint;
 		
-			if (message && !dynamic_cast<JoinRequest*>(message) && !dynamic_cast<ConnectionMessage*>(message))
+			if (message && !dynamic_cast<ConnectionMessage*>(message))
 			{
 				ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
 				if (connectionEndpoint)
@@ -106,12 +106,7 @@ void NetworkManager::operator()()
 						}
 					}
 					connectionEndpoint->m_unreceivedMessages.remove(message->messageId);
-					connectionEndpoint->m_uiRemotePacketId = message->messageId;
-				}
-				else
-				{
-					// throw exception
-					assert(false);
+					connectionEndpoint->m_uiRemotePacketId = max(message->messageId, connectionEndpoint->m_uiRemotePacketId);
 				}
 			}
 		
