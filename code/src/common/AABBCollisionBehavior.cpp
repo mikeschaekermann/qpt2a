@@ -54,10 +54,10 @@ bool AABBCollisionBehavior::isCircleInArea(Area const & a, Circle const & c) con
 Area AABBCollisionBehavior::circleToArea(Circle const & c) const
 {
 	Area circleArea;
-	circleArea.x1 = c.position.x - c.radius;
-	circleArea.y1 = c.position.y - c.radius;
-	circleArea.x2 = c.position.x + c.radius;
-	circleArea.y2 = c.position.y + c.radius;
+	circleArea.x1 = (int32_t) (c.position.x - c.radius);
+	circleArea.y1 = (int32_t) (c.position.y - c.radius);
+	circleArea.x2 = (int32_t) (c.position.x + c.radius);
+	circleArea.y2 = (int32_t) (c.position.y + c.radius);
 
 	return circleArea;
 }

@@ -18,7 +18,6 @@ enum LogSeverity
 	logWarning,
 	logError
 };
-
 class Logger
 {
 public:
@@ -80,8 +79,13 @@ template<typename T> void Logger::log(LogSeverity lvl, T message)
 
 	// write the current time in the line
 	time_t t = time(0);
+	
+	// TODO: Change function to localtime_s to avoid warning
+	#pragma warning(push)
+	#pragma warning(disable: 4996)
 	struct tm * now = localtime(&t);
 	output << now->tm_hour << ":" << now->tm_min << ":" << now->tm_sec << " " << now->tm_mday << "." << (now->tm_mon + 1) << "." << (now->tm_year + 1900) << "\t";
+	#pragma warning(pop)
 
 	// append the message
 	output << message;

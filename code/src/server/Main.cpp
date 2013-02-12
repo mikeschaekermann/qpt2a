@@ -2,9 +2,15 @@
 
 #include <iostream>
 #include <boost/thread/thread.hpp>
+
 #include "event/EventManager.h"
-#include "network/ServerNetworkManager.h"
+
+#include "game/GameContext.h"
 #include "game/Game.h"
+
+#include "../common/network/NetworkManager.h"
+
+#include "../common/Config.h"
 
 using namespace std;
 
@@ -26,7 +32,7 @@ int main(int argc, char argv[])
 		networkThread.join();
 		eventQueueThread.join();
 
-		cout << "test";
+		cout << "Application over";
 		return 0;
 	}
 	catch(exception & e)
