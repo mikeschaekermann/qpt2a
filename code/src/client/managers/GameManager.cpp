@@ -117,11 +117,9 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	{
 		GAME_SCR.addCellToPick(stemCell);
 	}
-	else
-	{
-		GAME_SCR.addGameObjectToDraw(stemCell);
-		GAME_SCR.addGameObjectToCollide(stemCell);
-	}
+	
+	GAME_SCR.addGameObjectToDraw(stemCell);
+	GAME_SCR.addGameObjectToCollide(stemCell);
 }
 
 void GameManager::setMyPlayerId(unsigned int id)

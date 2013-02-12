@@ -91,32 +91,32 @@ void GameScreen::draw()
 	
 	
 		////////////// render test
-		gl::color(1,1,1,1);
-		gl::pushMatrices();
+		//gl::color(1,1,1,1);
+		//gl::pushMatrices();
 
-		gl::translate(100, -100, 20);
-		gl::scale(100, 100, 100);
-		string name("stemcell");
-		auto model = ASSET_MGR->getModel(name);
-		auto shader = ASSET_MGR->getShaderProg(string("test"));
+		//gl::translate(100, -100, 20);
+		//gl::scale(100, 100, 100);
+		//string name("stemcell");
+		//auto model = ASSET_MGR->getModel(name);
+		//auto shader = ASSET_MGR->getShaderProg(string("test"));
 	
-		shader.bind();
+		//shader.bind();
 
-		shader.uniform("viewPos", cam.getEyePoint());
-		shader.uniform("lightPos", Vec3f(0, 0, 100));
+		//shader.uniform("viewPos", cam.getEyePoint());
+		//shader.uniform("lightPos", Vec3f(0, 0, 100));
 
-		shader.uniform("matModelView", cam.getModelViewMatrix());
-		shader.uniform("matProjection", cam.getProjectionMatrix());
+		//shader.uniform("matModelView", cam.getModelViewMatrix());
+		//shader.uniform("matProjection", cam.getProjectionMatrix());
 	
-		shader.uniform("ambientColor", Vec3f(0.1, 0.1, 0.1));
-		shader.uniform("diffuseColor", Vec3f(0.1, 0.1, 0.1));
-		shader.uniform("specularColor", Vec3f(0.1, 0.1, 0.1));
-		shader.uniform("shininess", 2);
+		//shader.uniform("ambientColor", Vec3f(0.1, 0.1, 0.1));
+		//shader.uniform("diffuseColor", Vec3f(0.1, 0.1, 0.1));
+		//shader.uniform("specularColor", Vec3f(0.1, 0.1, 0.1));
+		//shader.uniform("shininess", 2);
 
-		gl::draw(model);
-		shader.unbind();
+		//gl::draw(model);
+		//shader.unbind();
 
-		gl::popMatrices();
+		//gl::popMatrices();
 
 	gl::popMatrices();
 
@@ -208,9 +208,6 @@ void GameScreen::addGameObjectToCollide(GameObject * gameObject)
 void GameScreen::addCellToPick(CellClient * cell)
 {
 	cellsToPick.createGameObject(cell);
-
-	addGameObjectToDraw(cell);
-	addGameObjectToCollide(cell);
 }
 
 void GameScreen::addIncompleteCell(CellClient * cell)
@@ -226,13 +223,21 @@ void GameScreen::completeCellById(unsigned int id)
 
 	if (cell != nullptr)
 	{
-		cellsIncomplete.removeGameObject(id);
+		cellsIncomplete.removeGameObject(id, false);
 		
 		addGameObjectToDraw(cell);
 		
-		if (cell->getOwner() == GAME_MGR->getMyPlayer())
+		auto cellOwner= cell->getOwner();
+		auto myPlayer = GAME_MGR->getMyPlayer();
+
+		if (cellOwner == myPlayer)
 		{
 			addCellToPick(cell);
+			LOG_INFO("Own cell was completed.");
+		}
+		else
+		{
+			LOG_INFO("Other player's cell was completed.");
 		}
 	}
 	else

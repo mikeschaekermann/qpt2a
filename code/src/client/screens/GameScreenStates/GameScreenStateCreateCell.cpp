@@ -22,6 +22,8 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellTy
 				break;
 			}
 		}
+
+		cell->setOwner(GAME_MGR->getMyPlayer());
 	}
 	else
 	{

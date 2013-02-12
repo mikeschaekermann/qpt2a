@@ -196,7 +196,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CreateCellComplete *createCellComplete = dynamic_cast<CreateCellComplete*> (message);
 		if (createCellComplete)
 		{
-			/// TODO
+			LOG_INFO("CreateCellComplete received");
+			GAME_SCR.completeCellById(createCellComplete->cellId);
 		}
 		break;
 	}
