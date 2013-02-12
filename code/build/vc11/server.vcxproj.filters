@@ -43,9 +43,6 @@
     <ClInclude Include="..\..\src\common\Player.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\PositionGameObjectMap.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\common\StandardCell.h">
       <Filter>Common</Filter>
     </ClInclude>

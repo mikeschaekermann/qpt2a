@@ -19,7 +19,6 @@
 #include "../common/Logger.h"
 
 #include "IdGameObjectMap.h"
-#include "PositionGameObjectMap.h"
 #include "CollisionHandler.h"
 #include "ConfigurationDataHandler.h"
 
@@ -42,13 +41,8 @@ public:
 	{
 		if (idMap.addGameObject(gameObject))
 		{
-			if (positionMap.addGameObject(gameObject))
-			{
-				collisionHandler.insert(Circle(gameObject->getId(), Vec2f(gameObject->getPosition().x, gameObject->getPosition().y), gameObject->getRadius()));
-				return;
-			}
-			LOG_INFO("Inserting gameobject in position map failed");
-			idMap.removeGameObject(gameObject);
+			collisionHandler.insert(Circle(gameObject->getId(), Vec2f(gameObject->getPosition().x, gameObject->getPosition().y), gameObject->getRadius()));
+			return;
 		}
 		LOG_INFO("Inserting gameobject in id map failed");
 	}
@@ -60,7 +54,6 @@ public:
 		{
 			collisionHandler.remove(id);
 			idMap.removeGameObject(gameObject);
-			positionMap.removeGameObject(gameObject);
 
 			if (deleteObject)
 			{
@@ -76,11 +69,6 @@ public:
 	O * find(unsigned int id) const
 	{
 		return idMap.find(id);
-	}
-
-	O * find(Vec3f const & position) const
-	{
-		return positionMap.find(position);
 	}
 
 	const vector<O *> getGameObjectsToCheck(Vec3f const & position, float radius) const
@@ -128,7 +116,7 @@ public:
 
 	unsigned int getSize() const
 	{
-		if (idMap.getSize() != positionMap.getSize())
+		if (idMap.getSize() != collisionHandler.getSize())
 		{
 			/// something wicked happens here
 			LOG_ERROR("Problem with the maps");
@@ -147,6 +135,5 @@ public:
 	}
 private:
 	IdGameObjectMap<O> idMap;
-	PositionGameObjectMap<O> positionMap;
 	CollisionHandler collisionHandler;
 };

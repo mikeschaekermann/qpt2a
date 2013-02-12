@@ -57,17 +57,20 @@ CollisionHandler & CollisionHandler::insert(Circle const & circle)
 CollisionHandler & CollisionHandler::remove(unsigned int id)
 {
 	Circle const & cur = circleBackup[id];
-	unsigned int bucketIdx = getBucketIndex(cur.position);
-	auto & bucketSet = buckets[bucketIdx];
-	for (auto it = bucketSet.begin(); it != bucketSet.end(); ++it)
+	auto ids = getBucketIndices(cur);
+	for (auto idIt = ids.begin(); idIt != ids.end(); ++idIt)
 	{
-		if ((*it)->index == cur.index)
+		auto & bucketSet = buckets[*idIt];
+		for (auto it = bucketSet.begin(); it != bucketSet.end(); ++it)
 		{
-			if (bucketSet.erase(*it))
+			if ((*it)->index == cur.index)
 			{
-				// worked
+				if (bucketSet.erase(*it))
+				{
+					// worked
+				}
+				break;
 			}
-			break;
 		}
 	}
 
@@ -96,6 +99,11 @@ set<unsigned int> CollisionHandler::getCircleIndicesToCheck(Circle const & circl
 	}
 
 	return circleIndices;
+}
+
+unsigned int CollisionHandler::getSize() const
+{
+	return circleBackup.size();
 }
 
 void CollisionHandler::setScreenDimension(Area const & screen)

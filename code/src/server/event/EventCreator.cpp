@@ -49,7 +49,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 		LOG_ERROR("Cell could not be created because it is not in the game area");
 		return false;
 	}
-
+	auto foo = GAMECONTEXT;
 	auto it = GAMECONTEXT->getPlayerMap().begin();
 	for (; it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
