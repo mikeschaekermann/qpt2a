@@ -1,4 +1,5 @@
 #include "TouchWay.h"
+#include "../../common/ConfigurationDataHandler.h"
 
 const Vec2f& TouchWay::TouchPoint::getPos() const { return m_pos; }
 double TouchWay::TouchPoint::getTime() const { return m_dTime; }
@@ -47,7 +48,9 @@ Vec2f TouchWay::getLastDeltaVector() const
 
 bool TouchWay::isClick() const
 {
-	return (m_way.size() == 2 && getStartPos() == getCurrentPos());
+	auto distance = getStartPos().distance(getCurrentPos());
+	auto clickPixelTolerance = CONFIG_FLOAT1("data.input.clickPixelTolerance");
+	return (distance <= clickPixelTolerance);
 }
 
 TouchWay::TRIGGER TouchWay::getTrigger() const
