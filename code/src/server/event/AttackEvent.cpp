@@ -7,6 +7,7 @@
 #include "../../common/network/NetworkManager.h"
 #include "../../common/network/messages/game/ingame/cell/combat/CellAttack.h"
 #include "../../common/network/messages/game/ingame/cell/combat/CellDie.h"
+#include "../../common/network/messages/game/outgame/GameOver.h"
 
 AttackEvent::AttackEvent(double startTime, CellServer & attacker, CellServer & victim, float damage) :
 	attacker(attacker),
@@ -47,6 +48,16 @@ void AttackEvent::trigger()
 		}
 			
 		NETWORKMANAGER->sendTo<CellDie>(die, endpointArr);
+		
+		if (victim.getType() == CellServer::STEMCELL)
+		{
+			GameOver * gameOver = new GameOver();
+			gameOver->playerId = player->getId();
+
+			NETWORKMANAGER->sendTo<GameOver>(gameOver, endpointArr);
+			
+			player->kill();
+		}
 
 		GAMECONTEXT->getActiveCells().removeGameObject(victim.getId());
 	}
