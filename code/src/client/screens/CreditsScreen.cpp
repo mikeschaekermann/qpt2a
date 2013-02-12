@@ -4,22 +4,45 @@
 #include "../managers/GameManager.h"
 #include "TextInput.h"
 #include "IpInput.h"
+#include "../../common/ConfigurationDataHandler.h"
 
 using namespace ci;
 
 CreditsScreen::CreditsScreen()
 {
-	auto back = &(ASSET_MGR->getGuiTexture(string("back")));
+	auto background = &(ASSET_MGR->getGuiTexture(string("soma-background")));
+	rootItem->addSubItem(
+		this,
+		[]() {},
+		Vec2f(CONFIG_FLOAT2("data.menu.creditscreen.background.x", 0), CONFIG_FLOAT2("data.menu.creditscreen.background.y", 0)),
+		background,
+		background,
+		background
+	);
+
+	auto content = &(ASSET_MGR->getGuiTexture(string("soma-credits")));
+	rootItem->addSubItem(
+		this,
+		[]() {},
+		Vec2f(CONFIG_FLOAT2("data.menu.creditscreen.content.x", 0), CONFIG_FLOAT2("data.menu.creditscreen.content.y", 0)),
+		content,
+		content,
+		content
+	);
+
+	auto backBasic = &(ASSET_MGR->getGuiTexture(string("soma-connect-basic-back")));
+	auto backClick = &(ASSET_MGR->getGuiTexture(string("soma-connect-clicked-back")));
+	auto backHover = &(ASSET_MGR->getGuiTexture(string("soma-connect-hover-back")));
 	rootItem->addSubItem(
 		this,
 		[]()
 		{
 			SCREEN_MGR->openMenuScreen();
 		},
-		Vec2f(100, 300),
-		back,
-		back,
-		back
+		Vec2f(CONFIG_FLOAT2("data.menu.creditscreen.back.x", 100), CONFIG_FLOAT2("data.menu.creditscreen.back.y", 300)),
+		backBasic,
+		backClick,
+		backHover
 	);
 }
 

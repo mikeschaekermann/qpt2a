@@ -139,14 +139,14 @@ void GUIItem::draw()
 	gl::pushMatrices();
 	{
 		gl::translate(position);
-		if(isVisible && currentTexture != nullptr && !hasFocus)
+		if(isVisible && currentTexture != nullptr)/// && !hasFocus)
 		{
 			gl::draw(*currentTexture);
 		}
-		else if(isVisible && hasFocus && clickTexture)
+		/*else if(isVisible && hasFocus && clickTexture)
 		{
 			gl::draw(*clickTexture);
-		}
+		}*/
 
 		for (auto it = subItems.begin(); it != subItems.end(); ++it)
 		{

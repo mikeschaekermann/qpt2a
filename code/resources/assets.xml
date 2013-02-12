@@ -56,6 +56,178 @@ vertexShader and fragmentShader are also file paths
 	<fragmentShader></fragmentShader>
 </shader>-->
 
+<!-- menu -->
+
+<guiTexture>
+	<key>soma-background</key>
+	<value>..\..\..\resources\images\soma-background.svg</value>
+	<width>1024</width>
+	<height>768</height>
+</guiTexture>
+
+<guiTexture>
+	<key>soma-menu-background</key>
+	<value>..\..\..\resources\images\soma-menu-background.svg</value>
+	<width>1025</width>
+	<height>769</height>
+</guiTexture>
+
+<!-- button connect -->
+<guiTexture>
+	<key>soma-menu-basic-connect</key>
+	<value>..\..\..\resources\images\soma-menu-basic-connect.svg</value>
+	<width>122.683</width>
+	<height>65.867</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-menu-clicked-connect</key>
+	<value>..\..\..\resources\images\soma-menu-clicked-connect.svg</value>
+	<width>122.684</width>
+	<height>65.867</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-menu-hover-connect</key>
+	<value>..\..\..\resources\images\soma-menu-hover-connect.svg</value>
+	<width>122.683</width>
+	<height>65.867</height>
+</guiTexture>
+
+<!-- button start server -->
+<guiTexture>
+	<key>soma-menu-basic-start</key>
+	<value>..\..\..\resources\images\soma-menu-basic-start.svg</value>
+	<width>210</width>
+	<height>76.449</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-menu-clicked-start</key>
+	<value>..\..\..\resources\images\soma-menu-clicked-start.svg</value>
+	<width>210</width>
+	<height>76.449</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-menu-hover-start</key>
+	<value>..\..\..\resources\images\soma-menu-hover-start.svg</value>
+	<width>210</width>
+	<height>76.449</height>
+</guiTexture>
+
+<!-- button credits -->
+<guiTexture>
+	<key>soma-menu-basic-credits</key>
+	<value>..\..\..\resources\images\soma-menu-basic-credits.svg</value>
+	<width>163.209</width>
+	<height>78.996</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-menu-clicked-credits</key>
+	<value>..\..\..\resources\images\soma-menu-clicked-credits.svg</value>
+	<width>163.209</width>
+	<height>78.996</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-menu-hover-credits</key>
+	<value>..\..\..\resources\images\soma-menu-hover-credits.svg</value>
+	<width>163.209</width>
+	<height>78.996</height>
+</guiTexture>
+
+<!-- button exit -->
+<guiTexture>
+	<key>soma-menu-basic-exit</key>
+	<value>..\..\..\resources\images\soma-menu-basic-exit.svg</value>
+	<width>142.676</width>
+	<height>74.389</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-menu-clicked-exit</key>
+	<value>..\..\..\resources\images\soma-menu-clicked-exit.svg</value>
+	<width>142.676</width>
+	<height>74.389</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-menu-hover-exit</key>
+	<value>..\..\..\resources\images\soma-menu-hover-exit.svg</value>
+	<width>142.676</width>
+	<height>74.389</height>
+</guiTexture>
+
+<!-- connect menu -->
+<!-- headline -->
+<guiTexture>
+	<key>soma-connect-headline</key>
+	<value>..\..\..\resources\images\soma-connect-headline.svg</value>
+	<width>195</width>
+	<height>104.5</height>
+</guiTexture>
+
+<!-- textbox username -->
+<guiTexture>
+	<key>soma-connect-username-without-font</key>
+	<value>..\..\..\resources\images\soma-connect-username-without-font.svg</value>
+	<width>504</width>
+	<height>73</height>
+</guiTexture>
+
+<!-- textbox server -->
+<guiTexture>
+	<key>soma-connect-server-without-font</key>
+	<value>..\..\..\resources\images\soma-connect-server-without-font.svg</value>
+	<width>517</width>
+	<height>65</height>
+</guiTexture>
+
+<!-- button back -->
+<guiTexture>
+	<key>soma-connect-basic-back</key>
+	<value>..\..\..\resources\images\soma-connect-basic-back.svg</value>
+	<width>119.619</width>
+	<height>88.773</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-connect-clicked-back</key>
+	<value>..\..\..\resources\images\soma-connect-clicked-back.svg</value>
+	<width>119.619</width>
+	<height>88.773</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-connect-hover-back</key>
+	<value>..\..\..\resources\images\soma-connect-hover-back.svg</value>
+	<width>119.619</width>
+	<height>88.773</height>
+</guiTexture>
+
+<!-- button connect -->
+<guiTexture>
+	<key>soma-connect-basic-connect</key>
+	<value>..\..\..\resources\images\soma-connect-basic-connect.svg</value>
+	<width>112.238</width>
+	<height>84.969</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-connect-clicked-connect</key>
+	<value>..\..\..\resources\images\soma-connect-clicked-connect.svg</value>
+	<width>112.238</width>
+	<height>84.969</height>
+</guiTexture>
+<guiTexture>
+	<key>soma-connect-hover-connect</key>
+	<value>..\..\..\resources\images\soma-connect-hover-connect.svg</value>
+	<width>112.238</width>
+	<height>84.969</height>
+</guiTexture>
+
+<!-- credit menu -->
+
+<guiTexture>
+	<key>soma-credits</key>
+	<value>..\..\..\resources\images\soma-credits.svg</value>
+	<width>753</width>
+	<height>425</height>
+</guiTexture>
+
+<!-- other -->
+
 <guiTexture>
 	<key>createCell</key>
 	<value>..\..\..\resources\images\createCell.svg</value>
