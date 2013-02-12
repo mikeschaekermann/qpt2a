@@ -7,7 +7,6 @@ class StaticModificator : virtual public GameObject
 public:
 	enum Type
 	{
-		ANTIBIOTIC,
 		NUTRIENTSOIL,
 		RADIOACTIVITY
 	};

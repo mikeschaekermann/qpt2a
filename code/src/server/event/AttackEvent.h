@@ -1,6 +1,5 @@
 #pragma once
 
-class NetworkManager;
 class CellServer;
 
 #include <vector>
@@ -11,11 +10,10 @@ class CellServer;
 class AttackEvent : public GameEvent
 {
 public:
-	AttackEvent(double startTime, NetworkManager & manager, CellServer & attacker, CellServer & victim, float damage);
+	AttackEvent(double startTime, CellServer & attacker, CellServer & victim, float damage);
 
 	virtual void trigger();
 private:
-	NetworkManager & manager;
 	CellServer & attacker;
 	CellServer & victim;
 	float damage;

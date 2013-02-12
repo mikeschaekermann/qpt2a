@@ -1,5 +1,6 @@
 #include "GameContext.h"
 #include "PlayerServer.h"
+#include "../network/ServerNetworkManager.h"
 
 GameContext * GameContext::instance = 0;
 
@@ -47,8 +48,17 @@ GameContext * GameContext::getInstance()
 	return instance;
 }
 	
+NetworkManager * GameContext::getNetworkManager()
+{
+	return networkManager;
+}
+
+void GameContext::initializeNetworkManager(int port, Game * game)
+{
+	networkManager = new ServerNetworkManager(port, game);
+}
 	
-GameContext::GameContext()
+GameContext::GameContext() : networkManager(0)
 {
 
 }

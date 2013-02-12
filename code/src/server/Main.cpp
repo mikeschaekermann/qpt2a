@@ -18,10 +18,11 @@ int main(int argc, char argv[])
 
 		Game game;
 
-		ServerNetworkManager nm(port, &game);
-		boost::thread networkThread(boost::bind(&NetworkManager::operator(), &nm));
+		GAMECONTEXT->initializeNetworkManager(port, &game);
+
+		boost::thread networkThread(boost::bind(&NetworkManager::operator(), NETWORKMANAGER));
 		boost::thread eventQueueThread(boost::bind(&EventManager::operator(), EVENT_MGR));
-		game.bind(&nm);
+
 		networkThread.join();
 		eventQueueThread.join();
 

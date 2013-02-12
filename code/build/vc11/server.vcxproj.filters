@@ -130,16 +130,10 @@
     <ClInclude Include="..\..\src\common\environment\Barrier.h">
       <Filter>Environment</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\environment\DynamicModificator.h">
-      <Filter>Environment</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\common\environment\StaticModificator.h">
       <Filter>Environment</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\environment\BarrierServer.h">
-      <Filter>Environment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\server\environment\DynamicModificatorServer.h">
       <Filter>Environment</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\environment\StaticModificatorServer.h">
@@ -195,6 +189,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\server\game\GameContext.h">
       <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\BoneCell.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -346,12 +343,6 @@
       <Filter>Environment</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\environment\StaticModificator.cpp">
-      <Filter>Environment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\environment\DynamicModificator.cpp">
-      <Filter>Environment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\server\environment\DynamicModificatorServer.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\environment\StaticModificatorServer.cpp">

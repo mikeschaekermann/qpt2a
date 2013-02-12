@@ -6,8 +6,11 @@
 #include <map>
 
 class PlayerServer;
+class NetworkManager;
+class Game;
 
 #define GAMECONTEXT GameContext::getInstance()
+#define NETWORKMANAGER GameContext::getInstance()->getNetworkManager()
 
 class GameContext
 {
@@ -22,10 +25,15 @@ public:
 	void addPlayer(PlayerServer * player);
 	std::map<unsigned, PlayerServer *> & getPlayerMap();
 
-private:
-	static GameContext *instance;
+	NetworkManager * getNetworkManager();
+	void initializeNetworkManager(int port, Game * game);
 
+private:
+	// Singleton stuff
+	static GameContext *instance;
 	GameContext();
+
+	NetworkManager* networkManager;
 	std::map<unsigned, PlayerServer *> playermap;
 	GameObjectContainer<GameObject> activeCells;
 	GameObjectContainer<GameObject> inactiveCells;
