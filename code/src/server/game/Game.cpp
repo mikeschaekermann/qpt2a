@@ -278,6 +278,18 @@ void Game::createCell(CreateCellRequest &request)
 	if (GAMECONTEXT->getPlayer(playerId))
 	{
 		PlayerServer & player = *(GAMECONTEXT->getPlayer(playerId));
+
+		if (player.isDead())
+		{
+			CreateCellFailure *failure = new CreateCellFailure();
+			failure->endpoint = player.getEndpoint();
+			failure->requestId = request.requestId;
+			failure->errorCode = CreateCellErrorCode::PlayerIsSpectator;
+			NETWORKMANAGER->send(failure);
+			return;
+		}
+
+
 		CellServer * parentCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
 		if (parentCell == 0)
 		{

@@ -52,9 +52,6 @@
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\PlayerServer.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\server\game\IIdentifiable.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
@@ -192,6 +189,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\common\BoneCell.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\PlayerServer.h">
+      <Filter>Gamelogic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
