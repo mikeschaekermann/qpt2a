@@ -18,6 +18,8 @@
 
 #include "../../client/managers/GameManager.h"
 
+#include "../../client/actors/CellClient.h"
+
 using namespace std;
 
 ConnectionEndpoint* ClientNetworkManager::getConnectionEndpoint(boost::asio::ip::udp::endpoint endpoint)
@@ -217,20 +219,22 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			LOG_INFO("CreateCellSuccess received");
 			unsigned int requestId = createCellSuccess->requestId;
 
-			auto callbacks = createCellCallbacks.find(requestId);
+			auto context = createCellRequestContexts.find(requestId);
 
-			if (callbacks != createCellCallbacks.end())
+			if (context != createCellRequestContexts.end())
 			{
-				auto callback = callbacks->second.first;
+				auto newCell = context->second.first;
+				auto parentCell = context->second.second;
 
-				if (callback != nullptr)
-				{
-					callback(createCellSuccess);
-				}
-				else
-				{
-					delete createCellSuccess;
-				}
+				newCell->setPosition(createCellSuccess->position);
+				newCell->setAngle(createCellSuccess->angle);
+				newCell->setId(createCellSuccess->cellId);
+				newCell->addParent(parentCell);
+				parentCell->addChild(newCell);
+				GAME_SCR.removeCellPreview(newCell);
+				GAME_SCR.addIncompleteCell(newCell);
+
+				createCellRequestContexts.erase(context);
 			}
 		}
 		break;
@@ -243,20 +247,15 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			LOG_INFO("CreateCellFailure received");
 			unsigned int requestId = createCellFailure->requestId;
 
-			auto callbacks = createCellCallbacks.find(requestId);
+			auto context = createCellRequestContexts.find(requestId);
 
-			if (callbacks != createCellCallbacks.end())
+			if (context != createCellRequestContexts.end())
 			{
-				auto callback = callbacks->second.second;
+				auto newCell = context->second.first;
 
-				if (callback != nullptr)
-				{
-					callback(createCellFailure);
-				}
-				else
-				{
-					delete createCellFailure;
-				}
+				GAME_SCR.removeCellPreview(newCell);
+
+				createCellRequestContexts.erase(context);
 			}
 		}
 		break;
@@ -282,17 +281,17 @@ ClientNetworkManager::ClientNetworkManager(udp::endpoint serverEndpoint) :
 	m_endpoints.push_back(ConnectionEndpoint(serverEndpoint));
 }
 
-void ClientNetworkManager::registerCreateCellCallbacks(
+void ClientNetworkManager::registerCreateCellRequest(
 	CreateCellRequest * request,
-	std::function<void(CreateCellSuccess *)> successCallback,
-	std::function<void(CreateCellFailure *)> failureCallback
+	CellClient * newCell,
+	CellClient * parentCell
 )
 {
-	createCellCallbacks.insert(make_pair(
+	createCellRequestContexts.insert(make_pair(
 		nextRequestId,
 		make_pair(
-			successCallback,
-			failureCallback
+			newCell,
+			parentCell
 		)
 	));
 

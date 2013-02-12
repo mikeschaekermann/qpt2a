@@ -46,9 +46,10 @@ public:
 	void addGameObjectToUpdate(GameObjectClient * gameObject);
 	void addGameObjectToDraw(GameObjectClient * gameObject);
 	void addGameObjectToCollide(GameObject * gameObject);
+	void removeGameObjectToCollide(GameObject * gameObject);
 	void addCellToPick(CellClient * cell);
-
 	void addIncompleteCell(CellClient * cell);
+	void removeIncompleteCell(CellClient * cell);
 	void addIncompleteCell(
 		unsigned int playerId, 
 		CellType::Type type, 
@@ -57,6 +58,9 @@ public:
 		float angle
 	);
 	void completeCellById(unsigned int id);
+	void addCellPreview(CellClient * cell);
+	void removeCellPreview(CellClient * cell);
+
 
 	void switchToState(GameScreenState * newState);
 
@@ -91,4 +95,7 @@ private:
 
 	/// all incomplete cells
 	GameObjectContainer<CellClient>			cellsIncomplete;
+
+	/// all cell previews
+	std::set<CellClient *>					cellPreviews;
 };

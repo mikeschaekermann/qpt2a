@@ -390,6 +390,9 @@
     <ClCompile Include="..\..\src\common\Helper.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\game\Game.cpp">
+      <Filter>Gamelogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

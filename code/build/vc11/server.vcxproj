@@ -127,6 +127,7 @@
     <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp" />
     <ClCompile Include="..\..\src\server\event\EventCreator.cpp" />
     <ClCompile Include="..\..\src\server\event\EventManager.cpp" />
+    <ClCompile Include="..\..\src\server\game\Game.cpp" />
     <ClCompile Include="..\..\src\server\game\GameContext.cpp" />
     <ClCompile Include="..\..\src\server\game\IIdentifiable.cpp" />
     <ClCompile Include="..\..\src\server\Main.cpp" />
@@ -175,9 +176,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\..\..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>.\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

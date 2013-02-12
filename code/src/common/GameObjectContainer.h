@@ -35,7 +35,10 @@ public:
 
 	GameObjectContainer()
 	{
-		collisionHandler.initialize(ci::Area(-CONFIG_FLOAT1("data.world.radius"), -CONFIG_FLOAT1("data.world.radius"), CONFIG_FLOAT1("data.world.radius"), CONFIG_FLOAT1("data.world.radius")));
+		collisionHandler.initialize(ci::Area((int32_t) -CONFIG_FLOAT1("data.world.radius"), 
+			(int32_t) -CONFIG_FLOAT1("data.world.radius"), 
+			(int32_t)  CONFIG_FLOAT1("data.world.radius"), 
+			(int32_t)  CONFIG_FLOAT1("data.world.radius")));
 	}
 
 	void createGameObject(O * gameObject)

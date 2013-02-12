@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data>
+	<input>
+		<clickPixelTolerance>10</clickPixelTolerance>
+	</input>
 	<rendering>
 		<camera>
 			<fieldOfView>30</fieldOfView>
@@ -11,7 +14,7 @@
 		<radius>500.0</radius>
 	</world>
 	<players>
-		<max>2</max>
+		<max>1</max>
 		<player>
 			<startposition>
 				<x>35.0</x>

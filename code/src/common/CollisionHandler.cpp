@@ -18,8 +18,8 @@ CollisionHandler & CollisionHandler::clear()
 {
 	circleBackup.clear();
 	buckets.clear();
-	area.bucketMeasures.x = abs(area.dimensions.x1) + abs(area.dimensions.x2);
-	area.bucketMeasures.y = abs(area.dimensions.y1) + abs(area.dimensions.y2);
+	area.bucketMeasures.x = (float) (abs(area.dimensions.x1) + abs(area.dimensions.x2));
+	area.bucketMeasures.y = (float) (abs(area.dimensions.y1) + abs(area.dimensions.y2));
 	area.largestRadius = 0;
 	initialized = false;
 	backupInsert = false;
@@ -123,8 +123,8 @@ void CollisionHandler::calculateBucketMeasures(Circle const & circle)
 		float & radius = area.largestRadius = circle.radius;
 		float buffer = 1.f;
 
-		float width = abs(area.dimensions.x1) + abs(area.dimensions.x2);
-		float height = abs(area.dimensions.y1) + abs(area.dimensions.y2);
+		float width = (float) (abs(area.dimensions.x1) + abs(area.dimensions.x2));
+		float height = (float) (abs(area.dimensions.y1) + abs(area.dimensions.y2));
 		float divisorX = width / (2 * radius + buffer);
 		divisorX = divisorX >= 1.f ? floor(divisorX) : 1.f;
 		area.bucketMeasures.x = width / divisorX;
@@ -185,10 +185,10 @@ Area CollisionHandler::getBucketSizeFromIndex(unsigned int idx) const
 	int y = idx / nrOfColumns;
 	int x = idx % nrOfColumns;
 
-	bucketSize.x1 = area.dimensions.x1 + x * area.bucketMeasures.x;
-	bucketSize.y1 = area.dimensions.y1 + y * area.bucketMeasures.y;
-	bucketSize.x2 = bucketSize.x1 + area.bucketMeasures.x;
-	bucketSize.y2 = bucketSize.y1 + area.bucketMeasures.y;
+	bucketSize.x1 = (int32_t) (area.dimensions.x1 + x * area.bucketMeasures.x);
+	bucketSize.y1 = (int32_t) (area.dimensions.y1 + y * area.bucketMeasures.y);
+	bucketSize.x2 = (int32_t) (bucketSize.x1 + area.bucketMeasures.x);
+	bucketSize.y2 = (int32_t) (bucketSize.y1 + area.bucketMeasures.y);
 
 	return bucketSize;
 }

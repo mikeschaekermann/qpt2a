@@ -19,9 +19,10 @@ class PlayerServer :
 public:
 	PlayerServer(string name, boost::asio::ip::udp::endpoint endpoint, Vec3f position) :
 		Player(IIdentifiable::getNewId(), name),  
-		ConnectionEndpoint(endpoint),
-		stemCell(new CellServer(CellServer::STEMCELL, position, 0.f, this))
-	{ }
+		ConnectionEndpoint(endpoint)
+	{ 
+		stemCell = new CellServer(CellServer::STEMCELL, position, 0.f, this);
+	}
 	
 	const boost::asio::ip::udp::endpoint & getEndpoint() const { return m_endpoint; }
 	CellServer & getStemCell() { return *stemCell; }
