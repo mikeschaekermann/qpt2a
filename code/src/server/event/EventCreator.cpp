@@ -41,6 +41,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	if (!isInRadiusOf<float>(cell.getPosition(), cell.getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
 	{
 		CreateCellFailure *failure = new CreateCellFailure();
+		failure->endpoint = currentPlayer.getEndpoint();
 		failure->requestId = requestId;
 		failure->errorCode = CreateCellErrorCode::OutsideGameArea;
 		networkManager->send(failure);
@@ -65,6 +66,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 			/// collision detected
 			CreateCellFailure *failure = new CreateCellFailure();
 			failure->requestId = requestId;
+			failure->endpoint = currentPlayer.getEndpoint();
 			failure->errorCode = CreateCellErrorCode::SpotAlreadyTaken;
 			networkManager->send(failure);
 			LOG_INFO("CreateCellFailure SpotAlreadyTaken sent");

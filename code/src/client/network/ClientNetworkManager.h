@@ -6,18 +6,17 @@
 using namespace boost::asio::ip;
 
 class CreateCellRequest;
-class CreateCellSuccess;
-class CreateCellFailure;
+class CellClient;
 
 class ClientNetworkManager : public NetworkManager
 {
 public:
 	ClientNetworkManager(udp::endpoint serverEndpoint);
 	
-	virtual void registerCreateCellCallbacks(
+	virtual void registerCreateCellRequest(
 		CreateCellRequest * request,
-		std::function<void(CreateCellSuccess *)> successCallback = nullptr,
-		std::function<void(CreateCellFailure *)> failureCallback = nullptr
+		CellClient * newCell,
+		CellClient * parentCell
 	);
 	
 protected:
@@ -29,10 +28,10 @@ protected:
 	std::map<
 		unsigned int,
 		std::pair<
-			std::function<void(CreateCellSuccess *)>,
-			std::function<void(CreateCellFailure *)>
+			CellClient *,
+			CellClient *
 		>
-	> createCellCallbacks;
+	> createCellRequestContexts;
 	
 	unsigned int nextRequestId;
 
