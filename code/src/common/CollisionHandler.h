@@ -21,6 +21,7 @@ public:
 	CollisionHandler & insert(Circle const & circle);
 	CollisionHandler & remove(unsigned int id);
 	std::set<unsigned int> getCircleIndicesToCheck(Circle const & circle) const;
+	unsigned int getSize() const;
 private:
 	struct SelectionArea
 	{

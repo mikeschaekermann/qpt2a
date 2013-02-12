@@ -109,7 +109,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		GameOver *gameOver = dynamic_cast<GameOver*> (message);
 		if (gameOver)
 		{
-			/// TODO
+			LOG_INFO("GameOver received");
 		}
 		break;
 	}
@@ -118,7 +118,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		JoinFailure *joinFailure= dynamic_cast<JoinFailure*> (message);
 		if (joinFailure)
 		{
-			/// TODO
+			LOG_INFO("JoinFailure received");
 		}
 		break;
 	}
@@ -129,8 +129,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			GAME_MGR->setMyPlayerId(joinSuccess->playerId);
 
-			LOG_INFO("join success message from server");
-			LOG_INFO("================================");
+			LOG_INFO("JoinSuccess received");
+			LOG_INFO("====================");
 			stringstream message;
 			message << "my player id: " << joinSuccess->playerId;
 			LOG_INFO(message.str());
@@ -144,8 +144,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			stringstream message;
 
-			LOG_INFO("start game message from server");
-			LOG_INFO("==============================");
+			LOG_INFO("StartGame received");
+			LOG_INFO("==================");
 			message << "world radius: " << startGame->worldRadius;
 			LOG_INFO(message.str());
 			message.str("");
@@ -169,7 +169,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CellAttack *cellAttack = dynamic_cast<CellAttack*> (message);
 		if (cellAttack)
 		{
-			/// TODO
+			LOG_INFO("CellAttack received");
 		}
 		break;
 	}
@@ -178,7 +178,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CellDie *cellDie = dynamic_cast<CellDie*> (message);
 		if (cellDie)
 		{
-			/// TODO
+			LOG_INFO("CellDie received");
 		}
 		break;
 	}
@@ -187,7 +187,15 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CellNew *cellNew = dynamic_cast<CellNew*> (message);
 		if (cellNew)
 		{
-			/// TODO
+			LOG_INFO("CellNew received");
+
+			GAME_SCR.addIncompleteCell(
+				cellNew->playerId, 
+				cellNew->type.getType(),
+				cellNew->cellId,
+				cellNew->position,
+				cellNew->angle
+			);
 		}
 		break;
 	}
@@ -196,7 +204,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CreateCellComplete *createCellComplete = dynamic_cast<CreateCellComplete*> (message);
 		if (createCellComplete)
 		{
-			/// TODO
+			LOG_INFO("CreateCellComplete received");
+			GAME_SCR.completeCellById(createCellComplete->cellId);
 		}
 		break;
 	}
@@ -205,6 +214,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CreateCellSuccess *createCellSuccess = dynamic_cast<CreateCellSuccess*> (message);
 		if (createCellSuccess)
 		{
+			LOG_INFO("CreateCellSuccess received");
 			unsigned int requestId = createCellSuccess->requestId;
 
 			auto callbacks = createCellCallbacks.find(requestId);
@@ -230,6 +240,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CreateCellFailure *createCellFailure = dynamic_cast<CreateCellFailure*> (message);
 		if (createCellFailure)
 		{
+			LOG_INFO("CreateCellFailure received");
 			unsigned int requestId = createCellFailure->requestId;
 
 			auto callbacks = createCellCallbacks.find(requestId);
@@ -252,7 +263,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 	}
 	default:
 	{
-		LOG_WARNING("Received message that could not be categorized as a client message.");
+		LOG_WARNING("Message received that could not be categorized.");
 		break;
 	}
 	}

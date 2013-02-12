@@ -22,6 +22,8 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellTy
 				break;
 			}
 		}
+
+		cell->setOwner(GAME_MGR->getMyPlayer());
 	}
 	else
 	{
@@ -75,8 +77,6 @@ bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)
 	NETWORK_MGR->registerCreateCellCallbacks(
 		createCellRequest,
 		[this](CreateCellSuccess * response){
-			LOG_INFO("CreateCellSuccess received");
-
 			cell->setPosition(response->position);
 			cell->setAngle(response->angle);
 			cell->setId(response->cellId);
@@ -88,9 +88,7 @@ bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)
 			screen->switchToState(new GameScreenStateNeutral(screen));
 		},
 		[this](CreateCellFailure * response){
-			LOG_INFO("CreateCellFailure received");
-
-			delete cell;
+			
 		}
 	);
 

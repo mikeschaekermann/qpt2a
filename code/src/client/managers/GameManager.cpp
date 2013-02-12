@@ -117,11 +117,9 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	{
 		GAME_SCR.addCellToPick(stemCell);
 	}
-	else
-	{
-		GAME_SCR.addGameObjectToDraw(stemCell);
-		GAME_SCR.addGameObjectToCollide(stemCell);
-	}
+	
+	GAME_SCR.addGameObjectToDraw(stemCell);
+	GAME_SCR.addGameObjectToCollide(stemCell);
 }
 
 void GameManager::setMyPlayerId(unsigned int id)
@@ -132,6 +130,20 @@ void GameManager::setMyPlayerId(unsigned int id)
 PlayerClient * GameManager::getMyPlayer() const
 {
 	return myPlayer;
+}
+
+PlayerClient * GameManager::getPlayerById(unsigned int id)
+{
+	auto player = players.find(id);
+
+	if (player != players.end())
+	{
+		return player->second;
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 ClientNetworkManager * GameManager::getNetworkManager()

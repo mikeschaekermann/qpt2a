@@ -6,6 +6,8 @@
 #include "../../common/Player.h"
 #include "../../common/GameObjectContainer.h"
 #include <unordered_map>
+#include "../../common/network/messages/enum/CellType.h"
+#include "boost/thread/mutex.hpp"
 
 class CellClient;
 class GameObjectClient;
@@ -28,6 +30,7 @@ public:
 
 	virtual void update(float frameTime);
 	virtual void draw();
+
 	void setWorldRadius(float radius) { worldRadius = radius; }
 	void zoomToWorld();
 
@@ -44,7 +47,15 @@ public:
 	void addGameObjectToDraw(GameObjectClient * gameObject);
 	void addGameObjectToCollide(GameObject * gameObject);
 	void addCellToPick(CellClient * cell);
+
 	void addIncompleteCell(CellClient * cell);
+	void addIncompleteCell(
+		unsigned int playerId, 
+		CellType::Type type, 
+		unsigned int cellId, 
+		Vec3f position, 
+		float angle
+	);
 	void completeCellById(unsigned int id);
 
 	void switchToState(GameScreenState * newState);
@@ -63,6 +74,9 @@ private:
 	/// cell currently picked
 	CellClient * pickedCell;
 
+	/// mutex for container manipulation and reading
+	boost::mutex containerMutex;
+	
 	/// all game objects registered to be updated
 	GameObjectContainer<GameObject>			gameObjectsToUpdate;
 

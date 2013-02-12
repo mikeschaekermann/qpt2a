@@ -3,6 +3,7 @@
 #include "../../common/network/NetworkManager.h"
 #include "../managers/AssetManager.h"
 #include "../actors/CellClient.h"
+#include "../actors/StandardCellClient.h"
 #include "../actors/GameObjectClient.h"
 #include "GameScreenStates/GameScreenStateNeutral.h"
 #include "GameScreenStates/GameScreenStateCreateCell.h"
@@ -72,6 +73,8 @@ void GameScreen::draw()
 
 		gl::setMatrices(cam);
 
+		containerMutex.lock();
+
 		for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
 		{
 			it->second->draw();
@@ -81,6 +84,8 @@ void GameScreen::draw()
 		{
 			it->second->draw();
 		}
+
+		containerMutex.unlock();
 
 		state->draw3D();
 
@@ -193,34 +198,66 @@ void GameScreen::mouseWheel(MouseEvent & e)
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject)
 {
+	containerMutex.lock();
 	gameObjectsToUpdate.createGameObject(gameObject);
+	containerMutex.unlock();
 }
 
 void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject)
 {
 	addGameObjectToUpdate(gameObject);
 
+	containerMutex.lock();
 	gameObjectsToDraw.createGameObject(gameObject);
+	containerMutex.unlock();
 }
 
 void GameScreen::addGameObjectToCollide(GameObject * gameObject)
 {
+	containerMutex.lock();
 	gameObjectsToCollide.createGameObject(gameObject);
+	containerMutex.unlock();
 }
 
 void GameScreen::addCellToPick(CellClient * cell)
 {
+	containerMutex.lock();
 	cellsToPick.createGameObject(cell);
-
-	addGameObjectToDraw(cell);
-	addGameObjectToCollide(cell);
+	containerMutex.unlock();
 }
 
 void GameScreen::addIncompleteCell(CellClient * cell)
 {
+	containerMutex.lock();
 	cellsIncomplete.createGameObject(cell);
+	containerMutex.unlock();
 
 	addGameObjectToCollide(cell);
+}
+
+void GameScreen::addIncompleteCell(
+	unsigned int playerId, 
+	CellType::Type type, 
+	unsigned int cellId, 
+	Vec3f position, 
+	float angle
+)
+{
+	auto player = GAME_MGR->getPlayerById(playerId);
+
+	CellClient * cell;
+
+	switch (type)
+	{
+	case CellType::Type::StandardCell:
+	default:
+	{
+		cell = new StandardCellClient(cellId, position, angle, player);
+	}
+	break;
+	}
+
+	addIncompleteCell(cell);
 }
 
 void GameScreen::completeCellById(unsigned int id)
@@ -229,13 +266,21 @@ void GameScreen::completeCellById(unsigned int id)
 
 	if (cell != nullptr)
 	{
-		cellsIncomplete.removeGameObject(id);
+		cellsIncomplete.removeGameObject(id, false);
 		
 		addGameObjectToDraw(cell);
 		
-		if (cell->getOwner() == GAME_MGR->getMyPlayer())
+		auto cellOwner= cell->getOwner();
+		auto myPlayer = GAME_MGR->getMyPlayer();
+
+		if (cellOwner == myPlayer)
 		{
 			addCellToPick(cell);
+			LOG_INFO("Own cell was completed.");
+		}
+		else
+		{
+			LOG_INFO("Other player's cell was completed.");
 		}
 	}
 	else

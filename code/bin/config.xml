@@ -11,7 +11,7 @@
 		<radius>500.0</radius>
 	</world>
 	<players>
-		<max>1</max>
+		<max>2</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
@@ -20,8 +20,8 @@
 		</player>
 		<player>
 			<startposition>
-				<x>-95.0</x>
-				<y>0.0</y>
+				<x>200.0</x>
+				<y>35.0</y>
 			</startposition>
 		</player>
 		<player>

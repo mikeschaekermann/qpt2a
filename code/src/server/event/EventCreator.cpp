@@ -44,11 +44,12 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 		failure->requestId = requestId;
 		failure->errorCode = CreateCellErrorCode::OutsideGameArea;
 		networkManager->send(failure);
+		LOG_INFO("CreateCellFailure OutsideGameArea sent");
 
 		LOG_ERROR("Cell could not be created because it is not in the game area");
 		return false;
 	}
-
+	auto foo = GAMECONTEXT;
 	auto it = GAMECONTEXT->getPlayerMap().begin();
 	for (; it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
@@ -66,6 +67,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 			failure->requestId = requestId;
 			failure->errorCode = CreateCellErrorCode::SpotAlreadyTaken;
 			networkManager->send(failure);
+			LOG_INFO("CreateCellFailure SpotAlreadyTaken sent");
 
 			LOG_ERROR("Cell could not be created because a gameobject is already at this spot");
 			return false;
@@ -86,6 +88,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	success->position[1] = cell.getPosition()[1];
 	success->angle = cell.getAngle();
 	networkManager->send(success);
+	LOG_INFO("CreateCellSuccess sent");
 
 	
 	CellNew * cellNew = new CellNew();
@@ -108,6 +111,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	}
 
 	networkManager->sendTo<CellNew>(cellNew, endpointArr);
+	LOG_INFO("CellNew sent");
 
 	return true;
 }

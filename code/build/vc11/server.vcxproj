@@ -62,7 +62,6 @@
     <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h" />
     <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
     <ClInclude Include="..\..\src\common\Player.h" />
-    <ClInclude Include="..\..\src\common\PositionGameObjectMap.h" />
     <ClInclude Include="..\..\src\common\StandardCell.h" />
     <ClInclude Include="..\..\src\common\StemCell.h" />
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h" />
