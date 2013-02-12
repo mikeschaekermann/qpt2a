@@ -59,6 +59,7 @@ public:
 
 	void join(JoinRequest request)
 	{
+		LOG_INFO("JoinRequest received");
 		string playerName = request.name;
 		
 		if(GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
@@ -66,6 +67,7 @@ public:
 			JoinFailure * failure = new JoinFailure();
 			failure->errorCode = JoinErrorCode::GameIsFull;
 			networkManager->send(failure);
+			LOG_INFO("JoinFailure GameIsFull sent");
 
 			LOG_INFO(stringify(ostringstream() << "Player " << playerName << " tried to join the game. But game is full"));
 
@@ -79,6 +81,7 @@ public:
 				JoinFailure * failure = new JoinFailure();
 				failure->errorCode = JoinErrorCode::NameAlreadyTaken;
 				networkManager->send(failure);
+				LOG_INFO("JoinFailure NameAlreadyTaken sent");
 
 				LOG_INFO(stringify(ostringstream() << "Playername " << playerName << " already exists"));
 
@@ -114,6 +117,7 @@ public:
 		success->playerId = p->getId();
 		success->endpoint = request.endpoint;
 		networkManager->send(success);
+		LOG_INFO("JoinSuccess sent");
 
 		if (GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
 		{
@@ -393,6 +397,7 @@ public:
 			 */
 			
 			networkManager->sendTo<StartGame>(startgame, endpointArr);
+			LOG_INFO("StartGame sent");
 
 			LOG_INFO("Game started");
 		}
@@ -400,6 +405,7 @@ public:
 
 	void createCell(CreateCellRequest request)
 	{
+		LOG_INFO("CreateCellRequest received");
 		unsigned int playerId = request.playerId;
 		unsigned int cellId = request.cellId;
 		float angle = request.angle;

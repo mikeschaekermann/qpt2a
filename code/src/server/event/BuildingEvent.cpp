@@ -43,6 +43,7 @@ void BuildingEvent::trigger()
 		}
 	}
 	manager.sendTo<CreateCellComplete>(complete, endpointArr);
+	LOG_INFO("CreateCellComplete sent");
 
 	EVENT_CRTR->createAttackEvent(m_dDeadTime, true, *current, cell);
 }
