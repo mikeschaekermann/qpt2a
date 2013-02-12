@@ -57,6 +57,10 @@
 			<distanceDropOffDegree>100.0</distanceDropOffDegree>
 			<damage>5.0</damage>
 		</standardcell>
+		<bonecell>
+			<radius>30.0</radius>
+			<healthpoints>200.0</healthpoints>
+		</bonecell>
 	</cell>
 	<environment>
 		<barriers>

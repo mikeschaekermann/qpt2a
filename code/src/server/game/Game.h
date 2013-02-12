@@ -425,6 +425,10 @@ public:
 				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.standardcell.radius"), position);
 				cell = new CellServer(CellServer::STANDARDCELL, position, angle, &player);
 				break;
+			case CellType::BoneCell:
+				parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.bonecell.radius"), position);
+				cell = new CellServer(CellServer::BONECELL, position, angle, &player);
+				break;
 			default:
 				stringstream message;
 				message << "Unknown CellType: " << type.getType();
@@ -445,6 +449,9 @@ public:
 						break;
 					case CellType::StandardCell:
 						typeName = "StandardCell";
+						break;
+					case CellType::BoneCell:
+						typeName = "BoneCell";
 						break;
 				}
 				LOG_INFO(stringify(ostringstream() << typeName << " of player " << player.getName() << " at position (" << 

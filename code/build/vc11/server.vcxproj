@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\common\AABBCollisionBehavior.h" />
+    <ClInclude Include="..\..\src\common\BoneCell.h" />
     <ClInclude Include="..\..\src\common\Cell.h" />
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h" />
     <ClInclude Include="..\..\src\common\Circle.h" />

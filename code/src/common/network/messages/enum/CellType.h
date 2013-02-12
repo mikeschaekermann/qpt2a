@@ -9,6 +9,7 @@ public:
 		Invalid,					/// Determines that this is an invalid cell type
 		StemCell,					/// The main cell for the player
 		StandardCell,				/// The standard cell
+		BoneCell,					/// The bone cell
 		Last_Value					/// Is the last valid cell type
 	};
 	

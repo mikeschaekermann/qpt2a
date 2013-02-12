@@ -196,6 +196,9 @@
     <ClInclude Include="..\..\src\server\game\GameContext.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\BoneCell.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
