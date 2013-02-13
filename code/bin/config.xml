@@ -2,11 +2,18 @@
 <data>
 	<input>
 		<clickPixelTolerance>10</clickPixelTolerance>
-    <text>
-      <font>Comic Sans MS</font>
-      <size>34</size>
-    </text>
+		<text>
+		  <font>Comic Sans MS</font>
+		  <size>34</size>
+		</text>
 	</input>
+	<ingamefeedback>
+		<renderedDamage>
+			<font>Comic Sans MS</font>
+			<size>28</size>
+			<displaytime>0.2</displaytime>
+		</renderedDamage>
+	</ingamefeedback>
 	<network>
 		<server>
 			<ip>78.104.170.110</ip>
@@ -16,14 +23,14 @@
 		<camera>
 			<fieldOfView>30</fieldOfView>
 			<nearPlane>5.0</nearPlane>
-      <farPlane>3000.0</farPlane>
+			<farPlane>3000.0</farPlane>
 		</camera>
 	</rendering>
 	<world>
 		<radius>500.0</radius>
 	</world>
 	<players>
-		<max>1</max>
+		<max>2</max>
 		<player>
 			<startposition>
 				<x>35.0</x>

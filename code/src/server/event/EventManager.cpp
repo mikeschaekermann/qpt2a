@@ -2,6 +2,7 @@
 
 #include "EventManager.h"
 #include "GameEvent.h"
+#include "../game/GameContext.h"
 
 using namespace std;
 
@@ -23,7 +24,9 @@ double EventManager::getTime() const
 
 void EventManager::operator+=(GameEvent * e)
 {
-	events.push(e);
+	GAMECONTEXT->getMutex().lock();
+	toAddList.push_back(e);
+	GAMECONTEXT->getMutex().unlock();
 }
 
 void EventManager::operator()()
@@ -40,6 +43,13 @@ void EventManager::operator()()
 		{
 			boost::this_thread::sleep(boost::posix_time::milliseconds(33));
 		}
+		GAMECONTEXT->getMutex().lock();
+		for (auto it = toAddList.begin(); it != toAddList.end(); ++it)
+		{
+			events.push(*it);
+		}
+		toAddList.clear();
+		GAMECONTEXT->getMutex().unlock();
 	}
 }
 

@@ -30,19 +30,19 @@ public:
 	class RenderText
 	{
 	public:
-		RenderText(float timeDeath, ci::Vec2f pos, std::string text) :
+		RenderText(float timeDeath, ci::Vec3f pos, std::string text) :
 			timeDeath(timeDeath),
 			pos(pos),
 			text(text)
 		{}
 
 		float getTimeDeath() const { return timeDeath; }
-		ci::Vec2f getPos() const { return pos; }
+		ci::Vec3f getPos() const { return pos; }
 		std::string getText() const { return text; }
 
 	private:
 		float timeDeath;
-		ci::Vec2f pos;
+		ci::Vec3f pos;
 		std::string text;
 	};
 

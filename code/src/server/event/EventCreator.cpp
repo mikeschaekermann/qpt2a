@@ -13,6 +13,10 @@
 #include "../game/CellServer.h"
 #include "../game/GameContext.h"
 
+#include "../environment/StaticModificatorServer.h"
+
+#include "cinder/Rand.h"
+
 #include "GameEvent.h"
 #include "EventManager.h"
 #include "AttackEvent.h"
@@ -68,6 +72,17 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 
 			LOG_ERROR("Cell could not be created because a gameobject is already at this spot");
 			return false;
+		}
+	}
+
+	// Calculate static Effects on Cell
+	auto environment = GAMECONTEXT->getEnvironment().findInRadiusOf(cell.getPosition(), cell.getRadius());
+	for (auto it = environment.begin(); it != environment.end(); ++it)
+	{
+		auto staticModifier = dynamic_cast<StaticModificatorServer*>(*it);
+		if (staticModifier)
+		{
+			cell.addStaticModificator(staticModifier);
 		}
 	}
 
@@ -172,10 +187,40 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, const P
 				float attackPower = min<float>(max<float>((distanceDropOffDegree - attackAngle) / distanceDropOffDegree, 0.f), 1.f);
 
 				float damage = CONFIG_FLOAT1("data.cell.standardcell.damage") * attackPower;
+
 				if (damage > 0.f)
 				{
 					CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
 					CellServer * victimCell = isAttacker ? actualCell : &currentCell;
+
+					// Modify damage when cells within a static modifier
+
+					auto staticAttackerModifier = attackerCell->getStaticModificator();
+					for (auto it = staticAttackerModifier.begin(); it != staticAttackerModifier.end(); ++it)
+					{
+						switch((*it)->getType())
+						{
+						case StaticModificator::NUTRIENTSOIL:
+							damage *= (1 + ci::randFloat());
+							break;
+						default:
+							break;
+						}
+					}
+
+					auto staticVictimModifier = victimCell->getStaticModificator();
+					for (auto it = staticVictimModifier.begin(); it != staticVictimModifier.end(); ++it)
+					{
+						switch((*it)->getType())
+						{
+						case StaticModificator::RADIOACTIVITY:
+							damage *= (1 + ci::randFloat());
+							break;
+						default:
+							break;
+						}
+					}
+
 					(*EVENT_MGR) += new AttackEvent(time, attackerCell->getId(), victimCell->getId(), damage);
 				}
 				/// attack message is sent in event

@@ -136,14 +136,6 @@ void GameScreen::draw()
 	}
 
 	containerMutex.unlock();
-		containerMutex.lock();
-
-		for (auto it = textList.begin(); it != textList.end(); ++it)
-		{
-			gl::drawStringCentered(it->getText(), it->getPos(), ColorA(1, 1, 1, 1), Font("Comic Sans MS", 18));
-		}
-
-		containerMutex.unlock();
 
 	state->draw3D();
 
@@ -155,6 +147,16 @@ void GameScreen::draw()
 	///////////// 2D rendering
 
 	state->draw2D();
+
+	containerMutex.lock();
+
+	for (auto it = textList.begin(); it != textList.end(); ++it)
+	{
+		drawString(it->getText(), worldToScreen(it->getPos()), ColorA(1, 0, 0, 1), 
+			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
+	}
+
+	containerMutex.unlock();
 }
 
 bool GameScreen::touchBegan(const TouchWay & touchWay)

@@ -4,7 +4,10 @@
 
 #include "../../common/Cell.h"
 #include "../../common/ConfigurationDataHandler.h"
+
 #include "GameObjectServer.h"
+
+class StaticModificatorServer;
 
 class CellServer :
 	virtual public Cell,
@@ -48,12 +51,21 @@ public:
 
 	Type getType() const { return type; }
 
+	vector<StaticModificatorServer *> getStaticModificator() const { return staticModificators; }
+
+	void addStaticModificator(StaticModificatorServer * staticModificator)
+	{
+		staticModificators.push_back(staticModificator);
+	}
+
 private:
 	virtual void setId(unsigned int id) { GameObjectServer::setId(id); }
 	virtual void setPosition(Vec3f position) { Cell::setPosition(position); }
 	virtual void setRotation(Vec3f rotation) { Cell::setRotation(rotation); }
 	virtual void setScale(Vec3f scale) { Cell::setScale(scale); }
 	virtual void setRadius(float radius) { Cell::setRadius(radius); }
+
+	vector<StaticModificatorServer *> staticModificators;
 
 	Type type;
 };

@@ -4,6 +4,7 @@ class CellServer;
 class PlayerServer;
 
 #include <vector>
+#include <map>
 
 #include "GameEvent.h"
 
