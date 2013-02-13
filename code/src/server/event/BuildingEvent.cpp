@@ -25,6 +25,7 @@ void BuildingEvent::trigger()
 	if (obj == nullptr)
 	{
 		LOG_INFO("cell not in list");
+		return;
 	}
 	GAMECONTEXT->getActiveCells().createGameObject(obj);
 	GAMECONTEXT->getInactiveCells().removeGameObject(cell.getId(), false);

@@ -3,6 +3,7 @@
 class GameEvent;
 
 #include <queue>
+#include <vector>
 
 #include "cinder/Timer.h"
 
@@ -28,4 +29,5 @@ private:
 	ci::Timer timer;
 	bool run;
 	std::priority_queue<GameEvent *> events;
+	std::vector<GameEvent *> toAddList;
 };
