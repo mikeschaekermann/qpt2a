@@ -112,6 +112,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		GameOver *gameOver = dynamic_cast<GameOver*> (message);
 		if (gameOver)
 		{
+			
 			LOG_INFO("GameOver received");
 		}
 		break;
