@@ -1,4 +1,5 @@
 #include "AttackEvent.h"
+#include "CellDieEvent.h"
 #include "EventManager.h"
 #include "../game/CellServer.h"
 #include "../game/PlayerServer.h"
@@ -11,34 +12,27 @@
 
 AttackEvent::AttackEvent(double startTime, unsigned int attackerId, unsigned int attackedId, float damage) :
 	damage(damage),
+	attackerId(attackerId),
+	attackedId(attackedId),
 	GameEvent(startTime, CONFIG_FLOAT1("data.event.attack.time"))
-{
-	auto attackCell = GAMECONTEXT->getActiveCells().find(attackerId);
-	if (attackCell != nullptr)
-	{
-		auto victimCell = GAMECONTEXT->getActiveCells().find(attackedId);
-		if (victimCell != nullptr)
-		{
-			attacker = dynamic_cast<CellServer *>(attackCell);
-			victim = dynamic_cast<CellServer *>(victimCell);
-			return;
-		}
-	}
-	attacker = nullptr;
-	victim = nullptr;
-}
+{ }
 
 void AttackEvent::trigger()
 {
-	if (attacker != nullptr && victim != nullptr)
+	auto attackerO = GAMECONTEXT->getActiveCells().find(attackerId);
+	auto attackedO = GAMECONTEXT->getActiveCells().find(attackedId);
+	if (attackerO != nullptr && attackedO != nullptr)
 	{
-		victim->decreaseHealthPointsBy(damage);
+		auto attacker = dynamic_cast<CellServer *>(attackerO);
+		auto attacked = dynamic_cast<CellServer *>(attackedO);
+
+		attacked->decreaseHealthPointsBy(damage);
 		CellAttack * attack = new CellAttack();
 		attack->attackerCellId = attacker->getId();
-		attack->attackedCellId = victim->getId();
+		attack->attackedCellId = attacked->getId();
 		attack->damage = damage;
 
-		LOG_INFO(stringify(ostringstream() << "Cell with id: " << attack->attackedCellId << " is attacking cell with id: " << attack->attackedCellId << " width a damage of: " << attack->damage));
+		LOG_INFO(stringify(ostringstream() << "Cell with id: " << attack->attackerCellId << " is attacking cell with id: " << attack->attackedCellId << " width a damage of: " << attack->damage));
 		
 		using boost::asio::ip::udp;
 		vector<udp::endpoint> endpointArr;
@@ -51,24 +45,21 @@ void AttackEvent::trigger()
 		NETWORKMANAGER->sendTo<CellAttack>(attack, endpointArr);
 		LOG_INFO("CellAttack sent");
 
-		if (victim->getHealthPoints() < 0.f)
+		if (attacked->getHealthPoints() < 0.f)
 		{
-			CellDie * die = new CellDie();
-			die->cellId = victim->getId();
-			PlayerServer * player = 0;
-			for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
+			(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT1("data.event.celldie.time"), attacked->getId());
+
+			if (attacked->getType() == CellServer::STEMCELL)
 			{
-				if (it->second->getId() == victim->getOwner()->getId()) 
+				PlayerServer * player = 0;
+				for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 				{
-					player = it->second;
+					if (it->second->getId() == attacked->getOwner()->getId()) 
+					{
+						player = it->second;
+					}
 				}
-			}
-			
-			NETWORKMANAGER->sendTo<CellDie>(die, endpointArr);
-			LOG_INFO("CellDie sent");
-		
-			if (victim->getType() == CellServer::STEMCELL)
-			{
+
 				GameOver * gameOver = new GameOver();
 				gameOver->playerId = player->getId();
 
@@ -77,12 +68,10 @@ void AttackEvent::trigger()
 			
 				player->kill();
 			}
-
-			GAMECONTEXT->getActiveCells().removeGameObject(victim->getId());
 		}
 		else
 		{
-			(*EVENT_MGR) += new AttackEvent(this->m_dDeadTime, attacker->getId(), victim->getId(), damage);
+			(*EVENT_MGR) += new AttackEvent(this->m_dDeadTime, attacker->getId(), attacked->getId(), damage);
 		}
 	}
 }

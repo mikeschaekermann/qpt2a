@@ -24,9 +24,9 @@ double EventManager::getTime() const
 
 void EventManager::operator+=(GameEvent * e)
 {
-	GAMECONTEXT->getMutex().lock();
+	mutex.lock();
 	toAddList.push_back(e);
-	GAMECONTEXT->getMutex().unlock();
+	mutex.unlock();
 }
 
 void EventManager::operator()()
@@ -35,7 +35,9 @@ void EventManager::operator()()
 	{
 		if (!events.empty() && events.top()->getDeadTime() < timer.getSeconds())
 		{
+			GAMECONTEXT->getMutex().lock();
 			events.top()->trigger();
+			GAMECONTEXT->getMutex().unlock();
 			delete events.top();
 			events.pop();
 		}
@@ -43,13 +45,13 @@ void EventManager::operator()()
 		{
 			boost::this_thread::sleep(boost::posix_time::milliseconds(33));
 		}
-		GAMECONTEXT->getMutex().lock();
+		mutex.lock();
 		for (auto it = toAddList.begin(); it != toAddList.end(); ++it)
 		{
 			events.push(*it);
 		}
 		toAddList.clear();
-		GAMECONTEXT->getMutex().unlock();
+		mutex.unlock();
 	}
 }
 

@@ -27,3 +27,8 @@ void GameObject::addParent(GameObject* parent)
 {
 	parents.push_back(parent);
 };
+
+vector<GameObject *> & GameObject::getChildren()
+{
+	return children;
+}

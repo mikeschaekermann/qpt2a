@@ -324,7 +324,7 @@ void Game::createCell(CreateCellRequest &request)
 		/// get current time
 		double time = EVENT_MGR->getTime();
 
-		if (EVENT_CRTR->createBuildEvent(time, request.requestId, type.getType(), angle, player, *cell))
+		if (EVENT_CRTR->createBuildEvent(time, request.requestId, type.getType(), angle, player, *parentCell, *cell))
 		{
 			string typeName;
 			switch(type.getType())

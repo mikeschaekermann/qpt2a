@@ -191,6 +191,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 					stringify(ostringstream() << ceil(cellAttack->damage))));
 
 			LOG_INFO("CellAttack received");
+			LOG_INFO(stringify(ostringstream() << "Cell with id: " << cellAttack->attackerCellId << " is attacking cell with id: " << cellAttack->attackedCellId << " width a damage of: " << cellAttack->damage));
 		}
 		break;
 	}
@@ -199,6 +200,19 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CellDie *cellDie = dynamic_cast<CellDie*> (message);
 		if (cellDie)
 		{
+			auto cellObject = GAME_SCR.getGameObjectsToDraw().find(cellDie->cellId);
+			if (cellObject != nullptr)
+			{
+				GAME_SCR.removeGameObjectToCollide(cellObject);
+				auto cellClient = dynamic_cast<CellClient *>(cellObject);
+				if (cellClient != nullptr)
+				{
+					GAME_SCR.removeCellToPick(cellClient);
+				}
+				GAME_SCR.removeGameObjectToUpdate(cellObject);
+				GAME_SCR.removeGameObjectToDraw(cellObject);
+				delete cellObject;
+			}
 			LOG_INFO("CellDie received");
 		}
 		break;

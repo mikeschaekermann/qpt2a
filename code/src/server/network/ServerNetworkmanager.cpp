@@ -52,6 +52,7 @@ NetworkMessage* ServerNetworkManager::createNetworkMessage(char* data)
 
 void ServerNetworkManager::handleMessage(NetworkMessage* message)
 {
+	GAMECONTEXT->getMutex().lock();
 	JoinRequest *joinRequest = dynamic_cast<JoinRequest*> (message);
 	if (joinRequest)
 	{
@@ -63,6 +64,7 @@ void ServerNetworkManager::handleMessage(NetworkMessage* message)
 	{
 		m_game->createCell(*createCellRequest);
 	}
+	GAMECONTEXT->getMutex().unlock();
 }
 
 vector<ConnectionEndpoint> ServerNetworkManager::getConnectionEndpoints()
