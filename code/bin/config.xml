@@ -75,13 +75,13 @@
 		<standardcell>
 			<radius>25.0</radius>
 			<healthpoints>100.0</healthpoints>
-			<attackradius>10.0</attackradius>
+			<attackradius>15.0</attackradius>
 			<distanceDropOffDegree>120.0</distanceDropOffDegree>
-      <spikes>
-        <numberOnEachSide>7</numberOnEachSide>
-        <shrinkAmountPerSecond>0.75</shrinkAmountPerSecond>
-      </spikes>
-			<damage>5.0</damage>
+			<damage>10.0</damage>
+			<spikes>
+				<numberOnEachSide>7</numberOnEachSide>
+				<shrinkAmountPerSecond>0.75</shrinkAmountPerSecond>
+			</spikes>
 		</standardcell>
 		<bonecell>
 			<radius>30.0</radius>
