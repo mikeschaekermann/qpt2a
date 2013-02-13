@@ -12,7 +12,7 @@ void ClientMain::setup()
 {
 	setWindowPos(100, 100);
 	
-
+	srand(time(0));
 	m_fFrameTime = 0;
 	m_fElapsedGameTimeLastFrame = (float)getElapsedSeconds();
 

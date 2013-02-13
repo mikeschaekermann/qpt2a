@@ -7,6 +7,11 @@
       <size>12</size>
     </text>
 	</input>
+	<network>
+		<server>
+			<ip>127.0.0.1</ip>
+		</server>
+	</network>
 	<rendering>
 		<camera>
 			<fieldOfView>30</fieldOfView>

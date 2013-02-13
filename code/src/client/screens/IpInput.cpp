@@ -1,4 +1,5 @@
 #include "IpInput.h"
+#include "../../common/ConfigurationDataHandler.h"
 
 
 IpInput::IpInput(Screen* screen, std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture) :
@@ -10,7 +11,7 @@ IpInput::IpInput(Screen* screen, std::function<void()> callback, ci::Vec2f posit
 			  clickTexture
 	)
 {
-	this->text = "127.0.0.1";
+	this->text = CONFIG_STRING2("data.network.server.ip", "127.0.0.1");
 }
 
 IpInput::~IpInput(void)
