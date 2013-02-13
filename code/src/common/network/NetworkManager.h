@@ -60,4 +60,7 @@ private:
 	bool bound;
 	boost::mutex maintenanceMutex;
 	boost::thread maintenanceThread;
+
+	bool networkThreadRunning;
+	bool maintenanceThreadRunning;
 };
