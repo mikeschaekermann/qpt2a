@@ -65,7 +65,6 @@ void GameScreen::update(float frameTime)
 
 void GameScreen::draw()
 {
-	//////////////// 3D rendering
 	gl::pushMatrices();
 	{
 		gl::enableDepthWrite();
@@ -80,10 +79,16 @@ void GameScreen::draw()
 			it->second->draw();
 		}
 
+		containerMutex.unlock();
+		containerMutex.lock();
+
 		for (auto it = cellsIncomplete.begin(); it != cellsIncomplete.end(); ++it)
 		{
 			it->second->draw();
 		}
+
+		containerMutex.unlock();
+		containerMutex.lock();
 
 		for (auto it = cellPreviews.begin(); it != cellPreviews.end(); ++it)
 		{
@@ -93,9 +98,6 @@ void GameScreen::draw()
 		containerMutex.unlock();
 
 		state->draw3D();
-
-		gl::disableDepthWrite();
-		gl::disableDepthRead();
 	}
 	gl::popMatrices();
 
@@ -320,4 +322,35 @@ void GameScreen::switchToState(GameScreenState * newState)
 	{
 		delete oldState;
 	}
+}
+
+void GameScreen::renderModel(string modelName, 
+							 string shaderName, 
+							 Vec3f lightPos, 
+							 Vec3f ambient, 
+							 Vec3f diffuse, 
+							 Vec3f specular, 
+							 float shininess)
+{
+	gl::pushMatrices();
+
+	auto model = ASSET_MGR->getModel(modelName);
+	auto shader = ASSET_MGR->getShaderProg(shaderName);
+
+	shader.bind();
+
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * lightPos);
+
+	shader.uniform("ambientColor", ambient);
+	shader.uniform("diffuseColor", diffuse);
+	shader.uniform("specularColor", specular);
+	shader.uniform("shininess", shininess);
+
+	gl::pushModelView();
+		gl::draw(model);
+	gl::popModelView();
+
+	shader.unbind();
+
+	gl::popMatrices();
 }

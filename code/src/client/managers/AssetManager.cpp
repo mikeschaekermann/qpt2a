@@ -137,7 +137,7 @@ void AssetManager::loadAssets(string filePath)
 				model = createModel(it->getChild("value").getValue());
 				modelMap.insert(pair<string, TriMesh>(key, model));	
 			}
-			catch(...)
+			catch(exception& ex)
 			{
 				LOG_ERROR("Model could not be loaded. Model name: " + it->getChild("key").getValue());
 			}

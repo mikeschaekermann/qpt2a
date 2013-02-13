@@ -64,6 +64,14 @@ public:
 
 	void switchToState(GameScreenState * newState);
 
+	void renderModel(string modelName, 
+					 string shaderName, 
+					 Vec3f lightPos, 
+					 Vec3f ambient = Vec3f(0.1, 0.1, 0.1), 
+					 Vec3f diffuse = Vec3f(0.4, 0.4, 0.4), 
+					 Vec3f specular = Vec3f(1., 1., 1.), 
+					 float shininess = 10.);
+
 private:
 	vector<CellClient *> GameScreen::getCellsPicked(Vec2f position);
 	

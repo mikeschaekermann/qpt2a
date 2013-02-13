@@ -157,6 +157,7 @@
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\bin\config.xml" />
     <None Include="..\..\resources\assets.xml" />
     <None Include="..\..\resources\shader\test.frag" />
     <None Include="..\..\resources\shader\test.vert" />

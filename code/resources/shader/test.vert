@@ -1,14 +1,12 @@
-#version 330
+#version 110
 
-uniform mat4 matModelView;
-uniform mat4 matProjection;
+varying vec4 vertexPositionEye;
+varying vec4 vertexNormalEye;
 
-out vec4 vertexPositionEye;
-out vec4 vertexNormalEye;
+void main()
+{
+	vertexPositionEye = gl_ModelViewMatrix * gl_Vertex;       
+	vertexNormalEye = normalize(vec4(gl_NormalMatrix * gl_Normal, 0.));
 
-void main(void) {
-	vertexPositionEye = matModelView * vec4(gl_Position.xyz, 1.);
-	vertexNormalEye = matModelView * vec4(gl_Normal.xyz, 0);
-
-	gl_Position = matProjection * vertexPositionEye;
+	gl_Position = ftransform();
 }
