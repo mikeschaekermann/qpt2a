@@ -9,12 +9,38 @@
 #include "../game/CellServer.h"
 #include "../game/PlayerServer.h"
 #include "../game/GameContext.h"
+
+#include "../environment/StaticModificatorServer.h"
+
+#include "cinder/Rand.h"
+
 #include "EventCreator.h"
 
 BuildingEvent::BuildingEvent(double startTime, CellServer & cell) :
 	cell(cell),
 	GameEvent(startTime, CONFIG_FLOAT1("data.event.build.time"))
-	{ }
+	{ 
+		double duration = CONFIG_FLOAT1("data.event.build.time");
+
+		auto modifiers = cell.getStaticModificator();
+		for (auto it = modifiers.begin(); it != modifiers.end(); ++it)
+		{
+			switch ((*it)->getType())
+			{
+			case StaticModificator::RADIOACTIVITY:
+				duration *= (1 + ci::randFloat());
+				break;
+
+			case StaticModificator::NUTRIENTSOIL:
+				duration /= (1 + ci::randFloat());
+				break;
+			default:
+				break;
+			}
+		}
+
+		this->m_dDeadTime = startTime + duration;
+	}
 
 void BuildingEvent::trigger()
 {
