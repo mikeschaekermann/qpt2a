@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost\thread\mutex.hpp>
+
 #include "../../common/GameObject.h"
 #include "../../common/GameObjectContainer.h"
 
@@ -28,6 +30,8 @@ public:
 	NetworkManager * getNetworkManager();
 	void initializeNetworkManager(int port, Game * game);
 
+	boost::mutex & getMutex();
+
 private:
 	// Singleton stuff
 	static GameContext *instance;
@@ -38,4 +42,5 @@ private:
 	GameObjectContainer<GameObject> activeCells;
 	GameObjectContainer<GameObject> inactiveCells;
 	GameObjectContainer<GameObject> environment;
+	boost::mutex mutex;
 };

@@ -17,6 +17,9 @@ public:
  {
   setId(id);
  }
+
+ void startAnimation();
+
  virtual void setPosition(Vec3f position) { CellClient::setPosition(position); }
  
 private:

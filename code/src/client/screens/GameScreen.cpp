@@ -59,6 +59,22 @@ GameScreen::~GameScreen(void)
 void GameScreen::update(float frameTime)
 {
 	state->update(frameTime);
+
+	containerMutex.lock();
+
+	for (auto it = textList.begin(); it != textList.end();)
+	{
+		if (it->getTimeDeath() < getElapsedSeconds())
+		{
+			it = textList.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	containerMutex.unlock();
 }
 
 void GameScreen::draw()
@@ -98,6 +114,14 @@ void GameScreen::draw()
 	}
 
 	containerMutex.unlock();
+		containerMutex.lock();
+
+		for (auto it = textList.begin(); it != textList.end(); ++it)
+		{
+			gl::drawStringCentered(it->getText(), it->getPos(), ColorA(1, 1, 1, 1), Font("Comic Sans MS", 18));
+		}
+
+		containerMutex.unlock();
 
 	state->draw3D();
 
@@ -312,4 +336,19 @@ void GameScreen::switchToState(GameScreenState * newState)
 	{
 		delete oldState;
 	}
+}
+
+GameObjectContainer<GameObjectClient> & GameScreen::getGameObjectsToDraw()
+{
+	return gameObjectsToDraw;
+}
+
+ci::Vec2f GameScreen::worldToScreen(ci::Vec3f position)
+{
+	return RenderManager::getInstance()->cam.worldToScreen(position, getWindowWidth(), getWindowHeight());
+}
+
+void GameScreen::addRenderText(RenderText const & text)
+{
+	textList.push_back(text);
 }

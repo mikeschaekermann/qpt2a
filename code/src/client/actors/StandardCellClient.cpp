@@ -1,6 +1,11 @@
 #include "StandardCellClient.h"
 #include "../rendering/RenderManager.h"
 
+void StandardCellClient::startAnimation()
+{
+	/// animation
+}
+
 void StandardCellClient::drawAtTransformation() const
 {
 	gl::scale(radius, radius, radius);

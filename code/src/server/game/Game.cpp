@@ -286,6 +286,7 @@ void Game::createCell(CreateCellRequest &request)
 			failure->requestId = request.requestId;
 			failure->errorCode = CreateCellErrorCode::PlayerIsSpectator;
 			NETWORKMANAGER->send(failure);
+			LOG_INFO("CreateCellFailure PlayerIsSpectator sent");
 			return;
 		}
 
@@ -344,12 +345,6 @@ void Game::createCell(CreateCellRequest &request)
 		else
 		{
 			/// creation failed
-			return;
-		}
-
-		if (!EVENT_CRTR->createAttackEvent(time, false, player, *cell))
-		{
-			/// no attacks are performed
 			return;
 		}
 	}

@@ -20,11 +20,30 @@ class GameScreenStateCreateCell;
 class GameScreen :
 	public Screen
 {
-public:	
+public:
 	friend class GameScreenState;
 	friend class GameScreenStateNeutral;
 	friend class GameScreenStateInMenu;
 	friend class GameScreenStateCreateCell;
+
+	class RenderText
+	{
+	public:
+		RenderText(float timeDeath, ci::Vec2f pos, std::string text) :
+			timeDeath(timeDeath),
+			pos(pos),
+			text(text)
+		{}
+
+		float getTimeDeath() const { return timeDeath; }
+		ci::Vec2f getPos() const { return pos; }
+		std::string getText() const { return text; }
+
+	private:
+		float timeDeath;
+		ci::Vec2f pos;
+		std::string text;
+	};
 
 	GameScreen();
 	virtual ~GameScreen(void);
@@ -61,11 +80,16 @@ public:
 	void addCellPreview(CellClient * cell);
 	void removeCellPreview(CellClient * cell);
 
+	void addRenderText(RenderText const & text);
+
+	ci::Vec2f worldToScreen(ci::Vec3f position);
+
+	GameObjectContainer<GameObjectClient> & getGameObjectsToDraw();
 
 	void switchToState(GameScreenState * newState);
 
 private:
-	vector<CellClient *> GameScreen::getCellsPicked(Vec2f position);
+	vector<CellClient *> getCellsPicked(Vec2f position);
 	
 	/// current state of the screen
 	GameScreenState * state;
@@ -96,4 +120,7 @@ private:
 
 	/// all cell previews
 	std::set<CellClient *>					cellPreviews;
+
+	/// text which should be rendered to the screen
+	std::vector<RenderText> textList;
 };

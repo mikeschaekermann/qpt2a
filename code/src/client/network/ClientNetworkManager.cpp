@@ -19,6 +19,7 @@
 #include "../../client/managers/GameManager.h"
 
 #include "../../client/actors/CellClient.h"
+#include "../../client/actors/StandardCellClient.h"
 
 using namespace std;
 
@@ -171,6 +172,25 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CellAttack *cellAttack = dynamic_cast<CellAttack*> (message);
 		if (cellAttack)
 		{
+			auto attacker = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackerCellId);
+			assert(attacker != nullptr);
+			dynamic_cast<StandardCellClient *>(attacker)->startAnimation();
+
+			auto attacked = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackedCellId);
+			assert(attacked != nullptr);
+			dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
+			
+			assert(attacker != nullptr && attacked != nullptr);
+			ci::Vec3f cellVec = attacker->getPosition() - attacked->getPosition();
+			cellVec.normalize();
+			ci::Vec2f textPos = GAME_SCR.worldToScreen(
+				attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 2.f));
+			GAME_SCR.addRenderText(
+				GameScreen::RenderText(
+					getElapsedSeconds() + 5.f,
+					textPos,
+					static_cast<ostringstream*>( &(ostringstream() << cellAttack->damage) )->str()));
+
 			LOG_INFO("CellAttack received");
 		}
 		break;

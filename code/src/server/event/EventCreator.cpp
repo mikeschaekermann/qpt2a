@@ -114,78 +114,71 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	return true;
 }
 
-bool EventCreator::createAttackEvent(const double time, const bool isAttacker, const PlayerServer & currentPlayer, CellServer & currentCell)
+bool EventCreator::createAttackEvent(const double time, bool isAttacker, const PlayerServer & currentPlayer, CellServer & currentCell)
 {
-	if (isAttacker && (!currentCell.getIsComplete() || currentCell.getType() == CellServer::STANDARDCELL))
+	if (isAttacker && (!currentCell.getIsComplete() || currentCell.getType() != CellServer::STANDARDCELL))
 	{
 		LOG_INFO("No attack is performed");
 		return false;
 	}
 
-	auto playersIt = GAMECONTEXT->getPlayerMap().begin();
-	for (; playersIt != GAMECONTEXT->getPlayerMap().end(); ++playersIt)
-	{
-		if (playersIt->second->getId() != currentPlayer.getId())
-		{
-			/** 
-				* search for all cells that would be in its attack radius
-				* reversely all the other cell that are attackers have the current cell in its attack radius
-				*/
-			const vector<GameObject *> & gameObjects =
-				GAMECONTEXT->getActiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
+	/** 
+		* search for all cells that would be in its attack radius
+		* reversely all the other cell that are attackers have the current cell in its attack radius
+		*/
+	const vector<GameObject *> & gameObjects =
+		GAMECONTEXT->getActiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
 					
-			ci::Vec3f attacker;
-			ci::Vec3f victim;
-			/// those assignments are true for all iterations
-			if (isAttacker)
+	ci::Vec3f attacker;
+	ci::Vec3f victim;
+	/// those assignments are true for all iterations
+	if (isAttacker)
+	{
+		attacker = currentCell.getPosition();
+	}
+	else
+	{
+		victim = currentCell.getPosition();
+	}
+	for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
+	{
+		CellServer * actualCell = dynamic_cast<CellServer *>(*it);
+		if (actualCell->getOwner() != &currentPlayer)
+		{
+			if (actualCell != 0 && actualCell->getIsComplete())
 			{
-				attacker = ci::Vec3f(currentCell.getPosition());
-			}
-			else
-			{
-				ci::Vec3f victim(currentCell.getPosition());
-			}
-			for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
-			{
-				CellServer * actualCell = dynamic_cast<CellServer *>(*it);
-				if (actualCell != 0 && actualCell->getIsComplete())
+				/// those assignments depend on the iterator
+				if (isAttacker)
 				{
-					/// those assignments depend on the iterator
-					if (isAttacker)
-					{
-						victim = ci::Vec3f(actualCell->getPosition());
-					}
-					else
-					{
-						if (actualCell->getIsComplete() && actualCell->getType() == CellServer::STANDARDCELL) continue;
-						ci::Vec3f attacker(actualCell->getPosition());
-					}
-
-					ci::Vec3f attackerDir(Vec3f::xAxis());
-					attackerDir.rotate(Vec3f::zAxis(), actualCell->getAngle() * (float)M_PI / 180.f);
-					attackerDir.normalize();
-
-					ci::Vec3f attacker2VictimDir;
-					attacker2VictimDir = victim - attacker;
-					attacker2VictimDir.normalize();
-
-					float modifier = attackerDir.dot(attacker2VictimDir);
-					float distanceDropOffDegree = CONFIG_FLOAT1("data.cell.standardcell.distanceDropOffDegree");
-					float cosOfDDOD = cosf(distanceDropOffDegree * (float)M_PI / 180.f);
-					if (modifier >= cosOfDDOD)
-					{
-						modifier -= cosOfDDOD;
-						modifier /= (1.f + cosOfDDOD);
-
-						float damage = CONFIG_FLOAT1("data.cell.standardcell.damage") * modifier;
-
-						CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
-						CellServer * victimCell = isAttacker ? actualCell : &currentCell;
-						(*EVENT_MGR) += new AttackEvent(time, *attackerCell, *victimCell, damage);
-					}
-
-					/// attack message is sent in event
+					victim = actualCell->getPosition();
 				}
+				else
+				{
+					if (actualCell->getType() != CellServer::STANDARDCELL) continue;
+					attacker = actualCell->getPosition();
+				}
+
+				ci::Vec3f attackerDir(Vec3f::xAxis());
+				attackerDir.rotate(Vec3f::zAxis(), actualCell->getAngle());
+				attackerDir.normalize();
+
+				ci::Vec3f attacker2VictimDir;
+				attacker2VictimDir = victim - attacker;
+				attacker2VictimDir.normalize();
+
+
+				float attackAngle = acosf(attackerDir.dot(attacker2VictimDir)) * 180.f / float(M_PI);
+				float distanceDropOffDegree = CONFIG_FLOAT1("data.cell.standardcell.distanceDropOffDegree");
+				float attackPower = min<float>(max<float>((distanceDropOffDegree - attackAngle) / distanceDropOffDegree, 0.f), 1.f);
+
+				float damage = CONFIG_FLOAT1("data.cell.standardcell.damage") * attackPower;
+				if (damage > 0.f)
+				{
+					CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
+					CellServer * victimCell = isAttacker ? actualCell : &currentCell;
+					(*EVENT_MGR) += new AttackEvent(time, attackerCell->getId(), victimCell->getId(), damage);
+				}
+				/// attack message is sent in event
 			}
 		}
 	}
