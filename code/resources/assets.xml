@@ -360,7 +360,7 @@ vertexShader and fragmentShader are also file paths
 </model>
 
 <model>
-  <key>standardCellAttack.obj</key>
+  <key>standardCellAttack</key>
   <value>..\..\..\resources\models\standardCellAttack.obj</value>
 </model>
 

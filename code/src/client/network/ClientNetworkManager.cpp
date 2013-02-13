@@ -174,7 +174,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			auto attacker = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackerCellId);
 			assert(attacker != nullptr);
-			dynamic_cast<StandardCellClient *>(attacker)->startAnimation();
+			dynamic_cast<StandardCellClient *>(attacker)->startAttackAnimation();
 
 			auto attacked = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackedCellId);
 			assert(attacked != nullptr);

@@ -30,7 +30,7 @@
 		<radius>500.0</radius>
 	</world>
 	<players>
-		<max>2</max>
+		<max>1</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
@@ -73,7 +73,11 @@
 			<radius>25.0</radius>
 			<healthpoints>100.0</healthpoints>
 			<attackradius>10.0</attackradius>
-			<distanceDropOffDegree>100.0</distanceDropOffDegree>
+			<distanceDropOffDegree>120.0</distanceDropOffDegree>
+      <spikes>
+        <numberOnEachSide>7</numberOnEachSide>
+        <shrinkAmountPerSecond>0.75</shrinkAmountPerSecond>
+      </spikes>
 			<damage>5.0</damage>
 		</standardcell>
 		<bonecell>
