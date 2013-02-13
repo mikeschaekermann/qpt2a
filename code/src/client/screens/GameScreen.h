@@ -9,6 +9,7 @@
 #include "../../common/network/messages/enum/CellType.h"
 #include "boost/thread/mutex.hpp"
 #include "../rendering/RenderManager.h"
+#include <unordered_map>
 
 class CellClient;
 class GameObjectClient;
@@ -95,10 +96,11 @@ private:
 	GameScreenState * state;
 	/// the world's radius, i.e. the radius of the Petri's dish
 	float worldRadius;
-	/// in-game menu for cell actions
-	GUIItem * cellMenu;
 	/// cell currently picked
 	CellClient * pickedCell;
+	/// in-game menu for cell actions
+	GUIItem * cellMenu;
+	unordered_map<string, GUIItem *> cellMenuButtons;
 
 	/// mutex for container manipulation and reading
 	boost::mutex containerMutex;

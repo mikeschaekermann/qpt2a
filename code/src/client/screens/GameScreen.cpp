@@ -17,33 +17,55 @@ GameScreen::GameScreen():
 
 	worldRadius = CONFIG_FLOAT1("data.world.radius");
 
-	auto createCellButton = &(ASSET_MGR->getGuiTexture(string("createCell")));
-	auto createStandardCellButton = &(ASSET_MGR->getGuiTexture(string("createStandardCell")));
-	auto createStandardCellHoverButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellHover")));
-	auto createStandardCellClickButton = &(ASSET_MGR->getGuiTexture(string("createStandardCellClick")));
-
 	cellMenu = rootItem->addSubItem(this, nullptr);
 
-	cellMenu
-		->addSubItem(
-			this,
-			[](){},
-			Vec2f::zero(),
-			createCellButton,
-			createCellButton,
-			createCellButton
-		)
-		->addSubItem(
-			this,
-			[this]()
-			{
-				switchToState(new GameScreenStateCreateCell(this, CellType::StandardCell));
-			},
-			Vec2f(45, -10),
-			createStandardCellButton,
-			createStandardCellHoverButton,
-			createStandardCellClickButton
-		);
+	cellMenuButtons.insert(make_pair("standard", cellMenu->addSubItem(
+		this,
+		[this]()
+		{
+			switchToState(new GameScreenStateCreateCell(this, CellType::StandardCell));
+		},
+		Vec2f::zero(),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-standard-normal"))),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-standard-hover"))),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-standard-clicked")))
+	)));
+
+	cellMenuButtons.insert(make_pair("knochen", cellMenu->addSubItem(
+		this,
+		[this]()
+		{
+			LOG_INFO("Create bone cell button was clicked!");
+		},
+		Vec2f::zero(),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-knochen-normal"))),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-knochen-hover"))),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-knochen-clicked")))
+	)));
+
+	cellMenuButtons.insert(make_pair("verbindung", cellMenu->addSubItem(
+		this,
+		[this]()
+		{
+			LOG_INFO("Create branch cell button was clicked!");
+		},
+		Vec2f::zero(),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-verbindung-normal"))),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-verbindung-hover"))),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-verbindung-clicked")))
+	)));
+
+	cellMenuButtons.insert(make_pair("polypeptid", cellMenu->addSubItem(
+		this,
+		[this]()
+		{
+			LOG_INFO("Create attacker polypeptide button was clicked!");
+		},
+		Vec2f::zero(),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-polypeptid-normal"))),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-polypeptid-hover"))),
+		&(ASSET_MGR->getGuiTexture(string("ingame-button-polypeptid-clicked")))
+	)));
 
 	cellMenu->setVisible(false);
 }

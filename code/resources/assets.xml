@@ -226,72 +226,90 @@ vertexShader and fragmentShader are also file paths
 	<height>425</height>
 </guiTexture>
 
-<!-- other -->
+<!-- ingame menu -->
 
 <guiTexture>
-	<key>createCell</key>
-	<value>..\..\..\resources\images\createCell.svg</value>
-	<width>40</width>
-	<height>40</height>
-</guiTexture>
-<guiTexture>
-	<key>connect</key>
-	<value>..\..\..\resources\images\connect.svg</value>
-	<width>240</width>
-	<height>65</height>
-</guiTexture>
-<guiTexture>
-	<key>exit</key>
-	<value>..\..\..\resources\images\exit.svg</value>
-	<width>130</width>
-	<height>56</height>
+  <key>ingame-button-standard-normal</key>
+  <value>..\..\..\resources\images\ingame-button-standard-normal.svg</value>
+  <width>82</width>
+  <height>74</height>
 </guiTexture>
 
 <guiTexture>
-	<key>createStandardCell</key>
-	<value>..\..\..\resources\images\createStandardCell.svg</value>
-	<width>60</width>
-	<height>60</height>
+  <key>ingame-button-standard-hover</key>
+  <value>..\..\..\resources\images\ingame-button-standard-hover.svg</value>
+  <width>82</width>
+  <height>74</height>
 </guiTexture>
 
 <guiTexture>
-	<key>createStandardCellClick</key>
-	<value>..\..\..\resources\images\createStandardCellClick.svg</value>
-	<width>60</width>
-	<height>60</height>
+  <key>ingame-button-standard-clicked</key>
+  <value>..\..\..\resources\images\ingame-button-standard-clicked.svg</value>
+  <width>82</width>
+  <height>74</height>
 </guiTexture>
 
 <guiTexture>
-	<key>createStandardCellHover</key>
-	<value>..\..\..\resources\images\createStandardCellHover.svg</value>
-	<width>60</width>
-	<height>60</height>
+  <key>ingame-button-knochen-normal</key>
+  <value>..\..\..\resources\images\ingame-button-knochen-normal.svg</value>
+  <width>82</width>
+  <height>74</height>
 </guiTexture>
 
 <guiTexture>
-	<key>credits</key>
-	<value>..\..\..\resources\images\credits.svg</value>
-	<width>500</width>
-	<height>150</height>
+  <key>ingame-button-knochen-hover</key>
+  <value>..\..\..\resources\images\ingame-button-knochen-hover.svg</value>
+  <width>82</width>
+  <height>74</height>
 </guiTexture>
 
 <guiTexture>
-	<key>startServer</key>
-	<value>..\..\..\resources\images\startServer.svg</value>
-	<width>500</width>
-	<height>150</height>
+  <key>ingame-button-knochen-clicked</key>
+  <value>..\..\..\resources\images\ingame-button-knochen-clicked.svg</value>
+  <width>82</width>
+  <height>74</height>
 </guiTexture>
 
 <guiTexture>
-	<key>textBox</key>
-	<value>..\..\..\resources\images\textBox.png</value>
+  <key>ingame-button-verbindung-normal</key>
+  <value>..\..\..\resources\images\ingame-button-verbindung-normal.svg</value>
+  <width>82</width>
+  <height>74</height>
 </guiTexture>
 
 <guiTexture>
-	<key>back</key>
-	<value>..\..\..\resources\images\exit.svg</value>
-	<width>500</width>
-	<height>150</height>
+  <key>ingame-button-verbindung-hover</key>
+  <value>..\..\..\resources\images\ingame-button-verbindung-hover.svg</value>
+  <width>82</width>
+  <height>74</height>
+</guiTexture>
+
+<guiTexture>
+  <key>ingame-button-verbindung-clicked</key>
+  <value>..\..\..\resources\images\ingame-button-verbindung-clicked.svg</value>
+  <width>82</width>
+  <height>74</height>
+</guiTexture>
+
+<guiTexture>
+  <key>ingame-button-polypeptid-normal</key>
+  <value>..\..\..\resources\images\ingame-button-polypeptid-normal.svg</value>
+  <width>82</width>
+  <height>74</height>
+</guiTexture>
+
+<guiTexture>
+  <key>ingame-button-polypeptid-hover</key>
+  <value>..\..\..\resources\images\ingame-button-polypeptid-hover.svg</value>
+  <width>82</width>
+  <height>74</height>
+</guiTexture>
+
+<guiTexture>
+  <key>ingame-button-polypeptid-clicked</key>
+  <value>..\..\..\resources\images\ingame-button-polypeptid-clicked.svg</value>
+  <width>82</width>
+  <height>74</height>
 </guiTexture>
 
 <!-- game models -->
