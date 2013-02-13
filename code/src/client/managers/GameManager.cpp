@@ -31,11 +31,9 @@ GameManager::~GameManager(void)
 			delete it->second;
 		}
 	}
-/* IF UNCOMMENTED, THESE LINES PROVOKE AN EXCEPTION AT THE INITIALIZATION OF GAME MANAGER
 	networkManager->stop();
 	networkManagerThread.join();
 	delete networkManager;
-*/
 }
 
 GameManager * const GameManager::getInstance()

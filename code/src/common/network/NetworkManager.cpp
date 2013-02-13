@@ -11,7 +11,7 @@
 using boost::asio::ip::udp;
 using namespace std;
 
-NetworkManager::NetworkManager(unsigned short listenPort) : run(true), bound(true)
+NetworkManager::NetworkManager(unsigned short listenPort) : run(true), bound(true), networkThreadRunning(false), maintenanceThreadRunning(false)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service);
@@ -20,7 +20,7 @@ NetworkManager::NetworkManager(unsigned short listenPort) : run(true), bound(tru
 	serverSocket->bind(udp::endpoint(udp::v4(), listenPort));
 }
 
-NetworkManager::NetworkManager() : run(true), bound(false)
+NetworkManager::NetworkManager() : run(true), bound(false), networkThreadRunning(false), maintenanceThreadRunning(false)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service);
@@ -28,7 +28,7 @@ NetworkManager::NetworkManager() : run(true), bound(false)
     serverSocket->set_option(boost::asio::ip::udp::socket::reuse_address(true));
 }
 
-NetworkManager::NetworkManager(const NetworkManager &other) : run(true), bound(false)
+NetworkManager::NetworkManager(const NetworkManager &other) : run(true), bound(false), networkThreadRunning(false), maintenanceThreadRunning(false)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service, udp::endpoint(udp::v4(), other.serverSocket->local_endpoint().port()));
@@ -40,6 +40,10 @@ NetworkManager::~NetworkManager()
 {
 	run = false;
 	serverSocket->shutdown(boost::asio::socket_base::shutdown_both);
+
+	// Wait on threads
+	while (maintenanceThreadRunning || networkThreadRunning);
+
 	if (serverSocket)
 	{
 		delete serverSocket;
@@ -53,6 +57,7 @@ NetworkManager::~NetworkManager()
 		
 void NetworkManager::operator()()
 {
+	networkThreadRunning = true;
 	maintenanceThread = boost::thread(boost::bind(&NetworkManager::connectionMaintenance, this));
 	
 	boost::array<char, 5000> buffer;
@@ -137,6 +142,7 @@ void NetworkManager::operator()()
 	{
 		// Don't know what else would be here
 	}
+	networkThreadRunning = false;
 }
 
 void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
@@ -194,6 +200,7 @@ void NetworkManager::connectionMaintenance()
 {
 	try
 	{
+		maintenanceThreadRunning = true;
 		while (run)
 		{
 			// On shut down of client.exe, sometimes the function body throws an access violation exception;
@@ -238,6 +245,7 @@ void NetworkManager::connectionMaintenance()
 	{
 		// Don't know what else would be here
 	}
+	maintenanceThreadRunning = false;
 }
 
 void NetworkManager::stop()

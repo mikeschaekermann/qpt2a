@@ -25,13 +25,8 @@ protected:
 	virtual void handleMessage(NetworkMessage* message);
 	virtual std::vector<ConnectionEndpoint> getConnectionEndpoints();
 	
-	std::map<
-		unsigned int,
-		std::pair<
-			CellClient *,
-			CellClient *
-		>
-	> createCellRequestContexts;
+	std::map<unsigned int, std::pair<CellClient *,CellClient *> >
+		createCellRequestContexts;
 	
 	unsigned int nextRequestId;
 
