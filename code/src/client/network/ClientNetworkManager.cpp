@@ -183,13 +183,12 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			assert(attacker != nullptr && attacked != nullptr);
 			ci::Vec3f cellVec = attacker->getPosition() - attacked->getPosition();
 			cellVec.normalize();
-			ci::Vec2f textPos = GAME_SCR.worldToScreen(
-				attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 2.f));
+			ci::Vec3f textPos = attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 2.f);
 			GAME_SCR.addRenderText(
 				GameScreen::RenderText(
-					getElapsedSeconds() + 5.f,
+					getElapsedSeconds() + CONFIG_FLOAT2("data.ingamefeedback.renderedDamage.displaytime", 5.f),
 					textPos,
-					static_cast<ostringstream*>( &(ostringstream() << cellAttack->damage) )->str()));
+					stringify(ostringstream() << ceil(cellAttack->damage))));
 
 			LOG_INFO("CellAttack received");
 		}
