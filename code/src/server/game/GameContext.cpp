@@ -57,6 +57,11 @@ void GameContext::initializeNetworkManager(int port, Game * game)
 {
 	networkManager = new ServerNetworkManager(port, game);
 }
+
+boost::mutex & GameContext::getMutex()
+{
+	return mutex;
+}
 	
 GameContext::GameContext() : networkManager(0)
 {

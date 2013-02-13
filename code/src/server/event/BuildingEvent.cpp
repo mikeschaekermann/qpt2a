@@ -20,7 +20,13 @@ void BuildingEvent::trigger()
 {
 	cell.completeCell();
 
-	GAMECONTEXT->getActiveCells().createGameObject(GAMECONTEXT->getInactiveCells().find(cell.getId()));
+	auto x = GAMECONTEXT;
+	auto obj = GAMECONTEXT->getInactiveCells().find(cell.getId());
+	if (obj == nullptr)
+	{
+		LOG_INFO("cell not in list");
+	}
+	GAMECONTEXT->getActiveCells().createGameObject(obj);
 	GAMECONTEXT->getInactiveCells().removeGameObject(cell.getId(), false);
 
 	LOG_INFO(stringify(ostringstream() << "Cell with the id " << cell.getId() << " is finished"));
@@ -44,5 +50,8 @@ void BuildingEvent::trigger()
 	NETWORKMANAGER->sendTo<CreateCellComplete>(complete, endpointArr);
 	LOG_INFO("CreateCellComplete sent");
 
-	EVENT_CRTR->createAttackEvent(m_dDeadTime, true, *current, cell);
+	if (cell.getType() == CellServer::STANDARDCELL)
+		EVENT_CRTR->createAttackEvent(m_dDeadTime, true, *current, cell);
+
+	EVENT_CRTR->createAttackEvent(m_dDeadTime, false, *current, cell);
 }

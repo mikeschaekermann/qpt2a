@@ -10,11 +10,11 @@ class CellServer;
 class AttackEvent : public GameEvent
 {
 public:
-	AttackEvent(double startTime, CellServer & attacker, CellServer & victim, float damage);
+	AttackEvent(double startTime, unsigned int attackerId, unsigned int attackedId, float damage);
 
 	virtual void trigger();
 private:
-	CellServer & attacker;
-	CellServer & victim;
+	CellServer * attacker;
+	CellServer * victim;
 	float damage;
 };

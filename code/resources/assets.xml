@@ -67,7 +67,7 @@ vertexShader and fragmentShader are also file paths
 
 <guiTexture>
 	<key>soma-menu-background</key>
-	<value>..\..\..\resources\images\soma-background.svg</value>
+	<value>..\..\..\resources\images\soma-menu-background.svg</value>
 	<width>1025</width>
 	<height>769</height>
 </guiTexture>

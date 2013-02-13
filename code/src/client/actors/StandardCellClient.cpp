@@ -1,5 +1,10 @@
 #include "StandardCellClient.h"
 
+void StandardCellClient::startAnimation()
+{
+	/// animation
+}
+
 void StandardCellClient::drawAtTransformation() const
 {
 	gl::color(ColorA(0, 0, 1, opacity));
