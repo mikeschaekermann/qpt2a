@@ -1,4 +1,6 @@
 #include "TextInput.h"
+#include <ostream>
+#include <sstream>
 
 
 TextInput::TextInput(Screen* screen, std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture) :
@@ -10,6 +12,7 @@ TextInput::TextInput(Screen* screen, std::function<void()> callback, ci::Vec2f p
 			clickTexture
 	)
 {
+	this->text = static_cast<ostringstream*>(&(ostringstream() <<  rand()))->str();
 }
 
 

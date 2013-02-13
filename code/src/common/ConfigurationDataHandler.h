@@ -23,6 +23,9 @@
 #define CONFIG_INT1(key) CONFIG_MGR->get<int>(key)
 #define CONFIG_INT2(key, value) CONFIG_MGR->get<int>(key, value)
 
+#define CONFIG_STRING1(key) CONFIG_MGR->get<std::string>(key)
+#define CONFIG_STRING2(key, value) CONFIG_MGR->get<std::string>(key, value)
+
 #define CONFIG_FLOATS2(path, key) CONFIG_MGR->getChildrenDataVector<float>(path,key)
 
 class ConfigurationDataHandler

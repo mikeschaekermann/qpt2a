@@ -41,7 +41,6 @@ ConnectScreen::ConnectScreen()
 		nameBox
 	);
 	auto nameBoxItem = rootItem->addSubItem(nameTextBox);
-	nameTextBox->text = "test";
 
 	auto ipBox = &(ASSET_MGR->getGuiTexture(string("soma-connect-server-without-font")));
 	auto ipBoxItem = rootItem->addSubItem(new IpInput(

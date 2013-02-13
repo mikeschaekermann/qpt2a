@@ -12,7 +12,7 @@ public:
 	virtual void onKeyInput(KeyEvent& e);
 	virtual void draw();
 
-//protected:
+protected:
 	string text;
 };
 
