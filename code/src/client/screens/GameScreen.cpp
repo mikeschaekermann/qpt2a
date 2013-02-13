@@ -79,10 +79,16 @@ void GameScreen::draw()
 			it->second->draw();
 		}
 
+		containerMutex.unlock();
+		containerMutex.lock();
+
 		for (auto it = cellsIncomplete.begin(); it != cellsIncomplete.end(); ++it)
 		{
 			it->second->draw();
 		}
+
+		containerMutex.unlock();
+		containerMutex.lock();
 
 		for (auto it = cellPreviews.begin(); it != cellPreviews.end(); ++it)
 		{
@@ -90,8 +96,6 @@ void GameScreen::draw()
 		}
 
 		containerMutex.unlock();
-
-		renderModel("stemcell", "test", cam.getEyePoint());
 
 		state->draw3D();
 	}
