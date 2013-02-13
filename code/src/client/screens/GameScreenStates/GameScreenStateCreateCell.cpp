@@ -57,12 +57,8 @@ void GameScreenStateCreateCell::draw3D()
 {
 	if (cell != nullptr)
 	{
-		gl::color(1, 1, 1, 0.5);
 		cell->draw();
 	}
-
-	gl::color(0, 0, 1);
-	gl::drawVector(arrowEnd, arrowStart);
 }
 
 bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)

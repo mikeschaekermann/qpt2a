@@ -9,6 +9,7 @@
 #include "../../common/network/messages/enum/CellType.h"
 #include "boost/thread/mutex.hpp"
 #include "../rendering/RenderManager.h"
+#include <unordered_map>
 
 class CellClient;
 class GameObjectClient;
@@ -29,19 +30,19 @@ public:
 	class RenderText
 	{
 	public:
-		RenderText(float timeDeath, ci::Vec2f pos, std::string text) :
+		RenderText(float timeDeath, ci::Vec3f pos, std::string text) :
 			timeDeath(timeDeath),
 			pos(pos),
 			text(text)
 		{}
 
 		float getTimeDeath() const { return timeDeath; }
-		ci::Vec2f getPos() const { return pos; }
+		ci::Vec3f getPos() const { return pos; }
 		std::string getText() const { return text; }
 
 	private:
 		float timeDeath;
-		ci::Vec2f pos;
+		ci::Vec3f pos;
 		std::string text;
 	};
 
@@ -95,10 +96,11 @@ private:
 	GameScreenState * state;
 	/// the world's radius, i.e. the radius of the Petri's dish
 	float worldRadius;
-	/// in-game menu for cell actions
-	GUIItem * cellMenu;
 	/// cell currently picked
 	CellClient * pickedCell;
+	/// in-game menu for cell actions
+	GUIItem * cellMenu;
+	unordered_map<string, GUIItem *> cellMenuButtons;
 
 	/// mutex for container manipulation and reading
 	boost::mutex containerMutex;

@@ -47,6 +47,7 @@
     <ClCompile Include="..\..\src\common\CollisionHandler.cpp" />
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
+    <ClCompile Include="..\..\src\common\Helper.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
     <ClCompile Include="..\..\src\common\main.cpp" />
     <ClCompile Include="..\..\src\common\network\ConnectionEndpoint.cpp" />
