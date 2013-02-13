@@ -33,7 +33,7 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellTy
 
 bool GameScreenStateCreateCell::mouseMove(MouseEvent event)
 {
-	auto mouseCoordinates3D = screen->cam.screenToWorldPlane(event.getPos());
+	auto mouseCoordinates3D = RenderManager::getInstance()->cam.screenToWorldPlane(event.getPos());
 	auto pickedCellPosition = pickedCell->getPosition();
 	auto pickedCellRadius = pickedCell->getRadius();
 	auto direction = mouseCoordinates3D - pickedCellPosition;

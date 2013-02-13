@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include "../../common/network/messages/enum/CellType.h"
 #include "boost/thread/mutex.hpp"
+#include "../rendering/RenderManager.h"
 
 class CellClient;
 class GameObjectClient;
@@ -32,7 +33,6 @@ public:
 	virtual void draw();
 
 	void setWorldRadius(float radius) { worldRadius = radius; }
-	void zoomToWorld();
 
 	virtual bool touchBegan(const TouchWay & touchWay);
 	virtual void touchMoved(const TouchWay & touchWay);
@@ -64,21 +64,11 @@ public:
 
 	void switchToState(GameScreenState * newState);
 
-	void renderModel(string modelName, 
-					 string shaderName, 
-					 Vec3f lightPos, 
-					 Vec3f ambient = Vec3f(0.1, 0.1, 0.1), 
-					 Vec3f diffuse = Vec3f(0.4, 0.4, 0.4), 
-					 Vec3f specular = Vec3f(1., 1., 1.), 
-					 float shininess = 10.);
-
 private:
 	vector<CellClient *> GameScreen::getCellsPicked(Vec2f position);
 	
 	/// current state of the screen
 	GameScreenState * state;
-	/// perspective cam for the game
-	Cam cam;
 	/// the world's radius, i.e. the radius of the Petri's dish
 	float worldRadius;
 	/// in-game menu for cell actions

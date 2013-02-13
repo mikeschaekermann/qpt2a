@@ -294,15 +294,69 @@ vertexShader and fragmentShader are also file paths
 	<height>150</height>
 </guiTexture>
 
-<texture>
-	<key>stemcell</key>
-	<value>..\..\..\resources\textures\stemcell.png</value>
-</texture>
+<!-- game models -->
 
 <model>
-	<key>stemcell</key>
-	<value>..\..\..\resources\models\stemcell.obj</value>
+  <key>boneCell</key>
+  <value>..\..\..\resources\models\boneCell.obj</value>
 </model>
+
+<model>
+  <key>crossroadCell</key>
+  <value>..\..\..\resources\models\crossroadCell.obj</value>
+</model>
+
+<model>
+  <key>fatcell</key>
+  <value>..\..\..\resources\models\fatCell.obj</value>
+</model>
+
+<model>
+  <key>geysir</key>
+  <value>..\..\..\resources\models\geysir.obj</value>
+</model>
+
+<model>
+  <key>heal</key>
+  <value>..\..\..\resources\models\heal.obj</value>
+</model>
+
+<model>
+  <key>infiltrate</key>
+  <value>..\..\..\resources\models\infiltrate.obj</value>
+</model>
+
+<model>
+  <key>petriDish</key>
+  <value>..\..\..\resources\models\petriDish.obj</value>
+</model>
+
+<model>
+  <key>resourceCell</key>
+  <value>..\..\..\resources\models\resourceCell.obj</value>
+</model>
+
+<model>
+  <key>standardCell</key>
+  <value>..\..\..\resources\models\standardCell.obj</value>
+</model>
+
+<model>
+  <key>standardCellAttack.obj</key>
+  <value>..\..\..\resources\models\standardCellAttack.obj</value>
+</model>
+
+<model>
+  <key>stemCell</key>
+  <value>..\..\..\resources\models\stemCell.obj</value>
+</model>
+
+<model>
+  <key>vitamin</key>
+  <value>..\..\..\resources\models\vitamin.obj</value>
+</model>
+
+<!-- sounds -->
 
 <guiSound>
 	<key>song</key>

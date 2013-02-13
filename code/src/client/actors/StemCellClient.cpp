@@ -1,8 +1,12 @@
 #include "StemCellClient.h"
-#include "../managers/GameManager.h"
+#include "../rendering/RenderManager.h"
 
 void StemCellClient::drawAtTransformation() const
 {
-	gl::color(ColorA(0, 1, 0, opacity));
-	GAME_SCR.renderModel("stemcell", "test", Vec3f(100, 0, 100));
+	gl::scale(radius, radius, radius);
+	RenderManager::getInstance()->renderModel("stemCell", "test",
+											  Vec4f(0., 0.5, 0., 0.4),
+											  Vec4f(0., 0.3, 0., 0.6),
+											  Vec4f(0., 0.9, 0., 0.9),
+											  3.);
 }

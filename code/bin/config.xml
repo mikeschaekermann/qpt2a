@@ -16,7 +16,7 @@
 		<camera>
 			<fieldOfView>30</fieldOfView>
 			<nearPlane>5.0</nearPlane>
-			<farPlane>3000.0</farPlane>
+      <farPlane>3000.0</farPlane>
 		</camera>
 	</rendering>
 	<world>

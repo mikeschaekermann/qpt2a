@@ -20,13 +20,13 @@ bool GameScreenStateNeutral::touchClick(TouchWay touchWay)
 
 void GameScreenStateNeutral::touchMoved(const TouchWay & touchWay)
 {
-	auto& cam = screen->cam;
+	auto& cam = RenderManager::getInstance()->cam;
 	cam.setEyePoint(cam.getEyePoint() + Vec3f(-touchWay.getLastDeltaVector().x, touchWay.getLastDeltaVector().y, 0));
 }
 
 void GameScreenStateNeutral::onKeyInput(KeyEvent& e)
 {
-	auto& cam = screen->cam;
+	auto& cam = RenderManager::getInstance()->cam;
 
 	if (e.getCode() == KeyEvent::KEY_ESCAPE)
 	{
@@ -53,6 +53,6 @@ void GameScreenStateNeutral::onKeyInput(KeyEvent& e)
 
 void GameScreenStateNeutral::mouseWheel(MouseEvent & e)
 {
-	auto& cam = screen->cam;
+	auto& cam = RenderManager::getInstance()->cam;
 	cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 0.f, -e.getWheelIncrement() * 100.f));
 }

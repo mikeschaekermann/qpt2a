@@ -8,16 +8,14 @@
 #include "GameScreenStates/GameScreenStateNeutral.h"
 #include "GameScreenStates/GameScreenStateCreateCell.h"
 #include "../../common/network/messages/enum/CellType.h"
+#include "../rendering/RenderManager.h"
 
 GameScreen::GameScreen():
 	state(new GameScreenStateNeutral(this))
 {
-	auto screenSize = getWindowSize();
-	cam = Cam(screenSize.x, screenSize.y, CONFIG_FLOAT1("data.rendering.camera.fieldOfView"), CONFIG_FLOAT1("data.rendering.camera.nearPlane"), CONFIG_FLOAT1("data.rendering.camera.farPlane"));
+	RenderManager::getInstance()->zoomToWorld();
 
-	cam
-		.setPosition(Vec3f( 0.0f, 0.0f, 0.0f ))
-		.setFocus(Vec3f::zero());
+	worldRadius = CONFIG_FLOAT1("data.world.radius");
 
 	auto createCellButton = &(ASSET_MGR->getGuiTexture(string("createCell")));
 	auto createStandardCellButton = &(ASSET_MGR->getGuiTexture(string("createStandardCell")));
@@ -65,41 +63,45 @@ void GameScreen::update(float frameTime)
 
 void GameScreen::draw()
 {
+	RenderManager::getInstance()->setUp3d();
+
 	gl::pushMatrices();
-	{
-		gl::enableDepthWrite();
-		gl::enableDepthRead();
-
-		gl::setMatrices(cam);
-
-		containerMutex.lock();
-
-		for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
-		{
-			it->second->draw();
-		}
-
-		containerMutex.unlock();
-		containerMutex.lock();
-
-		for (auto it = cellsIncomplete.begin(); it != cellsIncomplete.end(); ++it)
-		{
-			it->second->draw();
-		}
-
-		containerMutex.unlock();
-		containerMutex.lock();
-
-		for (auto it = cellPreviews.begin(); it != cellPreviews.end(); ++it)
-		{
-			(*it)->draw();
-		}
-
-		containerMutex.unlock();
-
-		state->draw3D();
-	}
+		gl::scale(worldRadius, worldRadius, worldRadius);
+		RenderManager::getInstance()->renderModel("petriDish", "test",
+												  Vec4f(0.1, 0.1, 0.1, 0.1),
+												  Vec4f(0.1, 0.1, 0.1, 0.2),
+												  Vec4f(1., 1., 1., 0.6),
+												  100.);
 	gl::popMatrices();
+
+	containerMutex.lock();
+
+	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
+	{
+		it->second->draw();
+	}
+
+	containerMutex.unlock();
+	containerMutex.lock();
+
+	for (auto it = cellsIncomplete.begin(); it != cellsIncomplete.end(); ++it)
+	{
+		it->second->draw();
+	}
+
+	containerMutex.unlock();
+	containerMutex.lock();
+
+	for (auto it = cellPreviews.begin(); it != cellPreviews.end(); ++it)
+	{
+		(*it)->draw();
+	}
+
+	containerMutex.unlock();
+
+	state->draw3D();
+
+	RenderManager::getInstance()->shutdown3d();
 
 	gl::color(ColorA(1, 1, 1, 1));
 	rootItem->draw();
@@ -159,7 +161,7 @@ bool GameScreen::touchClick(TouchWay touchWay)
 void GameScreen::resize(ResizeEvent event)
 {
 	state->resize(event);
-	cam.setAspectRatio(getWindowAspectRatio());
+	RenderManager::getInstance()->cam.setAspectRatio(getWindowAspectRatio());
 }
 
 void GameScreen::onKeyInput(KeyEvent& e)
@@ -295,21 +297,9 @@ void GameScreen::removeCellPreview(CellClient * cell)
 	containerMutex.unlock();
 }
 
-void GameScreen::zoomToWorld()
-{
-	/// world radius = sin(camera's fov / 2) * camera's distance
-	/// camera's distance = world radius / sin(camera's fov / 2)
-
-	float camDistance = worldRadius / sin(cam.getFov() / 2 / 180.0 * M_PI);
-
-	cam
-		.setPosition(Vec3f(0, 0, camDistance))
-		.setFocus(Vec3f::zero());
-}
-
 vector<CellClient *> GameScreen::getCellsPicked(Vec2f position)
 {
-	auto pointInWorldPlane = cam.screenToWorldPlane(position);
+	auto pointInWorldPlane = RenderManager::getInstance()->cam.screenToWorldPlane(position);
 	
 	return cellsToPick.pick(pointInWorldPlane);
 }
@@ -322,35 +312,4 @@ void GameScreen::switchToState(GameScreenState * newState)
 	{
 		delete oldState;
 	}
-}
-
-void GameScreen::renderModel(string modelName, 
-							 string shaderName, 
-							 Vec3f lightPos, 
-							 Vec3f ambient, 
-							 Vec3f diffuse, 
-							 Vec3f specular, 
-							 float shininess)
-{
-	gl::pushMatrices();
-
-	auto model = ASSET_MGR->getModel(modelName);
-	auto shader = ASSET_MGR->getShaderProg(shaderName);
-
-	shader.bind();
-
-	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * lightPos);
-
-	shader.uniform("ambientColor", ambient);
-	shader.uniform("diffuseColor", diffuse);
-	shader.uniform("specularColor", specular);
-	shader.uniform("shininess", shininess);
-
-	gl::pushModelView();
-		gl::draw(model);
-	gl::popModelView();
-
-	shader.unbind();
-
-	gl::popMatrices();
 }

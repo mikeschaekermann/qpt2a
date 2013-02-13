@@ -1,5 +1,6 @@
 #include "GameScreenStateInMenu.h"
 #include "GameScreenStateNeutral.h"
+#include "../../rendering/RenderManager.h"
 
 GameScreenStateInMenu::GameScreenStateInMenu(GameScreen* screen, CellClient * pickedCell):
 	GameScreenState(screen),
@@ -9,7 +10,7 @@ GameScreenStateInMenu::GameScreenStateInMenu(GameScreen* screen, CellClient * pi
 	{
 		screen->pickedCell = pickedCell;
 		auto menuPosition3D = pickedCell->getPosition() + Vec3f(pickedCell->getRadius() + 5, 0, 0);
-		auto menuPosition2D = screen->cam.worldToScreen(menuPosition3D, getWindowWidth(), getWindowHeight());
+		auto menuPosition2D = RenderManager::getInstance()->cam.worldToScreen(menuPosition3D, getWindowWidth(), getWindowHeight());
 		screen->cellMenu->setPosition(menuPosition2D);
 		screen->cellMenu->setVisible(true);
 	}

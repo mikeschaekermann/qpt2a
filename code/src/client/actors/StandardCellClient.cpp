@@ -1,7 +1,12 @@
 #include "StandardCellClient.h"
+#include "../rendering/RenderManager.h"
 
 void StandardCellClient::drawAtTransformation() const
 {
-	gl::color(ColorA(0, 0, 1, opacity));
-	drawSphere(Vec3f(0, 0, 0), radius);
+	gl::scale(radius, radius, radius);
+	RenderManager::getInstance()->renderModel("standardCell", "test",
+											  Vec4f(0., 0.4, 0., 0.6),
+											  Vec4f(0., 0.2, 0., 0.3),
+											  Vec4f(0., 0.9, 0., 0.9),
+											  4.);
 }
