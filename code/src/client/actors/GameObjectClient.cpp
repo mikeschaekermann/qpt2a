@@ -15,6 +15,6 @@ void GameObjectClient::draw() const
 
 void GameObjectClient::drawAtTransformation() const
 {
-	gl::color(1, 0, 0);
+	gl::color(ColorA(1, 0, 0, opacity));
 	drawSphere(Vec3f(0, 0, 0), radius, radius);
 }
