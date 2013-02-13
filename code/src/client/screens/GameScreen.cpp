@@ -86,39 +86,11 @@ void GameScreen::draw()
 
 		gl::color(ColorA(1, 1, 1, 1));
 
+		renderModel("stemcell", "test", cam.getEyePoint());
+
 		gl::disableDepthWrite();
 		gl::disableDepthRead();
 	}
-	
-	
-		////////////// render test
-		//gl::color(1,1,1,1);
-		//gl::pushMatrices();
-
-		//gl::translate(100, -100, 20);
-		//gl::scale(100, 100, 100);
-		//string name("stemcell");
-		//auto model = ASSET_MGR->getModel(name);
-		//auto shader = ASSET_MGR->getShaderProg(string("test"));
-	
-		//shader.bind();
-
-		//shader.uniform("viewPos", cam.getEyePoint());
-		//shader.uniform("lightPos", Vec3f(0, 0, 100));
-
-		//shader.uniform("matModelView", cam.getModelViewMatrix());
-		//shader.uniform("matProjection", cam.getProjectionMatrix());
-	
-		//shader.uniform("ambientColor", Vec3f(0.1, 0.1, 0.1));
-		//shader.uniform("diffuseColor", Vec3f(0.1, 0.1, 0.1));
-		//shader.uniform("specularColor", Vec3f(0.1, 0.1, 0.1));
-		//shader.uniform("shininess", 2);
-
-		//gl::draw(model);
-		//shader.unbind();
-
-		//gl::popMatrices();
-
 	gl::popMatrices();
 
 	Screen::draw();
@@ -299,4 +271,35 @@ void GameScreen::switchToState(GameScreenState * newState)
 	{
 		delete oldState;
 	}
+}
+
+void GameScreen::renderModel(string modelName, 
+							 string shaderName, 
+							 Vec3f lightPos, 
+							 Vec3f ambient, 
+							 Vec3f diffuse, 
+							 Vec3f specular, 
+							 float shininess)
+{
+	gl::pushMatrices();
+
+	auto model = ASSET_MGR->getModel(modelName);
+	auto shader = ASSET_MGR->getShaderProg(shaderName);
+
+	shader.bind();
+
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * lightPos);
+
+	shader.uniform("ambientColor", ambient);
+	shader.uniform("diffuseColor", diffuse);
+	shader.uniform("specularColor", specular);
+	shader.uniform("shininess", shininess);
+
+	gl::pushModelView();
+		gl::draw(model);
+	gl::popModelView();
+
+	shader.unbind();
+
+	gl::popMatrices();
 }

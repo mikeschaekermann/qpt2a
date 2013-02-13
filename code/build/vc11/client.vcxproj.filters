@@ -495,5 +495,8 @@
     <None Include="..\..\resources\assets.xml">
       <Filter>Config</Filter>
     </None>
+    <None Include="..\..\bin\config.xml">
+      <Filter>Config</Filter>
+    </None>
   </ItemGroup>
 </Project>
