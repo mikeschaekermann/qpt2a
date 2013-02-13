@@ -1,6 +1,5 @@
 #pragma once
 
-class NetworkManager;
 class CellServer;
 class PlayerServer;
 
@@ -12,10 +11,9 @@ class PlayerServer;
 class BuildingEvent : public GameEvent
 {
 public:
-	BuildingEvent(double startTime, NetworkManager & manager, CellServer & cell);
+	BuildingEvent(double startTime, CellServer & cell);
 
 	virtual void trigger();
 private:
-	NetworkManager & manager;
 	CellServer & cell;
 };

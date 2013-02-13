@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "../common/Logger.h"
+#include "../common/Helper.h"
 
 #include "IdGameObjectMap.h"
 #include "CollisionHandler.h"
@@ -34,7 +35,10 @@ public:
 
 	GameObjectContainer()
 	{
-		collisionHandler.initialize(ci::Area(0, 0, CONFIG_FLOAT1("data.world.radius") * 2, CONFIG_FLOAT1("data.world.radius") * 2));
+		collisionHandler.initialize(ci::Area((int32_t) -CONFIG_FLOAT1("data.world.radius"), 
+			(int32_t) -CONFIG_FLOAT1("data.world.radius"), 
+			(int32_t)  CONFIG_FLOAT1("data.world.radius"), 
+			(int32_t)  CONFIG_FLOAT1("data.world.radius")));
 	}
 
 	void createGameObject(O * gameObject)
@@ -42,7 +46,19 @@ public:
 		if (idMap.addGameObject(gameObject))
 		{
 			collisionHandler.insert(Circle(gameObject->getId(), Vec2f(gameObject->getPosition().x, gameObject->getPosition().y), gameObject->getRadius()));
-			return;
+			if (idMap.getSize() == collisionHandler.getSize())
+			{
+				return;
+			}
+			else
+			{
+				stringstream ss;
+				ss << "Inserting gameobject creates inconsistence: id " << gameObject->getId();
+				LOG_INFO(ss.str());
+
+				idMap.removeGameObject(gameObject);
+				collisionHandler.remove(gameObject->getId());
+			}
 		}
 		LOG_INFO("Inserting gameobject in id map failed");
 	}

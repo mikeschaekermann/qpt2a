@@ -52,9 +52,6 @@
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\game\PlayerServer.h">
-      <Filter>Gamelogic</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\server\game\IIdentifiable.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
@@ -130,16 +127,10 @@
     <ClInclude Include="..\..\src\common\environment\Barrier.h">
       <Filter>Environment</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\environment\DynamicModificator.h">
-      <Filter>Environment</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\common\environment\StaticModificator.h">
       <Filter>Environment</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\environment\BarrierServer.h">
-      <Filter>Environment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\server\environment\DynamicModificatorServer.h">
       <Filter>Environment</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\environment\StaticModificatorServer.h">
@@ -194,6 +185,12 @@
       <Filter>Network\Messages\Game\InGame\Environment</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\game\GameContext.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\BoneCell.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\game\PlayerServer.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -348,12 +345,6 @@
     <ClCompile Include="..\..\src\common\environment\StaticModificator.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\common\environment\DynamicModificator.cpp">
-      <Filter>Environment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\server\environment\DynamicModificatorServer.cpp">
-      <Filter>Environment</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\server\environment\StaticModificatorServer.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
@@ -365,9 +356,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\AttackEvent.cpp">
       <Filter>Eventlogic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\Helper.cpp">
-      <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\EventCreator.cpp">
       <Filter>Eventlogic</Filter>
@@ -397,6 +385,12 @@
       <Filter>Network\Messages\Game\InGame\Environment</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\game\GameContext.cpp">
+      <Filter>Gamelogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\Helper.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\game\Game.cpp">
       <Filter>Gamelogic</Filter>
     </ClCompile>
   </ItemGroup>

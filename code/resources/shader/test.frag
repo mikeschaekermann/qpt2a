@@ -13,7 +13,6 @@ varying vec4 vertexNormalEye;
 
 const vec3 viewPos = vec3(0., 0., 0.);
 
-
 float powing(float x, float y){
 	float result = x;
 	for(float i = 0.; i < y - 1.; ++i){

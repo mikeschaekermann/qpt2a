@@ -4,54 +4,85 @@
 #include "../managers/GameManager.h"
 #include "TextInput.h"
 #include "IpInput.h"
+#include "../../common/ConfigurationDataHandler.h"
 
 using namespace ci;
 
 ConnectScreen::ConnectScreen()
 {
-	auto nameBox = &(ASSET_MGR->getGuiTexture(string("textBox")));
+	auto background = &(ASSET_MGR->getGuiTexture(string("soma-background")));
+	rootItem->addSubItem(
+		this,
+		[]() {},
+		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.background.x", 0), CONFIG_FLOAT2("data.menu.connectcreen.background.y", 0)),
+		background,
+		background,
+		background
+	);
 
-	TextInput *nameTextBox = new TextInput(this, []() { }, Vec2f(100, 40), nameBox, nameBox, nameBox);
+	auto headline = &(ASSET_MGR->getGuiTexture(string("soma-connect-headline")));
+	rootItem->addSubItem(
+		this,
+		[]() {},
+		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.headline.x", 0), CONFIG_FLOAT2("data.menu.connectcreen.headline.y", 0)),
+		headline,
+		headline,
+		headline
+	);
+
+	auto nameBox = &(ASSET_MGR->getGuiTexture(string("soma-connect-username-without-font")));
+
+	TextInput *nameTextBox = new TextInput(
+		this, 
+		[]() { },
+		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.username.x", 100), CONFIG_FLOAT2("data.menu.connectcreen.username.y", 40)), 
+		nameBox, 
+		nameBox, 
+		nameBox
+	);
 	auto nameBoxItem = rootItem->addSubItem(nameTextBox);
-	nameTextBox->text = "test";
 
-	auto ipBox = &(ASSET_MGR->getGuiTexture(string("textBox")));
+	auto ipBox = &(ASSET_MGR->getGuiTexture(string("soma-connect-server-without-font")));
 	auto ipBoxItem = rootItem->addSubItem(new IpInput(
 		this,
 		[]()
 		{
 			
 		},
-		Vec2f(100, 150),
+		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.server.x", 100), CONFIG_FLOAT2("data.menu.connectcreen.server.y", 150)),
 		ipBox,
 		ipBox,
 		ipBox)
 	);
 
-	auto connectTexture = &(ASSET_MGR->getGuiTexture(string("connect")));
+	auto connectTextureBasic = &(ASSET_MGR->getGuiTexture(string("soma-connect-basic-connect")));
+	auto connectTextureClick = &(ASSET_MGR->getGuiTexture(string("soma-connect-clicked-connect")));
+	auto connectTextureHover = &(ASSET_MGR->getGuiTexture(string("soma-connect-hover-connect")));
 	rootItem->addSubItem(
 		this,
 		[ipBoxItem, nameBoxItem]()
 		{
 			GAME_MGR->startGame(nameBoxItem->getValue(), ipBoxItem->getValue());
 		},
-		Vec2f(100, 220),
-		connectTexture,
-		connectTexture,
-		connectTexture
+		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.connect.x", 100), CONFIG_FLOAT2("data.menu.connectcreen.connect.y", 220)),
+		connectTextureBasic,
+		connectTextureClick,
+		connectTextureHover
 	);
 
-	auto back = &(ASSET_MGR->getGuiTexture(string("back")));
+	auto backBasic = &(ASSET_MGR->getGuiTexture(string("soma-connect-basic-back")));
+	auto backClick = &(ASSET_MGR->getGuiTexture(string("soma-connect-clicked-back")));
+	auto backHover = &(ASSET_MGR->getGuiTexture(string("soma-connect-hover-back")));
 	rootItem->addSubItem(
 		this,
 		[]()
 		{
 			SCREEN_MGR->openMenuScreen();
 		},
-		Vec2f(100, 300),
-		back,
-		back,
-		back
+		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.back.x", 100), CONFIG_FLOAT2("data.menu.connectcreen.back.y", 300)),
+		backBasic,
+		backClick,
+		backHover
 	);
 }
 

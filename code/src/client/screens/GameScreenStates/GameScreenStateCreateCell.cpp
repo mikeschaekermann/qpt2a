@@ -74,26 +74,18 @@ bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)
 	createCellRequest->angle = angle;
 	createCellRequest->type = cellType;
 
-	NETWORK_MGR->registerCreateCellCallbacks(
+	NETWORK_MGR->registerCreateCellRequest(
 		createCellRequest,
-		[this](CreateCellSuccess * response){
-			cell->setPosition(response->position);
-			cell->setAngle(response->angle);
-			cell->setId(response->cellId);
-			cell->addParent(pickedCell);
-			pickedCell->addChild(cell);
-
-			GAME_SCR.addIncompleteCell(cell);
-
-			screen->switchToState(new GameScreenStateNeutral(screen));
-		},
-		[this](CreateCellFailure * response){
-			
-		}
+		cell,
+		pickedCell
 	);
+
+	GAME_SCR.addCellPreview(cell);
 
 	NETWORK_MGR->send(createCellRequest);
 	LOG_INFO("CreateCellRequest sent");
+
+	screen->switchToState(new GameScreenStateNeutral(screen));
 
 	return false;	
 }

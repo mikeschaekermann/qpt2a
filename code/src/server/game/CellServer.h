@@ -14,7 +14,8 @@ public:
 	enum Type
 	{
 		STEMCELL,
-		STANDARDCELL
+		STANDARDCELL,
+		BONECELL
 	};
 
 	CellServer(Type type, Vec3f position, float angle, Player * owner) :
@@ -30,6 +31,10 @@ public:
 			case STANDARDCELL:
 				this->radius = CONFIG_FLOAT1("data.cell.standardcell.radius");
 				this->healthPoints = CONFIG_FLOAT1("data.cell.standardcell.healthpoints");
+				break;
+			case BONECELL:
+				this->radius = CONFIG_FLOAT1("data.cell.bonecell.radius");
+				this->healthPoints = CONFIG_FLOAT1("data.cell.bonecell.healthpoints");
 				break;
 		}
 	}

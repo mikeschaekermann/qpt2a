@@ -72,6 +72,8 @@ void GameScreen::draw()
 
 		gl::setMatrices(cam);
 
+		containerMutex.lock();
+
 		for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
 		{
 			it->second->draw();
@@ -82,18 +84,22 @@ void GameScreen::draw()
 			it->second->draw();
 		}
 
-		state->draw3D();
+		for (auto it = cellPreviews.begin(); it != cellPreviews.end(); ++it)
+		{
+			(*it)->draw();
+		}
 
-		gl::color(ColorA(1, 1, 1, 1));
+		containerMutex.unlock();
 
 		renderModel("stemcell", "test", cam.getEyePoint());
 
-		gl::disableDepthWrite();
-		gl::disableDepthRead();
+		state->draw3D();
 	}
 	gl::popMatrices();
 
-	Screen::draw();
+	rootItem->draw();
+
+	///////////// 2D rendering
 
 	state->draw2D();
 }
@@ -163,32 +169,59 @@ void GameScreen::mouseWheel(MouseEvent & e)
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject)
 {
+	containerMutex.lock();
 	gameObjectsToUpdate.createGameObject(gameObject);
+	containerMutex.unlock();
 }
 
 void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject)
 {
 	addGameObjectToUpdate(gameObject);
 
+	containerMutex.lock();
 	gameObjectsToDraw.createGameObject(gameObject);
+	containerMutex.unlock();
 }
 
 void GameScreen::addGameObjectToCollide(GameObject * gameObject)
 {
+	containerMutex.lock();
 	gameObjectsToCollide.createGameObject(gameObject);
+	containerMutex.unlock();
+}
+
+void GameScreen::removeGameObjectToCollide(GameObject * gameObject)
+{
+	containerMutex.lock();
+	gameObjectsToCollide.removeGameObject(gameObject->getId(), false);
+	containerMutex.unlock();
 }
 
 void GameScreen::addCellToPick(CellClient * cell)
 {
+	containerMutex.lock();
 	cellsToPick.createGameObject(cell);
+	containerMutex.unlock();
 }
 
 void GameScreen::addIncompleteCell(CellClient * cell)
 {
+	containerMutex.lock();
 	cellsIncomplete.createGameObject(cell);
+	containerMutex.unlock();
 
 	addGameObjectToCollide(cell);
 }
+
+void GameScreen::removeIncompleteCell(CellClient * cell)
+{
+	containerMutex.lock();
+	cellsIncomplete.removeGameObject(cell->getId(), false);
+	containerMutex.unlock();
+
+	removeGameObjectToCollide(cell);
+}
+
 
 void GameScreen::addIncompleteCell(
 	unsigned int playerId, 
@@ -221,8 +254,7 @@ void GameScreen::completeCellById(unsigned int id)
 
 	if (cell != nullptr)
 	{
-		cellsIncomplete.removeGameObject(id, false);
-		
+		removeIncompleteCell(cell);
 		addGameObjectToDraw(cell);
 		
 		auto cellOwner= cell->getOwner();
@@ -242,6 +274,20 @@ void GameScreen::completeCellById(unsigned int id)
 	{
 		LOG_WARNING("Could not find cell to be completed in GameScreen::completeCellById(unsigned int id).");
 	}
+}
+
+void GameScreen::addCellPreview(CellClient * cell)
+{
+	containerMutex.lock();
+	cellPreviews.insert(cell);
+	containerMutex.unlock();
+}
+
+void GameScreen::removeCellPreview(CellClient * cell)
+{
+	containerMutex.lock();
+	cellPreviews.erase(cell);
+	containerMutex.unlock();
 }
 
 void GameScreen::zoomToWorld()

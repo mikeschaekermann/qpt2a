@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data>
+	<input>
+		<clickPixelTolerance>10</clickPixelTolerance>
+    <text>
+      <font>Comic Sans MS</font>
+      <size>34</size>
+    </text>
+	</input>
+	<network>
+		<server>
+			<ip>127.0.0.1</ip>
+		</server>
+	</network>
 	<rendering>
 		<camera>
 			<fieldOfView>30</fieldOfView>
@@ -20,8 +32,8 @@
 		</player>
 		<player>
 			<startposition>
-				<x>-95.0</x>
-				<y>0.0</y>
+				<x>200.0</x>
+				<y>35.0</y>
 			</startposition>
 		</player>
 		<player>
@@ -57,6 +69,10 @@
 			<distanceDropOffDegree>100.0</distanceDropOffDegree>
 			<damage>5.0</damage>
 		</standardcell>
+		<bonecell>
+			<radius>30.0</radius>
+			<healthpoints>200.0</healthpoints>
+		</bonecell>
 	</cell>
 	<environment>
 		<barriers>
@@ -97,19 +113,70 @@
 					<radius>10.0</radius>
 				</radioactivity>
 			</static>
-			<dynamic>
-				<viriswarm>
-					<startposition>
-						<x>0.0</x>
-						<y>50.0</y>
-					</startposition>
-					<rotation>
-						<x>0.0</x>
-						<y>0.0</y>
-					</rotation>
-					<radius>10.0</radius>
-				</viriswarm>
-			</dynamic>
 		</modifiers>
 	</environment>
+	<menu>
+		<menuscreen>
+			<background>
+				<x>-0.5</x>
+				<y>0</y>
+			</background>
+			<connect>
+				<x>450.6585</x>
+				<y>450</y>
+			</connect>
+			<start>
+				<x>407</x>
+				<y>510</y>
+			</start>
+			<credits>
+				<x>430.3955</x>
+				<y>580</y>
+			</credits>
+			<exit>
+				<x>440.662</x>
+				<y>650</y>
+			</exit>
+		</menuscreen>
+		<connectcreen>
+			<background>
+				<x>0</x>
+				<y>0</y>
+			</background>
+			<headline>
+				<x>140</x>
+				<y>120</y>
+			</headline>
+			<username>
+				<x>130</x>
+				<y>290</y>
+			</username>
+			<server>
+				<x>130</x>
+				<y>395</y>
+			</server>
+			<connect>
+				<x>450</x>
+				<y>525</y>
+			</connect>
+			<back>
+				<x>160</x>
+				<y>515</y>
+			</back>
+		</connectcreen>
+		<creditscreen>
+			<background>
+				<x>0</x>
+				<y>0</y>
+			</background>
+			<content>
+				<x>120</x>
+				<y>120</y>
+			</content>
+			<back>
+				<x>160</x>
+				<y>515</y>
+			</back>
+		</creditscreen>
+	</menu>
 </data>

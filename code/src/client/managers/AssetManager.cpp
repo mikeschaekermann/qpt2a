@@ -3,6 +3,7 @@
 using namespace cinder;
 
 AssetManager* AssetManager::manager = nullptr;
+boost::mutex AssetManager::instanceMutex;
 
 AssetManager::AssetManager(void)
 {

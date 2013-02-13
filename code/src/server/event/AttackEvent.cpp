@@ -7,9 +7,9 @@
 #include "../../common/network/NetworkManager.h"
 #include "../../common/network/messages/game/ingame/cell/combat/CellAttack.h"
 #include "../../common/network/messages/game/ingame/cell/combat/CellDie.h"
+#include "../../common/network/messages/game/outgame/GameOver.h"
 
-AttackEvent::AttackEvent(double startTime, NetworkManager & manager, CellServer & attacker, CellServer & victim, float damage) :
-	manager(manager),
+AttackEvent::AttackEvent(double startTime, CellServer & attacker, CellServer & victim, float damage) :
 	attacker(attacker),
 	victim(victim),
 	damage(damage),
@@ -32,7 +32,7 @@ void AttackEvent::trigger()
 		endpointArr.push_back(it->second->getEndpoint());
 	}
 
-	manager.sendTo<CellAttack>(attack, endpointArr);
+	NETWORKMANAGER->sendTo<CellAttack>(attack, endpointArr);
 
 	if (victim.getHealthPoints() < 0.f)
 	{
@@ -47,12 +47,22 @@ void AttackEvent::trigger()
 			}
 		}
 			
-		manager.sendTo<CellDie>(die, endpointArr);
+		NETWORKMANAGER->sendTo<CellDie>(die, endpointArr);
+		
+		if (victim.getType() == CellServer::STEMCELL)
+		{
+			GameOver * gameOver = new GameOver();
+			gameOver->playerId = player->getId();
+
+			NETWORKMANAGER->sendTo<GameOver>(gameOver, endpointArr);
+			
+			player->kill();
+		}
 
 		GAMECONTEXT->getActiveCells().removeGameObject(victim.getId());
 	}
 	else
 	{
-		(*EVENT_MGR) += new AttackEvent(this->m_dDeadTime, manager, attacker, victim, damage);
+		(*EVENT_MGR) += new AttackEvent(this->m_dDeadTime, attacker, victim, damage);
 	}
 }

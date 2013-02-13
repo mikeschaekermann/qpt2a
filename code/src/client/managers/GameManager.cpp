@@ -11,6 +11,7 @@ using namespace ci;
 using namespace ci::app;
 
 GameManager* GameManager::m_pManager = nullptr;
+boost::mutex GameManager::instanceMutex;
 
 GameManager::GameManager(void):
 	serverEndpoint(boost::asio::ip::address_v4::loopback(), 2345)
@@ -30,18 +31,21 @@ GameManager::~GameManager(void)
 			delete it->second;
 		}
 	}
-
+/* IF UNCOMMENTED, THESE LINES PROVOKE AN EXCEPTION AT THE INITIALIZATION OF GAME MANAGER
 	networkManager->stop();
 	networkManagerThread.join();
 	delete networkManager;
+*/
 }
 
 GameManager * const GameManager::getInstance()
 {
+	instanceMutex.lock();
 	if(!m_pManager)
 	{
 		m_pManager = new GameManager();
 	}
+	instanceMutex.unlock();
 
 	return m_pManager;
 }

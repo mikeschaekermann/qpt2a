@@ -2,25 +2,40 @@
 #include "../../common/network/NetworkManager.h"
 #include "../managers/AssetManager.h"
 #include "../managers/GameManager.h"
+#include "../../common/ConfigurationDataHandler.h"
 
 using namespace ci;
 
 MenuScreen::MenuScreen()
 {
-	auto connectTexture = &(ASSET_MGR->getGuiTexture(string("connect")));
+	auto background = &(ASSET_MGR->getGuiTexture(string("soma-menu-background")));
+	rootItem->addSubItem(
+		this,
+		[]() {},
+		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.background.x", 0), CONFIG_FLOAT2("data.menu.menuscreen.background.y", 0)),
+		background,
+		background,
+		background
+	);
+
+	auto connectTextureBasic = &(ASSET_MGR->getGuiTexture(string("soma-menu-basic-connect")));
+	auto connectTextureClick = &(ASSET_MGR->getGuiTexture(string("soma-menu-clicked-connect")));
+	auto connectTextureHover = &(ASSET_MGR->getGuiTexture(string("soma-menu-hover-connect")));
 	rootItem->addSubItem(
 		this,
 		[]()
 		{
 			SCREEN_MGR->openConnectScreen();
 		},
-		Vec2f(100, 50),
-		connectTexture,
-		connectTexture,
-		connectTexture
+		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.connect.x", 100), CONFIG_FLOAT2("data.menu.menuscreen.connect.y", 50)),
+		connectTextureBasic,
+		connectTextureClick,
+		connectTextureHover
 	);
 
-	auto startServerTexture = &(ASSET_MGR->getGuiTexture(string("startServer")));
+	auto startServerTextureBasic = &(ASSET_MGR->getGuiTexture(string("soma-menu-basic-start")));
+	auto startServerTextureClick = &(ASSET_MGR->getGuiTexture(string("soma-menu-clicked-start")));
+	auto startServerTextureHover = &(ASSET_MGR->getGuiTexture(string("soma-menu-hover-start")));
 	rootItem->addSubItem(
 		this,
 		[this]()
@@ -55,36 +70,40 @@ MenuScreen::MenuScreen()
 			sleep(500);
 			GAME_MGR->startGame("Mike");
 		},
-		Vec2f(100, 200),
-		startServerTexture,
-		startServerTexture,
-		startServerTexture
+		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.start.x", 100), CONFIG_FLOAT2("data.menu.menuscreen.start.y", 200)),
+		startServerTextureBasic,
+		startServerTextureClick,
+		startServerTextureHover
 	);
 
-	auto creditsTexture = &(ASSET_MGR->getGuiTexture(string("credits")));
+	auto creditsTextureBasic = &(ASSET_MGR->getGuiTexture(string("soma-menu-basic-credits")));
+	auto creditsTextureClick = &(ASSET_MGR->getGuiTexture(string("soma-menu-clicked-credits")));
+	auto creditsTextureHover = &(ASSET_MGR->getGuiTexture(string("soma-menu-hover-credits")));
 	rootItem->addSubItem(
 		this,
 		[]()
 		{
 			SCREEN_MGR->openCreditsScreen();
 		},
-		Vec2f(100, 300),
-		creditsTexture,
-		creditsTexture,
-		creditsTexture
+		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.credits.x", 100), CONFIG_FLOAT2("data.menu.menuscreen.credits.y", 300)),
+		creditsTextureBasic,
+		creditsTextureClick,
+		creditsTextureHover
 	);
 
-	auto exitButton = &(ASSET_MGR->getGuiTexture(string("exit")));
+	auto exitButtonBasic = &(ASSET_MGR->getGuiTexture(string("soma-menu-basic-exit")));
+	auto exitButtonClick = &(ASSET_MGR->getGuiTexture(string("soma-menu-clicked-exit")));
+	auto exitButtonHover = &(ASSET_MGR->getGuiTexture(string("soma-menu-hover-exit")));
 	rootItem->addSubItem(
 		this,
 		[]()
 		{
 			GAME_MGR->quit();
 		},
-		Vec2f(100, 400),
-		exitButton,
-		exitButton,
-		exitButton
+		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.exit.x", 100), CONFIG_FLOAT2("data.menu.menuscreen.exit.y", 400)),
+		exitButtonBasic,
+		exitButtonClick,
+		exitButtonHover
 	);
 }
 

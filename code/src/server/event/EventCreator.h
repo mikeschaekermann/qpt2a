@@ -22,7 +22,6 @@ public:
 	bool createAttackEvent(const double time, const bool isAttacker, const PlayerServer & currentPlayer, CellServer & currentCell);
 private:
 	static EventCreator * instance;
-	NetworkManager * networkManager;
 
 	EventCreator();
 	EventCreator(const EventCreator & cpy);
