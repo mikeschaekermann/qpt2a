@@ -1,5 +1,5 @@
 #include "TextInput.h"
-
+#include "../../common/ConfigurationDataHandler.h"
 
 TextInput::TextInput(Screen* screen, std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture) :
 	GUIItem(screen,
@@ -20,7 +20,7 @@ TextInput::~TextInput(void)
 void TextInput::draw()
 {
 	GUIItem::draw();
-	ci::gl::drawString(text, this->position + Vec2f(20, 25), ci::ColorA::black());
+	ci::gl::drawString(text, this->position + Vec2f(20, 25), ci::ColorA::white(), cinder::Font(CONFIG_STRING2("data.input.text.font", "Arial"), CONFIG_FLOAT2("data.input.text.size", 34)));
 }
 
 void TextInput::onKeyInput(KeyEvent& e)
