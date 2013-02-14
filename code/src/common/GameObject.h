@@ -26,16 +26,11 @@ public:
 
 	virtual void update(float frameTime);
 
-	/**
-		@brief adds a child to the list of children
-		@param child		pointer to child to be added
-	 */
 	void addChild(GameObject* child);
-	/**
-		@brief adds a parent to the list of parents
-		@param parent		pointer to parent to be added
-	 */
+	void removeChild(GameObject* child);
+
 	void addParent(GameObject* parent);
+	void removeParent(GameObject* parent);
 
 	vector<GameObject *> & getChildren();
 
