@@ -72,6 +72,11 @@ GameScreen & ScreenManager::getGameScreen() const
 	return *gameScreen;
 }
 
+ConnectScreen & ScreenManager::getConnectScreen() const
+{ 
+	return *connectScreen;
+}
+
 void ScreenManager::fadeToBlack(float alpha)
 {
 	auto windowSize = getWindowSize();

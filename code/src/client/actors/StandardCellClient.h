@@ -20,7 +20,7 @@ public:
 	setId(id);
 	
 	auto distanceDropOffDegree = CONFIG_FLOAT2("data.cell.standardcell.distanceDropOffDegree", 70);
-	auto attackRadius = CONFIG_FLOAT2("data.cell.standardcell.attackRadius", 20);
+	auto attackRadius = CONFIG_FLOAT2("data.cell.standardcell.attackradius", 20);
 	auto numOfSpikesOnEachSide = CONFIG_INT2("data.cell.standardcell.spikes.numberOnEachSide", 10);
 	int directions[2] = {-1, 1};
 

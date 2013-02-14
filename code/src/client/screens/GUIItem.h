@@ -28,6 +28,10 @@ public:
 	virtual string const & getValue() { return string(); }
 
 	virtual void draw();
+
+	void setEnabled(bool enabled);
+
+	bool isEnabled();
 protected:
 	bool isPositionInItem(ci::Vec2f position);
 
@@ -47,4 +51,6 @@ protected:
 	std::vector<GUIItem*> subItems;
 
 	Screen* screen;
+
+	bool enabled;
 };

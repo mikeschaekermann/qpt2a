@@ -37,6 +37,8 @@ public:
 	 */
 	void addParent(GameObject* parent);
 
+	vector<GameObject *> & getChildren();
+
 protected:
 	/// unique id identifying the game object within the process
 	unsigned int id;

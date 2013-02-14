@@ -63,6 +63,9 @@
 		<build>
 			<time>1.0</time>
 		</build>
+		<celldie>
+			<time>1.0</time>
+		</celldie>
 	</event>
 	<cell>
 		<stemcell>
@@ -72,13 +75,13 @@
 		<standardcell>
 			<radius>25.0</radius>
 			<healthpoints>100.0</healthpoints>
-			<attackradius>10.0</attackradius>
+			<attackradius>15.0</attackradius>
 			<distanceDropOffDegree>120.0</distanceDropOffDegree>
-      <spikes>
-        <numberOnEachSide>7</numberOnEachSide>
-        <shrinkAmountPerSecond>0.75</shrinkAmountPerSecond>
-      </spikes>
-			<damage>5.0</damage>
+			<damage>10.0</damage>
+			<spikes>
+				<numberOnEachSide>7</numberOnEachSide>
+				<shrinkAmountPerSecond>0.75</shrinkAmountPerSecond>
+			</spikes>
 		</standardcell>
 		<bonecell>
 			<radius>30.0</radius>
@@ -206,7 +209,7 @@
 			</content>
 			<back>
 				<x>160</x>
-				<y>515</y>
+				<y>585</y>
 			</back>
 		</creditscreen>
 	</menu>

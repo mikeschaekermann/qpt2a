@@ -193,6 +193,9 @@
     <ClInclude Include="..\..\src\Server\game\PlayerServer.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\server\event\CellDieEvent.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -392,6 +395,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\server\game\Game.cpp">
       <Filter>Gamelogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\CellDieEvent.cpp">
+      <Filter>Eventlogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

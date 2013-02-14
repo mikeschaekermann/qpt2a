@@ -26,6 +26,7 @@ public:
 	friend class GameScreenStateNeutral;
 	friend class GameScreenStateInMenu;
 	friend class GameScreenStateCreateCell;
+	friend class GameScreenStateGameOver;
 
 	class RenderText
 	{
@@ -64,10 +65,13 @@ public:
 	virtual void mouseWheel(MouseEvent & e);
 
 	void addGameObjectToUpdate(GameObjectClient * gameObject);
+	void removeGameObjectToUpdate(GameObjectClient * gameObject);
 	void addGameObjectToDraw(GameObjectClient * gameObject);
+	void removeGameObjectToDraw(GameObjectClient * gameObject);
 	void addGameObjectToCollide(GameObject * gameObject);
 	void removeGameObjectToCollide(GameObject * gameObject);
 	void addCellToPick(CellClient * cell);
+	void removeCellToPick(CellClient * cell);
 	void addIncompleteCell(CellClient * cell);
 	void removeIncompleteCell(CellClient * cell);
 	void addIncompleteCell(

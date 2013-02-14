@@ -35,7 +35,7 @@ EventCreator * EventCreator::getInstance()
 	return instance;
 }
 
-bool EventCreator::createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & cell)
+bool EventCreator::createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & parentCell, CellServer & cell)
 {
 	if (!isInRadiusOf<float>(cell.getPosition(), cell.getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
 	{
@@ -86,9 +86,10 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 		}
 	}
 
+	parentCell.addChild(&cell);
 	GAMECONTEXT->getInactiveCells().createGameObject(&cell);
 
-	(*EVENT_MGR) += new BuildingEvent(time, cell);
+	(*EVENT_MGR) += new BuildingEvent(time, cell.getId());
 
 	EventManager & em = (*EVENT_MGR);
 		
@@ -173,26 +174,25 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, const P
 					attacker = actualCell->getPosition();
 				}
 
-				ci::Vec3f attackerDir(Vec3f::xAxis());
-				attackerDir.rotate(Vec3f::zAxis(), actualCell->getAngle());
+				CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
+				CellServer * victimCell = isAttacker ? actualCell : &currentCell;
+
+				ci::Vec3f attackerDir(cosf(attackerCell->getAngle()), sinf(attackerCell->getAngle()), 0.f);
 				attackerDir.normalize();
 
 				ci::Vec3f attacker2VictimDir;
 				attacker2VictimDir = victim - attacker;
 				attacker2VictimDir.normalize();
 
-
-				float attackAngle = acosf(attackerDir.dot(attacker2VictimDir)) * 180.f / float(M_PI);
+				float maxSpikeLength = CONFIG_FLOAT1("data.cell.standardcell.attackradius");
 				float distanceDropOffDegree = CONFIG_FLOAT1("data.cell.standardcell.distanceDropOffDegree");
-				float attackPower = min<float>(max<float>((distanceDropOffDegree - attackAngle) / distanceDropOffDegree, 0.f), 1.f);
-
-				float damage = CONFIG_FLOAT1("data.cell.standardcell.damage") * attackPower;
+				float attackAngle = acosf(attackerDir.dot(attacker2VictimDir)) * 180.f / float(M_PI);
+				float spikeLength = maxSpikeLength * min<float>(max<float>((distanceDropOffDegree - attackAngle) / distanceDropOffDegree, 0.f), 1.f);
+				float punctureDepth = spikeLength - ((victim - attacker).length() - attackerCell->getRadius() - victimCell->getRadius());
+				float damage = punctureDepth;
 
 				if (damage > 0.f)
 				{
-					CellServer * attackerCell = isAttacker ? &currentCell : actualCell;
-					CellServer * victimCell = isAttacker ? actualCell : &currentCell;
-
 					// Modify damage when cells within a static modifier
 
 					auto staticAttackerModifier = attackerCell->getStaticModificator();

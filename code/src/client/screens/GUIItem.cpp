@@ -13,7 +13,8 @@ GUIItem::GUIItem(Screen* screen, std::function<void()> callback, ci::Vec2f posit
 	isVisible(true),
 	hasFocus(false),
 	parentItem(nullptr),
-	currentTexture(texture)
+	currentTexture(texture),
+	enabled(true)
 {
 }
 
@@ -93,27 +94,31 @@ void GUIItem::isMouseUp()
 
 bool GUIItem::hasMouseClickedOnItem(ci::Vec2f position)
 {
-	if (isPositionInItem(position))
+	if (enabled)
 	{
-		if (callback != nullptr)
+		if (isPositionInItem(position))
 		{
-			callback();
-			hasFocus = true;
-			screen->focusedItem = this;
-			return true;
+			if (callback != nullptr)
+			{
+				callback();
+				hasFocus = true;
+				screen->focusedItem = this;
+				return true;
+			}
 		}
+		else
+		{
+			currentTexture = texture;
+			hasFocus = false;
+		}
+		bool hasClicked = false;
+		for (auto it = subItems.begin(); it != subItems.end(); ++it)
+		{
+			hasClicked |= (*it)->hasMouseClickedOnItem(position - this->position);
+		}
+		return hasClicked;
 	}
-	else
-	{
-		currentTexture = texture;
-		hasFocus = false;
-	}
-	bool hasClicked = false;
-	for (auto it = subItems.begin(); it != subItems.end(); ++it)
-	{
-		hasClicked |= (*it)->hasMouseClickedOnItem(position - this->position);
-	}
-	return hasClicked;
+	return false;
 }
 
 
@@ -139,14 +144,17 @@ void GUIItem::draw()
 	gl::pushMatrices();
 	{
 		gl::translate(position);
-		if(isVisible && currentTexture != nullptr)/// && !hasFocus)
+		if(isVisible)
 		{
-			gl::draw(*currentTexture);
+			if ((enabled && currentTexture) || (!enabled && !clickTexture))
+			{
+				gl::draw(*currentTexture);
+			}
+			else if (clickTexture)
+			{
+				gl::draw(*clickTexture);
+			}
 		}
-		/*else if(isVisible && hasFocus && clickTexture)
-		{
-			gl::draw(*clickTexture);
-		}*/
 
 		for (auto it = subItems.begin(); it != subItems.end(); ++it)
 		{
@@ -172,4 +180,15 @@ void GUIItem::onKeyInput(KeyEvent& e)
 	{
 		(*it)->onKeyInput(e);
 	}
+}
+
+
+void GUIItem::setEnabled(bool enabled)
+{
+	this->enabled = enabled;
+}
+
+bool GUIItem::isEnabled()
+{
+	return enabled;
 }

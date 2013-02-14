@@ -8,11 +8,15 @@ public:
 	~TextInput(void);
 
 	virtual string const & getValue() { return text; }
+	void setValue(string value) { text = value; }
 
 	virtual void onKeyInput(KeyEvent& e);
 	virtual void draw();
 
+	void setRenderBox(bool doRender) { renderBox = doRender; }
+
 protected:
 	string text;
+	bool renderBox;
 };
 

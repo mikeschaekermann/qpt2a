@@ -194,6 +194,9 @@
     <ClCompile Include="..\..\src\common\Helper.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateGameOver.cpp">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -421,6 +424,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\client\rendering\RenderManager.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateGameOver.h">
+      <Filter>Screens\GameScreenStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

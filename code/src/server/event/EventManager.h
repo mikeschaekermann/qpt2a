@@ -4,6 +4,7 @@ class GameEvent;
 
 #include <queue>
 #include <vector>
+#include <boost\thread\mutex.hpp>
 
 #include "cinder/Timer.h"
 
@@ -30,4 +31,5 @@ private:
 	bool run;
 	std::priority_queue<GameEvent *> events;
 	std::vector<GameEvent *> toAddList;
+	boost::mutex mutex;
 };

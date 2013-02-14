@@ -248,12 +248,26 @@ void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject)
 	containerMutex.unlock();
 }
 
+void GameScreen::removeGameObjectToUpdate(GameObjectClient * gameObject)
+{
+	containerMutex.lock();
+	gameObjectsToUpdate.removeGameObject(gameObject->getId(), false);
+	containerMutex.unlock();
+}
+
 void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject)
 {
 	addGameObjectToUpdate(gameObject);
 
 	containerMutex.lock();
 	gameObjectsToDraw.createGameObject(gameObject);
+	containerMutex.unlock();
+}
+
+void GameScreen::removeGameObjectToDraw(GameObjectClient * gameObject)
+{
+	containerMutex.lock();
+	gameObjectsToDraw.removeGameObject(gameObject->getId(), false);
 	containerMutex.unlock();
 }
 
@@ -275,6 +289,13 @@ void GameScreen::addCellToPick(CellClient * cell)
 {
 	containerMutex.lock();
 	cellsToPick.createGameObject(cell);
+	containerMutex.unlock();
+}
+
+void GameScreen::removeCellToPick(CellClient * gameObject)
+{
+	containerMutex.lock();
+	cellsToPick.removeGameObject(gameObject->getId(), false);
 	containerMutex.unlock();
 }
 
