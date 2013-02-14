@@ -188,14 +188,14 @@
     <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenState.cpp">
       <Filter>Screens\GameScreenStates</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\client\rendering\RenderManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\common\Helper.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateGameOver.cpp">
       <Filter>Screens\GameScreenStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\rendering\RenderManager.cpp">
+      <Filter>Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -422,11 +422,11 @@
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateInMenu.h">
       <Filter>Screens\GameScreenStates</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\client\rendering\RenderManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateGameOver.h">
       <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\rendering\RenderManager.h">
+      <Filter>Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

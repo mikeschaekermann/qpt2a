@@ -13,6 +13,27 @@
 			<size>28</size>
 			<displaytime>0.2</displaytime>
 		</renderedDamage>
+    <healthBar>
+      <width>15</width>
+      <height>7</height>
+      <cornerRadius>3</cornerRadius>
+      <criticalPercentage>0.3</criticalPercentage>
+      <borderColor>
+        <r>0</r>
+        <g>0</g>
+        <b>0</b>
+      </borderColor>
+      <goodColor>
+        <r>0.1</r>
+        <g>0.9</g>
+        <b>0.1</b>
+      </goodColor>
+      <ciriticalColor>
+        <r>0.8</r>
+        <g>0.1</g>
+        <b>0.1</b>
+      </ciriticalColor>
+    </healthBar>
 	</ingamefeedback>
 	<network>
 		<server>
@@ -37,6 +58,12 @@
 				<y>90.0</y>
 			</startposition>
 		</player>
+    <player>
+      <startposition>
+        <x>0.0</x>
+        <y>-150.0</y>
+      </startposition>
+    </player>
 		<player>
 			<startposition>
 				<x>200.0</x>
@@ -47,12 +74,6 @@
 			<startposition>
 				<x>0.0</x>
 				<y>95.0</y>
-			</startposition>
-		</player>
-		<player>
-			<startposition>
-				<x>0.0</x>
-				<y>-95.0</y>
 			</startposition>
 		</player>
 	</players>

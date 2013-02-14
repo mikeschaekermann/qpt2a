@@ -179,6 +179,13 @@ void GameScreen::draw()
 
 		drawString(stringify(ostringstream() << id), idPosition, ColorA(1.f, 0.f, 0.f, 1.f), 
 			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
+		
+		auto cell = dynamic_cast<CellClient *>(it->second);
+
+		if (cell != nullptr)
+		{
+			cell->drawHealthBar();
+		}
 	}
 
 	containerMutex.unlock();

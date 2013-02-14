@@ -13,6 +13,8 @@ using namespace std;
 using namespace ci;
 using namespace ci::gl;
 
+#define RENDER_MGR RenderManager::getInstance()
+
 class RenderManager
 {
 public:

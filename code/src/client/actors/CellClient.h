@@ -9,6 +9,7 @@ class CellClient :
 {
 public:
 	virtual void setPosition(Vec3f position) { GameObject::setPosition(position); }
+	virtual void drawHealthBar(float healthBarOpacity=1.0);
 
 protected:
 	virtual void setRotation(Vec3f rotation) { GameObject::setRotation(rotation); }
