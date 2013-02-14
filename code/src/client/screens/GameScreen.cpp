@@ -9,6 +9,7 @@
 #include "GameScreenStates/GameScreenStateCreateCell.h"
 #include "../../common/network/messages/enum/CellType.h"
 #include "../rendering/RenderManager.h"
+#include <ostream>
 
 GameScreen::GameScreen()
 {
@@ -163,6 +164,20 @@ void GameScreen::draw()
 	{
 		/// TODO: Load Font size in float?
 		drawString(it->getText(), worldToScreen(it->getPos()), ColorA(1.f, 0.f, 0.f, 1.f), 
+			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
+	}
+
+	containerMutex.unlock();
+
+	/// DRAW CELL IDs FOR DEBUGGING
+	containerMutex.lock();
+
+	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
+	{
+		auto idPosition = worldToScreen(it->second->getPosition()) - Vec2f(10, 15);
+		auto id = it->second->getId();
+
+		drawString(stringify(ostringstream() << id), idPosition, ColorA(1.f, 0.f, 0.f, 1.f), 
 			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
 	}
 
