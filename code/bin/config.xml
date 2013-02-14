@@ -58,13 +58,13 @@
 	</players>
 	<event>
 		<attack>
-			<time>1.0</time>
+			<time>0.8</time>
 		</attack>
 		<build>
-			<time>1.0</time>
+			<time>1.5</time>
 		</build>
 		<celldie>
-			<time>1.0</time>
+			<time>0.5</time>
 		</celldie>
 	</event>
 	<cell>
@@ -115,7 +115,7 @@
 		</barriers>
 		<modifiers>
 			<static>
-				<radioactivity>
+				<!--<radioactivity>
 					<position>
 						<x>-50.0</x>
 						<y>0.0</y>
@@ -125,7 +125,7 @@
 						<y>0.0</y>
 					</rotation>
 					<radius>10.0</radius>
-				</radioactivity>
+				</radioactivity>-->
 			</static>
 		</modifiers>
 	</environment>

@@ -19,6 +19,8 @@ CellDieEvent::CellDieEvent(double startTime, unsigned int cellId) :
 void CellDieEvent::trigger()
 {
 	auto tempCell = GAMECONTEXT->getActiveCells().find(cellId);
+	if (!tempCell) tempCell = GAMECONTEXT->getInactiveCells().find(cellId);
+
 	if (tempCell != nullptr)
 	{
 		auto cell = dynamic_cast<CellServer *>(tempCell);
@@ -32,19 +34,12 @@ void CellDieEvent::trigger()
 
 			CellDie * die = new CellDie();
 			die->cellId = cell->getId();
-			PlayerServer * player = 0;
-			for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
-			{
-				if (it->second->getId() == cell->getOwner()->getId()) 
-				{
-					player = it->second;
-				}
-			}
 
 			NETWORKMANAGER->sendTo<CellDie>(die, NETWORKMANAGER->getConnectionEndpoints());
 			LOG_INFO("CellDie sent");
 
 			GAMECONTEXT->getActiveCells().removeGameObject(cell->getId());
+			GAMECONTEXT->getInactiveCells().removeGameObject(cell->getId());
 		}
 	}
 }

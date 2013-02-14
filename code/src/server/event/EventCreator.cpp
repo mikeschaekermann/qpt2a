@@ -47,6 +47,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	calculateStaticEffects(cell);	
 
 	// Add the cell
+	cell.addParent(&parentCell);
 	parentCell.addChild(&cell);
 	GAMECONTEXT->getInactiveCells().createGameObject(&cell);
 
@@ -176,17 +177,24 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 	{
 		CellServer * victimCell = isAttacker ? dynamic_cast<CellServer *>(*it) : &currentCell;
 		CellServer * attackerCell = isAttacker ? &currentCell : dynamic_cast<CellServer *>(*it);
-		if (victimCell->getOwner()->getId() != attackerCell->getOwner()->getId())
+		if (attackerCell->getType() == CellServer::STANDARDCELL)
 		{
-			float damage = calculateDamage(attackerCell, victimCell);
-
-			if (damage > 0.f)
+			if (victimCell->getOwner()->getId() != attackerCell->getOwner()->getId())
 			{
-				// Modify damage when cells within a static modifier
-				damage *= getAttackerMultiplier(attackerCell);
-				damage *= getVictimMultiplier(victimCell);
+				float damage = calculateDamage(attackerCell, victimCell);
 
-				(*EVENT_MGR) += new AttackEvent(time, attackerCell->getId(), victimCell->getId(), damage);
+				if (damage > 0.f)
+				{
+					// Modify damage when cells within a static modifier
+					damage *= getAttackerMultiplier(attackerCell);
+					damage *= getVictimMultiplier(victimCell);
+
+					(*EVENT_MGR) += new AttackEvent(time, attackerCell->getId(), victimCell->getId(), damage);
+				}
+				else
+				{
+					LOG_INFO("Bad damage calculation?");
+				}
 			}
 		}
 	}

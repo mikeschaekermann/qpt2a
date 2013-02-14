@@ -182,14 +182,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CellAttack *cellAttack = dynamic_cast<CellAttack*> (message);
 		if (cellAttack)
 		{
+			LOG_INFO("CellAttack received");
 			auto attacker = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackerCellId);
 			auto attacked = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackedCellId);
 
 			if (attacker) dynamic_cast<StandardCellClient *>(attacker)->startAttackAnimation();
 			if (attacked) dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
 
+
 			if (attacker && attacked)
 			{
+				
+				LOG_INFO("CellAttack: Both available");
 				ci::Vec3f cellVec = attacker->getPosition() - attacked->getPosition();
 				cellVec.normalize();
 				ci::Vec3f textPos = attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 2.f);
@@ -200,8 +204,9 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				
 				GAME_SCR.addRenderText(renderText);
 			}
-			LOG_INFO("CellAttack received");
 			LOG_INFO(stringify(ostringstream() << "Cell with id: " << cellAttack->attackerCellId << " is attacking cell with id: " << cellAttack->attackedCellId << " width a damage of: " << cellAttack->damage));
+			
+			LOG_INFO("CellAttack finished");
 		}
 		break;
 	}
@@ -215,6 +220,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			{
 				GAME_SCR.removeGameObjectToCollide(cellObject);
 				auto cellClient = dynamic_cast<CellClient *>(cellObject);
+
 				if (cellClient != nullptr)
 				{
 					GAME_SCR.removeCellToPick(cellClient);
