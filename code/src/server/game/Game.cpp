@@ -56,7 +56,7 @@ void Game::join(JoinRequest &request)
 		
 	if(GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
 	{
-		JoinFailure * failure = new JoinFailure();
+		JoinFailure * failure = new JoinFailure(request);
 		failure->errorCode = JoinErrorCode::GameIsFull;
 		NETWORKMANAGER->send(failure);
 		LOG_INFO("JoinFailure GameIsFull sent");
@@ -70,7 +70,7 @@ void Game::join(JoinRequest &request)
 	{
 		if (it->second->getName() == playerName)
 		{
-			JoinFailure * failure = new JoinFailure();
+			JoinFailure * failure = new JoinFailure(request);
 			failure->errorCode = JoinErrorCode::NameAlreadyTaken;
 			NETWORKMANAGER->send(failure);
 			LOG_INFO("JoinFailure NameAlreadyTaken sent");

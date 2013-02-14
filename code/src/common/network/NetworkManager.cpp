@@ -39,8 +39,9 @@ NetworkManager::NetworkManager(const NetworkManager &other) : run(true), bound(f
 NetworkManager::~NetworkManager()
 {
 	run = false;
+	
 	serverSocket->shutdown(boost::asio::socket_base::shutdown_both);
-
+	serverSocket->close();
 	// Wait on threads
 	while (maintenanceThreadRunning || networkThreadRunning);
 

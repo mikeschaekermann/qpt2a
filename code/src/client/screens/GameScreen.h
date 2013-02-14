@@ -26,6 +26,7 @@ public:
 	friend class GameScreenStateNeutral;
 	friend class GameScreenStateInMenu;
 	friend class GameScreenStateCreateCell;
+	friend class GameScreenStateGameOver;
 
 	class RenderText
 	{

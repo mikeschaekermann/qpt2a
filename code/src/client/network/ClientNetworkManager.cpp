@@ -21,6 +21,9 @@
 #include "../../client/actors/CellClient.h"
 #include "../../client/actors/StandardCellClient.h"
 
+#include "../screens/GameScreenStates/GameScreenStateGameOver.h"
+#include "../screens/ConnectScreen.h"
+
 using namespace std;
 
 ConnectionEndpoint* ClientNetworkManager::getConnectionEndpoint(boost::asio::ip::udp::endpoint endpoint)
@@ -112,8 +115,10 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		GameOver *gameOver = dynamic_cast<GameOver*> (message);
 		if (gameOver)
 		{
-			
-			LOG_INFO("GameOver received");
+			if (gameOver->playerId == GAME_MGR->getMyPlayer()->getId())
+			{
+				GAME_SCR.switchToState(new GameScreenStateGameOver(&GAME_SCR));
+			}
 		}
 		break;
 	}
@@ -122,6 +127,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		JoinFailure *joinFailure= dynamic_cast<JoinFailure*> (message);
 		if (joinFailure)
 		{
+			CONN_SCR.joinFailure(joinFailure->errorCode);
 			LOG_INFO("JoinFailure received");
 		}
 		break;
@@ -132,7 +138,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (joinSuccess)
 		{
 			GAME_MGR->setMyPlayerId(joinSuccess->playerId);
-
+			CONN_SCR.joinSuccess();
 			LOG_INFO("JoinSuccess received");
 			LOG_INFO("====================");
 			stringstream message;
@@ -174,23 +180,22 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (cellAttack)
 		{
 			auto attacker = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackerCellId);
-			assert(attacker != nullptr);
-			dynamic_cast<StandardCellClient *>(attacker)->startAnimation();
-
 			auto attacked = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackedCellId);
-			assert(attacked != nullptr);
-			dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
-			
-			assert(attacker != nullptr && attacked != nullptr);
-			ci::Vec3f cellVec = attacker->getPosition() - attacked->getPosition();
-			cellVec.normalize();
-			ci::Vec3f textPos = attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 2.f);
-			GAME_SCR.addRenderText(
-				GameScreen::RenderText(
-					getElapsedSeconds() + CONFIG_FLOAT2("data.ingamefeedback.renderedDamage.displaytime", 5.f),
-					textPos,
-					stringify(ostringstream() << ceil(cellAttack->damage))));
 
+			if (attacker) dynamic_cast<StandardCellClient *>(attacker)->startAnimation();
+			if (attacked) dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
+
+			if (attacker && attacked)
+			{
+				ci::Vec3f cellVec = attacker->getPosition() - attacked->getPosition();
+				cellVec.normalize();
+				ci::Vec3f textPos = attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 2.f);
+				GAME_SCR.addRenderText(
+					GameScreen::RenderText(
+						getElapsedSeconds() + CONFIG_FLOAT2("data.ingamefeedback.renderedDamage.displaytime", 5.f),
+						textPos,
+						stringify(ostringstream() << ceil(cellAttack->damage))));
+			}
 			LOG_INFO("CellAttack received");
 		}
 		break;

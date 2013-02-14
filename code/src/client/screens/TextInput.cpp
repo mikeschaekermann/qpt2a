@@ -10,9 +10,9 @@ TextInput::TextInput(Screen* screen, std::function<void()> callback, ci::Vec2f p
 			texture,
 			hoverTexture,
 			clickTexture
-	)
+	),
+	renderBox(true)
 {
-	this->text = static_cast<ostringstream*>(&(ostringstream() <<  rand()))->str();
 }
 
 
@@ -22,20 +22,30 @@ TextInput::~TextInput(void)
 
 void TextInput::draw()
 {
-	GUIItem::draw();
-	ci::gl::drawString(text, this->position + Vec2f(20, 15), ci::ColorA::white(), cinder::Font(CONFIG_STRING2("data.input.text.font", "Arial"), CONFIG_FLOAT2("data.input.text.size", 34)));
+	if (renderBox)
+	{
+		GUIItem::draw();
+		ci::gl::drawString(text, this->position + Vec2f(20, 15), ci::ColorA::white(), cinder::Font(CONFIG_STRING2("data.input.text.font", "Arial"), CONFIG_FLOAT2("data.input.text.size", 34)));
+	}
+	else
+	{
+		ci::gl::drawString(text, this->position + Vec2f(20, 15), ci::ColorA(0.42f, 0.81f, 0.22f), cinder::Font(CONFIG_STRING2("data.input.text.font", "Arial"), CONFIG_FLOAT2("data.input.text.size", 34)));
+	}
+	
 }
 
 void TextInput::onKeyInput(KeyEvent& e)
 {
-	if(e.getCode() == KeyEvent::KEY_BACKSPACE && text.length() > 0)
+	if (enabled)
 	{
-		text = text.substr(0, text.length() - 1);
+		if(e.getCode() == KeyEvent::KEY_BACKSPACE && text.length() > 0)
+		{
+			text = text.substr(0, text.length() - 1);
+		}
+		else if(isalnum((unsigned char)e.getChar()) || e.getChar() == '.')
+		{
+			text += e.getChar();
+		}
+		GUIItem::onKeyInput(e);
 	}
-	else if(isalnum((unsigned char)e.getChar()) || e.getChar() == '.')
-	{
-		text += e.getChar();
-	}
-
-	GUIItem::onKeyInput(e);
 }

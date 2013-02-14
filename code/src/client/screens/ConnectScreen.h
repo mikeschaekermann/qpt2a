@@ -4,8 +4,11 @@
 #include "../../common/Config.h"
 #include "../actors/GameObjectClient.h"
 #include "../../common/Player.h"
+#include "../../common/network/messages/enum/JoinErrorCode.h"
 
 #include "Screen.h"
+class TextInput;
+
 
 class ConnectScreen :
 	public Screen
@@ -35,4 +38,15 @@ public:
 	virtual void touchEnded(TouchWay touchWay);
 	
 	virtual void resize(ResizeEvent event);
+
+	void joinFailure(JoinErrorCode error);
+
+	void joinSuccess();
+
+private:
+	GUIItem * backButton;
+	GUIItem * connectButton;
+	TextInput * messageBox;
+
+	float connectTimeout;
 };

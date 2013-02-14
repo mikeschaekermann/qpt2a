@@ -7,6 +7,7 @@
 #include "boost/thread/mutex.hpp"
 
 #define SCREEN_MGR ScreenManager::getInstance()
+#define CONN_SCR SCREEN_MGR->getConnectScreen()
 
 class Screen;
 class GameScreen;
@@ -27,6 +28,7 @@ public:
 	void openConnectScreen();
 	void openCreditsScreen();
 	GameScreen & getGameScreen() const;
+	ConnectScreen & getConnectScreen() const;
 	void closeScreen();
 	void exit();
 	void fadeToBlack(float alpha);
