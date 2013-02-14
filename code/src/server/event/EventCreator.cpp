@@ -90,8 +90,6 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	GAMECONTEXT->getInactiveCells().createGameObject(&cell);
 
 	(*EVENT_MGR) += new BuildingEvent(time, cell.getId());
-
-	EventManager & em = (*EVENT_MGR);
 		
 	CreateCellSuccess * success = new CreateCellSuccess();
 	success->requestId = requestId;

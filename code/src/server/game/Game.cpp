@@ -345,6 +345,7 @@ void Game::createCell(CreateCellRequest &request)
 		else
 		{
 			/// creation failed
+			if (cell) delete cell;
 			return;
 		}
 	}
