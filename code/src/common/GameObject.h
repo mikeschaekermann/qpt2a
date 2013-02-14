@@ -24,7 +24,7 @@ public:
 	float getRadius() const { return radius; }
 	virtual void setRadius(float radius) { this->radius = radius; }
 
-	void update(float frameTime);
+	virtual void update(float frameTime);
 
 	/**
 		@brief adds a child to the list of children
@@ -36,6 +36,8 @@ public:
 		@param parent		pointer to parent to be added
 	 */
 	void addParent(GameObject* parent);
+
+	vector<GameObject *> & getChildren();
 
 protected:
 	/// unique id identifying the game object within the process

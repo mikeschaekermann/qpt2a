@@ -97,6 +97,15 @@ void GameScreen::update(float frameTime)
 	}
 
 	containerMutex.unlock();
+
+	containerMutex.lock();
+
+	for (auto it = gameObjectsToUpdate.begin(); it != gameObjectsToUpdate.end(); ++it)
+	{
+		it->second->update(frameTime);
+	}
+
+	containerMutex.unlock();
 }
 
 void GameScreen::draw()
@@ -215,6 +224,16 @@ void GameScreen::resize(ResizeEvent event)
 void GameScreen::onKeyInput(KeyEvent& e)
 {
 	state->onKeyInput(e);
+
+	for (auto it = gameObjectsToUpdate.begin(); it != gameObjectsToUpdate.end(); ++it)
+	{
+		auto standardCell = dynamic_cast<StandardCellClient *>(it->second);
+		
+		if (standardCell)
+		{
+			standardCell->startAttackAnimation();
+		}
+	}
 }
 
 void GameScreen::mouseWheel(MouseEvent & e)
@@ -229,12 +248,26 @@ void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject)
 	containerMutex.unlock();
 }
 
+void GameScreen::removeGameObjectToUpdate(GameObjectClient * gameObject)
+{
+	containerMutex.lock();
+	gameObjectsToUpdate.removeGameObject(gameObject->getId(), false);
+	containerMutex.unlock();
+}
+
 void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject)
 {
 	addGameObjectToUpdate(gameObject);
 
 	containerMutex.lock();
 	gameObjectsToDraw.createGameObject(gameObject);
+	containerMutex.unlock();
+}
+
+void GameScreen::removeGameObjectToDraw(GameObjectClient * gameObject)
+{
+	containerMutex.lock();
+	gameObjectsToDraw.removeGameObject(gameObject->getId(), false);
 	containerMutex.unlock();
 }
 
@@ -256,6 +289,13 @@ void GameScreen::addCellToPick(CellClient * cell)
 {
 	containerMutex.lock();
 	cellsToPick.createGameObject(cell);
+	containerMutex.unlock();
+}
+
+void GameScreen::removeCellToPick(CellClient * gameObject)
+{
+	containerMutex.lock();
+	cellsToPick.removeGameObject(gameObject->getId(), false);
 	containerMutex.unlock();
 }
 

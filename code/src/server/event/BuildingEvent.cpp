@@ -16,11 +16,13 @@
 
 #include "EventCreator.h"
 
-BuildingEvent::BuildingEvent(double startTime, CellServer & cell) :
-	cell(cell),
+BuildingEvent::BuildingEvent(double startTime, unsigned int cellId) :
+	cellId(cellId),
 	GameEvent(startTime, CONFIG_FLOAT1("data.event.build.time"))
 	{ 
 		double duration = CONFIG_FLOAT1("data.event.build.time");
+
+		auto & cell = *(dynamic_cast<CellServer *>(GAMECONTEXT->getInactiveCells().find(cellId)));
 
 		auto modifiers = cell.getStaticModificator();
 		for (auto it = modifiers.begin(); it != modifiers.end(); ++it)
@@ -44,41 +46,46 @@ BuildingEvent::BuildingEvent(double startTime, CellServer & cell) :
 
 void BuildingEvent::trigger()
 {
-	cell.completeCell();
-
-	auto x = GAMECONTEXT;
-	auto obj = GAMECONTEXT->getInactiveCells().find(cell.getId());
-	if (obj == nullptr)
+	auto cellO = GAMECONTEXT->getInactiveCells().find(cellId);
+	if (cellO != nullptr)
 	{
-		LOG_INFO("cell not in list");
-		return;
-	}
-	GAMECONTEXT->getActiveCells().createGameObject(obj);
-	GAMECONTEXT->getInactiveCells().removeGameObject(cell.getId(), false);
+		auto & cell = *(dynamic_cast<CellServer *>(cellO));
+		cell.completeCell();
 
-	LOG_INFO(stringify(ostringstream() << "Cell with the id " << cell.getId() << " is finished"));
-
-	PlayerServer * current = 0;
-
-	CreateCellComplete * complete = new CreateCellComplete();
-	complete->cellId = cell.getId();
-
-	using boost::asio::ip::udp;
-	vector<udp::endpoint> endpointArr;
-
-	for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
-	{
-		endpointArr.push_back(it->second->getEndpoint());
-		if (it->second->getId() == cell.getOwner()->getId())
+		auto x = GAMECONTEXT;
+		auto obj = GAMECONTEXT->getInactiveCells().find(cell.getId());
+		if (obj == nullptr)
 		{
-			current = it->second;
+			LOG_INFO("cell not in list");
+			return;
 		}
+		GAMECONTEXT->getActiveCells().createGameObject(obj);
+		GAMECONTEXT->getInactiveCells().removeGameObject(cell.getId(), false);
+
+		LOG_INFO(stringify(ostringstream() << "Cell with the id " << cell.getId() << " is finished"));
+
+		PlayerServer * current = 0;
+
+		CreateCellComplete * complete = new CreateCellComplete();
+		complete->cellId = cell.getId();
+
+		using boost::asio::ip::udp;
+		vector<udp::endpoint> endpointArr;
+
+		for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
+		{
+			endpointArr.push_back(it->second->getEndpoint());
+			if (it->second->getId() == cell.getOwner()->getId())
+			{
+				current = it->second;
+			}
+		}
+		NETWORKMANAGER->sendTo<CreateCellComplete>(complete, endpointArr);
+		LOG_INFO("CreateCellComplete sent");
+
+		if (cell.getType() == CellServer::STANDARDCELL)
+			EVENT_CRTR->createAttackEvent(m_dDeadTime, true, *current, cell);
+
+		EVENT_CRTR->createAttackEvent(m_dDeadTime, false, *current, cell);
 	}
-	NETWORKMANAGER->sendTo<CreateCellComplete>(complete, endpointArr);
-	LOG_INFO("CreateCellComplete sent");
-
-	if (cell.getType() == CellServer::STANDARDCELL)
-		EVENT_CRTR->createAttackEvent(m_dDeadTime, true, *current, cell);
-
-	EVENT_CRTR->createAttackEvent(m_dDeadTime, false, *current, cell);
 }

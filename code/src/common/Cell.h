@@ -17,8 +17,8 @@ public:
 
  float getHealthPoints() const { return healthPoints; }
 
- float getAngle() const { return rotation.z; }
- void setAngle(float angle) { rotation.z = angle; }
+ float getAngle() const { return ci::toRadians(rotation.z); }
+ void setAngle(float angle) { rotation.z = ci::toDegrees(angle); }
 
  bool getIsComplete() const { return isComplete; }
 

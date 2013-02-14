@@ -69,6 +69,7 @@
     <ClInclude Include="..\..\src\server\environment\StaticModificatorServer.h" />
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h" />
     <ClInclude Include="..\..\src\Server\event\BuildingEvent.h" />
+    <ClInclude Include="..\..\src\server\event\CellDieEvent.h" />
     <ClInclude Include="..\..\src\server\event\EventCreator.h" />
     <ClInclude Include="..\..\src\Server\event\GameEvent.h" />
     <ClInclude Include="..\..\src\Server\event\EventManager.h" />
@@ -125,6 +126,7 @@
     <ClCompile Include="..\..\src\server\environment\StaticModificatorServer.cpp" />
     <ClCompile Include="..\..\src\server\event\AttackEvent.cpp" />
     <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp" />
+    <ClCompile Include="..\..\src\server\event\CellDieEvent.cpp" />
     <ClCompile Include="..\..\src\server\event\EventCreator.cpp" />
     <ClCompile Include="..\..\src\server\event\EventManager.cpp" />
     <ClCompile Include="..\..\src\server\game\Game.cpp" />
@@ -244,7 +246,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(BOOST_DIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_DIR);$(CINDER_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -14,7 +14,7 @@ public:
 
 	virtual void trigger();
 private:
-	CellServer * attacker;
-	CellServer * victim;
+	unsigned int attackerId;
+	unsigned int attackedId;
 	float damage;
 };

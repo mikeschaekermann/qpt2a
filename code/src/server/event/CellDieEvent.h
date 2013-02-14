@@ -1,18 +1,16 @@
 #pragma once
 
 class CellServer;
-class PlayerServer;
 
 #include <vector>
-#include <map>
 
+#include "../../common/GameObjectContainer.h"
 #include "GameEvent.h"
 
-
-class BuildingEvent : public GameEvent
+class CellDieEvent : public GameEvent
 {
 public:
-	BuildingEvent(double startTime, unsigned int cellId);
+	CellDieEvent(double startTime, unsigned int cellId);
 
 	virtual void trigger();
 private:
