@@ -22,6 +22,7 @@
 #include "../../client/actors/StandardCellClient.h"
 
 #include "../screens/GameScreenStates/GameScreenStateGameOver.h"
+#include "../screens/GameScreenStates/GameScreenStateCreateCell.h"
 #include "../screens/ConnectScreen.h"
 
 using namespace std;
@@ -298,9 +299,11 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			if (context != createCellRequestContexts.end())
 			{
 				auto newCell = context->second.first;
+				auto parentCell = context->second.second;
 
 				GAME_SCR.removeCellPreview(newCell);
-
+				GAME_SCR.switchToState(new GameScreenStateCreateCell(&GAME_SCR, parentCell, newCell));
+				
 				createCellRequestContexts.erase(context);
 			}
 		}

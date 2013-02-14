@@ -10,6 +10,7 @@ class GameScreenStateCreateCell :
 {
 public:
 	GameScreenStateCreateCell(GameScreen * screen, CellType::Type cellType);
+	GameScreenStateCreateCell(GameScreen * screen, CellClient * pickedCell, CellClient * cell);
 
 	virtual bool mouseMove(MouseEvent event);
 	virtual void draw3D();

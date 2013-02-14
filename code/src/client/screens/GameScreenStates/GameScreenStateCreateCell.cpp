@@ -6,6 +6,16 @@
 #include "../../../common/network/messages/game/ingame/cell/creation/CreateCellFailure.h"
 #include "../../actors/StandardCellClient.h"
 
+GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellClient * pickedCell, CellClient * cell):
+	GameScreenState(screen),
+	pickedCell(pickedCell),
+	cellType(CellType::StandardCell),
+	cell(cell)
+{
+	cell->setOwner(GAME_MGR->getMyPlayer());
+	screen->pickedCell = pickedCell;
+}
+
 GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellType::Type cellType):
 	GameScreenState(screen),
 	pickedCell(screen->pickedCell),
