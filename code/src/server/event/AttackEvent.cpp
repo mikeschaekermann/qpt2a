@@ -21,6 +21,8 @@ void AttackEvent::trigger()
 {
 	auto attackerO = GAMECONTEXT->getActiveCells().find(attackerId);
 	auto attackedO = GAMECONTEXT->getActiveCells().find(attackedId);
+	if (!attackedO) attackedO = GAMECONTEXT->getInactiveCells().find(attackedId);
+
 	if (attackerO != nullptr && attackedO != nullptr)
 	{
 		auto attacker = dynamic_cast<CellServer *>(attackerO);
@@ -33,16 +35,8 @@ void AttackEvent::trigger()
 		attack->damage = damage;
 
 		LOG_INFO(stringify(ostringstream() << "Cell with id: " << attack->attackerCellId << " is attacking cell with id: " << attack->attackedCellId << " width a damage of: " << attack->damage));
-		
-		using boost::asio::ip::udp;
-		vector<udp::endpoint> endpointArr;
 
-		for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
-		{
-			endpointArr.push_back(it->second->getEndpoint());
-		}
-
-		NETWORKMANAGER->sendTo<CellAttack>(attack, endpointArr);
+		NETWORKMANAGER->sendTo<CellAttack>(attack, NETWORKMANAGER->getConnectionEndpoints());
 		LOG_INFO("CellAttack sent");
 
 		if (attacked->getHealthPoints() < 0.f)
@@ -51,19 +45,12 @@ void AttackEvent::trigger()
 
 			if (attacked->getType() == CellServer::STEMCELL)
 			{
-				PlayerServer * player = 0;
-				for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
-				{
-					if (it->second->getId() == attacked->getOwner()->getId()) 
-					{
-						player = it->second;
-					}
-				}
+				PlayerServer * player = GAMECONTEXT->getPlayer(attacked->getOwner()->getId());
 
 				GameOver * gameOver = new GameOver();
 				gameOver->playerId = player->getId();
 
-				NETWORKMANAGER->sendTo<GameOver>(gameOver, endpointArr);
+				NETWORKMANAGER->sendTo<GameOver>(gameOver, NETWORKMANAGER->getConnectionEndpoints());
 				LOG_INFO("GameOver sent");
 			
 				player->kill();

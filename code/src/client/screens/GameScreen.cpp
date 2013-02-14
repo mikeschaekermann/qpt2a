@@ -10,9 +10,9 @@
 #include "../../common/network/messages/enum/CellType.h"
 #include "../rendering/RenderManager.h"
 
-GameScreen::GameScreen():
-	state(new GameScreenStateNeutral(this))
+GameScreen::GameScreen()
 {
+	state = new GameScreenStateNeutral(this);
 	RenderManager::getInstance()->zoomToWorld();
 
 	worldRadius = CONFIG_FLOAT1("data.world.radius");
@@ -115,10 +115,10 @@ void GameScreen::draw()
 	gl::pushMatrices();
 		gl::scale(worldRadius, worldRadius, worldRadius);
 		RenderManager::getInstance()->renderModel("petriDish", "test",
-												  Vec4f(0.1, 0.1, 0.1, 0.1),
-												  Vec4f(0.1, 0.1, 0.1, 0.2),
-												  Vec4f(1., 1., 1., 0.6),
-												  100.);
+												  Vec4f(0.1f, 0.1f, 0.1f, 0.1f),
+												  Vec4f(0.1f, 0.1f, 0.1f, 0.2f),
+												  Vec4f(1.f, 1.f, 1.f, 0.6f),
+												  100.f);
 	gl::popMatrices();
 
 	containerMutex.lock();
@@ -161,8 +161,9 @@ void GameScreen::draw()
 
 	for (auto it = textList.begin(); it != textList.end(); ++it)
 	{
-		drawString(it->getText(), worldToScreen(it->getPos()), ColorA(1, 0, 0, 1), 
-			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
+		/// TODO: Load Font size in float?
+		drawString(it->getText(), worldToScreen(it->getPos()), ColorA(1.f, 0.f, 0.f, 1.f), 
+			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
 	}
 
 	containerMutex.unlock();
@@ -312,12 +313,12 @@ void GameScreen::addIncompleteCell(
 
 	switch (type)
 	{
-	case CellType::Type::StandardCell:
+	case CellType::StandardCell:
 	default:
-	{
-		cell = new StandardCellClient(cellId, position, angle, player);
-	}
-	break;
+		{
+			cell = new StandardCellClient(cellId, position, angle, player);
+		}
+		break;
 	}
 
 	addIncompleteCell(cell);
@@ -385,7 +386,7 @@ GameObjectContainer<GameObjectClient> & GameScreen::getGameObjectsToDraw()
 
 ci::Vec2f GameScreen::worldToScreen(ci::Vec3f position)
 {
-	return RenderManager::getInstance()->cam.worldToScreen(position, getWindowWidth(), getWindowHeight());
+	return RenderManager::getInstance()->cam.worldToScreen(position, (float) getWindowWidth(), (float) getWindowHeight());
 }
 
 void GameScreen::addRenderText(RenderText const & text)

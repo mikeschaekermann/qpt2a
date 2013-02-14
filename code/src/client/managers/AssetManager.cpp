@@ -137,7 +137,7 @@ void AssetManager::loadAssets(string filePath)
 				model = createModel(it->getChild("value").getValue());
 				modelMap.insert(pair<string, TriMesh>(key, model));	
 			}
-			catch(exception& ex)
+			catch(exception)
 			{
 				LOG_ERROR("Model could not be loaded. Model name: " + it->getChild("key").getValue());
 			}
@@ -216,7 +216,6 @@ FMOD::Sound* AssetManager::createSound(XmlTree xml)
 	}
 }
 
-
 TriMesh const & AssetManager::getModel(string& modelName) const
 {
 	try
@@ -226,6 +225,8 @@ TriMesh const & AssetManager::getModel(string& modelName) const
 	catch(std::exception& ex)
 	{
 		manager->assetErrorOutput(ex, modelName, "getModel");
+		static TriMesh const & defaultResult = TriMesh();
+		return defaultResult;
 	}
 }
 

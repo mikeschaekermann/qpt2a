@@ -16,6 +16,7 @@ bool GameScreenStateNeutral::touchClick(TouchWay touchWay)
 		screen->switchToState(new GameScreenStateInMenu(screen, cellsPicked[0]));
 		return true;
 	}
+	return false;
 }
 
 void GameScreenStateNeutral::touchMoved(const TouchWay & touchWay)

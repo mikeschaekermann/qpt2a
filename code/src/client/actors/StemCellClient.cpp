@@ -5,8 +5,8 @@ void StemCellClient::drawAtTransformation() const
 {
 	gl::scale(radius, radius, radius);
 	RenderManager::getInstance()->renderModel("stemCell", "test",
-											  Vec4f(0., 0.5, 0., 0.4),
-											  Vec4f(0., 0.3, 0., 0.6),
-											  Vec4f(0., 0.9, 0., 0.9),
-											  3.);
+											  Vec4f(0.f, 0.5f, 0.f, 0.4f),
+											  Vec4f(0.f, 0.3f, 0.f, 0.6f),
+											  Vec4f(0.f, 0.9f, 0.f, 0.9f),
+											  3.f);
 }

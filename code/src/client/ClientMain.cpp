@@ -12,7 +12,7 @@ void ClientMain::setup()
 {
 	setWindowPos(100, 100);
 	
-	srand(time(0));
+	srand((unsigned int) time(0));
 	m_fFrameTime = 0;
 	m_fElapsedGameTimeLastFrame = (float)getElapsedSeconds();
 
@@ -62,7 +62,7 @@ void ClientMain::update()
 
 void ClientMain::draw()
 {
-	gl::clear(Color(0.7, 0.9, 0.9));
+	gl::clear(Color(0.7f, 0.9f, 0.9f));
 	GAME_MGR->draw();
 }
 

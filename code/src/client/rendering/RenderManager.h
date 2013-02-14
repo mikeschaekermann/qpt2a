@@ -24,10 +24,10 @@ public:
 
 	void renderModel(string modelName,
 					 string shaderName,
-					 Vec4f ambient = Vec4f(0.1, 0.1, 0.1, 1.),
-					 Vec4f diffuse = Vec4f(0.4, 0.4, 0.4, 1.),
-					 Vec4f specular = Vec4f(1., 1., 1., 1.),
-					 float shininess = 10.);
+					 Vec4f ambient = Vec4f(0.1f, 0.1f, 0.1f, 1.f),
+					 Vec4f diffuse = Vec4f(0.4f, 0.4f, 0.4f, 1.f),
+					 Vec4f specular = Vec4f(1.f, 1.f, 1.f, 1.f),
+					 float shininess = 10.f);
 
 	void setUp3d();
 	void shutdown3d();

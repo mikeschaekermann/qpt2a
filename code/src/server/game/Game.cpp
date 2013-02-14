@@ -238,7 +238,6 @@ void Game::join(JoinRequest &request)
 			GAMECONTEXT->getEnvironment().createGameObject(s);
 		}
 
-		vector<udp::endpoint> endpointArr;
 		StartGame * startgame = new StartGame();
 		startgame->worldRadius = worldRadius;
 		for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
@@ -251,15 +250,13 @@ void Game::join(JoinRequest &request)
 			networkPlayer.startPosition = it->second->getStemCell().getPosition();
 
 			startgame->players.push_back(networkPlayer);
-
-			endpointArr.push_back(it->second->getEndpoint());
 		}
 
 		/**
 			* Add Modifiers and Barriers to message
 			*/
 			
-		NETWORKMANAGER->sendTo<StartGame>(startgame, endpointArr);
+		NETWORKMANAGER->sendTo<StartGame>(startgame, NETWORKMANAGER->getConnectionEndpoints());
 		LOG_INFO("StartGame sent");
 
 		LOG_INFO("Game started");

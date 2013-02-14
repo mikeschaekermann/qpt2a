@@ -21,7 +21,7 @@ public:
 	void send(NetworkMessage *message);
 	
 	template<typename T>
-	void sendTo(T * message, std::vector<boost::asio::ip::udp::endpoint> endpoints)
+	void sendTo(T * message, std::vector<ConnectionEndpoint> endpoints)
 	{
 		unsigned size = message->calculateSize();
 
@@ -33,7 +33,7 @@ public:
 		{ 
 			unsigned index = 0;
 			T * copy = new T(copyData, index);
-			copy->endpoint = *it;
+			copy->endpoint = (*it).m_endpoint;
 			send(copy);
 		}
 		delete message;
@@ -41,11 +41,13 @@ public:
 
 	void stop();
 
+
+	
+	virtual std::vector<ConnectionEndpoint> getConnectionEndpoints() = 0;
 protected:
 	virtual NetworkMessage* createNetworkMessage(char* data);
 	virtual void handleMessage(NetworkMessage* message) = 0;
 	virtual ConnectionEndpoint* getConnectionEndpoint(boost::asio::ip::udp::endpoint endpoint) = 0;
-	virtual std::vector<ConnectionEndpoint> getConnectionEndpoints() = 0;
 
 private:
 	void handleConnectionMessage(ConnectionMessage* message);

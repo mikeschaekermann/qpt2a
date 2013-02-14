@@ -74,9 +74,7 @@ void RenderManager::zoomToWorld()
 	/// world radius = sin(camera's fov / 2) * camera's distance
 	/// camera's distance = world radius / sin(camera's fov / 2)
 	float worldRadius = CONFIG_FLOAT1("data.world.radius");
-	float camDistance = worldRadius / sin(cam.getFov() / 2 / 180.0 * M_PI);
+	float camDistance = worldRadius / (float) sin(cam.getFov() / 2.f / 180.f * M_PI);
 
-	cam
-		.setPosition(Vec3f(0, 0, camDistance))
-		.setFocus(Vec3f::zero());
+	cam.setPosition(Vec3f(0, 0, camDistance)).setFocus(Vec3f::zero());
 }
