@@ -11,7 +11,7 @@ public:
 
 	bool operator<(GameEvent & other)
 	{
-		return m_dDeadTime < other.m_dDeadTime;
+		return m_dDeadTime > other.m_dDeadTime;
 	}
 
 	virtual void trigger() = 0;

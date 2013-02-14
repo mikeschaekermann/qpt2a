@@ -33,17 +33,14 @@ void EventManager::operator()()
 {
 	while (run)
 	{
-		if (!events.empty() && events.top()->getDeadTime() < timer.getSeconds())
+		boost::this_thread::sleep(boost::posix_time::milliseconds(33));
+		while (!events.empty() && events.top()->getDeadTime() < timer.getSeconds())
 		{
 			GAMECONTEXT->getMutex().lock();
 			events.top()->trigger();
 			GAMECONTEXT->getMutex().unlock();
 			delete events.top();
 			events.pop();
-		}
-		else
-		{
-			boost::this_thread::sleep(boost::posix_time::milliseconds(33));
 		}
 		mutex.lock();
 		for (auto it = toAddList.begin(); it != toAddList.end(); ++it)
