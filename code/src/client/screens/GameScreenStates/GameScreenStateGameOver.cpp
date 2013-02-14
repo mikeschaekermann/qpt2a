@@ -3,8 +3,27 @@
 #include "../../managers/GameManager.h"
 
 GameScreenStateGameOver::GameScreenStateGameOver(GameScreen * screen):
-	GameScreenState(screen)
+	GameScreenState(screen),
+	layerOpacity(0),
+	maxLayerOpacity(CONFIG_FLOAT2("data.ingamefeedback.gameOver.maxLayerOpacity", 0.5f)),
+	layerOpacityChangeSpeed(CONFIG_FLOAT2("data.ingamefeedback.gameOver.layerOpacityChangeSpeed", 0.25f))
 {
+}
+
+void GameScreenStateGameOver::update(float frameTime)
+{
+	layerOpacity += layerOpacityChangeSpeed * frameTime;
+
+	if (layerOpacity > maxLayerOpacity)
+	{
+		layerOpacity = maxLayerOpacity;
+	}
+}
+
+void GameScreenStateGameOver::draw2D()
+{
+	gl::color(ColorA(0, 0, 0, layerOpacity));
+	gl::drawSolidRect(Rectf(Vec2f(0, 0), getWindowSize()));
 }
 
 bool GameScreenStateGameOver::touchClick(TouchWay touchWay)
