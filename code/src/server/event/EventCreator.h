@@ -19,7 +19,7 @@ public:
 
 	bool createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & parentCell, CellServer & cell);
 
-	bool createAttackEvent(const double time, bool isAttacker, const PlayerServer & currentPlayer, CellServer & currentCell);
+	bool createAttackEvent(const double time, bool isAttacker, CellServer & currentCell);
 
 	float calculateDamage(CellServer * attacker, CellServer * victim);
 

@@ -72,9 +72,6 @@ void BuildingEvent::trigger()
 		NETWORKMANAGER->sendTo<CreateCellComplete>(complete, NETWORKMANAGER->getConnectionEndpoints());
 		LOG_INFO("CreateCellComplete sent");
 
-		if (cell.getType() == CellServer::STANDARDCELL)
-			EVENT_CRTR->createAttackEvent(m_dDeadTime, true, *current, cell);
-
-		EVENT_CRTR->createAttackEvent(m_dDeadTime, false, *current, cell);
+		EVENT_CRTR->createAttackEvent(m_dDeadTime, true, cell);
 	}
 }
