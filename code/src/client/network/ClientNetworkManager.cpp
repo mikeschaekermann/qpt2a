@@ -180,12 +180,9 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (cellAttack)
 		{
 			auto attacker = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackerCellId);
-			assert(attacker != nullptr);
-			dynamic_cast<StandardCellClient *>(attacker)->startAttackAnimation();
-
 			auto attacked = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackedCellId);
 
-			if (attacker) dynamic_cast<StandardCellClient *>(attacker)->startAnimation();
+			if (attacker) dynamic_cast<StandardCellClient *>(attacker)->startAttackAnimation();
 			if (attacked) dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
 
 			if (attacker && attacked)
