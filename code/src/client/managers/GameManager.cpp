@@ -114,7 +114,8 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 
 	auto player = players[id];
 	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0, player);
-	
+	stemCell->setHue(player->getHue());
+
 	if (ownPlayerAdded)
 	{
 		GAME_SCR.addCellToPick(stemCell);
@@ -134,7 +135,21 @@ PlayerClient * GameManager::getMyPlayer() const
 	return myPlayer;
 }
 
-PlayerClient * GameManager::getPlayerById(unsigned int id)
+float GameManager::getMyHue() const
+{
+	auto player = getMyPlayer();
+
+	if (player != nullptr)
+	{
+		return player->getHue();
+	}
+	else
+	{
+		assert(false);
+	}
+}
+
+PlayerClient * GameManager::getPlayerById(unsigned int id) const
 {
 	auto player = players.find(id);
 
@@ -145,6 +160,20 @@ PlayerClient * GameManager::getPlayerById(unsigned int id)
 	else
 	{
 		return nullptr;
+	}
+}
+
+float GameManager::getHueByPlayerId(unsigned int id) const
+{
+	auto player = getPlayerById(id);
+
+	if (player != nullptr)
+	{
+		return player->getHue();
+	}
+	else
+	{
+		assert(false);
 	}
 }
 

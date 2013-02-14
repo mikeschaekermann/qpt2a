@@ -23,7 +23,7 @@ public:
 	const string& getName() const { return name; }
 	void setId(unsigned int newId) { id = newId; }
 
-private:
+protected:
 	unsigned int id;
 	string name;
 };

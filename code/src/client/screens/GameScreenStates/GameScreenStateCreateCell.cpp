@@ -33,6 +33,7 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellTy
 			}
 		}
 
+		cell->setHue(GAME_MGR->getMyHue());
 		cell->setOwner(GAME_MGR->getMyPlayer());
 	}
 	else

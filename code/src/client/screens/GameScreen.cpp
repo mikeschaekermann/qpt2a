@@ -320,6 +320,8 @@ void GameScreen::addIncompleteCell(
 	break;
 	}
 
+	cell->setHue(GAME_MGR->getHueByPlayerId(playerId));
+
 	addIncompleteCell(cell);
 }
 

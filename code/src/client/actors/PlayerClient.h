@@ -13,7 +13,12 @@ public:
 	~PlayerClient(void);
 
 	bool operator==(const PlayerClient & otherPlayer) const;
+	float getHue() const { return hue; }
+	void setHue(float newHue) { hue = min<float>(max<float>(newHue, 0.0), 1.0); }
 
 private:
+	void initializeHue();
+
 	bool m_bCanManipulate;
+	float hue;
 };

@@ -43,7 +43,9 @@ public:
 	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
 	void setMyPlayerId(unsigned int id);
 	PlayerClient * getMyPlayer() const;
-	PlayerClient * getPlayerById(unsigned int id);
+	float getMyHue() const;
+	PlayerClient * getPlayerById(unsigned int id) const;
+	float getHueByPlayerId(unsigned int id) const;
 	
 	ClientNetworkManager * getNetworkManager();
 	boost::asio::ip::udp::endpoint getServerEndpoint();
