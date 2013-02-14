@@ -243,76 +243,56 @@ void GameScreen::mouseWheel(MouseEvent & e)
 
 void GameScreen::addGameObjectToUpdate(GameObjectClient * gameObject)
 {
-	containerMutex.lock();
 	gameObjectsToUpdate.createGameObject(gameObject);
-	containerMutex.unlock();
 }
 
 void GameScreen::removeGameObjectToUpdate(GameObjectClient * gameObject)
 {
-	containerMutex.lock();
 	gameObjectsToUpdate.removeGameObject(gameObject->getId(), false);
-	containerMutex.unlock();
 }
 
 void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject)
 {
 	addGameObjectToUpdate(gameObject);
 
-	containerMutex.lock();
 	gameObjectsToDraw.createGameObject(gameObject);
-	containerMutex.unlock();
 }
 
 void GameScreen::removeGameObjectToDraw(GameObjectClient * gameObject)
 {
-	containerMutex.lock();
 	gameObjectsToDraw.removeGameObject(gameObject->getId(), false);
-	containerMutex.unlock();
 }
 
 void GameScreen::addGameObjectToCollide(GameObject * gameObject)
 {
-	containerMutex.lock();
 	gameObjectsToCollide.createGameObject(gameObject);
-	containerMutex.unlock();
 }
 
 void GameScreen::removeGameObjectToCollide(GameObject * gameObject)
 {
-	containerMutex.lock();
 	gameObjectsToCollide.removeGameObject(gameObject->getId(), false);
-	containerMutex.unlock();
 }
 
 void GameScreen::addCellToPick(CellClient * cell)
 {
-	containerMutex.lock();
 	cellsToPick.createGameObject(cell);
-	containerMutex.unlock();
 }
 
 void GameScreen::removeCellToPick(CellClient * gameObject)
 {
-	containerMutex.lock();
 	cellsToPick.removeGameObject(gameObject->getId(), false);
-	containerMutex.unlock();
 }
 
 void GameScreen::addIncompleteCell(CellClient * cell)
 {
-	containerMutex.lock();
 	cellsIncomplete.createGameObject(cell);
-	containerMutex.unlock();
 
 	addGameObjectToCollide(cell);
 }
 
 void GameScreen::removeIncompleteCell(CellClient * cell)
 {
-	containerMutex.lock();
 	cellsIncomplete.removeGameObject(cell->getId(), false);
-	containerMutex.unlock();
 
 	removeGameObjectToCollide(cell);
 }
@@ -373,16 +353,12 @@ void GameScreen::completeCellById(unsigned int id)
 
 void GameScreen::addCellPreview(CellClient * cell)
 {
-	containerMutex.lock();
 	cellPreviews.insert(cell);
-	containerMutex.unlock();
 }
 
 void GameScreen::removeCellPreview(CellClient * cell)
 {
-	containerMutex.lock();
 	cellPreviews.erase(cell);
-	containerMutex.unlock();
 }
 
 vector<CellClient *> GameScreen::getCellsPicked(Vec2f position)
