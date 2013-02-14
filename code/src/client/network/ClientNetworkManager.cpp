@@ -193,11 +193,12 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				ci::Vec3f cellVec = attacker->getPosition() - attacked->getPosition();
 				cellVec.normalize();
 				ci::Vec3f textPos = attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 2.f);
-				GAME_SCR.addRenderText(
-					GameScreen::RenderText(
-						getElapsedSeconds() + CONFIG_FLOAT2("data.ingamefeedback.renderedDamage.displaytime", 5.f),
-						textPos,
-						stringify(ostringstream() << ceil(cellAttack->damage))));
+				
+				float deathTime = (float) getElapsedSeconds() + CONFIG_FLOAT2("data.ingamefeedback.renderedDamage.displaytime", 5.f);
+				string text = stringify(ostringstream() << ceil((float) cellAttack->damage));
+				GameScreen::RenderText renderText(deathTime, textPos, text);
+				
+				GAME_SCR.addRenderText(renderText);
 			}
 			LOG_INFO("CellAttack received");
 			LOG_INFO(stringify(ostringstream() << "Cell with id: " << cellAttack->attackerCellId << " is attacking cell with id: " << cellAttack->attackedCellId << " width a damage of: " << cellAttack->damage));
@@ -229,7 +230,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 	case MessageType::CellNew:
 	{
 		CellNew *cellNew = dynamic_cast<CellNew*> (message);
-		if (cellNew)
+		if (cellNew && cellNew->playerId != GAME_MGR->getMyPlayer()->getId())
 		{
 			LOG_INFO("CellNew received");
 

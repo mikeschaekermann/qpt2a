@@ -17,5 +17,5 @@ void StemCellClient::drawAtTransformation() const
 											  Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, ambientColor.a),
 											  Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, diffuseColor.a),
 											  Vec4f(specularColor.r, specularColor.g, specularColor.b, specularColor.a),
-											  3.);
+											  3.f);
 }

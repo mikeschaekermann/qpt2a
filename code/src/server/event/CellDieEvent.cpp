@@ -30,14 +30,6 @@ void CellDieEvent::trigger()
 				(*EVENT_MGR) += new CellDieEvent(getDeadTime(), (*it)->getId());
 			}
 
-			using boost::asio::ip::udp;
-			vector<udp::endpoint> endpointArr;
-
-			for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
-			{
-				endpointArr.push_back(it->second->getEndpoint());
-			}
-
 			CellDie * die = new CellDie();
 			die->cellId = cell->getId();
 			PlayerServer * player = 0;
@@ -48,8 +40,8 @@ void CellDieEvent::trigger()
 					player = it->second;
 				}
 			}
-			
-			NETWORKMANAGER->sendTo<CellDie>(die, endpointArr);
+
+			NETWORKMANAGER->sendTo<CellDie>(die, NETWORKMANAGER->getConnectionEndpoints());
 			LOG_INFO("CellDie sent");
 
 			GAMECONTEXT->getActiveCells().removeGameObject(cell->getId());

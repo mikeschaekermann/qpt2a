@@ -25,7 +25,7 @@ public:
 	void setPosition(ci::Vec2f newPosition);
 	void setVisible(bool visible, bool recursively = true);
 
-	virtual string const & getValue() { return string(); }
+	virtual string const & getValue() { return defaultValue; }
 
 	virtual void draw();
 
@@ -53,4 +53,6 @@ protected:
 	Screen* screen;
 
 	bool enabled;
+private:
+	static std::string defaultValue;
 };

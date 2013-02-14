@@ -25,11 +25,11 @@ void StandardCellClient::drawAtTransformation() const
 											  Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, ambientColor.a),
 											  Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, diffuseColor.a),
 											  Vec4f(specularColor.r, specularColor.g, specularColor.b, specularColor.a),
-											  4.);
+											  4.f);
 
 	gl::popMatrices();
 
-	gl::translate(0, 0, - radius * 0.3);
+	gl::translate(0.f, 0.f, - radius * 0.3f);
 
 	if (spikesCanBeSeen())
 	{
@@ -46,10 +46,10 @@ void StandardCellClient::drawAtTransformation() const
 			gl::rotate(Vec3f(spikeAngle, 0, 0));
 
 			RenderManager::getInstance()->renderModel("standardCellAttack", "test",
-													  Vec4f(0.1, 0.1, 0.1, 1.0),
-													  Vec4f(0.1, 0.1, 0.1, 1.0),
-													  Vec4f(0.9, 0.9, 0.9, 1.0),
-													  10.);
+													  Vec4f(0.1f, 0.1f, 0.1f, 1.0f),
+													  Vec4f(0.1f, 0.1f, 0.1f, 1.0f),
+													  Vec4f(0.9f, 0.9f, 0.9f, 1.0f),
+													  10.f);
 
 			gl::popMatrices();
 		}

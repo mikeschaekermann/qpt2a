@@ -38,7 +38,7 @@ Cam & Cam::setFocus(Vec3f & newFocus)
 Vec3f Cam::screenToWorldPlane(Vec2i screenPoint)
 {
 	float u = (float)screenPoint.x / (float)getWindowWidth();
-	float v = 1.0 - (float)screenPoint.y / (float)getWindowHeight();
+	float v = 1.f - ((float) screenPoint.y / (float) getWindowHeight());
 
 	auto ray = generateRay(u, v, getAspectRatio());
 

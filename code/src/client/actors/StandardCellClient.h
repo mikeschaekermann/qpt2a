@@ -24,11 +24,11 @@ public:
 	auto numOfSpikesOnEachSide = CONFIG_INT2("data.cell.standardcell.spikes.numberOnEachSide", 10);
 	int directions[2] = {-1, 1};
 
-	spikesAngleRadiusList.push_back(make_pair(0, radius + attackRadius));
+	spikesAngleRadiusList.push_back(make_pair(0.f, radius + attackRadius));
 
 	for (unsigned int i = 0; i < 2; ++i)
 	{
-		for (unsigned s = 1; s <= numOfSpikesOnEachSide; ++s)
+		for (int s = 1; s <= numOfSpikesOnEachSide; ++s)
 		{
 			auto spikeAngle = (float(s) / float(numOfSpikesOnEachSide)) * distanceDropOffDegree;
 			auto spikeRadius = radius + attackRadius * (1 - spikeAngle / distanceDropOffDegree);

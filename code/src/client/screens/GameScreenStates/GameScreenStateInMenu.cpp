@@ -20,12 +20,12 @@ GameScreenStateInMenu::GameScreenStateInMenu(GameScreen* screen, CellClient * pi
 			auto createCellButtonSize = ASSET_MGR->getGuiTexture(string("ingame-button-" + name + "-normal")).getSize();
 			auto createCellButtonRadius = 0.25 * (createCellButtonSize.x + createCellButtonSize.y);
 			auto createCellButtonAngle = CONFIG_FLOAT2("data.menu.ingame.create." + name + ".angle", 45) / 180.0 * M_PI;
-			auto cellEdgePoint3D = pickedCell->getPosition() + Vec3f(cos(createCellButtonAngle) * pickedCell->getRadius(), sin(createCellButtonAngle) * pickedCell->getRadius(), 0);
-			auto cellEdgePoint2D = RenderManager::getInstance()->cam.worldToScreen(cellEdgePoint3D, getWindowWidth(), getWindowHeight());
+			auto cellEdgePoint3D = pickedCell->getPosition() + Vec3f((float) cos(createCellButtonAngle) * pickedCell->getRadius(), (float) sin(createCellButtonAngle) * pickedCell->getRadius(), 0.f);
+			auto cellEdgePoint2D = RenderManager::getInstance()->cam.worldToScreen(cellEdgePoint3D, (float) getWindowWidth(), (float) getWindowHeight());
 			auto createCellButtonDistance = CONFIG_FLOAT2("data.menu.ingame.create." + name + ".distance", 30) + createCellButtonRadius;
-			auto createCellButtonOffsetFromEdge2D = Vec2f(cos(createCellButtonAngle) * createCellButtonDistance, -sin(createCellButtonAngle) * createCellButtonDistance);
+			auto createCellButtonOffsetFromEdge2D = Vec2f((float) (cos(createCellButtonAngle) * createCellButtonDistance), (float) (-sin(createCellButtonAngle) * createCellButtonDistance));
 			auto createCellButtonCenter = cellEdgePoint2D + createCellButtonOffsetFromEdge2D;
-			auto createCellButtonOffset = - 0.5 * createCellButtonSize;
+			auto createCellButtonOffset = createCellButtonSize / (-2);
 			auto createCellButtonPosition = createCellButtonCenter + createCellButtonOffset;
 		
 			button->setPosition(createCellButtonPosition);

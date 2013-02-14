@@ -64,28 +64,14 @@ void BuildingEvent::trigger()
 
 		LOG_INFO(stringify(ostringstream() << "Cell with the id " << cell.getId() << " is finished"));
 
-		PlayerServer * current = 0;
+		PlayerServer * current = GAMECONTEXT->getPlayer(cell.getOwner()->getId());
 
 		CreateCellComplete * complete = new CreateCellComplete();
 		complete->cellId = cell.getId();
 
-		using boost::asio::ip::udp;
-		vector<udp::endpoint> endpointArr;
-
-		for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
-		{
-			endpointArr.push_back(it->second->getEndpoint());
-			if (it->second->getId() == cell.getOwner()->getId())
-			{
-				current = it->second;
-			}
-		}
-		NETWORKMANAGER->sendTo<CreateCellComplete>(complete, endpointArr);
+		NETWORKMANAGER->sendTo<CreateCellComplete>(complete, NETWORKMANAGER->getConnectionEndpoints());
 		LOG_INFO("CreateCellComplete sent");
 
-		if (cell.getType() == CellServer::STANDARDCELL)
-			EVENT_CRTR->createAttackEvent(m_dDeadTime, true, *current, cell);
-
-		EVENT_CRTR->createAttackEvent(m_dDeadTime, false, *current, cell);
+		EVENT_CRTR->createAttackEvent(m_dDeadTime, true, cell);
 	}
 }

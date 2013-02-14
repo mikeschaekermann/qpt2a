@@ -3,6 +3,8 @@
 using namespace ci;
 using namespace std;
 
+string GUIItem::defaultValue = string();
+
 GUIItem::GUIItem(Screen* screen, std::function<void()> callback, ci::Vec2f position, const ci::gl::Texture * texture, const ci::gl::Texture * hoverTexture, const ci::gl::Texture * clickTexture) :
 	screen(screen),
 	callback(callback),
