@@ -416,3 +416,8 @@ void GameScreen::addRenderText(RenderText const & text)
 {
 	textList.push_back(text);
 }
+
+boost::mutex & GameScreen::getContainerMutex()
+{
+	return containerMutex;
+}

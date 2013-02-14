@@ -108,6 +108,8 @@ NetworkMessage* ClientNetworkManager::createNetworkMessage(char* data)
 
 void ClientNetworkManager::handleMessage(NetworkMessage* message)
 {
+	GAME_SCR.getContainerMutex().lock();
+
 	switch (message->messageType.getType())
 	{
 	case MessageType::GameOver:
@@ -237,6 +239,11 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				cellNew->position,
 				cellNew->angle
 			);
+
+			LOG_INFO("cell angle raw (should be radians):");
+			LOG_INFO(cellNew->angle);
+			LOG_INFO("cell angle degrees:");
+			LOG_INFO(ci::toDegrees(cellNew->angle));
 		}
 		break;
 	}
@@ -305,6 +312,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		break;
 	}
 	}
+
+	GAME_SCR.getContainerMutex().unlock();
 }
 
 vector<ConnectionEndpoint> ClientNetworkManager::getConnectionEndpoints()
