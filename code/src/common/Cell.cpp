@@ -13,7 +13,7 @@ Cell::Cell(Vec3f position, float radius, float angle, float healthPoints) :
 {
  this->position = position;
  this->radius = radius;
- this->rotation = Vec3f(0.0f, 0.0f, float(angle / 180.0f * M_PI));
+ this->rotation = Vec3f(0.0f, 0.0f, float(ci::toDegrees(angle)));
 }
 
 Cell::Cell(Vec3f position, float radius, float angle, float healthPoints, Player * owner) :
@@ -22,7 +22,7 @@ Cell::Cell(Vec3f position, float radius, float angle, float healthPoints, Player
 {
  this->position = position;
  this->radius = radius;
- this->rotation = Vec3f(0.0f, 0.0f, float(angle / 180.0f * M_PI));
+ this->rotation = Vec3f(0.0f, 0.0f, float(ci::toDegrees(angle)));
 }
 
 void Cell::decreaseHealthPointsBy(float damage)

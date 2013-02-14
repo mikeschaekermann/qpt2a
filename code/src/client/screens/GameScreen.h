@@ -66,14 +66,18 @@ public:
 
 	void addGameObjectToUpdate(GameObjectClient * gameObject);
 	void removeGameObjectToUpdate(GameObjectClient * gameObject);
+
 	void addGameObjectToDraw(GameObjectClient * gameObject);
 	void removeGameObjectToDraw(GameObjectClient * gameObject);
+	GameObjectContainer<GameObjectClient> & getGameObjectsToDraw();
+
 	void addGameObjectToCollide(GameObject * gameObject);
 	void removeGameObjectToCollide(GameObject * gameObject);
+
 	void addCellToPick(CellClient * cell);
 	void removeCellToPick(CellClient * cell);
+
 	void addIncompleteCell(CellClient * cell);
-	void removeIncompleteCell(CellClient * cell);
 	void addIncompleteCell(
 		unsigned int playerId, 
 		CellType::Type type, 
@@ -81,17 +85,17 @@ public:
 		Vec3f position, 
 		float angle
 	);
+	void removeIncompleteCell(CellClient * cell);
 	void completeCellById(unsigned int id);
+
 	void addCellPreview(CellClient * cell);
 	void removeCellPreview(CellClient * cell);
 
 	void addRenderText(RenderText const & text);
-
 	ci::Vec2f worldToScreen(ci::Vec3f position);
-
-	GameObjectContainer<GameObjectClient> & getGameObjectsToDraw();
-
 	void switchToState(GameScreenState * newState);
+
+	boost::mutex & getContainerMutex();
 
 private:
 	vector<CellClient *> getCellsPicked(Vec2f position);
