@@ -35,13 +35,13 @@ void PlayerClient::initializeHue()
 
 	for (unsigned int i = 0; i < name.length(); ++i)
 	{
-		srandValue << 4;
+		srandValue = srandValue << 4;
 		srandValue = name[i] + (name[i] ^ srandValue);
 	}
 
 	srand(srandValue);
 
-	hue = float(rand() % 101) / 100.0;
+	hue = float(rand() % 101) / 100.0f;
 
-	srand(time(NULL));
+	srand((unsigned int) time(NULL));
 }

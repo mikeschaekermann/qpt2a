@@ -16,8 +16,8 @@ void StandardCellClient::drawAtTransformation() const
 	auto b = getBrightness();
 	auto o = getOpacity();
 
-	ColorA ambientColor(CM_HSV, h, s * 0.4, b * 0.4, o * 0.4);
-	ColorA diffuseColor(CM_HSV, h, s * 0.6, b * 0.6, o * 0.6);
+	ColorA ambientColor(CM_HSV, h, s * 0.4f, b * 0.4f, o * 0.4f);
+	ColorA diffuseColor(CM_HSV, h, s * 0.6f, b * 0.6f, o * 0.6f);
 	ColorA specularColor(CM_HSV, h, s, b, o);
 
 	gl::scale(radius, radius, radius);

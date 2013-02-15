@@ -30,11 +30,11 @@ void CellClient::drawHealthBar(float healthBarOpacity)
 	auto innerTopLeft = position2D - innerHalfSize;
 	auto innerBottomRight = innerTopLeft;
 	innerBottomRight.y += innerHalfSize.y * 2;
-	auto healthInPercent = healthPoints / 100.0;
+	auto healthInPercent = healthPoints / maxHealthPoints;
 	innerBottomRight.x += (innerHalfSize.x * 2) * healthInPercent;
 
 	ColorA barColor;
-	auto criticalPercentage = CONFIG_FLOAT2("data.ingamefeedback.healthBar.criticalPercentage", 0.3);
+	auto criticalPercentage = CONFIG_FLOAT2("data.ingamefeedback.healthBar.criticalPercentage", 0.3f);
 
 	if (healthInPercent > criticalPercentage)
 	{

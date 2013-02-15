@@ -1,15 +1,17 @@
 #include "Cell.h"
 
-Cell::Cell() { }
+Cell::Cell() : maxHealthPoints(0.f)
+{ }
 
-Cell::Cell(Vec3f position, float angle, Player * owner) : owner(owner)
+Cell::Cell(Vec3f position, float angle, Player * owner) : owner(owner), maxHealthPoints(0.f)
 {
  this->position = position;
  setAngle(angle);
 }
 
 Cell::Cell(Vec3f position, float radius, float angle, float healthPoints) :
- healthPoints(healthPoints)
+ healthPoints(healthPoints),
+ maxHealthPoints(healthPoints)
 {
  this->position = position;
  this->radius = radius;
@@ -18,6 +20,8 @@ Cell::Cell(Vec3f position, float radius, float angle, float healthPoints) :
 
 Cell::Cell(Vec3f position, float radius, float angle, float healthPoints, Player * owner) :
  healthPoints(healthPoints),
+	 
+ maxHealthPoints(healthPoints),
  owner(owner)
 {
  this->position = position;
