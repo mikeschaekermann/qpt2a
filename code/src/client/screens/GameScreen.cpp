@@ -101,8 +101,6 @@ void GameScreen::update(float frameTime)
 	}
 
 	containerMutex.unlock();
-
-	updateFogOfWar();
 }
 
 void GameScreen::draw()
@@ -243,6 +241,7 @@ void GameScreen::resize(ResizeEvent event)
 {
 	state->resize(event);
 	RenderManager::getInstance()->cam.setAspectRatio(getWindowAspectRatio());
+	updateFogOfWar();
 }
 
 void GameScreen::onKeyInput(KeyEvent& e)
@@ -409,6 +408,28 @@ void GameScreen::removeCellPreview(CellClient * cell)
 	cellPreviews.erase(cell);
 }
 
+void GameScreen::addExploringCell(CellClient * cell)
+{
+	cellsExploring.createGameObject(cell);
+	
+	auto area = new CellClient();
+	area->setId(cell->getId());
+	area->setPosition(cell->getPosition());
+	area->setRadius(cell->getRadius() + fogOfWarInnerRadius + fogOfWarOuterRadius);
+	
+	visibleAreas.createGameObject(area);
+
+	updateFogOfWar();
+}
+
+void GameScreen::removeExploringCell(CellClient * cell)
+{
+	cellsExploring.removeGameObject(cell->getId(), false);
+	visibleAreas.removeGameObject(cell->getId(), false);
+
+	updateFogOfWar();
+}
+
 vector<CellClient *> GameScreen::getCellsPicked(Vec2f position)
 {
 	auto pointInWorldPlane = RenderManager::getInstance()->cam.screenToWorldPlane(position);
@@ -470,13 +491,15 @@ void GameScreen::updateFogOfWar()
 		}
 	}
 
-	for (auto it = cellsToPick.begin(); it != cellsToPick.end(); ++it)
+	for (auto it = cellsExploring.begin(); it != cellsExploring.end(); ++it)
 	{
 		auto cell = it->second;
 		auto center2D = worldToScreen(cell->getPosition());
 		auto innerRadius = center2D.distance(worldToScreen(cell->getPosition() + Vec3f(cell->getRadius() + fogOfWarInnerRadius, 0, 0)));
 		auto outerRadius = center2D.distance(worldToScreen(cell->getPosition() + Vec3f(cell->getRadius() + fogOfWarInnerRadius + fogOfWarOuterRadius, 0, 0)));
-		auto radiusDifference = outerRadius - innerRadius;
+		auto innerRadiusSq = innerRadius * innerRadius;
+		auto outerRadiusSq = outerRadius * outerRadius;
+		auto radiusDifferenceSq = outerRadiusSq - innerRadiusSq;
 		/// multiplication by 1.1 to avoid sharp
 		/// horizontal and vertical edges
 		auto halfSize = Vec2f(outerRadius * 1.1, outerRadius * 1.1);
@@ -501,14 +524,14 @@ void GameScreen::updateFogOfWar()
 			{
 				while( pixel.pixel() )
 				{
-					auto distance = pixel.getPos().distance(center2D);
-					if (distance <= innerRadius)
+					auto distanceSq = pixel.getPos().distanceSquared(center2D);
+					if (distanceSq <= innerRadiusSq)
 					{
 						pixel.a() = 0.f;
 					}
-					else if (distance <= outerRadius)
+					else if (distanceSq <= outerRadiusSq)
 					{
-						auto opacity = (distance - innerRadius) / radiusDifference * 255.f;
+						auto opacity = (distanceSq - innerRadiusSq) / radiusDifferenceSq * 255.f;
 						pixel.a() = min<float>(opacity, pixel.a());
 					}
 				}

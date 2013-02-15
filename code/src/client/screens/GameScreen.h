@@ -93,6 +93,9 @@ public:
 	void addCellPreview(CellClient * cell);
 	void removeCellPreview(CellClient * cell);
 
+	void addExploringCell(CellClient * cell);
+	void removeExploringCell(CellClient * cell);
+
 	bool canCellBePlaced(CellClient * cell);
 
 	void addRenderText(RenderText const & text);
@@ -139,6 +142,12 @@ private:
 
 	/// all cells registered to be pickable
 	GameObjectContainer<CellClient>			cellsToPick;
+		
+	/// all game objects that contribute to the visible part of the fog-of-war
+	GameObjectContainer<GameObject>			cellsExploring;
+
+	/// all areas that form the visible part of the fog-of-war
+	GameObjectContainer<GameObject>			visibleAreas;
 
 	/// all incomplete cells
 	GameObjectContainer<CellClient>			cellsIncomplete;

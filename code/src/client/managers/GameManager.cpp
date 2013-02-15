@@ -121,6 +121,7 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	if (ownPlayerAdded)
 	{
 		GAME_SCR.addCellToPick(stemCell);
+		GAME_SCR.addExploringCell(stemCell);
 	}
 	
 	GAME_SCR.addGameObjectToDraw(stemCell);

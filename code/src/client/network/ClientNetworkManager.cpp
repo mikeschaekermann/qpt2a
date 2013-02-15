@@ -239,9 +239,15 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				{
 					GAME_SCR.removeCellToPick(cellClient);
 					removeCreateCellRequestByParentCell(cellClient);
+
+					if (cellClient->getOwner() == GAME_MGR->getMyPlayer())
+					{
+						GAME_SCR.removeExploringCell(cellClient);
+					}
 				}
 				GAME_SCR.removeGameObjectToUpdate(cellObject);
 				GAME_SCR.removeGameObjectToDraw(cellObject);
+				
 				delete cellObject;
 			}
 			LOG_INFO("CellDie received");
@@ -304,7 +310,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				parentCell->addChild(newCell);
 				GAME_SCR.removeCellPreview(newCell);
 				GAME_SCR.addIncompleteCell(newCell);
-
+				GAME_SCR.addExploringCell(newCell);
+				
 				createCellRequestContexts.erase(context);
 			}
 		}
