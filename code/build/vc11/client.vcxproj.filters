@@ -203,6 +203,9 @@
     <ClCompile Include="..\..\src\common\environment\Barrier.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\actors\BoneCellClient.cpp">
+      <Filter>Actors\Cells</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -439,6 +442,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\common\environment\Barrier.h">
       <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\actors\BoneCellClient.h">
+      <Filter>Actors\Cells</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 #include "../managers/AssetManager.h"
 #include "../actors/CellClient.h"
 #include "../actors/StandardCellClient.h"
+#include "../actors/BoneCellClient.h"
 #include "../actors/GameObjectClient.h"
 #include "GameScreenStates/GameScreenStateNeutral.h"
 #include "GameScreenStates/GameScreenStateCreateCell.h"
@@ -36,24 +37,12 @@ GameScreen::GameScreen()
 		this,
 		[this]()
 		{
-			LOG_INFO("Create bone cell button was clicked!");
+			switchToState(new GameScreenStateCreateCell(this, CellType::BoneCell));
 		},
 		Vec2f::zero(),
 		&(ASSET_MGR->getGuiTexture(string("ingame-button-knochen-normal"))),
 		&(ASSET_MGR->getGuiTexture(string("ingame-button-knochen-hover"))),
 		&(ASSET_MGR->getGuiTexture(string("ingame-button-knochen-clicked")))
-	)));
-
-	cellMenuButtons.insert(make_pair("verbindung", cellMenu->addSubItem(
-		this,
-		[this]()
-		{
-			LOG_INFO("Create branch cell button was clicked!");
-		},
-		Vec2f::zero(),
-		&(ASSET_MGR->getGuiTexture(string("ingame-button-verbindung-normal"))),
-		&(ASSET_MGR->getGuiTexture(string("ingame-button-verbindung-hover"))),
-		&(ASSET_MGR->getGuiTexture(string("ingame-button-verbindung-clicked")))
 	)));
 
 	cellMenuButtons.insert(make_pair("polypeptid", cellMenu->addSubItem(
@@ -357,6 +346,11 @@ void GameScreen::addIncompleteCell(
 			cell = new StandardCellClient(cellId, position, angle, player);
 		}
 		break;
+	case CellType::BoneCell:
+		{
+			cell = new BoneCellClient(cellId, position, angle, player);
+			break;
+		}
 	}
 
 	cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));

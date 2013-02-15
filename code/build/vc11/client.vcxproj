@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\client\actors\behaviors\MessagingBehavior.cpp" />
+    <ClCompile Include="..\..\src\client\actors\BoneCellClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\CellClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\GameObjectClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\PlayerClient.cpp" />
@@ -86,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\actors\behaviors\MessagingBehavior.h" />
+    <ClInclude Include="..\..\src\client\actors\BoneCellClient.h" />
     <ClInclude Include="..\..\src\client\actors\CellClient.h" />
     <ClInclude Include="..\..\src\client\actors\GameObjectClient.h" />
     <ClInclude Include="..\..\src\client\actors\PlayerClient.h" />
