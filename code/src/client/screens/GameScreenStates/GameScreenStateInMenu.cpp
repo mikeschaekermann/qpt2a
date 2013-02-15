@@ -46,16 +46,23 @@ GameScreenStateInMenu::~GameScreenStateInMenu(void)
 
 bool GameScreenStateInMenu::touchClick(TouchWay touchWay)
 {
-	auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
+	if (touchWay.getTrigger() == TouchWay::LEFT)
+	{
+		auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
 
-	if (cellsPicked.size() == 0)
+		if (cellsPicked.size() == 0)
+		{
+			screen->switchToState(new GameScreenStateNeutral(screen));
+			return false;
+		}
+		else if (cellsPicked[0] != pickedCell)
+		{
+			screen->switchToState(new GameScreenStateInMenu(screen, cellsPicked[0]));
+		}
+	}
+	else
 	{
 		screen->switchToState(new GameScreenStateNeutral(screen));
-		return false;
-	}
-	else if (cellsPicked[0] != pickedCell)
-	{
-		screen->switchToState(new GameScreenStateInMenu(screen, cellsPicked[0]));
 	}
 
 	return false;
