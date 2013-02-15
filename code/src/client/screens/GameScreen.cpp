@@ -151,9 +151,6 @@ void GameScreen::draw()
 
 	RenderManager::getInstance()->shutdown3d();
 
-	gl::color(ColorA(1, 1, 1, 1));
-	rootItem->draw();
-
 	///////////// 2D rendering
 
 	state->draw2D();
@@ -189,6 +186,9 @@ void GameScreen::draw()
 	}
 
 	containerMutex.unlock();
+
+	gl::color(ColorA(1, 1, 1, 1));
+	rootItem->draw();
 }
 
 bool GameScreen::touchBegan(const TouchWay & touchWay)
