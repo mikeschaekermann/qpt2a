@@ -301,9 +301,27 @@ void GameScreen::addCellToPick(CellClient * cell)
 	cellsToPick.createGameObject(cell);
 }
 
-void GameScreen::removeCellToPick(CellClient * gameObject)
+void GameScreen::removeCellToPick(CellClient * cell)
 {
-	cellsToPick.removeGameObject(gameObject->getId(), false);
+	cellsToPick.removeGameObject(cell->getId(), false);
+
+	if (cell == pickedCell)
+	{
+		unpickCells();
+	}
+}
+
+void GameScreen::pickCell(CellClient * cell)
+{
+	if (cell != nullptr)
+	{
+		pickedCell = cell;
+	}
+}
+
+void GameScreen::unpickCells()
+{
+	pickedCell = nullptr;
 }
 
 void GameScreen::addIncompleteCell(CellClient * cell)

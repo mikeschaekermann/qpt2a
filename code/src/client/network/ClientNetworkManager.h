@@ -18,6 +18,7 @@ public:
 		CellClient * newCell,
 		CellClient * parentCell
 	);
+	virtual void removeCreateCellRequestByParentCell(CellClient * parentCell);
 	
 protected:
 	virtual ConnectionEndpoint* getConnectionEndpoint(boost::asio::ip::udp::endpoint endpoint);

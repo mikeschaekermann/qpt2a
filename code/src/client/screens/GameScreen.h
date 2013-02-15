@@ -76,6 +76,8 @@ public:
 
 	void addCellToPick(CellClient * cell);
 	void removeCellToPick(CellClient * cell);
+	void pickCell(CellClient * cell);
+	void unpickCells();
 
 	void addIncompleteCell(CellClient * cell);
 	void addIncompleteCell(

@@ -224,6 +224,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				if (cellClient != nullptr)
 				{
 					GAME_SCR.removeCellToPick(cellClient);
+					removeCreateCellRequestByParentCell(cellClient);
 				}
 				GAME_SCR.removeGameObjectToUpdate(cellObject);
 				GAME_SCR.removeGameObjectToDraw(cellObject);
@@ -356,4 +357,19 @@ void ClientNetworkManager::registerCreateCellRequest(
 	request->requestId = nextRequestId;
 
 	++nextRequestId;
+}
+
+void ClientNetworkManager::removeCreateCellRequestByParentCell(CellClient * parentCell)
+{
+	for (auto it = createCellRequestContexts.begin(); it != createCellRequestContexts.end();)
+	{
+		if (it->second.second == parentCell)
+		{
+			it = createCellRequestContexts.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
