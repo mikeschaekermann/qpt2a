@@ -18,6 +18,10 @@ public:
 	virtual void drawHealthBar(float healthBarOpacity=1.0);
 
 protected:
+	float getHealthPercentage() const;
+	float getBrightnessFromHealthPoints() const;
+	float getOpacityFromHealthPoints() const;
+
 	virtual void setRotation(Vec3f rotation) { GameObject::setRotation(rotation); }
 	virtual void setScale(Vec3f scale) { GameObject::setScale(scale); }
 	virtual void setRadius(float radius) { GameObject::setRadius(radius); }

@@ -32,7 +32,7 @@ void CellClient::drawHealthBar(float healthBarOpacity)
 		auto innerTopLeft = position2D - innerHalfSize;
 		auto innerBottomRight = innerTopLeft;
 		innerBottomRight.y += innerHalfSize.y * 2;
-		auto healthInPercent = healthPoints / maxHealthPoints;
+		auto healthInPercent = getHealthPercentage();
 		innerBottomRight.x += (innerHalfSize.x * 2) * healthInPercent;
 
 		ColorA barColor;
@@ -60,4 +60,19 @@ void CellClient::drawHealthBar(float healthBarOpacity)
 		gl::color(barColor);
 		gl::drawSolidRoundedRect(Rectf(innerTopLeft, innerBottomRight), cornerRadius, 5);
 	}
+}
+
+float CellClient::getHealthPercentage() const
+{
+	return (healthPoints / maxHealthPoints);
+}
+
+float CellClient::getBrightnessFromHealthPoints() const
+{
+	return (getBrightness() * getHealthPercentage());
+}
+
+float CellClient::getOpacityFromHealthPoints() const
+{
+	return (getOpacity() * getHealthPercentage());
 }
