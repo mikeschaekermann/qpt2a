@@ -15,7 +15,8 @@ GameManager* GameManager::m_pManager = nullptr;
 boost::mutex GameManager::instanceMutex;
 
 GameManager::GameManager(void):
-	serverEndpoint(boost::asio::ip::address_v4::loopback(), 2345)
+	serverEndpoint(boost::asio::ip::address_v4::loopback(), 2345),
+	debugMode(false)
 {
 	networkManager = new ClientNetworkManager(serverEndpoint);
 	boost::thread(boost::bind(&NetworkManager::operator(), networkManager));

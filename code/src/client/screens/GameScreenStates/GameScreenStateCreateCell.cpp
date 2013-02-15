@@ -5,6 +5,7 @@
 #include "../../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
 #include "../../../common/network/messages/game/ingame/cell/creation/CreateCellFailure.h"
 #include "../../actors/StandardCellClient.h"
+#include "../../actors/BoneCellClient.h"
 
 GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellClient * pickedCell, CellClient * cell):
 	GameScreenState(screen),
@@ -35,6 +36,11 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellTy
 		default:
 			{
 				cell = new StandardCellClient(0, Vec3f::zero(), 0, nullptr);
+				break;
+			}
+		case CellType::BoneCell:
+			{
+				cell = new BoneCellClient(0, Vec3f::zero(), 0, nullptr);
 				break;
 			}
 		}
