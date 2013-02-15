@@ -90,27 +90,30 @@ void GameScreenStateCreateCell::draw3D()
 
 bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)
 {
-	auto pickedCell = screen->pickedCell;
+	if (touchWay.getTrigger() == TouchWay::LEFT)
+	{
+		auto pickedCell = screen->pickedCell;
 
-	if (pickedCell != nullptr)
-	{	
-		auto createCellRequest = new CreateCellRequest();
-		createCellRequest->endpoint = GAME_MGR->getServerEndpoint();
-		createCellRequest->playerId = pickedCell->getOwner()->getId();
-		createCellRequest->cellId = pickedCell->getId();
-		createCellRequest->angle = angle;
-		createCellRequest->type = cellType;
+		if (pickedCell != nullptr)
+		{	
+			auto createCellRequest = new CreateCellRequest();
+			createCellRequest->endpoint = GAME_MGR->getServerEndpoint();
+			createCellRequest->playerId = pickedCell->getOwner()->getId();
+			createCellRequest->cellId = pickedCell->getId();
+			createCellRequest->angle = angle;
+			createCellRequest->type = cellType;
 
-		NETWORK_MGR->registerCreateCellRequest(
-			createCellRequest,
-			cell,
-			pickedCell
-		);
+			NETWORK_MGR->registerCreateCellRequest(
+				createCellRequest,
+				cell,
+				pickedCell
+			);
 
-		GAME_SCR.addCellPreview(cell);
+			GAME_SCR.addCellPreview(cell);
 
-		NETWORK_MGR->send(createCellRequest);
-		LOG_INFO("CreateCellRequest sent");
+			NETWORK_MGR->send(createCellRequest);
+			LOG_INFO("CreateCellRequest sent");
+		}
 	}
 
 	screen->switchToState(new GameScreenStateNeutral(screen));
