@@ -99,6 +99,9 @@ public:
 	ci::Vec2f worldToScreen(ci::Vec3f position);
 	void switchToState(GameScreenState * newState);
 
+	void updateFogOfWar();
+	void drawFogOfWar() const;
+
 	boost::mutex & getContainerMutex();
 
 private:
@@ -113,6 +116,11 @@ private:
 	/// in-game menu for cell actions
 	GUIItem * cellMenu;
 	unordered_map<string, GUIItem *> cellMenuButtons;
+	/// fog-of-war surface
+	Surface fogOfWarSurface;
+	const float fogOfWarOpacity;
+	const float fogOfWarInnerRadius;
+	const float fogOfWarOuterRadius;
 
 	/// mutex for container manipulation and reading
 	boost::mutex containerMutex;

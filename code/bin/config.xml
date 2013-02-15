@@ -60,6 +60,11 @@
 	</rendering>
 	<world>
 		<radius>500.0</radius>
+    <fogOfWwar>
+      <opacity>0.9</opacity>
+      <innerRadius>20</innerRadius>
+      <outerRadius>30</outerRadius>
+    </fogOfWwar>
 	</world>
 	<players>
 		<max>2</max>
