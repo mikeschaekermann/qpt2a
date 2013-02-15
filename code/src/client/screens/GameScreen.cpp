@@ -247,16 +247,6 @@ void GameScreen::resize(ResizeEvent event)
 void GameScreen::onKeyInput(KeyEvent& e)
 {
 	state->onKeyInput(e);
-
-	for (auto it = gameObjectsToUpdate.begin(); it != gameObjectsToUpdate.end(); ++it)
-	{
-		auto standardCell = dynamic_cast<StandardCellClient *>(it->second);
-		
-		if (standardCell)
-		{
-			standardCell->startAttackAnimation();
-		}
-	}
 }
 
 void GameScreen::mouseWheel(MouseEvent & e)
