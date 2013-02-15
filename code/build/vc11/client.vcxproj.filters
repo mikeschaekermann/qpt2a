@@ -197,6 +197,12 @@
     <ClCompile Include="..\..\src\client\rendering\RenderManager.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\environment\BarrierClient.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\environment\Barrier.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -428,6 +434,12 @@
     <ClInclude Include="..\..\src\client\rendering\RenderManager.h">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\client\environment\BarrierClient.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\environment\Barrier.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -495,6 +507,9 @@
     </Filter>
     <Filter Include="Config">
       <UniqueIdentifier>{bae7d18c-0568-42e2-bfd0-caee06877532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Environment">
+      <UniqueIdentifier>{6df5a625-56a3-4ff1-b69d-bf3740885559}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

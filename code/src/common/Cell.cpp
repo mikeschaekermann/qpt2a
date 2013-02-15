@@ -1,9 +1,9 @@
 #include "Cell.h"
 
-Cell::Cell() : maxHealthPoints(0.f)
+Cell::Cell() : maxHealthPoints(1.f)
 { }
 
-Cell::Cell(Vec3f position, float angle, Player * owner) : owner(owner), maxHealthPoints(0.f)
+Cell::Cell(Vec3f position, float angle, Player * owner) : owner(owner), maxHealthPoints(1.f)
 {
  this->position = position;
  setAngle(angle);

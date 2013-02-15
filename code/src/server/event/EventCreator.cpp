@@ -14,6 +14,7 @@
 #include "../game/GameContext.h"
 
 #include "../environment/StaticModificatorServer.h"
+#include "../environment/BarrierServer.h"
 
 #include "cinder/Rand.h"
 
@@ -40,8 +41,8 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	// Check build location not outside the world
 	if (!checkInWorldRadius(requestId, cell, currentPlayer)) return false;
 
-	// Check build location not intersecting with other cells
-	if (!checkOtherCells(requestId, cell, currentPlayer)) return false;
+	// Check build location not intersecting with other cells or structures
+	if (!checkCollision(requestId, cell, currentPlayer)) return false;
 	
 	// Calculate static Effects on Cell
 	calculateStaticEffects(cell);	
@@ -120,16 +121,27 @@ bool EventCreator::checkInWorldRadius(unsigned int requestId, CellServer & cell,
 	return true;
 }
 
-bool EventCreator::checkOtherCells(unsigned int requestId, CellServer & cell, const PlayerServer & player)
+bool EventCreator::checkCollision(unsigned int requestId, CellServer & cell, const PlayerServer & player)
 {
 	for (auto it = GAMECONTEXT->getPlayerMap().begin(); it != GAMECONTEXT->getPlayerMap().end(); ++it)
 	{
 		const vector<GameObject *> & activeCells = GAMECONTEXT->getActiveCells().findInRadiusOf(cell.getPosition(), cell.getRadius());
 		const vector<GameObject *> & inactivecells =  GAMECONTEXT->getInactiveCells().findInRadiusOf(cell.getPosition(), cell.getRadius());
+		const vector<GameObject *> & environment =  GAMECONTEXT->getEnvironment().findInRadiusOf(cell.getPosition(), cell.getRadius());
+
 
 		vector<GameObject *> gameObjects;
 		gameObjects.insert(gameObjects.end(), activeCells.begin(), activeCells.end());
 		gameObjects.insert(gameObjects.end(), inactivecells.begin(), inactivecells.end());
+
+		for (auto it = environment.begin(); it != environment.end(); ++it)
+		{
+			auto modifier = dynamic_cast<BarrierServer *>(*it);
+			if (modifier)
+			{
+				gameObjects.push_back(modifier);
+			}
+		}
 
 		// There are cells colliding with this cell
 		if (gameObjects.size() > 0)

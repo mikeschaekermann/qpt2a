@@ -4,6 +4,7 @@
 #include "../../common/network/messages/game/outgame/JoinRequest.h"
 #include "../../client/actors/PlayerClient.h"
 #include "../../client/actors/StemCellClient.h"
+#include "../environment/BarrierClient.h"
 
 #include "cinder/app/AppBasic.h"
 
@@ -177,6 +178,15 @@ float GameManager::getHueByPlayerId(unsigned int id) const
 		assert(false);
 		return 0;
 	}
+}
+
+void GameManager::addBarrier(unsigned int id, Vec3f position, Vec3f rotation, Vec3f scale, float radius)
+{
+	BarrierClient * barrier = new BarrierClient(id, position, rotation, scale, radius);
+	
+	
+	GAME_SCR.addGameObjectToDraw(barrier);
+	GAME_SCR.addGameObjectToCollide(barrier);
 }
 
 ClientNetworkManager * GameManager::getNetworkManager()

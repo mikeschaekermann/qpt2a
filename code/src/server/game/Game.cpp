@@ -253,8 +253,49 @@ void Game::join(JoinRequest &request)
 		}
 
 		/**
-			* Add Modifiers and Barriers to message
-			*/
+		 * Add Modifiers and Barriers to message
+		 */
+
+		for (auto it = GAMECONTEXT->getEnvironment().begin(); it != GAMECONTEXT->getEnvironment().end(); ++it)
+		{
+			BarrierServer * barrier = dynamic_cast<BarrierServer *>(it->second);
+			if (barrier)
+			{
+				NetworkBarrier networkBarrier;
+				networkBarrier.modifierId = barrier->getId();
+				networkBarrier.position = barrier->getPosition();
+				networkBarrier.rotation = barrier->getRotation();
+				networkBarrier.scale = barrier->getScale();
+				networkBarrier.radius = barrier->getRadius();
+				startgame->barriers.push_back(networkBarrier);
+			}
+			
+			StaticModificatorServer * staticModifier = dynamic_cast<StaticModificatorServer *>(it->second);
+			if (staticModifier)
+			{
+				NetworkStaticModifier networkStatic;
+				networkStatic.modifierId = staticModifier->getId();
+				networkStatic.position = staticModifier->getPosition();
+				networkStatic.rotation = staticModifier->getRotation();
+				networkStatic.scale = staticModifier->getScale();
+				networkStatic.radius = staticModifier->getRadius();
+
+				switch(staticModifier->getType())
+				{
+				case StaticModificatorServer::RADIOACTIVITY:
+					networkStatic.type = StaticModifierType::RadioActivity;
+					break;
+				case StaticModificatorServer::NUTRIENTSOIL:
+					networkStatic.type = StaticModifierType::NutrientSoil;
+					break;
+				default:
+					networkStatic.type = StaticModifierType::Invalid;
+					break;
+				}
+
+				startgame->staticModifiers.push_back(networkStatic);
+			}
+		}
 			
 		NETWORKMANAGER->sendTo<StartGame>(startgame, NETWORKMANAGER->getConnectionEndpoints());
 		LOG_INFO("StartGame sent");
