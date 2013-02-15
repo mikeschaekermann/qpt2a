@@ -199,7 +199,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				ci::Vec3f textPos = attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 2.f);
 				
 				float deathTime = (float) getElapsedSeconds() + CONFIG_FLOAT2("data.ingamefeedback.renderedDamage.displaytime", 5.f);
-				string text = stringify(ostringstream() << ceil((float) cellAttack->damage));
+				string text = stringify(ostringstream() << "-" << ceil((float) cellAttack->damage));
 				GameScreen::RenderText renderText(deathTime, textPos, text);
 				
 				GAME_SCR.addRenderText(renderText);
