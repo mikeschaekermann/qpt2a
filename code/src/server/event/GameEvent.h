@@ -9,14 +9,9 @@ public:
 	  m_dDeadTime(startTime + duration)
 	{ }
 
-	bool operator<(GameEvent & other)
-	{
-		return m_dDeadTime > other.m_dDeadTime;
-	}
-
 	virtual void trigger() = 0;
 
-	double getDeadTime() const
+	virtual double getDeadTime() const
 	{
 		return m_dDeadTime;
 	}

@@ -42,6 +42,7 @@ void ClientMain::shutdown()
 	AssetManager::releaseInstance();
 	GameManager::releaseInstance();
 	ScreenManager::releaseInstance();
+	exit(0);
 }
 
 void ClientMain::prepareSettings( Settings *settings )

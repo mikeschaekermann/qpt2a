@@ -37,10 +37,11 @@ void EventManager::operator()()
 		while (!events.empty() && events.top()->getDeadTime() < timer.getSeconds())
 		{
 			GAMECONTEXT->getMutex().lock();
-			events.top()->trigger();
+			GameEvent * current = events.top();
+			current->trigger();
 			GAMECONTEXT->getMutex().unlock();
-			delete events.top();
 			events.pop();
+			delete current;
 		}
 		mutex.lock();
 		for (auto it = toAddList.begin(); it != toAddList.end(); ++it)

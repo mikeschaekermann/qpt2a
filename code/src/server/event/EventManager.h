@@ -1,14 +1,22 @@
 #pragma once
 
-class GameEvent;
+#include "GameEvent.h"
 
 #include <queue>
 #include <vector>
-#include <boost\thread\mutex.hpp>
+#include <boost/thread/mutex.hpp>
 
 #include "cinder/Timer.h"
 
 #define EVENT_MGR EventManager::getInstance()
+
+struct CompareGameEvent : public std::binary_function<GameEvent*, GameEvent*, bool>                                                                                       
+{  
+  bool operator()(const GameEvent* lhs, const GameEvent* rhs) const  
+  {  
+     return lhs->getDeadTime() > rhs->getDeadTime();  
+  }  
+};
 
 class EventManager
 {
@@ -29,7 +37,7 @@ private:
 
 	ci::Timer timer;
 	bool run;
-	std::priority_queue<GameEvent *> events;
+	std::priority_queue<GameEvent *, std::vector<GameEvent *>, CompareGameEvent> events;
 	std::vector<GameEvent *> toAddList;
 	boost::mutex mutex;
 };

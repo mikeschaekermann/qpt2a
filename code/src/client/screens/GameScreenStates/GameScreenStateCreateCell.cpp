@@ -70,17 +70,17 @@ bool GameScreenStateCreateCell::mouseMove(MouseEvent event)
 		
 		if (cell != nullptr)
 		{
-			auto cellPosition = pickedCellPosition + direction * (pickedCellRadius * 1.01 + cell->getRadius());
+			auto cellPosition = pickedCellPosition + direction * (pickedCellRadius * 1.01f + cell->getRadius());
 			cell->setPosition(cellPosition);
 			cell->setAngle(angle);
 
 			if (!screen->canCellBePlaced(cell))
 			{
-				cell->setHue(CONFIG_FLOAT2("data.ingamefeedback.building.collisionHue", 0.0));
+				cell->setHue(CONFIG_FLOAT2("data.ingamefeedback.building.collisionHue", 0.0f));
 			}
 			else
 			{
-				cell->setHue(CONFIG_FLOAT2("data.ingamefeedback.building.noCollisionHue", 0.33));
+				cell->setHue(CONFIG_FLOAT2("data.ingamefeedback.building.noCollisionHue", 0.33f));
 			}
 		}
 

@@ -430,12 +430,14 @@ bool GameScreen::canCellBePlaced(CellClient * cell)
 
 void GameScreen::switchToState(GameScreenState * newState)
 {
+	switchScreenMutex.lock();
 	auto oldState = state;
 	state = newState;
 	if (oldState != nullptr)
 	{
 		delete oldState;
 	}
+	switchScreenMutex.unlock();
 }
 
 GameObjectContainer<GameObjectClient> & GameScreen::getGameObjectsToDraw()
