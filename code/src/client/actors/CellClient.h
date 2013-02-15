@@ -2,12 +2,18 @@
 
 #include "../../common/Cell.h"
 #include "../../client/actors/GameObjectClient.h"
+#include "../../common/ConfigurationDataHandler.h"
 
 class CellClient :
 	virtual public Cell,
 	virtual public GameObjectClient
 {
 public:
+	CellClient()
+	{
+		setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.completeOpacity", 1.0f));
+	}
+
 	virtual void setPosition(Vec3f position) { GameObject::setPosition(position); }
 	virtual void drawHealthBar(float healthBarOpacity=1.0);
 

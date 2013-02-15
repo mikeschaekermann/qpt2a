@@ -285,6 +285,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				newCell->setAngle(createCellSuccess->angle);
 				newCell->setId(createCellSuccess->cellId);
 				newCell->addParent(parentCell);
+				newCell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));
 				parentCell->addChild(newCell);
 				GAME_SCR.removeCellPreview(newCell);
 				GAME_SCR.addIncompleteCell(newCell);

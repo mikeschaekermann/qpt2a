@@ -19,6 +19,7 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellCl
 	else
 	{
 		screen->switchToState(new GameScreenStateNeutral(screen));
+		cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.previewOpacity", 0.3f));
 	}
 }
 
@@ -38,6 +39,7 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellTy
 			}
 		}
 
+		cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.previewOpacity", 0.3f));
 		cell->setHue(GAME_MGR->getMyHue());
 		cell->setOwner(GAME_MGR->getMyPlayer());
 	}

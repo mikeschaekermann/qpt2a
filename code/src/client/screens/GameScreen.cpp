@@ -361,6 +361,7 @@ void GameScreen::addIncompleteCell(
 		break;
 	}
 
+	cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));
 	cell->setHue(GAME_MGR->getHueByPlayerId(playerId));
 
 	addIncompleteCell(cell);
@@ -372,6 +373,8 @@ void GameScreen::completeCellById(unsigned int id)
 
 	if (cell != nullptr)
 	{
+		cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.completeOpacity", 1.0f));
+
 		removeIncompleteCell(cell);
 		addGameObjectToDraw(cell);
 		
