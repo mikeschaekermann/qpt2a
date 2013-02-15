@@ -163,8 +163,10 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			LOG_INFO(message.str());
 			message.str("");
 
+			// Create world
 			GAME_MGR->addPetriDish(startGame->worldRadius);
 
+			// Add all players
 			for (auto it = startGame->players.begin(); it != startGame->players.end(); ++it)
 			{
 				message << "player " << it->playerName << "(" << it->playerId << ") with stem cell (" << it->startCellId << ") at position (" << it->startPosition.x << ", " << it->startPosition.y << ", " << it->startPosition.z << ")";
@@ -173,6 +175,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 				GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition);
 			}
+
+			// Add environment
+			for (auto it = startGame->barriers.begin(); it != startGame->barriers.end(); ++it)
+			{
+				message << "barrier " << it->modifierId << endl;
+				LOG_INFO(message.str());
+				message.str("");
+
+				GAME_MGR->addBarrier(it->modifierId, it->position, it->rotation, it->scale, it->radius);
+			}
+
+
 			SCREEN_MGR->openGameScreen();
 		}
 		break;

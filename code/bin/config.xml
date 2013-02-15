@@ -115,7 +115,7 @@
 	</cell>
 	<environment>
 		<barriers>
-			<!--<barrier>
+			<barrier>
 				<position>
 					<x>0.0</x>
 					<y>0.0</y>
@@ -124,7 +124,7 @@
 					<x>0.0</x>
 					<y>0.0</y>
 				</rotation>
-				<radius>10.0</radius>
+				<radius>45.0</radius>
 			</barrier>
 			<barrier>
 				<position>
@@ -135,8 +135,8 @@
 					<x>0.0</x>
 					<y>0.0</y>
 				</rotation>
-				<radius>10.0</radius>
-			</barrier>-->
+				<radius>30.0</radius>
+			</barrier>
 		</barriers>
 		<modifiers>
 			<static>

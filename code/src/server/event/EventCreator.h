@@ -31,7 +31,7 @@ private:
 	float getAttackerMultiplier(CellServer * attacker);
 	float getVictimMultiplier(CellServer * victim);
 
-	bool checkOtherCells(unsigned int requestId, CellServer & cell, const PlayerServer & player);
+	bool checkCollision(unsigned int requestId, CellServer & cell, const PlayerServer & player);
 	bool checkInWorldRadius(unsigned int requestId, CellServer & cell, const PlayerServer & player);
 	void calculateStaticEffects(CellServer & cell);
 	void sendCellCreationMessages(unsigned int requestId, PlayerServer & currentPlayer, CellServer & cell, const int type);

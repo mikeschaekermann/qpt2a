@@ -39,7 +39,7 @@ public:
 	void draw();
 
 	void addPetriDish(float radius);
-	
+	void addBarrier(unsigned int id, Vec3f position, Vec3f rotation, Vec3f scale, float radius);
 	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
 	void setMyPlayerId(unsigned int id);
 	PlayerClient * getMyPlayer() const;
@@ -58,6 +58,7 @@ private:
 
 	/// id map for all active players
 	map<unsigned int, PlayerClient*> players;
+
 	/// my own player
 	PlayerClient* myPlayer;
 
