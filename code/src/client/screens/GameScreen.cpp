@@ -151,9 +151,6 @@ void GameScreen::draw()
 
 	RenderManager::getInstance()->shutdown3d();
 
-	gl::color(ColorA(1, 1, 1, 1));
-	rootItem->draw();
-
 	///////////// 2D rendering
 
 	state->draw2D();
@@ -189,6 +186,9 @@ void GameScreen::draw()
 	}
 
 	containerMutex.unlock();
+
+	gl::color(ColorA(1, 1, 1, 1));
+	rootItem->draw();
 }
 
 bool GameScreen::touchBegan(const TouchWay & touchWay)
@@ -301,9 +301,27 @@ void GameScreen::addCellToPick(CellClient * cell)
 	cellsToPick.createGameObject(cell);
 }
 
-void GameScreen::removeCellToPick(CellClient * gameObject)
+void GameScreen::removeCellToPick(CellClient * cell)
 {
-	cellsToPick.removeGameObject(gameObject->getId(), false);
+	cellsToPick.removeGameObject(cell->getId(), false);
+
+	if (cell == pickedCell)
+	{
+		unpickCells();
+	}
+}
+
+void GameScreen::pickCell(CellClient * cell)
+{
+	if (cell != nullptr)
+	{
+		pickedCell = cell;
+	}
+}
+
+void GameScreen::unpickCells()
+{
+	pickedCell = nullptr;
 }
 
 void GameScreen::addIncompleteCell(CellClient * cell)
@@ -343,6 +361,7 @@ void GameScreen::addIncompleteCell(
 		break;
 	}
 
+	cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));
 	cell->setHue(GAME_MGR->getHueByPlayerId(playerId));
 
 	addIncompleteCell(cell);
@@ -354,8 +373,11 @@ void GameScreen::completeCellById(unsigned int id)
 
 	if (cell != nullptr)
 	{
+		cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.completeOpacity", 1.0f));
+
 		removeIncompleteCell(cell);
 		addGameObjectToDraw(cell);
+		addGameObjectToCollide(cell);
 		
 		auto cellOwner= cell->getOwner();
 		auto myPlayer = GAME_MGR->getMyPlayer();
@@ -391,6 +413,18 @@ vector<CellClient *> GameScreen::getCellsPicked(Vec2f position)
 	auto pointInWorldPlane = RenderManager::getInstance()->cam.screenToWorldPlane(position);
 	
 	return cellsToPick.pick(pointInWorldPlane);
+}
+
+bool GameScreen::canCellBePlaced(CellClient * cell)
+{
+	auto collidingObjects = gameObjectsToCollide.findInRadiusOf(cell->getPosition(), cell->getRadius());
+
+	if (collidingObjects.size() == 0)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void GameScreen::switchToState(GameScreenState * newState)

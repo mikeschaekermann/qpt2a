@@ -238,6 +238,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				if (cellClient != nullptr)
 				{
 					GAME_SCR.removeCellToPick(cellClient);
+					removeCreateCellRequestByParentCell(cellClient);
 				}
 				GAME_SCR.removeGameObjectToUpdate(cellObject);
 				GAME_SCR.removeGameObjectToDraw(cellObject);
@@ -298,6 +299,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				newCell->setAngle(createCellSuccess->angle);
 				newCell->setId(createCellSuccess->cellId);
 				newCell->addParent(parentCell);
+				newCell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));
+				newCell->setHue(GAME_MGR->getMyHue());
 				parentCell->addChild(newCell);
 				GAME_SCR.removeCellPreview(newCell);
 				GAME_SCR.addIncompleteCell(newCell);
@@ -370,4 +373,19 @@ void ClientNetworkManager::registerCreateCellRequest(
 	request->requestId = nextRequestId;
 
 	++nextRequestId;
+}
+
+void ClientNetworkManager::removeCreateCellRequestByParentCell(CellClient * parentCell)
+{
+	for (auto it = createCellRequestContexts.begin(); it != createCellRequestContexts.end();)
+	{
+		if (it->second.second == parentCell)
+		{
+			it = createCellRequestContexts.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }

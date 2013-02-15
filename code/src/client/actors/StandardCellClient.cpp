@@ -13,8 +13,8 @@ void StandardCellClient::drawAtTransformation() const
 
 	auto h = getHue();
 	auto s = getSaturation();
-	auto b = getBrightness();
-	auto o = getOpacity();
+	auto b = getBrightnessFromHealthPoints();
+	auto o = getOpacityFromHealthPoints();
 
 	ColorA ambientColor(CM_HSV, h, s * 0.4f, b * 0.4f, o * 0.4f);
 	ColorA diffuseColor(CM_HSV, h, s * 0.6f, b * 0.6f, o * 0.6f);

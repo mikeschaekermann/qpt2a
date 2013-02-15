@@ -8,20 +8,26 @@
 
 GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellClient * pickedCell, CellClient * cell):
 	GameScreenState(screen),
-	pickedCell(pickedCell),
 	cellType(CellType::StandardCell),
 	cell(cell)
 {
-	cell->setOwner(GAME_MGR->getMyPlayer());
-	screen->pickedCell = pickedCell;
+	if (pickedCell != nullptr)
+	{
+		screen->pickedCell = pickedCell;
+		cell->setOwner(GAME_MGR->getMyPlayer());
+	}
+	else
+	{
+		screen->switchToState(new GameScreenStateNeutral(screen));
+		cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.previewOpacity", 0.3f));
+	}
 }
 
 GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellType::Type cellType):
 	GameScreenState(screen),
-	pickedCell(screen->pickedCell),
 	cellType(cellType)
 {
-	if (pickedCell != nullptr)
+	if (screen->pickedCell != nullptr)
 	{
 		switch(cellType)
 		{
@@ -33,6 +39,7 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellTy
 			}
 		}
 
+		cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.previewOpacity", 0.3f));
 		cell->setHue(GAME_MGR->getMyHue());
 		cell->setOwner(GAME_MGR->getMyPlayer());
 	}
@@ -44,22 +51,40 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellTy
 
 bool GameScreenStateCreateCell::mouseMove(MouseEvent event)
 {
-	auto mouseCoordinates3D = RenderManager::getInstance()->cam.screenToWorldPlane(event.getPos());
-	auto pickedCellPosition = pickedCell->getPosition();
-	auto pickedCellRadius = pickedCell->getRadius();
-	auto direction = mouseCoordinates3D - pickedCellPosition;
-	direction.normalize();
-	angle = atan2(direction.y, direction.x);
-		
-	if (cell != nullptr)
-	{
-		auto cellPosition = pickedCellPosition + direction * (pickedCellRadius + cell->getRadius());
-		cell->setPosition(cellPosition);
-		cell->setAngle(angle);
-	}
+	auto pickedCell = screen->pickedCell;
 
-	arrowStart = pickedCellPosition + direction * (pickedCellRadius + 5);
-	arrowEnd = arrowStart + direction * 50;
+	if (pickedCell != nullptr)
+	{
+		auto mouseCoordinates3D = RenderManager::getInstance()->cam.screenToWorldPlane(event.getPos());
+		auto pickedCellPosition = pickedCell->getPosition();
+		auto pickedCellRadius = pickedCell->getRadius();
+		auto direction = mouseCoordinates3D - pickedCellPosition;
+		direction.normalize();
+		angle = atan2(direction.y, direction.x);
+		
+		if (cell != nullptr)
+		{
+			auto cellPosition = pickedCellPosition + direction * (pickedCellRadius * 1.01 + cell->getRadius());
+			cell->setPosition(cellPosition);
+			cell->setAngle(angle);
+
+			if (!screen->canCellBePlaced(cell))
+			{
+				cell->setHue(CONFIG_FLOAT2("data.ingamefeedback.building.collisionHue", 0.0));
+			}
+			else
+			{
+				cell->setHue(CONFIG_FLOAT2("data.ingamefeedback.building.noCollisionHue", 0.33));
+			}
+		}
+
+		arrowStart = pickedCellPosition + direction * (pickedCellRadius + 5);
+		arrowEnd = arrowStart + direction * 50;
+	}
+	else
+	{
+		screen->switchToState(new GameScreenStateNeutral(screen));
+	}
 
 	return false;
 }
@@ -74,25 +99,33 @@ void GameScreenStateCreateCell::draw3D()
 
 bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)
 {
-	auto createCellRequest = new CreateCellRequest();
-	createCellRequest->endpoint = GAME_MGR->getServerEndpoint();
-	createCellRequest->playerId = pickedCell->getOwner()->getId();
-	createCellRequest->cellId = pickedCell->getId();
-	createCellRequest->angle = angle;
-	createCellRequest->type = cellType;
+	if (touchWay.getTrigger() == TouchWay::LEFT)
+	{
+		auto pickedCell = screen->pickedCell;
 
-	NETWORK_MGR->registerCreateCellRequest(
-		createCellRequest,
-		cell,
-		pickedCell
-	);
+		if (pickedCell != nullptr)
+		{	
+			auto createCellRequest = new CreateCellRequest();
+			createCellRequest->endpoint = GAME_MGR->getServerEndpoint();
+			createCellRequest->playerId = pickedCell->getOwner()->getId();
+			createCellRequest->cellId = pickedCell->getId();
+			createCellRequest->angle = angle;
+			createCellRequest->type = cellType;
 
-	GAME_SCR.addCellPreview(cell);
+			NETWORK_MGR->registerCreateCellRequest(
+				createCellRequest,
+				cell,
+				pickedCell
+			);
 
-	NETWORK_MGR->send(createCellRequest);
-	LOG_INFO("CreateCellRequest sent");
+			GAME_SCR.addCellPreview(cell);
+
+			NETWORK_MGR->send(createCellRequest);
+			LOG_INFO("CreateCellRequest sent");
+		}
+	}
 
 	screen->switchToState(new GameScreenStateNeutral(screen));
 
-	return false;	
+	return false;
 }

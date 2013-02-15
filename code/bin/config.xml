@@ -38,6 +38,13 @@
       <maxLayerOpacity>0.5</maxLayerOpacity>
       <layerOpacityChangeSpeed>0.25</layerOpacityChangeSpeed>
     </gameOver>
+    <building>
+      <collisionHue>0.0</collisionHue>
+      <noCollisionHue>0.33</noCollisionHue>
+      <previewOpacity>0.3</previewOpacity>
+      <incompleteOpacity>0.5</incompleteOpacity>
+      <completeOpacity>1.0</completeOpacity>
+    </building>
 	</ingamefeedback>
 	<network>
 		<server>

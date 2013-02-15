@@ -76,6 +76,8 @@ public:
 
 	void addCellToPick(CellClient * cell);
 	void removeCellToPick(CellClient * cell);
+	void pickCell(CellClient * cell);
+	void unpickCells();
 
 	void addIncompleteCell(CellClient * cell);
 	void addIncompleteCell(
@@ -90,6 +92,8 @@ public:
 
 	void addCellPreview(CellClient * cell);
 	void removeCellPreview(CellClient * cell);
+
+	bool canCellBePlaced(CellClient * cell);
 
 	void addRenderText(RenderText const & text);
 	ci::Vec2f worldToScreen(ci::Vec3f position);
