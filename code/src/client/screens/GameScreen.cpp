@@ -377,6 +377,7 @@ void GameScreen::completeCellById(unsigned int id)
 
 		removeIncompleteCell(cell);
 		addGameObjectToDraw(cell);
+		addGameObjectToCollide(cell);
 		
 		auto cellOwner= cell->getOwner();
 		auto myPlayer = GAME_MGR->getMyPlayer();
@@ -412,6 +413,18 @@ vector<CellClient *> GameScreen::getCellsPicked(Vec2f position)
 	auto pointInWorldPlane = RenderManager::getInstance()->cam.screenToWorldPlane(position);
 	
 	return cellsToPick.pick(pointInWorldPlane);
+}
+
+bool GameScreen::canCellBePlaced(CellClient * cell)
+{
+	auto collidingObjects = gameObjectsToCollide.findInRadiusOf(cell->getPosition(), cell->getRadius());
+
+	if (collidingObjects.size() == 0)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void GameScreen::switchToState(GameScreenState * newState)

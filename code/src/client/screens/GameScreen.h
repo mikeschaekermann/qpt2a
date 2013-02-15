@@ -93,6 +93,8 @@ public:
 	void addCellPreview(CellClient * cell);
 	void removeCellPreview(CellClient * cell);
 
+	bool canCellBePlaced(CellClient * cell);
+
 	void addRenderText(RenderText const & text);
 	ci::Vec2f worldToScreen(ci::Vec3f position);
 	void switchToState(GameScreenState * newState);
