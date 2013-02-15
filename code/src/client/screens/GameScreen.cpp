@@ -167,25 +167,28 @@ void GameScreen::draw()
 	containerMutex.unlock();
 
 	/// DRAW CELL IDs FOR DEBUGGING
-	containerMutex.lock();
-
-	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
+	if (GAME_MGR->isInDebugMode())
 	{
-		auto idPosition = worldToScreen(it->second->getPosition()) - Vec2f(10, 15);
-		auto id = it->second->getId();
+		containerMutex.lock();
 
-		drawString(stringify(ostringstream() << id), idPosition, ColorA(1.f, 0.f, 0.f, 1.f), 
-			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
-		
-		auto cell = dynamic_cast<CellClient *>(it->second);
-
-		if (cell != nullptr)
+		for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
 		{
-			cell->drawHealthBar();
-		}
-	}
+			auto idPosition = worldToScreen(it->second->getPosition()) - Vec2f(10, 15);
+			auto id = it->second->getId();
 
-	containerMutex.unlock();
+			drawString(stringify(ostringstream() << id), idPosition, ColorA(1.f, 0.f, 0.f, 1.f), 
+				Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
+		
+			auto cell = dynamic_cast<CellClient *>(it->second);
+
+			if (cell != nullptr)
+			{
+				cell->drawHealthBar();
+			}
+		}
+
+		containerMutex.unlock();
+	}
 
 	gl::color(ColorA(1, 1, 1, 1));
 	rootItem->draw();
@@ -247,6 +250,11 @@ void GameScreen::resize(ResizeEvent event)
 void GameScreen::onKeyInput(KeyEvent& e)
 {
 	state->onKeyInput(e);
+
+	if (e.getCode() == KeyEvent::KEY_d)
+	{
+		GAME_MGR->toggleDebugMode();
+	}
 }
 
 void GameScreen::mouseWheel(MouseEvent & e)

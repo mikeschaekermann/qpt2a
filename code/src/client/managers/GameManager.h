@@ -50,6 +50,9 @@ public:
 	ClientNetworkManager * getNetworkManager();
 	boost::asio::ip::udp::endpoint getServerEndpoint();
 
+	bool isInDebugMode() const { return debugMode; }
+	void toggleDebugMode() { debugMode = !debugMode; }
+
 	void quit();
 private:
 	/// singleton instance
@@ -58,6 +61,9 @@ private:
 
 	/// id map for all active players
 	map<unsigned int, PlayerClient*> players;
+
+	/// flag indicating whether game is running in debug mode or not
+	bool debugMode;
 
 	/// my own player
 	PlayerClient* myPlayer;
