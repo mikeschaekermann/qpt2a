@@ -528,5 +528,11 @@
     <None Include="..\..\bin\config.xml">
       <Filter>Config</Filter>
     </None>
+    <None Include="..\..\resources\shader\barrier.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\barrier.vert">
+      <Filter>Rendering\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

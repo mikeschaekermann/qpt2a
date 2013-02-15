@@ -170,6 +170,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="..\..\resources\assets.xml" />
+    <None Include="..\..\resources\shader\barrier.frag" />
+    <None Include="..\..\resources\shader\barrier.vert" />
     <None Include="..\..\resources\shader\test.frag" />
     <None Include="..\..\resources\shader\test.vert" />
     <None Include="ClassDiagram1.cd" />

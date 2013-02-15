@@ -53,6 +53,31 @@ void RenderManager::renderModel(string modelName,
 	shader.unbind();
 }
 
+void RenderManager::renderBarrier(float radius)
+{
+	string barrier = "barrier";
+	auto shader = ASSET_MGR->getShaderProg(barrier);
+
+	shader.bind();
+
+	Vec4f ambient = Vec4f(0.2f, 0.2f, 0.22f, 1.f);
+	Vec4f diffuse = Vec4f(0.3f, 0.3f, 0.34f, 1.f);
+	Vec4f specular = Vec4f(0.f, 0.f, 0.f, 1.f);
+	float shininess = 0.f;
+
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * lightPos);
+
+	shader.uniform("ambientColor", ambient);
+	shader.uniform("diffuseColor", diffuse);
+	shader.uniform("radius", radius);
+
+	gl::pushModelView();
+		drawSphere(Vec3f(0.f, 0.f, 0.f), radius, (int) radius);
+	gl::popModelView();
+
+	shader.unbind();
+}
+
 void RenderManager::setUp3d()
 {
 	gl::pushMatrices();

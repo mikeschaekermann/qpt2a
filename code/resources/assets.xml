@@ -389,3 +389,9 @@ vertexShader and fragmentShader are also file paths
 	<vertexShader>..\..\..\resources\shader\test.vert</vertexShader>
 	<fragmentShader>..\..\..\resources\shader\test.frag</fragmentShader>
 </shader>
+
+<shader>
+  <key>barrier</key>
+  <vertexShader>..\..\..\resources\shader\barrier.vert</vertexShader>
+  <fragmentShader>..\..\..\resources\shader\barrier.frag</fragmentShader>
+</shader>

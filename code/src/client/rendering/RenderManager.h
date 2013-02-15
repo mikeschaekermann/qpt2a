@@ -31,6 +31,8 @@ public:
 					 Vec4f specular = Vec4f(1.f, 1.f, 1.f, 1.f),
 					 float shininess = 10.f);
 
+	void renderBarrier(float radius);
+
 	void setUp3d();
 	void shutdown3d();
 

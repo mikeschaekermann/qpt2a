@@ -221,20 +221,6 @@ void Game::join(JoinRequest &request)
 				throw string("Static modifier could not be created because it is not in the game area");
 			}
 				
-			vector<GameObject *> gameObjects;
-
-			const vector<GameObject *> & activeCells = GAMECONTEXT->getActiveCells().findInRadiusOf(s->getPosition(), s->getRadius());
-			const vector<GameObject *> & inactiveCells = GAMECONTEXT->getInactiveCells().findInRadiusOf(s->getPosition(), s->getRadius());
-			const vector<GameObject *> & environment = GAMECONTEXT->getEnvironment().findInRadiusOf(s->getPosition(), s->getRadius());
-				
-			gameObjects.insert(gameObjects.end(), activeCells.begin(), activeCells.end());
-			gameObjects.insert(gameObjects.end(), inactiveCells.begin(), inactiveCells.end());
-			gameObjects.insert(gameObjects.end(), environment.begin(), environment.end());
-
-			if (gameObjects.size() > 0)
-			{
-				throw string("Static modifier could not be created because a gameobject is already on this spot");
-			}
 			GAMECONTEXT->getEnvironment().createGameObject(s);
 		}
 

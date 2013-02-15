@@ -52,7 +52,6 @@ void BuildingEvent::trigger()
 		auto & cell = *(dynamic_cast<CellServer *>(cellO));
 		cell.completeCell();
 
-		auto x = GAMECONTEXT;
 		auto obj = GAMECONTEXT->getInactiveCells().find(cell.getId());
 		if (obj == nullptr)
 		{
