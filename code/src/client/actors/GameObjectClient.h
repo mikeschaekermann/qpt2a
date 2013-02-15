@@ -8,10 +8,10 @@ class GameObjectClient :
 {
 public:
 	GameObjectClient():
-		hue(0.0),
-		saturation(0.7),
-		brightness(0.9),
-		opacity(0.7)
+		hue(0.0f),
+		saturation(0.7f),
+		brightness(0.9f),
+		opacity(0.7f)
 	{}
 	
 	void draw() const;

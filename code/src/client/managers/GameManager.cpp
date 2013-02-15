@@ -146,6 +146,7 @@ float GameManager::getMyHue() const
 	else
 	{
 		assert(false);
+		return 0;
 	}
 }
 
@@ -174,6 +175,7 @@ float GameManager::getHueByPlayerId(unsigned int id) const
 	else
 	{
 		assert(false);
+		return 0;
 	}
 }
 

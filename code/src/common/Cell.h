@@ -26,6 +26,7 @@ public:
  void setOwner( const Player * owner) { this->owner = owner; }
 protected:
  float healthPoints;
+ const float maxHealthPoints;
  bool isComplete;
  const Player * owner;
 
