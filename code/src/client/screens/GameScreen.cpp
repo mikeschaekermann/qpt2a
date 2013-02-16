@@ -274,11 +274,13 @@ void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject)
 	addGameObjectToUpdate(gameObject);
 
 	gameObjectsToDraw.createGameObject(gameObject);
+	updateVisibilityOf(gameObject);
 }
 
 void GameScreen::removeGameObjectToDraw(GameObjectClient * gameObject)
 {
 	gameObjectsToDraw.removeGameObject(gameObject->getId(), false);
+	updateVisibilityOf(gameObject);
 }
 
 void GameScreen::addGameObjectToCollide(GameObject * gameObject)
@@ -322,6 +324,7 @@ void GameScreen::unpickCells()
 void GameScreen::addIncompleteCell(CellClient * cell)
 {
 	cellsIncomplete.createGameObject(cell);
+	updateVisibilityOf(cell);
 
 	addGameObjectToCollide(cell);
 }
@@ -329,6 +332,7 @@ void GameScreen::addIncompleteCell(CellClient * cell)
 void GameScreen::removeIncompleteCell(CellClient * cell)
 {
 	cellsIncomplete.removeGameObject(cell->getId(), false);
+	updateVisibilityOf(cell);
 
 	removeGameObjectToCollide(cell);
 }
@@ -420,6 +424,7 @@ void GameScreen::addExploringCell(CellClient * cell)
 	visibleAreas.createGameObject(area);
 
 	updateFogOfWar();
+	updateVisibleGameObjects();
 }
 
 void GameScreen::removeExploringCell(CellClient * cell)
@@ -428,6 +433,7 @@ void GameScreen::removeExploringCell(CellClient * cell)
 	visibleAreas.removeGameObject(cell->getId(), false);
 
 	updateFogOfWar();
+	updateVisibleGameObjects();
 }
 
 vector<CellClient *> GameScreen::getCellsPicked(Vec2f position)
@@ -544,6 +550,33 @@ void GameScreen::drawFogOfWar() const
 {
 	gl::color(ColorA(1, 1, 1, 0.9));
 	gl::draw(gl::Texture(fogOfWarSurface), getWindowBounds());
+}
+
+void GameScreen::updateVisibilityOf(GameObjectClient * gameObject)
+{
+	auto intersections = visibleAreas.findInRadiusOf(gameObject->getPosition(), gameObject->getRadius());
+	
+	if (intersections.size() > 0)
+	{
+		gameObject->show();
+	}
+	else
+	{
+		gameObject->hide();
+	}
+}
+
+void GameScreen::updateVisibleGameObjects()
+{
+	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
+	{
+		updateVisibilityOf(it->second);
+	}
+	
+	for (auto it = cellsIncomplete.begin(); it != cellsIncomplete.end(); ++it)
+	{
+		updateVisibilityOf(it->second);
+	}
 }
 
 boost::mutex & GameScreen::getContainerMutex()

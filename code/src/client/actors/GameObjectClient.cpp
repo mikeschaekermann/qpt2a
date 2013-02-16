@@ -4,15 +4,18 @@
 
 void GameObjectClient::draw() const
 {
-	pushMatrices();
+	if (visible)
+	{
+		pushMatrices();
 
-	translate(position);
-	rotate(rotation);
-	gl::scale(scale);
+		translate(position);
+		rotate(rotation);
+		gl::scale(scale);
 
-	drawAtTransformation();
+		drawAtTransformation();
 
-	popMatrices();	
+		popMatrices();	
+	}
 }
 
 void GameObjectClient::drawAtTransformation() const

@@ -247,7 +247,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				}
 				GAME_SCR.removeGameObjectToUpdate(cellObject);
 				GAME_SCR.removeGameObjectToDraw(cellObject);
-				
+
 				delete cellObject;
 			}
 			LOG_INFO("CellDie received");

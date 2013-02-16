@@ -104,6 +104,9 @@ public:
 
 	void updateFogOfWar();
 	void drawFogOfWar() const;
+	
+	void updateVisibleGameObjects();
+	void updateVisibilityOf(GameObjectClient * gameObject);
 
 	boost::mutex & getContainerMutex();
 

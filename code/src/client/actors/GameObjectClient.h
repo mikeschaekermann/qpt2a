@@ -11,7 +11,8 @@ public:
 		hue(0.0f),
 		saturation(0.7f),
 		brightness(0.9f),
-		opacity(0.7f)
+		opacity(0.7f),
+		visible(false)
 	{}
 	
 	void draw() const;
@@ -24,6 +25,10 @@ public:
 	void setSaturation(float newSaturation) { saturation = min<float>(max<float>(newSaturation, 0.0), 1.0); }
 	float getBrightness() const { return brightness; }
 	void setBrightness(float newBrightness) { brightness = min<float>(max<float>(newBrightness, 0.0), 1.0); }
+	bool isVisible() const { return visible; }
+	void setVisibility(bool newVisible) { visible = newVisible; }
+	void show() { setVisibility(true); }
+	void hide() { setVisibility(false); }
 
 	Vec2f getPosition2D() const;
 
@@ -35,4 +40,6 @@ protected:
 			saturation,
 			brightness,
 			opacity;
+
+	bool	visible;
 };
