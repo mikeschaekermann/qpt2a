@@ -65,6 +65,7 @@ void ClientMain::draw()
 {
 	gl::clear(Color(0.7f, 0.9f, 0.9f));
 	GAME_MGR->draw();
+	gl::drawString(toString(getFrameRate()), Vec2f(10, 10), Color::white());
 }
 
 void ClientMain::mouseDown( MouseEvent event )
