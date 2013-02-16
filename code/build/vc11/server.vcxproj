@@ -62,6 +62,7 @@
     <ClInclude Include="..\..\src\common\network\messages\NetworkMessage.h" />
     <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
     <ClInclude Include="..\..\src\common\Player.h" />
+    <ClInclude Include="..\..\src\common\Polypetide.h" />
     <ClInclude Include="..\..\src\common\StandardCell.h" />
     <ClInclude Include="..\..\src\common\StemCell.h" />
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h" />
@@ -79,6 +80,7 @@
     <ClInclude Include="..\..\src\Server\game\GameObjectServer.h" />
     <ClInclude Include="..\..\src\server\game\IIdentifiable.h" />
     <ClInclude Include="..\..\src\Server\game\PlayerServer.h" />
+    <ClInclude Include="..\..\src\server\game\PolypetideServer.h" />
     <ClInclude Include="..\..\src\server\network\ServerNetworkManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +123,7 @@
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
+    <ClCompile Include="..\..\src\common\Polypetide.cpp" />
     <ClCompile Include="..\..\src\common\StandardCell.cpp" />
     <ClCompile Include="..\..\src\server\environment\BarrierServer.cpp" />
     <ClCompile Include="..\..\src\server\environment\StaticModificatorServer.cpp" />
@@ -254,6 +257,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <AdditionalDependencies>libboost_system-vc100-mt-s-1_48.lib;cinder.lib;libboost_filesystem-vc100-mt-s-1_48.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(BOOST_DIR)/lib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
