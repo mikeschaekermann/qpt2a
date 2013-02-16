@@ -125,6 +125,11 @@
 			<healthpoints>200.0</healthpoints>
 		</bonecell>
 	</cell>
+	<polypetide>
+		<maxPerCell>15</maxPerCell>
+		<radius>5.0</radius>
+		<healthpoints>1.0</healthpoints>
+	</polypetide>
 	<environment>
 		<barriers>
 			<barrier>

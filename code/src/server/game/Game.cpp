@@ -35,6 +35,7 @@
 #include "../environment/StaticModificatorServer.h"
 
 #include "CellServer.h"
+#include "PolypetideServer.h"
 #include "PlayerServer.h"
 #include "GameContext.h"
 
@@ -291,7 +292,7 @@ void Game::join(JoinRequest &request)
 }
 
 
-void Game::createCell(CreateCellRequest &request)
+void Game::createCell(CreateCellRequest & request)
 {
 	LOG_INFO("CreateCellRequest received");
 	unsigned int playerId = request.playerId;
@@ -339,9 +340,7 @@ void Game::createCell(CreateCellRequest &request)
 			cell = new CellServer(CellServer::BONECELL, position, angle, &player);
 			break;
 		default:
-			stringstream message;
-			message << "Unknown CellType: " << type.getType();
-			LOG_INFO(message.str());
+			LOG_INFO(stringify(ostringstream() << "Unknown CellType: " << type.getType()));
 			return;
 		}
 
@@ -376,5 +375,59 @@ void Game::createCell(CreateCellRequest &request)
 	else
 	{
 		LOG_INFO("Players Id is invalid");
+	}
+}
+
+struct CreatePolyPeptideRequest
+{
+	unsigned int requestId;
+	unsigned int playerId;
+	unsigned int cellId;
+};
+
+void Game::createPolypetide(CreatePolyPeptideRequest & request)
+{
+	LOG_INFO("CreatePolyPeptideRequest received");
+	unsigned int playerId = request.playerId;
+	unsigned int cellId = request.cellId;
+
+	if (GAMECONTEXT->getPlayer(playerId))
+	{
+		PlayerServer & player = *(GAMECONTEXT->getPlayer(playerId));
+
+		if (player.isDead())
+		{
+			/// CreatePolypetideFailure
+			/*CreateCellFailure *failure = new CreateCellFailure();
+			failure->endpoint = player.getEndpoint();
+			failure->requestId = request.requestId;
+			failure->errorCode = CreateCellErrorCode::PlayerIsSpectator;
+			NETWORKMANAGER->send(failure);*/
+			LOG_INFO("CreatePolypetideFailure sent");
+			return;
+		}
+
+		CellServer * containerCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
+		if (containerCell == 0)
+		{
+			LOG_INFO(stringify(ostringstream() << "Cell with the id " << cellId << " does not exist"));
+			return;
+		}
+
+		if (player.getId() != containerCell->getOwner()->getId())
+		{
+			LOG_INFO(stringify(ostringstream() << "Cell with id " << cellId << " is not from passed player with id " << playerId));
+		}
+
+		PolypetideServer * polypetide = new PolypetideServer(containerCell->getPosition(), containerCell->getAngle(), &player);
+
+		if (containerCell->addPolypetide(polypetide))
+		{
+			/// success
+		}
+		else
+		{
+			/// failure
+		}
 	}
 }

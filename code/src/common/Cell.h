@@ -1,9 +1,13 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include <stdexcept>
 
 #include "GameObject.h"
+#include "Polypetide.h"
+
+#include "../common/ConfigurationDataHandler.h"
 
 class Player;
 
@@ -24,11 +28,39 @@ public:
 
  const Player * getOwner() const { return owner; }
  void setOwner( const Player * owner) { this->owner = owner; }
+
+ std::map<unsigned int, Polypetide *> const & getPolypetides() const
+ {
+	 return polypetides;
+ }
+
+ bool addPolypetide(Polypetide * polypetide)
+ {
+	 if (polypetides.size() < polyMax)
+	 {
+		 return polypetides.insert(make_pair(polypetide->getId(), polypetide)).second;
+	 }
+	 return false;
+ }
+
+ bool removePolypetide(Polypetide * polypetide)
+ {
+	 auto it = polypetides.find(polypetide->getId());
+	 if (it != polypetides.end())
+	 {
+		polypetides.erase(it);
+		return true;
+	 }
+	 return false;
+ }
+
 protected:
  float healthPoints;
  const float maxHealthPoints;
  bool isComplete;
  const Player * owner;
+ unsigned int polyMax;
+ std::map<unsigned int, Polypetide *> polypetides;
 
  Cell(void);
  Cell(Vec3f position, float angle, Player * owner);
