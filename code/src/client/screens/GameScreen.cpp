@@ -576,6 +576,32 @@ void GameScreen::updateFogOfWar()
 	}
 }
 
+void GameScreen::shiftFogOfWar(Vec2f shift)
+{
+	auto fogOfWarSurfaceBack = new Surface(getWindowWidth(), getWindowHeight(), false, cinder::SurfaceChannelOrder::RGBA);
+
+	auto it = fogOfWarSurfaceBack->getIter();
+
+	while( it.line() )
+	{
+		while( it.pixel() )
+		{
+			it.r() = it.g() = it.b() = 0.f;
+			it.a() = 255.f;
+		}
+	}
+
+	fogOfWarMutex.lock();
+
+	fogOfWarSurfaceBack->copyFrom(*fogOfWarSurfaceFront, fogOfWarSurfaceFront->getBounds(), shift);
+	
+	auto tmpSurface = fogOfWarSurfaceFront;
+	fogOfWarSurfaceFront = fogOfWarSurfaceBack;
+	delete tmpSurface;
+
+	fogOfWarMutex.unlock();
+}
+
 void GameScreen::drawFogOfWar()
 {
 	gl::color(ColorA(1, 1, 1, 0.9));
