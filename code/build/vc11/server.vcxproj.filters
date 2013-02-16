@@ -10,16 +10,10 @@
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\Cell.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\Config.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\GameObject.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\GameObjectContainer.h">
@@ -41,12 +35,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\Player.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\StandardCell.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\StemCell.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h">
@@ -196,6 +184,24 @@
     <ClInclude Include="..\..\src\server\event\CellDieEvent.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\Polypetide.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\Cell.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\StemCell.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\StandardCell.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\GameObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\game\PolypetideServer.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -245,19 +251,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\common\Cell.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\GameObject.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\Logger.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\StandardCell.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\Main.cpp" />
@@ -398,6 +395,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\CellDieEvent.cpp">
       <Filter>Eventlogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\Polypetide.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\Cell.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\StandardCell.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\GameObject.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
