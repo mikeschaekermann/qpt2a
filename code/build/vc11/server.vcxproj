@@ -254,6 +254,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <AdditionalDependencies>libboost_system-vc100-mt-s-1_48.lib;cinder.lib;libboost_filesystem-vc100-mt-s-1_48.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(BOOST_DIR)/lib;$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

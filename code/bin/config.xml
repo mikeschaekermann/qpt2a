@@ -13,38 +13,38 @@
 			<size>28</size>
 			<displaytime>0.2</displaytime>
 		</renderedDamage>
-    <healthBar>
-      <width>15</width>
-      <height>7</height>
-      <cornerRadius>3</cornerRadius>
-      <criticalPercentage>0.3</criticalPercentage>
-      <borderColor>
-        <r>0</r>
-        <g>0</g>
-        <b>0</b>
-      </borderColor>
-      <goodColor>
-        <r>0.1</r>
-        <g>0.9</g>
-        <b>0.1</b>
-      </goodColor>
-      <ciriticalColor>
-        <r>0.8</r>
-        <g>0.1</g>
-        <b>0.1</b>
-      </ciriticalColor>
-    </healthBar>
-    <gameOver>
-      <maxLayerOpacity>0.5</maxLayerOpacity>
-      <layerOpacityChangeSpeed>0.25</layerOpacityChangeSpeed>
-    </gameOver>
-    <building>
-      <collisionHue>0.0</collisionHue>
-      <noCollisionHue>0.33</noCollisionHue>
-      <previewOpacity>0.3</previewOpacity>
-      <incompleteOpacity>0.5</incompleteOpacity>
-      <completeOpacity>1.0</completeOpacity>
-    </building>
+		<healthBar>
+		  <width>15</width>
+		  <height>7</height>
+		  <cornerRadius>3</cornerRadius>
+		  <criticalPercentage>0.3</criticalPercentage>
+		  <borderColor>
+			<r>0</r>
+			<g>0</g>
+			<b>0</b>
+		  </borderColor>
+		  <goodColor>
+			<r>0.1</r>
+			<g>0.9</g>
+			<b>0.1</b>
+		  </goodColor>
+		  <ciriticalColor>
+			<r>0.8</r>
+			<g>0.1</g>
+			<b>0.1</b>
+		  </ciriticalColor>
+		</healthBar>
+		<gameOver>
+		  <maxLayerOpacity>0.5</maxLayerOpacity>
+		  <layerOpacityChangeSpeed>0.25</layerOpacityChangeSpeed>
+		</gameOver>
+		<building>
+		  <collisionHue>0.0</collisionHue>
+		  <noCollisionHue>0.33</noCollisionHue>
+		  <previewOpacity>0.3</previewOpacity>
+		  <incompleteOpacity>0.5</incompleteOpacity>
+		  <completeOpacity>1.0</completeOpacity>
+		</building>
 	</ingamefeedback>
 	<network>
 		<server>
@@ -60,26 +60,26 @@
 	</rendering>
 	<world>
 		<radius>500.0</radius>
-    <fogOfWwar>
-      <opacity>0.9</opacity>
-      <innerRadius>20</innerRadius>
-      <outerRadius>30</outerRadius>
-    </fogOfWwar>
+		<fogOfWwar>
+		  <opacity>0.9</opacity>
+		  <innerRadius>20</innerRadius>
+		  <outerRadius>30</outerRadius>
+		</fogOfWwar>
 	</world>
 	<players>
-		<max>1</max>
+		<max>2</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
 				<y>90.0</y>
 			</startposition>
 		</player>
-    <player>
-      <startposition>
-        <x>0.0</x>
-        <y>-150.0</y>
-      </startposition>
-    </player>
+		<player>
+			<startposition>
+				<x>0.0</x>
+				<y>-150.0</y>
+			</startposition>
+		</player>
 		<player>
 			<startposition>
 				<x>200.0</x>
