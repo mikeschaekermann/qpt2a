@@ -56,12 +56,16 @@ private:
 	boost::thread fogOfWarThread;
 	boost::mutex fogOfWarMutex;
 
+	GLuint fbo;
+	GLuint textureHandle;
+
 	TriMesh fogOfWarLayer;
 
 	RenderManager(void);
 	RenderManager(const RenderManager&);
 	~RenderManager();
 
+	void generateFogOfWarTexture();
 	void updateFogOfWar();
 };
 
