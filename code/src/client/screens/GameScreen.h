@@ -131,8 +131,11 @@ private:
 	/// mutex for container manipulation and reading
 	boost::mutex containerMutex;
 	
-	/// mutex for container manipulation and reading
+	/// mutex for game state manipulation and reading
 	boost::mutex switchScreenMutex;
+
+	/// mutex for fog-of-war manipulation and reading
+	boost::mutex fogOfWarMutex;
 
 	/// all game objects registered to be updated
 	GameObjectContainer<GameObject>			gameObjectsToUpdate;

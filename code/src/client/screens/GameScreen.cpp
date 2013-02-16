@@ -484,6 +484,8 @@ void GameScreen::addRenderText(RenderText const & text)
 
 void GameScreen::updateFogOfWar()
 {
+	fogOfWarMutex.lock();
+
 	fogOfWarSurface = Surface(getWindowWidth(), getWindowHeight(), false, cinder::SurfaceChannelOrder::RGBA);
 
 	auto it = fogOfWarSurface.getIter();
@@ -544,6 +546,8 @@ void GameScreen::updateFogOfWar()
 			}
 		}
 	}
+
+	fogOfWarMutex.unlock();
 }
 
 void GameScreen::drawFogOfWar() const
