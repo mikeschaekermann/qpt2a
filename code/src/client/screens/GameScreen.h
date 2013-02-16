@@ -103,6 +103,7 @@ public:
 	void switchToState(GameScreenState * newState);
 
 	void updateFogOfWar();
+	void shiftFogOfWar(Vec2f shift);
 	void drawFogOfWar();
 	
 	void updateVisibleGameObjects();

@@ -22,9 +22,10 @@ bool GameScreenStateNeutral::touchClick(TouchWay touchWay)
 void GameScreenStateNeutral::touchMoved(const TouchWay & touchWay)
 {
 	auto& cam = RenderManager::getInstance()->cam;
-	cam.setEyePoint(cam.getEyePoint() + Vec3f(-touchWay.getLastDeltaVector().x, touchWay.getLastDeltaVector().y, 0));
-
-	screen->updateFogOfWar();
+	auto shift3D = Vec3f(-touchWay.getLastDeltaVector().x, touchWay.getLastDeltaVector().y, 0);
+	auto shift2D = Vec2f(shift3D.x, shift3D.y);
+	cam.setEyePoint(cam.getEyePoint() + shift3D);
+	screen->shiftFogOfWar(shift2D);
 }
 
 void GameScreenStateNeutral::onKeyInput(KeyEvent& e)
@@ -39,22 +40,18 @@ void GameScreenStateNeutral::onKeyInput(KeyEvent& e)
 	else if(e.getCode() == KeyEvent::KEY_LEFT)
 	{
 		cam.setEyePoint(cam.getEyePoint() + Vec3f(10.f, 0.f, 0.f));
-		screen->updateFogOfWar();
 	}
 	else if(e.getCode() == KeyEvent::KEY_RIGHT)
 	{
 		cam.setEyePoint(cam.getEyePoint() + Vec3f(-10.f, 0.f, 0.f));
-		screen->updateFogOfWar();
 	}
 	else if(e.getCode() == KeyEvent::KEY_UP)
 	{
 		cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, -10.f, 0.f));
-		screen->updateFogOfWar();
 	}
 	else if(e.getCode() == KeyEvent::KEY_DOWN)
 	{
 		cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 10.f, 0.f));
-		screen->updateFogOfWar();
 	}
 }
 
@@ -62,5 +59,4 @@ void GameScreenStateNeutral::mouseWheel(MouseEvent & e)
 {
 	auto& cam = RenderManager::getInstance()->cam;
 	cam.setEyePoint(cam.getEyePoint() + Vec3f(0.f, 0.f, -e.getWheelIncrement() * 100.f));
-	screen->updateFogOfWar();
 }
