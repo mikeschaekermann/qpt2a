@@ -11,11 +11,14 @@
 #include "../../common/network/messages/enum/CellType.h"
 #include "../rendering/RenderManager.h"
 #include <ostream>
+#include "boost/thread/thread.hpp"
 
 GameScreen::GameScreen():
+	run(true),
 	fogOfWarOpacity(CONFIG_FLOAT2("data.world.fogOfWar.opacity", 0.9)),
 	fogOfWarInnerRadius(CONFIG_FLOAT2("data.world.fogOfWar.innerRadius", 20)),
-	fogOfWarOuterRadius(CONFIG_FLOAT2("data.world.fogOfWar.outerRadius", 20))
+	fogOfWarOuterRadius(CONFIG_FLOAT2("data.world.fogOfWar.outerRadius", 20)),
+	fogOfWarSurfaceFront(new Surface())
 {
 	state = new GameScreenStateNeutral(this);
 	RenderManager::getInstance()->zoomToWorld();
@@ -62,11 +65,15 @@ GameScreen::GameScreen():
 
 	cellMenu->setVisible(false);
 
-	updateFogOfWar();
+	fogOfWarThread = boost::thread(boost::bind(&GameScreen::updateFogOfWar, this));
 }
 
 GameScreen::~GameScreen(void)
 {
+	run = false;
+
+	fogOfWarThread.join();
+
 	if (state != nullptr)
 	{
 		delete state;
@@ -241,7 +248,6 @@ void GameScreen::resize(ResizeEvent event)
 {
 	state->resize(event);
 	RenderManager::getInstance()->cam.setAspectRatio(getWindowAspectRatio());
-	updateFogOfWar();
 }
 
 void GameScreen::onKeyInput(KeyEvent& e)
@@ -423,7 +429,6 @@ void GameScreen::addExploringCell(CellClient * cell)
 	
 	visibleAreas.createGameObject(area);
 
-	updateFogOfWar();
 	updateVisibleGameObjects();
 }
 
@@ -432,7 +437,6 @@ void GameScreen::removeExploringCell(CellClient * cell)
 	cellsExploring.removeGameObject(cell->getId(), false);
 	visibleAreas.removeGameObject(cell->getId(), false);
 
-	updateFogOfWar();
 	updateVisibleGameObjects();
 }
 
@@ -484,76 +488,103 @@ void GameScreen::addRenderText(RenderText const & text)
 
 void GameScreen::updateFogOfWar()
 {
-	fogOfWarMutex.lock();
-
-	fogOfWarSurface = Surface(getWindowWidth(), getWindowHeight(), false, cinder::SurfaceChannelOrder::RGBA);
-
-	auto it = fogOfWarSurface.getIter();
-
-	while( it.line() )
+	while (run)
 	{
-		while( it.pixel() )
+		auto fogOfWarSurfaceBack = new Surface(getWindowWidth(), getWindowHeight(), false, cinder::SurfaceChannelOrder::RGBA);
+
+		auto it = fogOfWarSurfaceBack->getIter();
+
+		while( it.line() )
 		{
-			it.r() = it.g() = it.b() = 0.f;
-			it.a() = 255.f;
-		}
-	}
-
-	for (auto it = cellsExploring.begin(); it != cellsExploring.end(); ++it)
-	{
-		auto cell = it->second;
-		auto center2D = worldToScreen(cell->getPosition());
-		auto innerRadius = center2D.distance(worldToScreen(cell->getPosition() + Vec3f(cell->getRadius() + fogOfWarInnerRadius, 0, 0)));
-		auto outerRadius = center2D.distance(worldToScreen(cell->getPosition() + Vec3f(cell->getRadius() + fogOfWarInnerRadius + fogOfWarOuterRadius, 0, 0)));
-		auto innerRadiusSq = innerRadius * innerRadius;
-		auto outerRadiusSq = outerRadius * outerRadius;
-		auto radiusDifferenceSq = outerRadiusSq - innerRadiusSq;
-		/// multiplication by 1.1 to avoid sharp
-		/// horizontal and vertical edges
-		auto halfSize = Vec2f(outerRadius * 1.1, outerRadius * 1.1);
-		auto reverseHalfSize = Vec2f(outerRadius * 1.1, - outerRadius * 1.1);
-		auto upperLeft = center2D - halfSize;
-		auto lowerRight = center2D + halfSize;
-		auto upperRight = center2D - reverseHalfSize;
-		auto lowerLeft = center2D + reverseHalfSize;
-
-		auto circleArea = Area(upperLeft, lowerRight);
-		
-		if (
-			getWindowBounds().contains(upperLeft) ||
-			getWindowBounds().contains(lowerRight) ||
-			getWindowBounds().contains(upperRight) ||
-			getWindowBounds().contains(lowerLeft)
-		)
-		{
-			auto pixel = fogOfWarSurface.getIter();
-
-			while( pixel.line() )
+			while( it.pixel() )
 			{
-				while( pixel.pixel() )
+				it.r() = it.g() = it.b() = 0.f;
+				it.a() = 255.f;
+			}
+		}
+
+		containerMutex.lock();
+
+		vector<pair<Vec3f, float> > positionsAndRadii;
+		positionsAndRadii.reserve(cellsExploring.getSize());
+
+		for (auto it = cellsExploring.begin(); it != cellsExploring.end(); ++it)
+		{
+			auto center = it->second->getPosition();
+			auto radius = it->second->getRadius();
+
+			positionsAndRadii.emplace_back(make_pair(center, radius)); 
+		}
+
+		containerMutex.unlock();
+
+		for (auto it = positionsAndRadii.begin(); it != positionsAndRadii.end(); ++it)
+		{
+			auto cell = it->second;
+			auto center2D = worldToScreen(it->first);
+			auto innerRadius = center2D.distance(worldToScreen(it->first + Vec3f(it->second + fogOfWarInnerRadius, 0, 0)));
+			auto outerRadius = center2D.distance(worldToScreen(it->first + Vec3f(it->second + fogOfWarInnerRadius + fogOfWarOuterRadius, 0, 0)));
+			auto innerRadiusSq = innerRadius * innerRadius;
+			auto outerRadiusSq = outerRadius * outerRadius;
+			auto radiusDifferenceSq = outerRadiusSq - innerRadiusSq;
+			/// multiplication by 1.1 to avoid sharp
+			/// horizontal and vertical edges
+			auto halfSize = Vec2f(outerRadius * 1.1, outerRadius * 1.1);
+			auto reverseHalfSize = Vec2f(outerRadius * 1.1, - outerRadius * 1.1);
+			auto upperLeft = center2D - halfSize;
+			auto lowerRight = center2D + halfSize;
+			auto upperRight = center2D - reverseHalfSize;
+			auto lowerLeft = center2D + reverseHalfSize;
+
+			auto circleArea = Area(upperLeft, lowerRight);
+		
+			if (
+				getWindowBounds().contains(upperLeft) ||
+				getWindowBounds().contains(lowerRight) ||
+				getWindowBounds().contains(upperRight) ||
+				getWindowBounds().contains(lowerLeft)
+			)
+			{
+				auto pixel = fogOfWarSurfaceBack->getIter();
+
+				while( pixel.line() )
 				{
-					auto distanceSq = pixel.getPos().distanceSquared(center2D);
-					if (distanceSq <= innerRadiusSq)
+					while( pixel.pixel() )
 					{
-						pixel.a() = 0.f;
-					}
-					else if (distanceSq <= outerRadiusSq)
-					{
-						auto opacity = (distanceSq - innerRadiusSq) / radiusDifferenceSq * 255.f;
-						pixel.a() = min<float>(opacity, pixel.a());
+						auto distanceSq = pixel.getPos().distanceSquared(center2D);
+						if (distanceSq <= innerRadiusSq)
+						{
+							pixel.a() = 0.f;
+						}
+						else if (distanceSq <= outerRadiusSq)
+						{
+							auto opacity = (distanceSq - innerRadiusSq) / radiusDifferenceSq * 255.f;
+							pixel.a() = min<float>(opacity, pixel.a());
+						}
 					}
 				}
 			}
 		}
-	}
 
-	fogOfWarMutex.unlock();
+		fogOfWarMutex.lock();
+
+		auto tmpSurface = fogOfWarSurfaceFront;
+		fogOfWarSurfaceFront = fogOfWarSurfaceBack;
+		delete tmpSurface;
+
+		fogOfWarMutex.unlock();
+	}
 }
 
-void GameScreen::drawFogOfWar() const
+void GameScreen::drawFogOfWar()
 {
 	gl::color(ColorA(1, 1, 1, 0.9));
-	gl::draw(gl::Texture(fogOfWarSurface), getWindowBounds());
+
+	fogOfWarMutex.lock();
+
+	gl::draw(gl::Texture(*fogOfWarSurfaceFront), getWindowBounds());
+
+	fogOfWarMutex.unlock();
 }
 
 void GameScreen::updateVisibilityOf(GameObjectClient * gameObject)
