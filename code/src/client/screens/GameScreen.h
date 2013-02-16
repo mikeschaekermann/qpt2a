@@ -103,7 +103,7 @@ public:
 	void switchToState(GameScreenState * newState);
 
 	void updateFogOfWar();
-	void drawFogOfWar() const;
+	void drawFogOfWar();
 	
 	void updateVisibleGameObjects();
 	void updateVisibilityOf(GameObjectClient * gameObject);
@@ -113,6 +113,9 @@ public:
 private:
 	vector<CellClient *> getCellsPicked(Vec2f position);
 	
+	/// flag indicating whether threads can be closed or not
+	volatile bool run;
+
 	/// current state of the screen
 	GameScreenState * state;
 	/// the world's radius, i.e. the radius of the Petri's dish
@@ -122,8 +125,9 @@ private:
 	/// in-game menu for cell actions
 	GUIItem * cellMenu;
 	unordered_map<string, GUIItem *> cellMenuButtons;
-	/// fog-of-war surface
-	Surface fogOfWarSurface;
+	/// fog-of-war information
+	boost::thread fogOfWarThread;
+	Surface * fogOfWarSurfaceFront;
 	const float fogOfWarOpacity;
 	const float fogOfWarInnerRadius;
 	const float fogOfWarOuterRadius;
