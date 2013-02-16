@@ -255,4 +255,9 @@
 			</back>
 		</creditscreen>
 	</menu>
+  <sound>
+    <doppler>1</doppler>
+    <distance>10</distance>
+    <rollOff>10</rollOff>
+  </sound>
 </data>

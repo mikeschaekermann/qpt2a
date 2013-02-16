@@ -80,7 +80,6 @@ public:
 	MovieGl const & getGuiMovie(string& movieName) const;
 	
 	FMOD::Sound * getSound(string& soundName) const;
-	FMOD::Sound * getGuiSound(string& soundName) const;
 	
 	GlslProg const & getShaderProg(string& shaderName) const;
 	
@@ -97,7 +96,6 @@ private:
 	unordered_map<string, MovieGl>					movieMap;
 	unordered_map<string, MovieGl>					guiMovieMap;
 	unordered_map<string, FMOD::Sound*>				soundMap;
-	unordered_map<string, FMOD::Sound*>				guiSoundMap;
 	unordered_map<string, GlslProg>					shaderMap;
 
 	AssetManager(void);

@@ -1,5 +1,6 @@
 #include "Screen.h"
 #include "../managers/ScreenManager.h"
+#include "../sound/SoundPlayer.h"
 
 Screen::Screen() :
 	focusedItem(nullptr)
@@ -36,6 +37,10 @@ bool Screen::touchBegan(const TouchWay & touchWay)
 	{
 		focusedItem = nullptr;
 		return false;
+	}
+	else
+	{
+		SOUND_PLAYER->playSound(string("click"));
 	}
 	
 	return true;

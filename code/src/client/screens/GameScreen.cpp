@@ -70,6 +70,8 @@ GameScreen::~GameScreen(void)
 
 void GameScreen::update(float frameTime)
 {
+	SOUND_PLAYER->setListener3d(RENDER_MGR->cam.getEyePoint(), Vec3f::zero(), Vec3f::zero(), RENDER_MGR->cam.getWorldUp());
+
 	state->update(frameTime);
 
 	containerMutex.lock();
@@ -317,6 +319,18 @@ void GameScreen::addIncompleteCell(CellClient * cell)
 {
 	cellsIncomplete.createGameObject(cell);
 	updateVisibilityOf(cell);
+
+	if(cell->isVisible())
+	{
+		if(cell->getOwner() == GAME_MGR->getMyPlayer())
+		{
+			SOUND_PLAYER->playSound(string("cellSuccess"));
+		}
+		else
+		{
+			SOUND_PLAYER->playSound(string("cellNew"));
+		}
+	}
 
 	addGameObjectToCollide(cell);
 }

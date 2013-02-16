@@ -12,13 +12,6 @@ vertexShader and fragmentShader are also file paths
 	<loop>true</loop>
 	<stream>true</stream>
 </sound>
-<guiSound>
-	<key></key>
-	<value></value>
-	<3d>false</3d>
-	<loop>false</loop>
-	<stream>false</stream>
-</guiSound>
 
 <texture>
 	<key></key>
@@ -376,13 +369,63 @@ vertexShader and fragmentShader are also file paths
 
 <!-- sounds -->
 
-<guiSound>
-	<key>song</key>
-	<value>..\..\..\resources\sounds\song.ogg</value>
-	<3d>false</3d>
-	<loop>true</loop>
-	<stream>false</stream>
-</guiSound>
+<sound>
+  <key>backgroundMusic</key>
+  <value>..\..\..\resources\sounds\backgroundMusic.aif</value>
+  <3d>false</3d>
+  <loop>true</loop>
+  <stream>true</stream>
+</sound>
+
+<sound>
+  <key>gameOver</key>
+  <value>..\..\..\resources\sounds\gameOver.wav</value>
+  <3d>false</3d>
+  <loop>false</loop>
+  <stream>false</stream>
+</sound>
+
+<sound>
+  <key>cellAttack</key>
+  <value>..\..\..\resources\sounds\cellAttack.wav</value>
+  <3d>true</3d>
+  <loop>false</loop>
+  <stream>false</stream>
+</sound>
+
+<sound>
+  <key>cellDie</key>
+  <value>..\..\..\resources\sounds\cellDie.wav</value>
+  <3d>true</3d>
+  <loop>false</loop>
+  <stream>false</stream>
+</sound>
+
+<sound>
+  <key>cellSuccess</key>
+  <value>..\..\..\resources\sounds\cellSuccess.wav</value>
+  <3d>true</3d>
+  <loop>false</loop>
+  <stream>false</stream>
+</sound>
+
+<sound>
+  <key>cellNew</key>
+  <value>..\..\..\resources\sounds\cellNew.wav</value>
+  <3d>true</3d>
+  <loop>false</loop>
+  <stream>false</stream>
+</sound>
+
+<sound>
+  <key>click</key>
+  <value>..\..\..\resources\sounds\click.wav</value>
+  <3d>true</3d>
+  <loop>false</loop>
+  <stream>false</stream>
+</sound>
+
+<!-- shader -->
 
 <shader>
 	<key>test</key>

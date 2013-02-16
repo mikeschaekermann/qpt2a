@@ -1,4 +1,7 @@
 #include "AssetManager.h"
+#include "../rendering/RenderManager.h"
+#include "../../common/ConfigurationDataHandler.h"
+#include "../sound/SoundPlayer.h"
 
 using namespace cinder;
 
@@ -7,6 +10,7 @@ boost::mutex AssetManager::instanceMutex;
 
 AssetManager::AssetManager(void)
 {
+	SOUND_PLAYER->set3DSettings(CONFIG_FLOAT1("data.sound.doppler"), CONFIG_FLOAT1("data.sound.distance"), CONFIG_FLOAT1("data.sound.rollOff"));
 }
 
 AssetManager::~AssetManager(void)
@@ -112,18 +116,10 @@ void AssetManager::loadAssets(string filePath)
 		}
 		else if(it->getTag() == "sound")
 		{
-			auto sound = createSound(it->createDoc());
-			if(sound)
-			{
-				soundMap.insert(pair<string, FMOD::Sound*>(it->getChild("key").getValue(), sound));
-			}
-		}
-		else if(it->getTag() == "guiSound")
-		{
 			auto sound = createSound(*it);
 			if(sound)
 			{
-				guiSoundMap.insert(pair<string, FMOD::Sound*>(it->getChild("key").getValue(), sound));
+				soundMap.insert(pair<string, FMOD::Sound*>(it->getChild("key").getValue(), sound));
 			}
 		}
 		else if(it->getTag() == "model")
@@ -190,7 +186,6 @@ void AssetManager::clearGameAssets()
 
 void AssetManager::clearGuiAssets()
 {
-	guiSoundMap.clear();
 	guiMovieMap.clear();
 	guiTextureMap.clear();
 }
@@ -290,18 +285,6 @@ FMOD::Sound * AssetManager::getSound(string& soundName) const
 	}
 }
 
-FMOD::Sound * AssetManager::getGuiSound(string& soundName) const
-{
-	try
-	{
-		return guiSoundMap.at(soundName);
-	}
-	catch(std::exception& ex)
-	{
-		manager->assetErrorOutput(ex, soundName, "getGuiSound");
-	}
-}
-	
 GlslProg const & AssetManager::getShaderProg(string& shaderName) const
 {
 	try

@@ -11,13 +11,11 @@
 
 using namespace std;
 
+#define SOUND_PLAYER SoundPlayer::getInstance()
+
 class SoundPlayer
 {
 public:
-	bool					sound3d;
-
-	~SoundPlayer(void);
-
 	static SoundPlayer * const getInstance();
 
 	void setMusicVolume(float volume);
@@ -28,9 +26,6 @@ public:
 
 	void playSound(string& key);
 	void playMusic(string& key);
-
-	void playSoundGui(string& key);
-	void playMusicGui(string& key);
 
 	void setListener3d(ci::Vec3f pos, ci::Vec3f vel, ci::Vec3f forward, ci::Vec3f up);
 	void set3DSettings(float dopplerFact, float distanceFact, float rollOffFact);
@@ -48,10 +43,16 @@ private:
 	FMOD::Channel*			musicChannel;
 	FMOD::Channel*			audioInputChannel;
 
+	FMOD_VECTOR				vPosition,
+							vVelocity,
+							vForward,
+							vUp;
+
 	float					musicVolume,
 							soundVolume;
 
 	SoundPlayer(void);
+	~SoundPlayer(void);
 	SoundPlayer(const SoundPlayer& cpy);
 	const SoundPlayer& operator=(const SoundPlayer& cpy);
 

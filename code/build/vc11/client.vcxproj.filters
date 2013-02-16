@@ -463,9 +463,6 @@
     <Filter Include="Actors">
       <UniqueIdentifier>{b93ff397-4ca8-4310-9355-88ddfbee4ee3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Screens">
-      <UniqueIdentifier>{0ded033c-2734-438b-8b11-583447869f9b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actors\Behaviors">
       <UniqueIdentifier>{4743efb3-979e-4b06-94d9-70ad904eec9c}</UniqueIdentifier>
     </Filter>
@@ -502,9 +499,6 @@
     <Filter Include="Network\Messages\Enum">
       <UniqueIdentifier>{7e36fa21-5895-4718-b3bf-f10361bf3a53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Screens\GameScreenStates">
-      <UniqueIdentifier>{2a317f10-862d-494d-9bf8-5cdc5f046aa4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network\Messages\Game\InGame\Environment">
       <UniqueIdentifier>{fc0cb6cd-74ef-42b2-9c54-b751e834bb47}</UniqueIdentifier>
     </Filter>
@@ -516,6 +510,12 @@
     </Filter>
     <Filter Include="Environment">
       <UniqueIdentifier>{6df5a625-56a3-4ff1-b69d-bf3740885559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screens">
+      <UniqueIdentifier>{0ded033c-2734-438b-8b11-583447869f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screens\GameScreenStates">
+      <UniqueIdentifier>{2a317f10-862d-494d-9bf8-5cdc5f046aa4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
