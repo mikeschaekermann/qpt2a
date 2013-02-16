@@ -540,5 +540,11 @@
     <None Include="..\..\resources\shader\barrier.vert">
       <Filter>Rendering\Shader</Filter>
     </None>
+    <None Include="..\..\resources\shader\fogOfWar.vert">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\fogOfWar.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
