@@ -67,7 +67,7 @@
     </fogOfWwar>
 	</world>
 	<players>
-		<max>1</max>
+		<max>2</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
