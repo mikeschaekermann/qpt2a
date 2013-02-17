@@ -438,6 +438,11 @@ vertexShader and fragmentShader are also file paths
   <vertexShader>..\..\..\resources\shader\barrier.vert</vertexShader>
   <fragmentShader>..\..\..\resources\shader\barrier.frag</fragmentShader>
 </shader>
+<shader>
+  <key>static</key>
+  <vertexShader>..\..\..\resources\shader\static.vert</vertexShader>
+  <fragmentShader>..\..\..\resources\shader\static.frag</fragmentShader>
+</shader>
 
 <shader>
 	<key>fogOfWar</key>

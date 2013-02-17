@@ -24,6 +24,7 @@
     <ClCompile Include="..\..\src\client\actors\StemCellClient.cpp" />
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
     <ClCompile Include="..\..\src\client\environment\BarrierClient.cpp" />
+    <ClCompile Include="..\..\src\client\environment\StaticModificatorClient.cpp" />
     <ClCompile Include="..\..\src\Client\input\TouchWay.cpp" />
     <ClCompile Include="..\..\src\client\managers\AssetManager.cpp" />
     <ClCompile Include="..\..\src\client\managers\GameManager.cpp" />
@@ -50,6 +51,7 @@
     <ClCompile Include="..\..\src\common\CollisionHandler.cpp" />
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp" />
     <ClCompile Include="..\..\src\common\environment\Barrier.cpp" />
+    <ClCompile Include="..\..\src\common\environment\StaticModificator.cpp" />
     <ClCompile Include="..\..\src\common\GameObject.cpp" />
     <ClCompile Include="..\..\src\common\Helper.cpp" />
     <ClCompile Include="..\..\src\common\Logger.cpp" />
@@ -95,6 +97,7 @@
     <ClInclude Include="..\..\src\client\actors\StemCellClient.h" />
     <ClInclude Include="..\..\src\client\ClientMain.h" />
     <ClInclude Include="..\..\src\client\environment\BarrierClient.h" />
+    <ClInclude Include="..\..\src\client\environment\StaticModificatorClient.h" />
     <ClInclude Include="..\..\src\Client\input\TouchWay.h" />
     <ClInclude Include="..\..\src\client\managers\AssetManager.h" />
     <ClInclude Include="..\..\src\client\managers\GameManager.h" />
@@ -125,6 +128,7 @@
     <ClInclude Include="..\..\src\common\Config.h" />
     <ClInclude Include="..\..\src\common\ConfigurationDataHandler.h" />
     <ClInclude Include="..\..\src\common\environment\Barrier.h" />
+    <ClInclude Include="..\..\src\common\environment\StaticModificator.h" />
     <ClInclude Include="..\..\src\common\GameObject.h" />
     <ClInclude Include="..\..\src\common\Helper.h" />
     <ClInclude Include="..\..\src\common\IGameObjectMap.h" />
@@ -174,6 +178,8 @@
     <None Include="..\..\resources\assets.xml" />
     <None Include="..\..\resources\shader\barrier.frag" />
     <None Include="..\..\resources\shader\barrier.vert" />
+    <None Include="..\..\resources\shader\static.frag" />
+    <None Include="..\..\resources\shader\static.vert" />
     <None Include="..\..\resources\shader\fogOfWar.frag" />
     <None Include="..\..\resources\shader\fogOfWar.vert" />
     <None Include="..\..\resources\shader\test.frag" />
