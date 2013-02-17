@@ -2,8 +2,22 @@
 
 class JoinRequest;
 class CreateCellRequest;
-struct CreatePolypeptideRequest;
-struct MovePolypetideRequest;
+class PlayerServer;
+class CellServer;
+
+struct CreatePolipeptideRequest
+{
+	unsigned int requestId;
+	unsigned int playerId;
+};
+
+struct MovePolipeptideRequest
+{
+	unsigned int requestId;
+	unsigned int fromCellId;
+	unsigned int toCellId;
+	unsigned int amount;
+};
 
 class Game
 {
@@ -11,8 +25,9 @@ public:
 	Game();
 	void join(JoinRequest & request);
 	void createCell(CreateCellRequest & request);
-	void createPolypetide(CreatePolypeptideRequest & request);
-	void movePolypetide(MovePolypetideRequest & request);
+	void createPolypetide(CreatePolipeptideRequest & request);
+	void movePolypetide(MovePolipeptideRequest & request);
 private:
-	bool testPlayerAndCell(unsigned int playerId, unsigned int cellId);
+	PlayerServer* testPlayer(unsigned int playerId);
+	CellServer* testCell(unsigned int cellId);
 };

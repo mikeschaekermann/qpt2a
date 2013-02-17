@@ -11,9 +11,19 @@ class Polypeptide :
  virtual public GameObject
 {
 public:
+	enum State
+	{
+		TRAVEL,
+		IDLE,
+		CELLFIGHT,
+		POLYPEPTIDEFIGHT
+	};
  void decreaseHealthPointsBy(float damage);
 
  float getHealthPoints() const { return healthPoints; }
+
+ void setState(State state) { this->state = state; }
+ State getState() const { return state; }
 
  float getAngle() const { return ci::toRadians(rotation.z); }
  void setAngle(float angle) { rotation.z = ci::toDegrees(angle); }
@@ -22,6 +32,7 @@ public:
  void setOwner( const Player * owner) { this->owner = owner; }
 protected:
  float healthPoints;
+ State state;
  const float maxHealthPoints;
  const Player * owner;
 
