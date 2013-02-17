@@ -183,19 +183,19 @@
     <ingame>
       <create>
         <standard>
-          <angle>0</angle>
+          <angle>-20</angle>
           <distance>0</distance>
         </standard>
         <knochen>
-          <angle>-60</angle>
+          <angle>-100</angle>
           <distance>0</distance>
         </knochen>
         <verbindung>
-          <angle>-120</angle>
+          <angle>-180</angle>
           <distance>0</distance>
         </verbindung>
         <polypeptid>
-          <angle>160</angle>
+          <angle>170</angle>
           <distance>0</distance>
         </polypeptid>
       </create>
