@@ -21,8 +21,6 @@ public:
 	bool createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & parentCell, CellServer & cell);
 
 	bool createAttackEvent(const double time, bool isAttacker, CellServer & currentCell);
-
-	bool createMovePolypeptideEvent(const double time, PolypeptideServer & polypetide, CellServer & position, CellServer & target);
 private:
 	static EventCreator * instance;
 

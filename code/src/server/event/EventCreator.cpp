@@ -112,14 +112,29 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 				}
 			}
 		}
+
+		/*unsigned int victimIdleCount = 0;
+		for (auto it = victimCell->getPolypeptides().begin(); it != victimCell->getPolypeptides().end(); ++it)
+		{
+			if (it->second->getState() == Polypeptide::IDLE) ++victimIdleCount;
+		}
+
+		unsigned int attackerIdleCount = 0;
+		for (auto it = attackerCell->getPolypeptides().begin(); it != attackerCell->getPolypeptides().end(); ++it)
+		{
+			if (it->second->getState() == Polypeptide::IDLE) ++attackerIdleCount;
+		}
+
+		unsigned int idleCount = min<unsigned int>(victimIdleCount, attackerIdleCount);
+		for (unsigned int i = 0; i < idleCount; ++i)
+		{
+			/// idles make polyfight
+		}
+
+		/// rest make cellfight*/
 	}
 
 	return true;
-}
-
-bool EventCreator::createMovePolypeptideEvent(const double time, PolypeptideServer & polypetide, CellServer & position, CellServer & target)
-{
-	return false;
 }
 
 void EventCreator::sendCellCreationMessages(unsigned int requestId, PlayerServer & currentPlayer, CellServer & cell, const int type)
