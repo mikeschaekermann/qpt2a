@@ -5,6 +5,7 @@
 #include "../../client/actors/PlayerClient.h"
 #include "../../client/actors/StemCellClient.h"
 #include "../environment/BarrierClient.h"
+#include "../environment/StaticModificatorClient.h"
 #include "../sound/SoundPlayer.h"
 
 #include "cinder/app/AppBasic.h"
@@ -192,6 +193,13 @@ void GameManager::addBarrier(unsigned int id, Vec3f position, Vec3f rotation, Ve
 	
 	GAME_SCR.addGameObjectToDraw(barrier);
 	GAME_SCR.addGameObjectToCollide(barrier);
+}
+
+void GameManager::addStaticModifier(unsigned int id, Vec3f position, Vec3f rotation, Vec3f scale, float radius, StaticModificator::Type type)
+{
+	StaticModificatorClient * staticModificator = new StaticModificatorClient(id, position, rotation, scale, radius, type);
+	GAME_SCR.addGameObjectToDraw(staticModificator);
+	GAME_SCR.updateVisibilityOf(staticModificator);
 }
 
 ClientNetworkManager * GameManager::getNetworkManager()

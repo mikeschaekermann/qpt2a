@@ -54,7 +54,7 @@
 	<rendering>
 		<camera>
 			<fieldOfView>30</fieldOfView>
-			<nearPlane>5.0</nearPlane>
+			<nearPlane>1000.0</nearPlane>
 			<farPlane>3000.0</farPlane>
 			<distance>
 				<min>200</min>
@@ -75,7 +75,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-    <max>2</max>
+		<max>1</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
@@ -165,17 +165,17 @@
 		</barriers>
 		<modifiers>
 			<static>
-				<!--<radioactivity>
+				<radioactivity>
 					<position>
 						<x>-50.0</x>
 						<y>0.0</y>
 					</position>
 					<rotation>
-						<x>0.0</x>
-						<y>0.0</y>
+						<x>800.0</x>
+						<y>-200.0</y>
 					</rotation>
-					<radius>10.0</radius>
-				</radioactivity>-->
+          <radius>200.0</radius>
+				</radioactivity>
 			</static>
 		</modifiers>
 	</environment>

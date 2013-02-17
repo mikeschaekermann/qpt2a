@@ -377,34 +377,23 @@ void Game::createCell(CreateCellRequest & request)
 	}
 }
 
-struct CreatePolypeptideRequest
-{
-	unsigned int requestId;
-	unsigned int playerId;
-	unsigned int cellId;
-};
 
-void Game::createPolypetide(CreatePolypeptideRequest & request)
+void Game::createPolypetide(CreatePolipeptideRequest & request)
 {
 	LOG_INFO("CreatePolyPeptideRequest received");
 	unsigned int playerId = request.playerId;
-	unsigned int cellId = request.cellId;
 
-	if (!testPlayerAndCell(playerId, cellId))
+	PlayerServer * player = testPlayer(playerId);
+	if (player == nullptr)
 	{
-		/// Failure
+		/// No valid player
 	}
 
-	CellServer * containerCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
+	CellServer * stemCell = &(player->getStemCell());
 
-	if (containerCell->getType() != CellServer::STEMCELL)
-	{
-		LOG_INFO(stringify(ostringstream() << "Cell with the id " << cellId << " is no stemcell"));
-	}
+	PolypeptideServer * polypetide = new PolypeptideServer(stemCell->getPosition(), stemCell->getAngle(), player);
 
-	PolypeptideServer * polypetide = new PolypeptideServer(containerCell->getPosition(), containerCell->getAngle(), GAMECONTEXT->getPlayer(playerId));
-
-	if (containerCell->addPolypetide(polypetide))
+	if (stemCell->addPolypetide(polypetide))
 	{
 		/// success
 	}
@@ -414,80 +403,59 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 	}
 }
 
-struct MovePolypetideRequest
-{
-	unsigned int requestId;
-	unsigned int playerId;
-	unsigned int cellId;
-	unsigned int targetCellId;
-	unsigned int number;
-};
 
-void Game::movePolypetide(MovePolypetideRequest & request)
+void Game::movePolypetide(MovePolipeptideRequest & request)
 {
 	LOG_INFO("MovePolypetideRequest received");
-	unsigned int playerId = request.playerId;
-	unsigned int cellId = request.cellId;
-	unsigned int targetCellId = request.targetCellId;
-	unsigned int number = request.number;
+	unsigned int fromCellId = request.fromCellId;
+	unsigned int toCellId = request.toCellId;
+	unsigned int amount = request.amount;
 
-	if (!testPlayerAndCell(playerId, cellId))
+	CellServer * fromCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(fromCellId));
+	CellServer * toCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(toCellId));
+
+	if (fromCell == nullptr && toCell == nullptr)
 	{
-		/// Failure
+		/// either sending cell or receiving cell are not valid
 	}
 
-	if (!testPlayerAndCell(playerId, targetCellId))
+	if (fromCell->getOwner() != toCell->getOwner())
 	{
-		/// Failure
+		/// the cells do not have the same owner
 	}
 
-	CellServer * containerCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
-	CellServer * containerTargetCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(targetCellId));
-
-	if (containerCell->getPolypeptides().size() < number)
+	if (toCell->getPolypeptides().size() + amount >= CONFIG_INT1("data.polypetide.maxPerCell"))
 	{
-		/// Failure
+		/// target-cell has not enough space
 	}
 
-	/// get current time
-	double time = EVENT_MGR->getTime();
-
-	for (auto it = containerCell->getPolypeptides().begin(); it != containerCell->getPolypeptides().end(); ++it)
+	vector<unsigned int> polypeptideIds;
+	for (auto it = fromCell->getPolypeptides().begin(); it != fromCell->getPolypeptides().end(); ++it)
 	{
-		if (!EVENT_CRTR->createMovePolypeptideEvent(time, *(dynamic_cast<PolypeptideServer *>(it->second)), *containerCell, *containerTargetCell))
-		{
-			/// Failure
-			return;
-		}
+		polypeptideIds.push_back(it->second->getId());
 	}
+
+	for (auto it = polypeptideIds.begin(); it != polypeptideIds.end(); ++it)
+	{
+		Polypeptide * polypeptide = fromCell->getPolypeptides().find(*it)->second;
+		toCell->addPolypetide(polypeptide);
+		fromCell->removePolypetide(polypeptide);
+	}
+
+	/// send success
+}
+	
+PlayerServer* Game::testPlayer(unsigned int playerId)
+{
+	PlayerServer * player = GAMECONTEXT->getPlayer(playerId);
+	if (player != nullptr && !player->isDead())
+	{
+		return player;
+	}
+	return nullptr;
 }
 
-bool Game::testPlayerAndCell(unsigned int playerId, unsigned int cellId)
+CellServer* Game::testCell(unsigned int cellId)
 {
-	if (GAMECONTEXT->getPlayer(playerId))
-	{
-		PlayerServer & player = *(GAMECONTEXT->getPlayer(playerId));
-
-		if (player.isDead())
-		{
-			/// Failure
-			return false;
-		}
-
-		CellServer * cell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
-		if (cell == 0)
-		{
-			LOG_INFO(stringify(ostringstream() << "Cell with the id " << cellId << " does not exist"));
-			return false;
-		}
-
-		if (player.getId() != cell->getOwner()->getId())
-		{
-			LOG_INFO(stringify(ostringstream() << "Cell with id " << cellId << " is not from passed player with id " << playerId));
-			return false;
-		}
-
-		return true;
-	}
-	return false;
+	return dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
 }
