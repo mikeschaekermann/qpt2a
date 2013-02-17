@@ -9,6 +9,7 @@
 #include "../network/ClientNetworkManager.h"
 #include "../actors/PlayerClient.h"
 #include "boost/thread/mutex.hpp"
+#include "../../common/environment/StaticModificator.h"
 
 #define GAME_MGR GameManager::getInstance()
 #define GAME_SCR SCREEN_MGR->getGameScreen()
@@ -39,6 +40,7 @@ public:
 	void draw();
 
 	void addPetriDish(float radius);
+	void addStaticModifier(unsigned int id, Vec3f position, Vec3f rotation, Vec3f scale, float radius, StaticModificator::Type type);
 	void addBarrier(unsigned int id, Vec3f position, Vec3f rotation, Vec3f scale, float radius);
 	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
 	void setMyPlayerId(unsigned int id);

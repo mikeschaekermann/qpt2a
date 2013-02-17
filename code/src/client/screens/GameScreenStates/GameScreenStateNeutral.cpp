@@ -25,7 +25,7 @@ void GameScreenStateNeutral::touchMoved(const TouchWay & touchWay)
 	auto shift3D = Vec3f(-touchWay.getLastDeltaVector().x, touchWay.getLastDeltaVector().y, 0);
 	auto shift2D = Vec2f(shift3D.x, shift3D.y);
 	cam.setEyePoint(cam.getEyePoint() + shift3D);
-	screen->shiftFogOfWar(shift2D);
+	//screen->shiftFogOfWar(shift2D);
 }
 
 void GameScreenStateNeutral::onKeyInput(KeyEvent& e)

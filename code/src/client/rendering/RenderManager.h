@@ -3,6 +3,7 @@
 #include "../managers/AssetManager.h"
 #include "Cam.h"
 #include "../../common/ConfigurationDataHandler.h"
+#include "../environment/StaticModificatorClient.h"
 
 #include <string>
 
@@ -32,6 +33,8 @@ public:
 					 float shininess = 10.f);
 
 	void renderBarrier(float radius);
+
+	void renderStatic(float radius, StaticModificator::Type type, float opacity);
 
 	void setUp3d();
 	void shutdown3d();

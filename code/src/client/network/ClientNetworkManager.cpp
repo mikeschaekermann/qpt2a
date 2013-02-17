@@ -176,7 +176,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition);
 			}
 
-			// Add environment
+			// Add barriers
 			for (auto it = startGame->barriers.begin(); it != startGame->barriers.end(); ++it)
 			{
 				message << "barrier " << it->modifierId << endl;
@@ -186,6 +186,27 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				GAME_MGR->addBarrier(it->modifierId, it->position, it->rotation, it->scale, it->radius);
 			}
 
+			// Add static environment
+			for (auto it = startGame->staticModifiers.begin(); it != startGame->staticModifiers.end(); ++it)
+			{
+				message << "staic " << it->modifierId << it->type.getType() << endl;
+				LOG_INFO(message.str());
+				message.str("");
+				StaticModificator::Type type = StaticModificator::NUTRIENTSOIL;
+
+				switch (it->type.getType())
+				{
+				case StaticModifierType::NutrientSoil:
+					type = StaticModificator::NUTRIENTSOIL;
+					break;
+				case StaticModifierType::RadioActivity:
+					type = StaticModificator::RADIOACTIVITY;
+					break;
+				default:
+					continue;
+				}
+				GAME_MGR->addStaticModifier(it->modifierId, it->position, it->rotation, it->scale, it->radius, type);
+			}
 
 			SCREEN_MGR->openGameScreen();
 		}

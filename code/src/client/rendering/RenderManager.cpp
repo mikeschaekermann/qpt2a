@@ -78,19 +78,53 @@ void RenderManager::renderBarrier(float radius)
 	shader.unbind();
 }
 
+void RenderManager::renderStatic(float radius, StaticModificator::Type type, float opacity)
+{
+	string staticString = "static";
+	auto shader = ASSET_MGR->getShaderProg(staticString);
+
+	shader.bind();
+
+	Vec4f ambient; 
+	Vec4f diffuse;
+
+	switch (type)
+	{
+	case StaticModificator::RADIOACTIVITY:
+		ambient = Vec4f(0.3f, 0.3f, 0.15f, opacity);
+		diffuse = Vec4f(0.75f, 0.6f, 0.12f, opacity);
+		break;
+	case StaticModificator::NUTRIENTSOIL:
+		ambient = Vec4f(0.15f, 0.55f, 0.15f, opacity);
+		diffuse = Vec4f(0.14f, 0.4f, 0.14f, opacity);
+		break;
+	}
+
+	float shininess = 0.f;
+
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * lightPos);
+
+	shader.uniform("ambientColor", ambient);
+	shader.uniform("diffuseColor", diffuse);
+	shader.uniform("radius", radius);
+
+	gl::pushModelView();
+		drawSphere(Vec3f(0.f, 0.f, 0.f), radius, (int) radius);
+	gl::popModelView();
+
+	shader.unbind();
+}
+
 void RenderManager::setUp3d()
 {
 	gl::pushMatrices();
-		gl::enableDepthWrite();
-		gl::enableDepthRead();
-
-		gl::setMatrices(cam);
+	gl::enableDepthRead();
+	gl::setMatrices(cam);
 }
 
 void RenderManager::shutdown3d()
 {
-		gl::disableDepthWrite();
-		gl::disableDepthRead();
+	gl::disableDepthRead();
 	gl::popMatrices();
 }
 

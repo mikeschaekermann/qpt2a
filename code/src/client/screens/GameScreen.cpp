@@ -15,9 +15,9 @@
 
 GameScreen::GameScreen():
 	run(true),
-	fogOfWarOpacity(CONFIG_FLOAT2("data.world.fogOfWar.opacity", 0.9)),
-	fogOfWarInnerRadius(CONFIG_FLOAT2("data.world.fogOfWar.innerRadius", 20)),
-	fogOfWarOuterRadius(CONFIG_FLOAT2("data.world.fogOfWar.outerRadius", 20)),
+	fogOfWarOpacity(CONFIG_FLOAT2("data.world.fogOfWar.opacity", 0.9f)),
+	fogOfWarInnerRadius(CONFIG_FLOAT2("data.world.fogOfWar.innerRadius", 20.f)),
+	fogOfWarOuterRadius(CONFIG_FLOAT2("data.world.fogOfWar.outerRadius", 20.f)),
 	fogOfWarSurfaceFront(new Surface())
 {
 	state = new GameScreenStateNeutral(this);
@@ -591,14 +591,14 @@ void GameScreen::shiftFogOfWar(Vec2f shift)
 		}
 	}
 
+	
 	fogOfWarMutex.lock();
-
 	fogOfWarSurfaceBack->copyFrom(*fogOfWarSurfaceFront, fogOfWarSurfaceFront->getBounds(), shift);
 	
-	auto tmpSurface = fogOfWarSurfaceFront;
+	auto tmpSurface = fogOfWarSurfaceFront;	
 	fogOfWarSurfaceFront = fogOfWarSurfaceBack;
 	delete tmpSurface;
-
+	
 	fogOfWarMutex.unlock();
 }
 

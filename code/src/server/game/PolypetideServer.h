@@ -19,13 +19,6 @@ public:
 		this->healthPoints = CONFIG_FLOAT1("data.polypetide.healthpoints");
 	}
 
-	void getNextCellPositionByAngle(float angle, float nextCellRadius, Vec3f & outPosition) const
-	{
-		outPosition = position;
-		outPosition.x += cosf(angle) * (0.1f + nextCellRadius + this->radius);
-		outPosition.y += sinf(angle) * (0.1f + nextCellRadius + this->radius);
-	}
-
 private:
 	virtual void setId(unsigned int id) { GameObjectServer::setId(id); }
 	virtual void setPosition(Vec3f position) { Polypetide::setPosition(position); }

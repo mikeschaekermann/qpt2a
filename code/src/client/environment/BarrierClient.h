@@ -9,7 +9,7 @@ public:
 	BarrierClient(unsigned id, Vec3f position, Vec3f rotation, Vec3f scale, float radius) :
 		GameObjectClient(),
 		Barrier(id, position, rotation, scale, radius)
-	{ opacity = 1.f;	}
+	{ opacity = 1.f; }
 protected:
 	void drawAtTransformation() const;
 private:

@@ -206,6 +206,12 @@
     <ClCompile Include="..\..\src\client\actors\BoneCellClient.cpp">
       <Filter>Actors\Cells</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\common\environment\StaticModificator.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\environment\StaticModificatorClient.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -446,6 +452,12 @@
     <ClInclude Include="..\..\src\client\actors\BoneCellClient.h">
       <Filter>Actors\Cells</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\environment\StaticModificator.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\environment\StaticModificatorClient.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -538,6 +550,12 @@
       <Filter>Rendering\Shader</Filter>
     </None>
     <None Include="..\..\resources\shader\barrier.vert">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\static.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\static.vert">
       <Filter>Rendering\Shader</Filter>
     </None>
   </ItemGroup>
