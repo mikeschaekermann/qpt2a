@@ -70,7 +70,7 @@ GameScreen::~GameScreen(void)
 
 void GameScreen::update(float frameTime)
 {
-	SOUND_PLAYER->setListener3d(RENDER_MGR->cam.getEyePoint(), Vec3f::zero(), Vec3f::zero(), RENDER_MGR->cam.getWorldUp());
+	SOUND_PLAYER->setListener3d(Vec3f(RENDER_MGR->cam.getEyePoint().xy(), 0), Vec3f::zero(), Vec3f::zero(), RENDER_MGR->cam.getWorldUp());
 
 	state->update(frameTime);
 
@@ -324,11 +324,11 @@ void GameScreen::addIncompleteCell(CellClient * cell)
 	{
 		if(cell->getOwner() == GAME_MGR->getMyPlayer())
 		{
-			SOUND_PLAYER->playSound(string("cellSuccess"));
+			SOUND_PLAYER->playSound(string("cellSuccess"), cell->getPosition(), Vec3f::zero());
 		}
 		else
 		{
-			SOUND_PLAYER->playSound(string("cellNew"));
+			SOUND_PLAYER->playSound(string("cellNew"), cell->getPosition(), Vec3f::zero());
 		}
 	}
 
