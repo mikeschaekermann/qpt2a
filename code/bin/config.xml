@@ -56,6 +56,14 @@
 			<fieldOfView>30</fieldOfView>
 			<nearPlane>5.0</nearPlane>
 			<farPlane>3000.0</farPlane>
+      <distance>
+        <min>200</min>
+        <max>8000</max>
+      </distance>
+      <angle>
+        <horizontal>100</horizontal>
+        <vertical>10</vertical>
+      </angle>
 		</camera>
 	</rendering>
 	<world>
