@@ -184,9 +184,6 @@
     <ClInclude Include="..\..\src\server\event\CellDieEvent.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\Polypetide.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\common\Cell.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -199,7 +196,10 @@
     <ClInclude Include="..\..\src\common\GameObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\server\game\PolypetideServer.h">
+    <ClInclude Include="..\..\src\common\Polypeptide.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\game\PolypeptideServer.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -396,9 +396,6 @@
     <ClCompile Include="..\..\src\server\event\CellDieEvent.cpp">
       <Filter>Eventlogic</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\common\Polypetide.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\common\Cell.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -406,6 +403,9 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\GameObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\Polypeptide.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>

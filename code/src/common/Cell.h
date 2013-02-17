@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 #include "GameObject.h"
-#include "Polypetide.h"
+#include "Polypeptide.h"
 
 #include "../common/ConfigurationDataHandler.h"
 
@@ -29,26 +29,26 @@ public:
  const Player * getOwner() const { return owner; }
  void setOwner( const Player * owner) { this->owner = owner; }
 
- std::map<unsigned int, Polypetide *> const & getPolypetides() const
+ std::map<unsigned int, Polypeptide *> & getPolypeptides()
  {
-	 return polypetides;
+	 return polypeptides;
  }
 
- bool addPolypetide(Polypetide * polypetide)
+ bool addPolypetide(Polypeptide * polypeptide)
  {
-	 if (polypetides.size() < polyMax)
+	 if (polypeptides.size() < polyMax)
 	 {
-		 return polypetides.insert(make_pair(polypetide->getId(), polypetide)).second;
+		 return polypeptides.insert(make_pair(polypeptide->getId(), polypeptide)).second;
 	 }
 	 return false;
  }
 
- bool removePolypetide(Polypetide * polypetide)
+ bool removePolypetide(Polypeptide * polypeptide)
  {
-	 auto it = polypetides.find(polypetide->getId());
-	 if (it != polypetides.end())
+	 auto it = polypeptides.find(polypeptide->getId());
+	 if (it != polypeptides.end())
 	 {
-		polypetides.erase(it);
+		polypeptides.erase(it);
 		return true;
 	 }
 	 return false;
@@ -60,7 +60,7 @@ protected:
  bool isComplete;
  const Player * owner;
  unsigned int polyMax;
- std::map<unsigned int, Polypetide *> polypetides;
+ std::map<unsigned int, Polypeptide *> polypeptides;
 
  Cell(void);
  Cell(Vec3f position, float angle, Player * owner);

@@ -12,6 +12,7 @@
 #include "../game/PlayerServer.h"
 #include "../game/CellServer.h"
 #include "../game/GameContext.h"
+#include "../game/PolypeptideServer.h"
 
 #include "../environment/StaticModificatorServer.h"
 #include "../environment/BarrierServer.h"
@@ -62,6 +63,63 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	sendCellCreationMessages(requestId, currentPlayer, cell, type);
 
 	return true;
+}
+
+bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellServer & currentCell)
+{
+	if (isAttacker && (!currentCell.getIsComplete() || currentCell.getType() != CellServer::STANDARDCELL))
+	{
+		LOG_INFO("No attack is performed");
+		return false;
+	}
+
+	/** 
+	 * search for all cells that would be in its attack radius
+	 * reversely all the other cell that are attackers have the current cell in its attack radius
+	 */
+	const vector<GameObject *> & activeVictims =
+		GAMECONTEXT->getActiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
+		
+	const vector<GameObject *> & inactiveVictims =
+		GAMECONTEXT->getInactiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
+
+	// Accumulate all possible enemies
+	vector<GameObject *> gameObjects;
+	gameObjects.insert(gameObjects.end(), activeVictims.begin(), activeVictims.end());
+	gameObjects.insert(gameObjects.end(), inactiveVictims.begin(), inactiveVictims.end());
+
+	for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
+	{
+		CellServer * victimCell = isAttacker ? dynamic_cast<CellServer *>(*it) : &currentCell;
+		CellServer * attackerCell = isAttacker ? &currentCell : dynamic_cast<CellServer *>(*it);
+		if (attackerCell->getType() == CellServer::STANDARDCELL)
+		{
+			if (victimCell->getOwner()->getId() != attackerCell->getOwner()->getId())
+			{
+				float damage = calculateDamage(attackerCell, victimCell);
+
+				if (damage > 0.f)
+				{
+					// Modify damage when cells within a static modifier
+					damage *= getAttackerMultiplier(attackerCell);
+					damage *= getVictimMultiplier(victimCell);
+
+					(*EVENT_MGR) += new AttackEvent(time, attackerCell->getId(), victimCell->getId(), damage);
+				}
+				else
+				{
+					LOG_INFO("Bad damage calculation?");
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+bool EventCreator::createMovePolypeptideEvent(const double time, PolypeptideServer & polypetide, CellServer & position, CellServer & target)
+{
+	return false;
 }
 
 void EventCreator::sendCellCreationMessages(unsigned int requestId, PlayerServer & currentPlayer, CellServer & cell, const int type)
@@ -156,58 +214,6 @@ bool EventCreator::checkCollision(unsigned int requestId, CellServer & cell, con
 
 			LOG_ERROR("Cell could not be created because a gameobject is already at this spot");
 			return false;
-		}
-	}
-
-	return true;
-}
-
-bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellServer & currentCell)
-{
-	if (isAttacker && (!currentCell.getIsComplete() || currentCell.getType() != CellServer::STANDARDCELL))
-	{
-		LOG_INFO("No attack is performed");
-		return false;
-	}
-
-	/** 
-	 * search for all cells that would be in its attack radius
-	 * reversely all the other cell that are attackers have the current cell in its attack radius
-	 */
-	const vector<GameObject *> & activeVictims =
-		GAMECONTEXT->getActiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
-		
-	const vector<GameObject *> & inactiveVictims =
-		GAMECONTEXT->getInactiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
-
-	// Accumulate all possible enemies
-	vector<GameObject *> gameObjects;
-	gameObjects.insert(gameObjects.end(), activeVictims.begin(), activeVictims.end());
-	gameObjects.insert(gameObjects.end(), inactiveVictims.begin(), inactiveVictims.end());
-
-	for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
-	{
-		CellServer * victimCell = isAttacker ? dynamic_cast<CellServer *>(*it) : &currentCell;
-		CellServer * attackerCell = isAttacker ? &currentCell : dynamic_cast<CellServer *>(*it);
-		if (attackerCell->getType() == CellServer::STANDARDCELL)
-		{
-			if (victimCell->getOwner()->getId() != attackerCell->getOwner()->getId())
-			{
-				float damage = calculateDamage(attackerCell, victimCell);
-
-				if (damage > 0.f)
-				{
-					// Modify damage when cells within a static modifier
-					damage *= getAttackerMultiplier(attackerCell);
-					damage *= getVictimMultiplier(victimCell);
-
-					(*EVENT_MGR) += new AttackEvent(time, attackerCell->getId(), victimCell->getId(), damage);
-				}
-				else
-				{
-					LOG_INFO("Bad damage calculation?");
-				}
-			}
 		}
 	}
 

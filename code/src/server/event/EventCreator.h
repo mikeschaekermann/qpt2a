@@ -3,6 +3,7 @@
 class NetworkManager;
 class PlayerServer;
 class CellServer;
+class PolypeptideServer;
 
 #include <vector>
 
@@ -21,12 +22,11 @@ public:
 
 	bool createAttackEvent(const double time, bool isAttacker, CellServer & currentCell);
 
-	float calculateDamage(CellServer * attacker, CellServer * victim);
-
-
+	bool createMovePolypeptideEvent(const double time, PolypeptideServer & polypetide, CellServer & position, CellServer & target);
 private:
 	static EventCreator * instance;
 
+	float calculateDamage(CellServer * attacker, CellServer * victim);
 	
 	float getAttackerMultiplier(CellServer * attacker);
 	float getVictimMultiplier(CellServer * victim);
