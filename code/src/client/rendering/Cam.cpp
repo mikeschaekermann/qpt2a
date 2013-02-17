@@ -1,6 +1,7 @@
 #include "Cam.h"
 #include "cinder/app/AppBasic.h"
 #include "../../common/Config.h"
+#include "../../common/ConfigurationDataHandler.h"
 
 using namespace cinder::app;
 
@@ -19,15 +20,33 @@ Cam::~Cam(void)
 {
 }
 
-Cam & Cam::setPosition(Vec3f & newPosition)
+Cam & Cam::setPosition(Vec3f newPosition)
 {
 	position = newPosition;
+
+	auto minDistance = max<float>(2 * getNearClip(), CONFIG_FLOAT2("data.rendering.camera.distance.min", 100));
+	auto maxDistance = min<float>(0.5 * getFarClip(), CONFIG_FLOAT2("data.rendering.camera.distance.max", 1000));
+
+	position.z = min<float>(max<float>(position.z, minDistance), maxDistance);
+
+	float horizontalAngle = ci::toRadians(CONFIG_FLOAT2("data.rendering.camera.angle.horizontal", 45));
+	float verticalAngle = ci::toRadians(CONFIG_FLOAT2("data.rendering.camera.angle.vertical", 10));
+
+	focus.x = position.x + cos(horizontalAngle) * sin(verticalAngle) * position.z;
+	focus.y = position.y + sin(horizontalAngle) * sin(verticalAngle) * position.z;
+	focus.z = 0;
+
 	lookAt(position, focus, upDirection);
 
 	return *this;
 }
 
-Cam & Cam::setFocus(Vec3f & newFocus)
+Vec3f Cam::getPosition() const
+{
+	return position;
+}
+
+Cam & Cam::setFocus(Vec3f newFocus)
 {
 	focus = newFocus;
 	lookAt(position, focus, upDirection);

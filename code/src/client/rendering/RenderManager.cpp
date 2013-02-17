@@ -116,7 +116,7 @@ void RenderManager::zoomToWorld()
 	float worldRadius = CONFIG_FLOAT1("data.world.radius");
 	float camDistance = worldRadius / (float) sin(cam.getFov() / 2.f / 180.f * M_PI);
 
-	cam.setPosition(Vec3f(0, 0, camDistance)).setFocus(Vec3f::zero());
+	cam.setPosition(Vec3f(0, 0, camDistance));
 }
 
 void RenderManager::initializeFogOfWar()
