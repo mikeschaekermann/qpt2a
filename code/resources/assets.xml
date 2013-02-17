@@ -371,7 +371,7 @@ vertexShader and fragmentShader are also file paths
 
 <sound>
   <key>backgroundMusic</key>
-  <value>..\..\..\resources\sounds\backgroundMusic.aif</value>
+  <value>..\..\..\resources\sounds\backgroundMusic.wav</value>
   <3d>false</3d>
   <loop>true</loop>
   <stream>true</stream>
