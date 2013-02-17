@@ -22,9 +22,16 @@ bool GameScreenStateNeutral::touchClick(TouchWay touchWay)
 void GameScreenStateNeutral::touchMoved(const TouchWay & touchWay)
 {
 	auto& cam = RenderManager::getInstance()->cam;
-	auto shift3D = Vec3f(-touchWay.getLastDeltaVector().x, touchWay.getLastDeltaVector().y, 0);
-	auto shift2D = Vec2f(shift3D.x, shift3D.y);
-	cam.setPosition(cam.getPosition() + shift3D);
+	
+	auto curPos2D = touchWay.getCurrentPos();
+	auto prevPos2D = curPos2D - touchWay.getLastDeltaVector();
+
+	auto curPos3D = cam.screenToWorldPlane(curPos2D);
+	auto prevPos3D = cam.screenToWorldPlane(prevPos2D);
+
+	auto shift = prevPos3D - curPos3D;
+
+	cam.setPosition(cam.getPosition() + shift);
 }
 
 void GameScreenStateNeutral::onKeyInput(KeyEvent& e)

@@ -157,17 +157,26 @@ void RenderManager::drawFogOfWar() const
 		auto innerRadius2D = center2D.distance(cam.worldToScreen(center3D + Vec3f(radius3D + fogOfWarInnerRadius, 0, 0), getWindowWidth(), getWindowHeight()));
 		auto outerRadius2D = center2D.distance(cam.worldToScreen(center3D + Vec3f(radius3D + fogOfWarInnerRadius + fogOfWarOuterRadius, 0, 0), getWindowWidth(), getWindowHeight()));
 
-		auto halfSize = Vec2f(outerRadius2D, outerRadius2D);
-		auto inverseHalfSize = Vec2f(outerRadius2D, - outerRadius2D);
+		auto left = center2D.x - outerRadius2D;
+		auto right = center2D.x + outerRadius2D;
+		auto top = center2D.y - outerRadius2D;
+		auto bottom = center2D.y + outerRadius2D;
+
+		bool intersectsViewport = true;
+
+		if (
+			right < 0 ||
+			left > getWindowWidth() ||
+			top > getWindowHeight() ||
+			bottom < 0
+		)
+		{
+			intersectsViewport = false;
+		}
 
 		/// only pass values to the shader
 		/// if they affect the viewport
-		if (
-			getWindowBounds().contains(center2D + halfSize) ||
-			getWindowBounds().contains(center2D - halfSize) ||
-			getWindowBounds().contains(center2D + inverseHalfSize) ||
-			getWindowBounds().contains(center2D - inverseHalfSize)
-		)
+		if (intersectsViewport)
 		{
 			centers2D[numOfRelevantCells] = center2D;
 			innerRadii2D[numOfRelevantCells] = innerRadius2D;

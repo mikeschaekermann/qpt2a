@@ -7,7 +7,7 @@
 
 class Player;
 
-class Polypetide :
+class Polypeptide :
  virtual public GameObject
 {
 public:
@@ -25,10 +25,10 @@ protected:
  const float maxHealthPoints;
  const Player * owner;
 
- Polypetide(void);
- Polypetide(Vec3f position, float angle, Player * owner);
- Polypetide(Vec3f position, float radius, float angle, float healthPoints);
- Polypetide(Vec3f position, float radius, float angle, float healthPoints, Player * owner);
+ Polypeptide(void);
+ Polypeptide(Vec3f position, float angle, Player * owner);
+ Polypeptide(Vec3f position, float radius, float angle, float healthPoints);
+ Polypeptide(Vec3f position, float radius, float angle, float healthPoints, Player * owner);
 
  virtual void setPosition(Vec3f position) { throw logic_error("Not implemented exception"); }
  virtual void setRotation(Vec3f rotation) { throw logic_error("Not implemented exception"); }

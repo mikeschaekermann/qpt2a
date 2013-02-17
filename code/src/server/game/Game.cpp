@@ -35,7 +35,7 @@
 #include "../environment/StaticModificatorServer.h"
 
 #include "CellServer.h"
-#include "PolypetideServer.h"
+#include "PolypeptideServer.h"
 #include "PlayerServer.h"
 #include "GameContext.h"
 
@@ -291,7 +291,6 @@ void Game::join(JoinRequest &request)
 	}
 }
 
-
 void Game::createCell(CreateCellRequest & request)
 {
 	LOG_INFO("CreateCellRequest received");
@@ -378,56 +377,117 @@ void Game::createCell(CreateCellRequest & request)
 	}
 }
 
-struct CreatePolyPeptideRequest
+struct CreatePolypeptideRequest
 {
 	unsigned int requestId;
 	unsigned int playerId;
 	unsigned int cellId;
 };
 
-void Game::createPolypetide(CreatePolyPeptideRequest & request)
+void Game::createPolypetide(CreatePolypeptideRequest & request)
 {
 	LOG_INFO("CreatePolyPeptideRequest received");
 	unsigned int playerId = request.playerId;
 	unsigned int cellId = request.cellId;
 
+	if (!testPlayerAndCell(playerId, cellId))
+	{
+		/// Failure
+	}
+
+	CellServer * containerCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
+
+	if (containerCell->getType() != CellServer::STEMCELL)
+	{
+		LOG_INFO(stringify(ostringstream() << "Cell with the id " << cellId << " is no stemcell"));
+	}
+
+	PolypeptideServer * polypetide = new PolypeptideServer(containerCell->getPosition(), containerCell->getAngle(), GAMECONTEXT->getPlayer(playerId));
+
+	if (containerCell->addPolypetide(polypetide))
+	{
+		/// success
+	}
+	else
+	{
+		/// failure
+	}
+}
+
+struct MovePolypetideRequest
+{
+	unsigned int requestId;
+	unsigned int playerId;
+	unsigned int cellId;
+	unsigned int targetCellId;
+	unsigned int number;
+};
+
+void Game::movePolypetide(MovePolypetideRequest & request)
+{
+	LOG_INFO("MovePolypetideRequest received");
+	unsigned int playerId = request.playerId;
+	unsigned int cellId = request.cellId;
+	unsigned int targetCellId = request.targetCellId;
+	unsigned int number = request.number;
+
+	if (!testPlayerAndCell(playerId, cellId))
+	{
+		/// Failure
+	}
+
+	if (!testPlayerAndCell(playerId, targetCellId))
+	{
+		/// Failure
+	}
+
+	CellServer * containerCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
+	CellServer * containerTargetCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(targetCellId));
+
+	if (containerCell->getPolypeptides().size() < number)
+	{
+		/// Failure
+	}
+
+	/// get current time
+	double time = EVENT_MGR->getTime();
+
+	for (auto it = containerCell->getPolypeptides().begin(); it != containerCell->getPolypeptides().end(); ++it)
+	{
+		if (!EVENT_CRTR->createMovePolypeptideEvent(time, *(dynamic_cast<PolypeptideServer *>(it->second)), *containerCell, *containerTargetCell))
+		{
+			/// Failure
+			return;
+		}
+	}
+}
+
+bool Game::testPlayerAndCell(unsigned int playerId, unsigned int cellId)
+{
 	if (GAMECONTEXT->getPlayer(playerId))
 	{
 		PlayerServer & player = *(GAMECONTEXT->getPlayer(playerId));
 
 		if (player.isDead())
 		{
-			/// CreatePolypetideFailure
-			/*CreateCellFailure *failure = new CreateCellFailure();
-			failure->endpoint = player.getEndpoint();
-			failure->requestId = request.requestId;
-			failure->errorCode = CreateCellErrorCode::PlayerIsSpectator;
-			NETWORKMANAGER->send(failure);*/
-			LOG_INFO("CreatePolypetideFailure sent");
-			return;
+			/// Failure
+			return false;
 		}
 
-		CellServer * containerCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
-		if (containerCell == 0)
+		CellServer * cell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
+		if (cell == 0)
 		{
 			LOG_INFO(stringify(ostringstream() << "Cell with the id " << cellId << " does not exist"));
-			return;
+			return false;
 		}
 
-		if (player.getId() != containerCell->getOwner()->getId())
+		if (player.getId() != cell->getOwner()->getId())
 		{
 			LOG_INFO(stringify(ostringstream() << "Cell with id " << cellId << " is not from passed player with id " << playerId));
+			return false;
 		}
 
-		PolypetideServer * polypetide = new PolypetideServer(containerCell->getPosition(), containerCell->getAngle(), &player);
-
-		if (containerCell->addPolypetide(polypetide))
-		{
-			/// success
-		}
-		else
-		{
-			/// failure
-		}
+		return true;
 	}
+	return false;
 }

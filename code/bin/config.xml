@@ -56,14 +56,14 @@
 			<fieldOfView>30</fieldOfView>
 			<nearPlane>5.0</nearPlane>
 			<farPlane>3000.0</farPlane>
-      <distance>
-        <min>200</min>
-        <max>8000</max>
-      </distance>
-      <angle>
-        <horizontal>100</horizontal>
-        <vertical>10</vertical>
-      </angle>
+			<distance>
+				<min>200</min>
+				<max>8000</max>
+			</distance>
+			<angle>
+				<horizontal>100</horizontal>
+				<vertical>10</vertical>
+			</angle>
 		</camera>
 	</rendering>
 	<world>
@@ -75,7 +75,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-		<max>1</max>
+		<max>2</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
@@ -180,26 +180,26 @@
 		</modifiers>
 	</environment>
 	<menu>
-    <ingame>
-      <create>
-        <standard>
-          <angle>0</angle>
-          <distance>0</distance>
-        </standard>
-        <knochen>
-          <angle>-60</angle>
-          <distance>0</distance>
-        </knochen>
-        <verbindung>
-          <angle>-120</angle>
-          <distance>0</distance>
-        </verbindung>
-        <polypeptid>
-          <angle>160</angle>
-          <distance>0</distance>
-        </polypeptid>
-      </create>
-    </ingame>
+		<ingame>
+		  <create>
+			<standard>
+			  <angle>-20</angle>
+			  <distance>0</distance>
+			</standard>
+			<knochen>
+			  <angle>-100</angle>
+			  <distance>0</distance>
+			</knochen>
+			<verbindung>
+			  <angle>-180</angle>
+			  <distance>0</distance>
+			</verbindung>
+			<polypeptid>
+			  <angle>170</angle>
+			  <distance>0</distance>
+			</polypeptid>
+		  </create>
+		</ingame>
 		<menuscreen>
 			<background>
 				<x>-0.5</x>
@@ -263,9 +263,9 @@
 			</back>
 		</creditscreen>
 	</menu>
-  <sound>
-    <doppler>1</doppler>
-    <distance>30</distance>
-    <rollOff>15</rollOff>
-  </sound>
+	<sound>
+		<doppler>1</doppler>
+		<distance>30</distance>
+		<rollOff>15</rollOff>
+	</sound>
 </data>
