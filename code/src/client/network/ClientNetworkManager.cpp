@@ -176,7 +176,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 				GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition);
 			}
-
+			
 			// Add barriers
 			for (auto it = startGame->barriers.begin(); it != startGame->barriers.end(); ++it)
 			{
@@ -190,7 +190,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			// Add static environment
 			for (auto it = startGame->staticModifiers.begin(); it != startGame->staticModifiers.end(); ++it)
 			{
-				message << "staic " << it->modifierId << it->type.getType() << endl;
+				message << "static " << it->modifierId << it->type.getType() << endl;
 				LOG_INFO(message.str());
 				message.str("");
 				StaticModificator::Type type = StaticModificator::NUTRIENTSOIL;

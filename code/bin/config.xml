@@ -167,15 +167,26 @@
 			<static>
 				<radioactivity>
 					<position>
-						<x>-50.0</x>
-						<y>0.0</y>
+						<x>150.0</x>
+						<y>180.0</y>
 					</position>
 					<rotation>
-						<x>800.0</x>
-						<y>-200.0</y>
+						<x>0.0</x>
+						<y>0.0</y>
 					</rotation>
-          <radius>200.0</radius>
+          <radius>50.0</radius>
 				</radioactivity>
+        <nutrientsoil>
+					<position>
+						<x>-100.0</x>
+						<y>-150.0</y>
+					</position>
+					<rotation>
+						<x>0.0</x>
+						<y>0.0</y>
+					</rotation>
+          <radius>150.0</radius>
+				</nutrientsoil>
 			</static>
 		</modifiers>
 	</environment>
