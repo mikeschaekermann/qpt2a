@@ -54,7 +54,7 @@
 	<rendering>
 		<camera>
 			<fieldOfView>30</fieldOfView>
-			<nearPlane>1000.0</nearPlane>
+			<nearPlane>400.0</nearPlane>
 			<farPlane>3000.0</farPlane>
 			<distance>
 				<min>200</min>

@@ -24,8 +24,8 @@ Cam & Cam::setPosition(Vec3f newPosition)
 {
 	position = newPosition;
 
-	auto minDistance = max<float>(2 * getNearClip(), CONFIG_FLOAT2("data.rendering.camera.distance.min", 100));
-	auto maxDistance = min<float>(0.5 * getFarClip(), CONFIG_FLOAT2("data.rendering.camera.distance.max", 1000));
+	auto minDistance = max<float>(1.1 * getNearClip(), CONFIG_FLOAT2("data.rendering.camera.distance.min", 100));
+	auto maxDistance = min<float>(0.9 * getFarClip(), CONFIG_FLOAT2("data.rendering.camera.distance.max", 1000));
 
 	position.z = min<float>(max<float>(position.z, minDistance), maxDistance);
 
