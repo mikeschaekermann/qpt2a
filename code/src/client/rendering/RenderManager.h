@@ -38,34 +38,20 @@ public:
 
 	void zoomToWorld();
 
-	void shiftFogOfWar(Vec2f shift);
-	void drawFogOfWar();
-
 private:
 	static RenderManager* instance;
 
-	/// flag indicating whether threads can be closed or not
-	volatile bool run;
-
-	/// fog-of-war information
-	Surface * fogOfWarSurfaceFront;
-	const float fogOfWarOpacity;
-	const float fogOfWarInnerRadius;
-	const float fogOfWarOuterRadius;
-
-	boost::thread fogOfWarThread;
-	boost::mutex fogOfWarMutex;
-
-	GLuint fbo;
-	GLuint textureHandle;
+	float fogOfWarOpacity;
+	float fogOfWarInnerRadius;
+	float fogOfWarOuterRadius;
 
 	TriMesh fogOfWarLayer;
 
 	RenderManager(void);
-	RenderManager(const RenderManager&);
+	RenderManager(const RenderManager&) {}
 	~RenderManager();
 
-	void generateFogOfWarTexture();
-	void updateFogOfWar();
+	void initializeFogOfWar();
+	void drawFogOfWar() const;
 };
 

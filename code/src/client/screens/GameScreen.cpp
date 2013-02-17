@@ -181,6 +181,17 @@ void GameScreen::draw()
 		containerMutex.unlock();
 	}
 
+	/// draw health bars
+	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
+	{
+		auto cell = dynamic_cast<CellClient *>(it->second);
+
+		if (cell != nullptr)
+		{
+			cell->drawHealthBar();
+		}
+	}
+
 	gl::color(ColorA(1, 1, 1, 1));
 	rootItem->draw();
 }
