@@ -18,10 +18,6 @@ void main(void) {
 	vec4 nVertexNormal = normalize(vertexNormalEye);
 	float vertexLightAngle = dot(nLightVec, nVertexNormal);
 	
-	vec4 nLightReflectVec = normalize(reflect(nLightVec, nVertexNormal));
-	vec4 nViewVec = normalize(vertexPositionEye - vec4(viewPos, 1.));
-	float viewReflectAngle = dot(nLightReflectVec, nViewVec);
-	
 	vec4 diffColor = diffuseColor * clamp(vertexLightAngle , 0., 1.);
 
 	gl_FragColor = ambientColor + diffColor * (currentRadius / radius);

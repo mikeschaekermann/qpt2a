@@ -257,7 +257,7 @@
 	</menu>
   <sound>
     <doppler>1</doppler>
-    <distance>10</distance>
-    <rollOff>1</rollOff>
+    <distance>30</distance>
+    <rollOff>15</rollOff>
   </sound>
 </data>

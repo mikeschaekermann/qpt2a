@@ -4,6 +4,7 @@ SoundPlayer * SoundPlayer::instance = nullptr;
 
 SoundPlayer::SoundPlayer(void)
 {
+	system->set3DListenerAttributes(0, &vPosition, &vVelocity, &vForward, &vUp);
 }
 
 SoundPlayer::~SoundPlayer(void)
@@ -48,7 +49,7 @@ void SoundPlayer::playSound(string& key, Vec3f pos, Vec3f vel)
 	system->playSound(FMOD_CHANNEL_FREE, sound, true, &soundChannel);
 	FMOD_MODE mode;
 	sound->getMode(&mode);
-	if(mode ^ FMOD_3D == FMOD_3D)
+	if(mode | FMOD_3D == FMOD_3D)
 	{
 		FMOD_VECTOR fPos,
 					fVel;
@@ -132,7 +133,7 @@ void SoundPlayer::setListener3d(ci::Vec3f pos, ci::Vec3f vel, ci::Vec3f forward,
 	vUp.y = up.y;
 	vUp.z = up.z;
 
-	system->set3DListenerAttributes( 0, &vPosition, &vVelocity, &vForward, &vUp);
+	system->set3DListenerAttributes(0, &vPosition, &vVelocity, &vForward, &vUp);
 }
 
 void SoundPlayer::set3DSettings(float dopplerFact, float distanceFact, float rollOffFact)

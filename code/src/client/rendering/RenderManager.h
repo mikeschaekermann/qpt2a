@@ -18,7 +18,6 @@ using namespace ci::gl;
 class RenderManager
 {
 public:
-	Vec3f lightPos;
 	Cam cam;
 
 	static RenderManager * const getInstance();
@@ -39,6 +38,8 @@ public:
 	void zoomToWorld();
 
 private:
+	Vec3f lightPos;
+
 	static RenderManager* instance;
 
 	float fogOfWarOpacity;

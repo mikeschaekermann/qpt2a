@@ -52,7 +52,7 @@ void RenderManager::renderModel(string modelName,
 
 	shader.bind();
 
-	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * lightPos);
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * Vec3f(cam.getEyePoint().xy(), 1000.));
 
 	shader.uniform("ambientColor", ambient);
 	shader.uniform("diffuseColor", diffuse);
