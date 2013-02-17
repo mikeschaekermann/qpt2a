@@ -109,7 +109,7 @@ void GameScreen::draw()
 		RenderManager::getInstance()->renderModel("petriDish", "test",
 												  Vec4f(0.1f, 0.1f, 0.1f, 0.1f),
 												  Vec4f(0.1f, 0.1f, 0.1f, 0.2f),
-												  Vec4f(1.f, 1.f, 1.f, 0.6f),
+												  Vec4f(1.f, 1.f, 1.f, 0.4f),
 												  100.f);
 	gl::popMatrices();
 
@@ -331,18 +331,6 @@ void GameScreen::addIncompleteCell(CellClient * cell)
 	cellsIncomplete.createGameObject(cell);
 	updateVisibilityOf(cell);
 
-	if(cell->isVisible())
-	{
-		if(cell->getOwner() == GAME_MGR->getMyPlayer())
-		{
-			SOUND_PLAYER->playSound(string("cellSuccess"), cell->getPosition(), Vec3f::zero());
-		}
-		else
-		{
-			SOUND_PLAYER->playSound(string("cellNew"), cell->getPosition(), Vec3f::zero());
-		}
-	}
-
 	addGameObjectToCollide(cell);
 }
 
@@ -407,10 +395,15 @@ void GameScreen::completeCellById(unsigned int id)
 		{
 			addCellToPick(cell);
 			LOG_INFO("Own cell was completed.");
+			SOUND_PLAYER->playSound(string("cellSuccess"), cell->getPosition(), Vec3f::zero());
 		}
 		else
 		{
 			LOG_INFO("Other player's cell was completed.");
+			if(cell->isVisible())
+			{
+				SOUND_PLAYER->playSound(string("cellNew"), cell->getPosition(), Vec3f::zero());
+			}
 		}
 	}
 	else
