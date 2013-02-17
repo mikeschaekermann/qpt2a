@@ -120,6 +120,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			if (gameOver->playerId == GAME_MGR->getMyPlayer()->getId())
 			{
+				SOUND_PLAYER->playSound(string("gameOver"));
 				GAME_SCR.switchToState(new GameScreenStateGameOver(&GAME_SCR));
 			}
 		}
@@ -224,7 +225,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			if (attacker) dynamic_cast<StandardCellClient *>(attacker)->startAttackAnimation();
 			if (attacked) dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
 
-
+			SOUND_PLAYER->playSound(string("cellAttack"));
 			if (attacker && attacked)
 			{
 				LOG_INFO("CellAttack: Both available");
@@ -249,6 +250,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		CellDie *cellDie = dynamic_cast<CellDie*> (message);
 		if (cellDie)
 		{
+			SOUND_PLAYER->playSound(string("cellDie"));
 			auto cellObject = GAME_SCR.getGameObjectsToDraw().find(cellDie->cellId);
 			if (cellObject != nullptr)
 			{

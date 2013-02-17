@@ -56,15 +56,23 @@
 			<fieldOfView>30</fieldOfView>
 			<nearPlane>1000.0</nearPlane>
 			<farPlane>3000.0</farPlane>
+			<distance>
+				<min>200</min>
+				<max>8000</max>
+			</distance>
+			<angle>
+				<horizontal>100</horizontal>
+				<vertical>10</vertical>
+			</angle>
 		</camera>
 	</rendering>
 	<world>
 		<radius>500.0</radius>
-		<fogOfWwar>
-		  <opacity>0.9</opacity>
-		  <innerRadius>20</innerRadius>
-		  <outerRadius>30</outerRadius>
-		</fogOfWwar>
+		<fogOfWar>
+		  <opacity>0.6</opacity>
+		  <innerRadius>40</innerRadius>
+		  <outerRadius>60</outerRadius>
+		</fogOfWar>
 	</world>
 	<players>
 		<max>1</max>
@@ -107,10 +115,10 @@
 	<cell>
 		<stemcell>
 			<radius>50.0</radius>
-			<healthpoints>100.0</healthpoints>
+			<healthpoints>400.0</healthpoints>
 		</stemcell>
 		<standardcell>
-			<radius>25.0</radius>
+			<radius>10.0</radius>
 			<healthpoints>100.0</healthpoints>
 			<attackradius>15.0</attackradius>
 			<distanceDropOffDegree>120.0</distanceDropOffDegree>
@@ -121,8 +129,8 @@
 			</spikes>
 		</standardcell>
 		<bonecell>
-			<radius>30.0</radius>
-			<healthpoints>200.0</healthpoints>
+			<radius>15.0</radius>
+			<healthpoints>300.0</healthpoints>
 		</bonecell>
 	</cell>
 	<polypetide>
@@ -172,26 +180,26 @@
 		</modifiers>
 	</environment>
 	<menu>
-    <ingame>
-      <create>
-        <standard>
-          <angle>0</angle>
-          <distance>0</distance>
-        </standard>
-        <knochen>
-          <angle>-60</angle>
-          <distance>0</distance>
-        </knochen>
-        <verbindung>
-          <angle>-120</angle>
-          <distance>0</distance>
-        </verbindung>
-        <polypeptid>
-          <angle>160</angle>
-          <distance>0</distance>
-        </polypeptid>
-      </create>
-    </ingame>
+		<ingame>
+		  <create>
+			<standard>
+			  <angle>-20</angle>
+			  <distance>0</distance>
+			</standard>
+			<knochen>
+			  <angle>-100</angle>
+			  <distance>0</distance>
+			</knochen>
+			<verbindung>
+			  <angle>-180</angle>
+			  <distance>0</distance>
+			</verbindung>
+			<polypeptid>
+			  <angle>170</angle>
+			  <distance>0</distance>
+			</polypeptid>
+		  </create>
+		</ingame>
 		<menuscreen>
 			<background>
 				<x>-0.5</x>
@@ -255,4 +263,9 @@
 			</back>
 		</creditscreen>
 	</menu>
+	<sound>
+		<doppler>1</doppler>
+		<distance>30</distance>
+		<rollOff>15</rollOff>
+	</sound>
 </data>

@@ -95,16 +95,13 @@ public:
 
 	void addExploringCell(CellClient * cell);
 	void removeExploringCell(CellClient * cell);
+	GameObjectContainer<GameObject> & getExploringCells();
 
 	bool canCellBePlaced(CellClient * cell);
 
 	void addRenderText(RenderText const & text);
 	ci::Vec2f worldToScreen(ci::Vec3f position);
 	void switchToState(GameScreenState * newState);
-
-	void updateFogOfWar();
-	void shiftFogOfWar(Vec2f shift);
-	void drawFogOfWar();
 	
 	void updateVisibleGameObjects();
 	void updateVisibilityOf(GameObjectClient * gameObject);
@@ -113,9 +110,6 @@ public:
 
 private:
 	vector<CellClient *> getCellsPicked(Vec2f position);
-	
-	/// flag indicating whether threads can be closed or not
-	volatile bool run;
 
 	/// current state of the screen
 	GameScreenState * state;
@@ -126,21 +120,12 @@ private:
 	/// in-game menu for cell actions
 	GUIItem * cellMenu;
 	unordered_map<string, GUIItem *> cellMenuButtons;
-	/// fog-of-war information
-	boost::thread fogOfWarThread;
-	Surface * fogOfWarSurfaceFront;
-	const float fogOfWarOpacity;
-	const float fogOfWarInnerRadius;
-	const float fogOfWarOuterRadius;
 
 	/// mutex for container manipulation and reading
 	boost::mutex containerMutex;
 	
 	/// mutex for game state manipulation and reading
 	boost::mutex switchScreenMutex;
-
-	/// mutex for fog-of-war manipulation and reading
-	boost::mutex fogOfWarMutex;
 
 	/// all game objects registered to be updated
 	GameObjectContainer<GameObject>			gameObjectsToUpdate;

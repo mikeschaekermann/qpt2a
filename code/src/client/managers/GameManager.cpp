@@ -6,6 +6,7 @@
 #include "../../client/actors/StemCellClient.h"
 #include "../environment/BarrierClient.h"
 #include "../environment/StaticModificatorClient.h"
+#include "../sound/SoundPlayer.h"
 
 #include "cinder/app/AppBasic.h"
 
@@ -19,6 +20,7 @@ GameManager::GameManager(void):
 	serverEndpoint(boost::asio::ip::address_v4::loopback(), 2345),
 	debugMode(false)
 {
+	SOUND_PLAYER->playMusic(string("backgroundMusic"));
 	networkManager = new ClientNetworkManager(serverEndpoint);
 	boost::thread(boost::bind(&NetworkManager::operator(), networkManager));
 
@@ -72,6 +74,7 @@ void GameManager::startGame(string playerName, string ip)
 
 void GameManager::update(float frameTime)
 {
+	SOUND_PLAYER->update();
 	SCREEN_MGR->update(frameTime);
 }
 

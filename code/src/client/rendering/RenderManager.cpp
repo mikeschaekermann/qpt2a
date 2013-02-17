@@ -1,4 +1,7 @@
 #include "RenderManager.h"
+#include "boost/thread/thread.hpp"
+#include "../../common/ConfigurationDataHandler.h"
+#include "../managers/GameManager.h"
 
 RenderManager* RenderManager::instance = nullptr;
 
@@ -14,7 +17,17 @@ RenderManager::RenderManager()
 		.setPosition(Vec3f( 0.0f, 0.0f, 0.0f ))
 		.setFocus(Vec3f::zero());
 
+	fogOfWarOpacity = CONFIG_FLOAT2("data.world.fogOfWar.opacity", 0.9);
+	fogOfWarInnerRadius = CONFIG_FLOAT2("data.world.fogOfWar.innerRadius", 20);
+	fogOfWarOuterRadius = CONFIG_FLOAT2("data.world.fogOfWar.outerRadius", 20);
+
 	gl::enableAlphaBlending();
+
+	initializeFogOfWar();
+}
+
+RenderManager::~RenderManager()
+{
 }
 
 RenderManager * const RenderManager::getInstance()
@@ -39,7 +52,7 @@ void RenderManager::renderModel(string modelName,
 
 	shader.bind();
 
-	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * lightPos);
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * Vec3f(cam.getEyePoint().xy(), 1000.));
 
 	shader.uniform("ambientColor", ambient);
 	shader.uniform("diffuseColor", diffuse);
@@ -118,13 +131,19 @@ void RenderManager::renderStatic(float radius, StaticModificator::Type type, flo
 void RenderManager::setUp3d()
 {
 	gl::pushMatrices();
+	gl::enableDepthWrite();
+	gl::enableDepthRead();
+	gl::setMatrices(cam);
 	gl::enableDepthRead();
 	gl::setMatrices(cam);
 }
 
 void RenderManager::shutdown3d()
 {
-	gl::disableDepthRead();
+		drawFogOfWar();
+
+		gl::disableDepthWrite();
+		gl::disableDepthRead();
 	gl::popMatrices();
 }
 
@@ -135,5 +154,90 @@ void RenderManager::zoomToWorld()
 	float worldRadius = CONFIG_FLOAT1("data.world.radius");
 	float camDistance = worldRadius / (float) sin(cam.getFov() / 2.f / 180.f * M_PI);
 
-	cam.setPosition(Vec3f(0, 0, camDistance)).setFocus(Vec3f::zero());
+	cam.setPosition(Vec3f(0, 0, camDistance));
+}
+
+void RenderManager::initializeFogOfWar()
+{
+	fogOfWarLayer = TriMesh();
+
+	fogOfWarLayer.appendVertex(Vec3f(-1.f,  1.f, -1.f)); /// top left
+	fogOfWarLayer.appendVertex(Vec3f( 1.f,  1.f, -1.f)); /// top right
+	fogOfWarLayer.appendVertex(Vec3f(-1.f, -1.f, -1.f)); /// bottom left
+	fogOfWarLayer.appendVertex(Vec3f( 1.f, -1.f, -1.f)); /// bottom right
+
+	fogOfWarLayer.appendTriangle(0, 2, 1);
+	fogOfWarLayer.appendTriangle(1, 2, 3);
+}
+
+void RenderManager::drawFogOfWar() const
+{
+	auto fogOfWarShaderProgram = ASSET_MGR->getShaderProg(string("fogOfWar"));
+	fogOfWarShaderProgram.bind();
+
+	GAME_SCR.getContainerMutex().lock();
+
+	auto& cellsExploring = GAME_SCR.getExploringCells();
+	int numOfCells = cellsExploring.getSize();
+
+	Vec2f * centers2D = new Vec2f[numOfCells];
+	float * innerRadii2D = new float[numOfCells];
+	float * outerRadii2D = new float[numOfCells];
+		
+	int numOfRelevantCells = 0;
+
+	for (auto it = cellsExploring.begin(); it != cellsExploring.end(); ++it)
+	{
+		auto center3D = it->second->getPosition();
+		auto center2D = cam.worldToScreen(center3D, getWindowWidth(), getWindowHeight());
+			
+		auto radius3D = it->second->getRadius();
+		auto innerRadius2D = center2D.distance(cam.worldToScreen(center3D + Vec3f(radius3D + fogOfWarInnerRadius, 0, 0), getWindowWidth(), getWindowHeight()));
+		auto outerRadius2D = center2D.distance(cam.worldToScreen(center3D + Vec3f(radius3D + fogOfWarInnerRadius + fogOfWarOuterRadius, 0, 0), getWindowWidth(), getWindowHeight()));
+
+		auto left = center2D.x - outerRadius2D;
+		auto right = center2D.x + outerRadius2D;
+		auto top = center2D.y - outerRadius2D;
+		auto bottom = center2D.y + outerRadius2D;
+
+		bool intersectsViewport = true;
+
+		if (
+			right < 0 ||
+			left > getWindowWidth() ||
+			top > getWindowHeight() ||
+			bottom < 0
+		)
+		{
+			intersectsViewport = false;
+		}
+
+		/// only pass values to the shader
+		/// if they affect the viewport
+		if (intersectsViewport)
+		{
+			centers2D[numOfRelevantCells] = center2D;
+			innerRadii2D[numOfRelevantCells] = innerRadius2D;
+			outerRadii2D[numOfRelevantCells] = outerRadius2D;
+
+			++numOfRelevantCells;
+		}
+	}
+
+	GAME_SCR.getContainerMutex().unlock();
+
+	fogOfWarShaderProgram.uniform("screenSize", Vec2f(getWindowWidth(), getWindowHeight()));
+	fogOfWarShaderProgram.uniform("numOfCells", numOfRelevantCells);
+	fogOfWarShaderProgram.uniform("centers2D", centers2D, numOfRelevantCells);
+	fogOfWarShaderProgram.uniform("innerRadii2D", innerRadii2D, numOfRelevantCells);
+	fogOfWarShaderProgram.uniform("outerRadii2D", outerRadii2D, numOfRelevantCells);
+	fogOfWarShaderProgram.uniform("maxOpacity", fogOfWarOpacity);
+
+	delete centers2D;
+	delete innerRadii2D;
+	delete outerRadii2D;
+
+	gl::draw(fogOfWarLayer);
+
+	fogOfWarShaderProgram.unbind();
 }

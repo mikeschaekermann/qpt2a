@@ -180,6 +180,8 @@
     <None Include="..\..\resources\shader\barrier.vert" />
     <None Include="..\..\resources\shader\static.frag" />
     <None Include="..\..\resources\shader\static.vert" />
+    <None Include="..\..\resources\shader\fogOfWar.frag" />
+    <None Include="..\..\resources\shader\fogOfWar.vert" />
     <None Include="..\..\resources\shader\test.frag" />
     <None Include="..\..\resources\shader\test.vert" />
     <None Include="ClassDiagram1.cd" />

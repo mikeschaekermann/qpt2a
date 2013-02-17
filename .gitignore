@@ -81,8 +81,8 @@ Ankh.NoLoad
 
 #Common Files and folders
 [Dd]ebug*/
+code/build/vc11/Release
 *.opensdf
-*.ico
 *.exe
 *.pdf
 

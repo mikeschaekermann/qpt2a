@@ -13,6 +13,7 @@ public:
 	virtual ~GameScreenStateInMenu(void);
 	
 	virtual bool touchClick(TouchWay touchWay);
+	virtual bool mouseMove(MouseEvent event);
 
 protected:
 	CellClient * pickedCell;

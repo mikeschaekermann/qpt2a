@@ -67,3 +67,10 @@ bool GameScreenStateInMenu::touchClick(TouchWay touchWay)
 
 	return false;
 }
+
+bool GameScreenStateInMenu::mouseMove(MouseEvent event)
+{
+	screen->cellMenu->setVisible(true);
+
+	return false;
+}
