@@ -420,7 +420,7 @@ vertexShader and fragmentShader are also file paths
 <sound>
   <key>click</key>
   <value>..\..\..\resources\sounds\click.wav</value>
-  <3d>true</3d>
+  <3d>false</3d>
   <loop>false</loop>
   <stream>false</stream>
 </sound>

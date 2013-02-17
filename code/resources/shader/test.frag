@@ -13,15 +13,6 @@ varying vec4 vertexNormalEye;
 
 const vec3 viewPos = vec3(0., 0., 0.);
 
-float powing(float x, float y){
-	float result = x;
-	for(float i = 0.; i < y - 1.; ++i){
-		result *= x;
-	}
-
-	return result;
-}
-
 void main(void) {
 	vec4 nLightVec = normalize(lightPos - vertexPositionEye);
 	vec4 nVertexNormal = normalize(vertexNormalEye);
@@ -32,7 +23,7 @@ void main(void) {
 	float viewReflectAngle = dot(nLightReflectVec, nViewVec);
 	
 	vec4 diffColor = diffuseColor * clamp(vertexLightAngle , 0., 1.);
-	vec4 specColor = specularColor * powing(clamp(viewReflectAngle, 0., 1.), shininess);
+	vec4 specColor = specularColor * pow(clamp(viewReflectAngle, 0., 1.), shininess);
 
 	gl_FragColor = ambientColor + diffColor + specColor;
 }

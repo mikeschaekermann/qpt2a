@@ -75,7 +75,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-		<max>2</max>
+		<max>1</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
@@ -115,10 +115,10 @@
 	<cell>
 		<stemcell>
 			<radius>50.0</radius>
-			<healthpoints>100.0</healthpoints>
+			<healthpoints>400.0</healthpoints>
 		</stemcell>
 		<standardcell>
-			<radius>25.0</radius>
+			<radius>10.0</radius>
 			<healthpoints>100.0</healthpoints>
 			<attackradius>15.0</attackradius>
 			<distanceDropOffDegree>120.0</distanceDropOffDegree>
@@ -129,8 +129,8 @@
 			</spikes>
 		</standardcell>
 		<bonecell>
-			<radius>30.0</radius>
-			<healthpoints>200.0</healthpoints>
+			<radius>15.0</radius>
+			<healthpoints>300.0</healthpoints>
 		</bonecell>
 	</cell>
 	<polypetide>
@@ -265,7 +265,7 @@
 	</menu>
   <sound>
     <doppler>1</doppler>
-    <distance>10</distance>
-    <rollOff>10</rollOff>
+    <distance>30</distance>
+    <rollOff>15</rollOff>
   </sound>
 </data>

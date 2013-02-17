@@ -73,6 +73,7 @@ void GameManager::startGame(string playerName, string ip)
 
 void GameManager::update(float frameTime)
 {
+	SOUND_PLAYER->update();
 	SCREEN_MGR->update(frameTime);
 }
 

@@ -25,6 +25,7 @@ public:
 	
 
 	void playSound(string& key);
+	void playSound(string& key, Vec3f pos, Vec3f vel);
 	void playMusic(string& key);
 
 	void setListener3d(ci::Vec3f pos, ci::Vec3f vel, ci::Vec3f forward, ci::Vec3f up);
