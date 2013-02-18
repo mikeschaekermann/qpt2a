@@ -1,10 +1,11 @@
 #include "PlayerClient.h"
+#include "../rendering/RenderManager.h"
 
 PlayerClient::PlayerClient(unsigned int id, string name, bool canManipulate) :
 	Player(id, name),
 	m_bCanManipulate(canManipulate),
 	hue(0.5),
-	skin(Vec3f(2 * CONFIG_FLOAT1("data.world.radius"), 2 * CONFIG_FLOAT1("data.world.radius"), 200), Vec3f(20.f, 20.f, 20.f), 10.f)
+	skin(Vec3f(2 * CONFIG_FLOAT1("data.world.radius"), 2 * CONFIG_FLOAT1("data.world.radius"), 200), Vec3f(15.f, 15.f, 15.f), 100.f)
 {
 	initializeHue();
 }
@@ -13,7 +14,7 @@ PlayerClient::PlayerClient(string name, bool canManipulate) :
 	Player(0, name),
 	m_bCanManipulate(canManipulate),
 	hue(0.5),
-	skin(Vec3f(2 * CONFIG_FLOAT1("data.world.radius"), 2 * CONFIG_FLOAT1("data.world.radius"), 200), Vec3f(20.f, 20.f, 20.f), 10.f)
+	skin(Vec3f(2 * CONFIG_FLOAT1("data.world.radius"), 2 * CONFIG_FLOAT1("data.world.radius"), 200), Vec3f(15.f, 15.f, 15.f), 100.f)
 {
 	initializeHue();
 }
@@ -57,8 +58,16 @@ void PlayerClient::drawSkin() const
 {
 	if (skin.meshExists())
 	{
-		gl::color(ColorA(CM_HSV, hue, 1.f, 1.f, 0.5f));
-		gl::draw(skin.getMesh());
+		auto ambientColor = Color(CM_HSV, hue, 0.8f, 1.f);
+		auto diffuseColor = Color(CM_HSV, hue, 0.7f, 0.4f);
+		
+		RENDER_MGR->renderPhongShadedModel(
+			skin.getMesh(),
+			Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, 0.15f),
+			Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, 0.9f),
+			Vec4f(1.f, 1.f, 1.f, 0.9f),
+			5.f
+		);
 	}
 }
 

@@ -29,6 +29,12 @@ RenderManager::RenderManager()
 	glCullFace(GL_BACK);
 
 	initializeFogOfWar();
+
+	lightPos = Vec3f(
+		CONFIG_FLOAT2("data.world.light.position.x", 100.f),
+		CONFIG_FLOAT2("data.world.light.position.y", -100.f),
+		CONFIG_FLOAT2("data.world.light.position.z", 700.f)
+	);
 }
 
 RenderManager::~RenderManager()
