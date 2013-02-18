@@ -91,20 +91,15 @@ MarchingCubes::Metaball::Metaball(Sphere ball):
 
 float MarchingCubes::Metaball::getValueAt(Vec3f position, float isoLevel) const
 {
-	return (1.f / (ball.getCenter().distanceSquared(position)) * radiusSq * isoLevel);
-}
+	auto value = (1.f / (ball.getCenter().distanceSquared(position)) * radiusSq * isoLevel);
+	
+	if (value < isoLevel * 0.5f)
+	{
+		value = 0.f;
+	}
 
-Vec3f MarchingCubes::GridCell::cornerNormals[8] =
-{
-	Vec3f(-NORMAL_LENGTH, -NORMAL_LENGTH, -NORMAL_LENGTH),
-	Vec3f( NORMAL_LENGTH, -NORMAL_LENGTH, -NORMAL_LENGTH),
-	Vec3f( NORMAL_LENGTH, -NORMAL_LENGTH,  NORMAL_LENGTH),
-	Vec3f(-NORMAL_LENGTH, -NORMAL_LENGTH,  NORMAL_LENGTH),
-	Vec3f(-NORMAL_LENGTH,  NORMAL_LENGTH, -NORMAL_LENGTH),
-	Vec3f( NORMAL_LENGTH,  NORMAL_LENGTH, -NORMAL_LENGTH),
-	Vec3f( NORMAL_LENGTH,  NORMAL_LENGTH,  NORMAL_LENGTH),
-	Vec3f(-NORMAL_LENGTH,  NORMAL_LENGTH,  NORMAL_LENGTH)
-};
+	return value;
+}
 
 MarchingCubes::Grid::Grid()
 {

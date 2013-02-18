@@ -33,7 +33,6 @@ public:
 	struct GridCell
 	{
 		GridPoint corners[8];
-		static Vec3f cornerNormals[8];
 	};
 
 	struct Triangle
