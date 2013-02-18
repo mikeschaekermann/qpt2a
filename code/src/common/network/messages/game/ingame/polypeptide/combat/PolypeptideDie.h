@@ -2,18 +2,18 @@
 
 #include "../../../../NetworkMessage.h"
 
-class CellDie : public NetworkMessage
+class PolypeptideDie : public NetworkMessage
 {
 public:
 	/* Fields */
-	unsigned int cellId;
+	unsigned int polypeptideId;
 
 	/* Constructor / Destructor */
-	CellDie();														/// Default constructor
-	CellDie(char *data, unsigned &index);							/// Construct from buffer starting by the given index
-	CellDie(const NetworkMessage &other);							/// Copy constructor which copies the network address
-	CellDie(const CellDie &other);								/// Copy constructor
-	virtual ~CellDie();												/// Default Destructor
+	PolypeptideDie();														/// Default constructor
+	PolypeptideDie(char *data, unsigned &index);							/// Construct from buffer starting by the given index
+	PolypeptideDie(const NetworkMessage &other);							/// Copy constructor which copies the network address
+	PolypeptideDie(const PolypeptideDie &other);								/// Copy constructor
+	virtual ~PolypeptideDie();												/// Default Destructor
 
 	/* Methods */
 	virtual unsigned writeToArray(char* data, unsigned start = 0);		/// Serializes the class to the array
