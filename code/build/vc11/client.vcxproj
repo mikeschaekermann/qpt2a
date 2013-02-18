@@ -175,7 +175,9 @@
     <None Include="..\..\bin\config.xml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="..\..\resources\assets.xml" />
+    <None Include="..\..\resources\assets.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="..\..\resources\shader\barrier.frag" />
     <None Include="..\..\resources\shader\barrier.vert" />
     <None Include="..\..\resources\shader\phong.frag" />

@@ -24,7 +24,22 @@ public:
 	static RenderManager * const getInstance();
 	static void releaseInstance() { if(instance) delete instance; }
 
-	void renderModel(string modelName,
+	void renderSlimeShadedModel(string modelName,
+					 string shaderName,
+					 Vec3f worldTranslation = Vec3f(0, 0, 0),
+					 Vec4f ambient = Vec4f(0.1f, 0.1f, 0.1f, 1.f),
+					 Vec4f diffuse = Vec4f(0.4f, 0.4f, 0.4f, 1.f),
+					 Vec4f specular = Vec4f(1.f, 1.f, 1.f, 1.f),
+					 float shininess = 10.f);
+	
+	void renderPhongShadedModel(string modelName,
+					 string shaderName,
+					 Vec4f ambient = Vec4f(0.1f, 0.1f, 0.1f, 1.f),
+					 Vec4f diffuse = Vec4f(0.4f, 0.4f, 0.4f, 1.f),
+					 Vec4f specular = Vec4f(1.f, 1.f, 1.f, 1.f),
+					 float shininess = 10.f);
+	
+	void renderPhongShadedModel(TriMesh model,
 					 string shaderName,
 					 Vec4f ambient = Vec4f(0.1f, 0.1f, 0.1f, 1.f),
 					 Vec4f diffuse = Vec4f(0.4f, 0.4f, 0.4f, 1.f),

@@ -434,6 +434,12 @@ vertexShader and fragmentShader are also file paths
 </shader>
 
 <shader>
+  <key>phong</key>
+  <vertexShader>..\..\..\resources\shader\phong.vert</vertexShader>
+  <fragmentShader>..\..\..\resources\shader\phong.frag</fragmentShader>
+</shader>
+
+<shader>
   <key>barrier</key>
   <vertexShader>..\..\..\resources\shader\barrier.vert</vertexShader>
   <fragmentShader>..\..\..\resources\shader\barrier.frag</fragmentShader>

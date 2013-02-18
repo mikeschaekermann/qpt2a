@@ -106,7 +106,7 @@ void GameScreen::draw()
 
 	gl::pushMatrices();
 		gl::scale(worldRadius, worldRadius, worldRadius);
-		RenderManager::getInstance()->renderModel("petriDish", "test",
+		RenderManager::getInstance()->renderPhongShadedModel("petriDish", "phong",
 												  Vec4f(0.1f, 0.1f, 0.1f, 0.1f),
 												  Vec4f(0.1f, 0.1f, 0.1f, 0.2f),
 												  Vec4f(1.f, 1.f, 1.f, 0.4f),
