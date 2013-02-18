@@ -362,6 +362,88 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		}
 		break;
 	}
+	/*
+	case MessageType::CreatePolipeptideSuccess
+	{
+		CreatePolipeptideSuccess * createPolySuccess = dynamic_cast<CreatePolipeptideSuccess *>(message);
+		if (createPolySuccess)
+		{
+			LOG_INFO("CreatePolipeptideSuccess received");
+			unsigned int requestId = createPolySuccess->requestId;
+			auto context = createPolypeptideRequestContexts.find(requestId);
+			if (context != createPolypeptideRequestContexts.end())
+			{
+				/// handle create poly success
+			}
+		}
+	}
+	case MessageType::CreatePolipeptideFailure
+	{
+		CreatePolipeptideFailure * createPolyFailure = dynamic_cast<CreatePolipeptideFailure *>(message);
+		if (createPolyFailure)
+		{
+			LOG_INFO("CreatePolipeptideFailure received");
+			unsigned int requestId = createPolyFailure->requestId;
+			auto context = createPolypeptideRequestContexts.find(requestId);
+			if (context != createPolypeptideRequestContexts.end())
+			{
+				/// handle create poly failure
+			}
+		}
+	}
+	case MessageType::MovePolipeptideSuccess
+	{
+		MovePolipeptideSuccess * movePolipeptideSuccess = dynamic_cast<MovePolipeptideSuccess *>(message);
+		if (movePolipeptideSuccess)
+		{
+			LOG_INFO("MovePolipeptideSuccess received");
+			unsigned int requestId = movePolipeptideSuccess->requestId;
+			auto context = movePolypeptideRequestContexts.find(requestId);
+			if (context != movePolypeptideRequestContexts.end())
+			{
+				/// handle move poly success
+			}
+		}
+	}
+	case MessageType::MovePolipeptideFailure
+	{
+		MovePolipeptideFailure * movePolipeptideFailure = dynamic_cast<MovePolipeptideFailure *>(message);
+		if (movePolipeptideFailure)
+		{
+			LOG_INFO("MovePolipeptideFailure received");
+			unsigned int requestId = movePolipeptideFailure->requestId;
+			auto context = movePolypeptideRequestContexts.find(requestId);
+			if (context != movePolypeptideRequestContexts.end())
+			{
+				/// handle move poly failure
+			}
+		}
+	}
+	case MessageType::PolipeptideDie
+	{
+		PolipeptideDie * polipeptideDie = dynamic_cast<PolipeptideDie *>(message);
+		if (polipeptideDie)
+		{
+			LOG_INFO("PolipeptideDie received");
+		}
+	}
+	case MessageType::PolipeptideCellAttack
+	{
+		PolipeptideCellAttack * polipeptideCellAttack = dynamic_cast<PolipeptideCellAttack *>(message);
+		if (polipeptideCellAttack)
+		{
+			LOG_INFO("PolipeptideCellAttack received");
+		}
+	}
+	case MessageType::PolipeptideFight
+	{
+		PolipeptideFight * polipeptideFight = dynamic_cast<PolipeptideFight *>(message);
+		if (polipeptideFight)
+		{
+			LOG_INFO("PolipeptideFight received");
+		}
+	}
+	*/
 	default:
 	{
 		LOG_WARNING("Message received that could not be categorized.");
