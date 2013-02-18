@@ -428,9 +428,9 @@ vertexShader and fragmentShader are also file paths
 <!-- shader -->
 
 <shader>
-	<key>test</key>
-	<vertexShader>..\..\..\resources\shader\test.vert</vertexShader>
-	<fragmentShader>..\..\..\resources\shader\test.frag</fragmentShader>
+	<key>slime</key>
+	<vertexShader>..\..\..\resources\shader\slime.vert</vertexShader>
+	<fragmentShader>..\..\..\resources\shader\slime.frag</fragmentShader>
 </shader>
 
 <shader>

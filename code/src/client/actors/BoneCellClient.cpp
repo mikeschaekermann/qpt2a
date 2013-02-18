@@ -16,7 +16,7 @@ void BoneCellClient::drawAtTransformation() const
 	ColorA specularColor(CM_HSV, h, s, b, o);
 
 	gl::scale(radius, radius, radius);
-	RenderManager::getInstance()->renderSlimeShadedModel("boneCell", "test",
+	RenderManager::getInstance()->renderSlimeShadedModel("boneCell",
 											  position,
 											  Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, ambientColor.a),
 											  Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, diffuseColor.a),

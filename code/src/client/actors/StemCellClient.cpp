@@ -13,7 +13,7 @@ void StemCellClient::drawAtTransformation() const
 	ColorA specularColor(CM_HSV, h, s, b, o);
 
 	gl::scale(radius, radius, radius);
-	RenderManager::getInstance()->renderSlimeShadedModel("stemCell", "test",
+	RenderManager::getInstance()->renderSlimeShadedModel("stemCell",
 											  position,
 											  Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, ambientColor.a),
 											  Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, diffuseColor.a),
