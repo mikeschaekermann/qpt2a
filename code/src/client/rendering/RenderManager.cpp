@@ -23,7 +23,18 @@ RenderManager::RenderManager()
 
 	gl::enableAlphaBlending();
 
+	/// enable back-face culling
+	/// to avoid artifacts
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
 	initializeFogOfWar();
+
+	lightPos = Vec3f(
+		CONFIG_FLOAT2("data.world.light.position.x", 100.f),
+		CONFIG_FLOAT2("data.world.light.position.y", -100.f),
+		CONFIG_FLOAT2("data.world.light.position.z", 700.f)
+	);
 }
 
 RenderManager::~RenderManager()
@@ -185,6 +196,26 @@ void RenderManager::setUp3d()
 void RenderManager::shutdown3d()
 {
 		drawFogOfWar();
+
+		/*
+		auto shader = ASSET_MGR->getShaderProg(string("test"));
+
+		shader.bind();
+
+		shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * Vec3f(cam.getEyePoint().xy(), 1000.));
+
+		shader.uniform("ambientColor", Vec4f(1.f, 0.5f, 0.3f, 0.1f));
+		shader.uniform("diffuseColor", Vec4f(1.f, 0.5f, 0.7f, 0.3f));
+		shader.uniform("specularColor", Vec4f(1.f, 1.f, 1.f, 0.9f));
+		shader.uniform("shininess", 6);
+
+		gl::pushModelView();
+			auto skinMesh = skin.getMesh();
+			gl::draw(skinMesh);
+		gl::popModelView();
+
+		shader.unbind();
+		*/
 	gl::popMatrices();
 }
 

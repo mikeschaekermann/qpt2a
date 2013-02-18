@@ -31,6 +31,7 @@
     <ClCompile Include="..\..\src\client\managers\ScreenManager.cpp" />
     <ClCompile Include="..\..\src\client\network\ClientNetworkManager.cpp" />
     <ClCompile Include="..\..\src\client\rendering\Cam.cpp" />
+    <ClCompile Include="..\..\src\client\rendering\MarchingCubes.cpp" />
     <ClCompile Include="..\..\src\client\rendering\RenderManager.cpp" />
     <ClCompile Include="..\..\src\client\screens\ConnectScreen.cpp" />
     <ClCompile Include="..\..\src\client\screens\CreditsScreen.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="..\..\src\client\managers\ScreenManager.h" />
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h" />
     <ClInclude Include="..\..\src\client\rendering\Cam.h" />
+    <ClInclude Include="..\..\src\client\rendering\MarchingCubes.h" />
     <ClInclude Include="..\..\src\client\rendering\RenderManager.h" />
     <ClInclude Include="..\..\src\client\screens\ConnectScreen.h" />
     <ClInclude Include="..\..\src\client\screens\CreditsScreen.h" />

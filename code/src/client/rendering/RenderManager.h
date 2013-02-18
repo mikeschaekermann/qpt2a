@@ -4,6 +4,7 @@
 #include "Cam.h"
 #include "../../common/ConfigurationDataHandler.h"
 #include "../environment/StaticModificatorClient.h"
+#include "MarchingCubes.h"
 
 #include <string>
 

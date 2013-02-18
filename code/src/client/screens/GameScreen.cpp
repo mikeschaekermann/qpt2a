@@ -138,6 +138,12 @@ void GameScreen::draw()
 
 	containerMutex.unlock();
 
+	/// draw player skins
+	for (auto it = GAME_MGR->getPlayers().begin(); it != GAME_MGR->getPlayers().end(); ++it)
+	{
+		it->second->drawSkin();
+	}
+
 	state->draw3D();
 
 	RenderManager::getInstance()->shutdown3d();
@@ -181,6 +187,8 @@ void GameScreen::draw()
 		containerMutex.unlock();
 	}
 
+	containerMutex.lock();
+
 	/// draw health bars
 	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
 	{
@@ -191,6 +199,8 @@ void GameScreen::draw()
 			cell->drawHealthBar();
 		}
 	}
+
+	containerMutex.unlock();
 
 	gl::color(ColorA(1, 1, 1, 1));
 	rootItem->draw();
@@ -285,6 +295,19 @@ void GameScreen::addGameObjectToDraw(GameObjectClient * gameObject)
 void GameScreen::removeGameObjectToDraw(GameObjectClient * gameObject)
 {
 	gameObjectsToDraw.removeGameObject(gameObject->getId(), false);
+	
+	auto cell = dynamic_cast<CellClient *>(gameObject);
+
+	if(cell != nullptr && cell->isVisible())
+	{
+		auto owner = GAME_MGR->getPlayerById(cell->getOwner()->getId());
+
+		if (owner != nullptr)
+		{
+			owner->removeSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT2("data.skin.distanceFromCells", 10.f)));
+		}
+	}
+	
 	updateVisibilityOf(gameObject);
 }
 
@@ -331,6 +354,13 @@ void GameScreen::addIncompleteCell(CellClient * cell)
 	cellsIncomplete.createGameObject(cell);
 	updateVisibilityOf(cell);
 
+
+		auto owner = GAME_MGR->getPlayerById(cell->getOwner()->getId());
+
+		if (owner != nullptr)
+		{
+			owner->addSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT2("data.skin.distanceFromCells", 10.f)));
+		}
 	addGameObjectToCollide(cell);
 }
 
@@ -498,15 +528,28 @@ void GameScreen::addRenderText(RenderText const & text)
 void GameScreen::updateVisibilityOf(GameObjectClient * gameObject)
 {
 	auto intersections = visibleAreas.findInRadiusOf(gameObject->getPosition(), gameObject->getRadius());
-	
-	if (intersections.size() > 0)
+	auto newVisible = intersections.size() > 0;
+
+	auto cell = dynamic_cast<CellClient *>(gameObject);
+
+	if (cell != nullptr && cell->isVisible() != newVisible)
 	{
-		gameObject->show();
+		auto owner = GAME_MGR->getPlayerById(cell->getOwner()->getId());
+
+		if (owner != nullptr)
+		{
+			if (newVisible)
+			{
+				owner->addSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT2("data.skin.distanceFromCells", 10.f)));
+			}
+			else
+			{
+				owner->removeSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT2("data.skin.distanceFromCells", 10.f)));
+			}
+		}
 	}
-	else
-	{
-		gameObject->hide();
-	}
+
+	gameObject->setVisibility(newVisible);
 }
 
 void GameScreen::updateVisibleGameObjects()

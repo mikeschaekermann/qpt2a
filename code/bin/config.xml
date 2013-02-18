@@ -54,7 +54,7 @@
 	<rendering>
 		<camera>
 			<fieldOfView>30</fieldOfView>
-			<nearPlane>400.0</nearPlane>
+			<nearPlane>5.0</nearPlane>
 			<farPlane>3000.0</farPlane>
 			<distance>
 				<min>200</min>
@@ -65,6 +65,13 @@
 				<vertical>10</vertical>
 			</angle>
 		</camera>
+    <light>
+      <position>
+        <x>200.0</x>
+        <y>-100.0</y>
+        <z>700.0</z>
+      </position>
+    </light>
 	</rendering>
 	<world>
 		<radius>500.0</radius>
@@ -118,6 +125,15 @@
 			<time>1.0</time>
 		</polypeptidecellattack>
 	</event>
+  <skin>
+    <distanceFromCells>5.0</distanceFromCells>
+    <grid>
+      <cell>
+        <size>15.0</size>
+      </cell>
+      <isoLevel>10.0</isoLevel>
+    </grid>
+  </skin>
 	<cell>
 		<stemcell>
 			<radius>50.0</radius>
@@ -144,7 +160,7 @@
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
 		<damage>2.0</damage>
-	</polypetide>
+	</polypeptide>
 	<environment>
 		<barriers>
 			<barrier>

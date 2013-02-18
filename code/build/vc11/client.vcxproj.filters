@@ -245,6 +245,9 @@
     <ClCompile Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.cpp">
       <Filter>Network\Messages\Enum</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\rendering\MarchingCubes.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -490,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\client\environment\StaticModificatorClient.h">
       <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\rendering\MarchingCubes.h">
+      <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.h">
       <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
