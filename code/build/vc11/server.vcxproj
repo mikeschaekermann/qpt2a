@@ -52,6 +52,9 @@
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.h" />
@@ -122,6 +125,9 @@
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.cpp" />

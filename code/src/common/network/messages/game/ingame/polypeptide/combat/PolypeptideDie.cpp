@@ -1,43 +1,43 @@
-#include "CellDie.h"
+#include "PolypeptideDie.h"
 
-CellDie::CellDie() : NetworkMessage(), cellId(0)
+PolypeptideDie::PolypeptideDie() : NetworkMessage(), polypeptideId(0)
 {
 	messageType = MessageType::CellDie;
 }
 
-CellDie::CellDie(char* data, unsigned &index) : NetworkMessage(data, index), cellId(0)
+PolypeptideDie::PolypeptideDie(char* data, unsigned &index) : NetworkMessage(data, index), polypeptideId(0)
 {
-	memcpy(&cellId, &data[index], sizeof(cellId));
-	cellId = ntohl(cellId);
-	index += sizeof(cellId);
+	memcpy(&polypeptideId, &data[index], sizeof(polypeptideId));
+	polypeptideId = ntohl(polypeptideId);
+	index += sizeof(polypeptideId);
 }
 
-CellDie::CellDie(const CellDie &other) : NetworkMessage(other), cellId(other.cellId)
+PolypeptideDie::PolypeptideDie(const PolypeptideDie &other) : NetworkMessage(other), polypeptideId(other.polypeptideId)
 { 
 	messageType = MessageType::CellDie;
 }
 
-CellDie::CellDie(const NetworkMessage &other) : NetworkMessage(other), cellId(0)
+PolypeptideDie::PolypeptideDie(const NetworkMessage &other) : NetworkMessage(other), polypeptideId(0)
 { 
 	messageType = MessageType::CellDie;
 }
 
-CellDie::~CellDie() 
+PolypeptideDie::~PolypeptideDie() 
 { }
 
-unsigned CellDie::writeToArray(char* data, unsigned start)
+unsigned PolypeptideDie::writeToArray(char* data, unsigned start)
 {
 	unsigned index = NetworkMessage::writeToArray(data);
 	
-	unsigned networkcellId = htonl(cellId);
-	memcpy(&data[index], &networkcellId, sizeof(networkcellId));
-	index += sizeof(networkcellId);
+	unsigned networkPolypeptideId = htonl(polypeptideId);
+	memcpy(&data[index], &networkPolypeptideId, sizeof(networkPolypeptideId));
+	index += sizeof(networkPolypeptideId);
 	
 	return index;
 }
 
-unsigned CellDie::calculateSize()
+unsigned PolypeptideDie::calculateSize()
 {
 	return NetworkMessage::calculateSize() 
-		+ sizeof(cellId);
+		+ sizeof(polypeptideId);
 }

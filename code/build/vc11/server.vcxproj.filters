@@ -226,6 +226,15 @@
     <ClInclude Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.h">
       <Filter>Network\Messages\Enum</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -467,6 +476,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.cpp">
       <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

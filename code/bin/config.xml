@@ -133,7 +133,7 @@
 			<healthpoints>300.0</healthpoints>
 		</bonecell>
 	</cell>
-	<polypetide>
+	<polypeptide>
 		<maxPerCell>15</maxPerCell>
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
