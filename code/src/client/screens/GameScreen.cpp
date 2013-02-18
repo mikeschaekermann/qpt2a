@@ -138,6 +138,8 @@ void GameScreen::draw()
 
 	containerMutex.unlock();
 
+	RENDER_MGR->renderGoo();
+
 	state->draw3D();
 
 	RenderManager::getInstance()->shutdown3d();

@@ -648,5 +648,11 @@
     <None Include="..\..\resources\shader\slime.vert">
       <Filter>Rendering\Shader</Filter>
     </None>
+    <None Include="..\..\resources\shader\goo.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\goo.vert">
+      <Filter>Rendering\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -367,6 +367,11 @@ vertexShader and fragmentShader are also file paths
   <value>..\..\..\resources\models\vitamin.obj</value>
 </model>
 
+<model>
+  <key>goo</key>
+  <value>..\..\..\resources\models\goo.obj</value>
+</model>
+
 <!-- sounds -->
 
 <sound>
@@ -454,4 +459,10 @@ vertexShader and fragmentShader are also file paths
 	<key>fogOfWar</key>
 	<vertexShader>..\..\..\resources\shader\fogOfWar.vert</vertexShader>
 	<fragmentShader>..\..\..\resources\shader\fogOfWar.frag</fragmentShader>
+</shader>
+
+<shader>
+  <key>goo</key>
+  <vertexShader>..\..\..\resources\shader\goo.vert</vertexShader>
+  <fragmentShader>..\..\..\resources\shader\goo.frag</fragmentShader>
 </shader>

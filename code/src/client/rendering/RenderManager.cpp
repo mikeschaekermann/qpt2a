@@ -176,6 +176,33 @@ void RenderManager::renderStatic(float radius, StaticModificator::Type type, flo
 	shader.unbind();
 }
 
+void RenderManager::renderGoo()
+{
+	auto model = ASSET_MGR->getModel(string("goo"));
+	auto shader = ASSET_MGR->getShaderProg(string("goo"));
+
+	shader.bind();
+
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * Vec3f(cam.getEyePoint().xy(), 1000.));
+
+	shader.uniform("ambientColor", Vec3f(0.1, 0.1, 0.1));
+	shader.uniform("diffuseColor", Vec3f(0.5, 0.1, 0.1));
+	shader.uniform("specularColor", Vec3f(0.9, 0.9, 0.9));
+	shader.uniform("shininess", float(1000.));
+	shader.uniform("time", float(getElapsedSeconds()));
+	gl::pushMatrices();
+	float scale = CONFIG_FLOAT1("data.world.radius");
+	gl::scale(scale, scale);
+	gl::color(1., 0., 0.);
+	gl::pushModelView();
+		gl::draw(model);
+	gl::popModelView();
+	
+	gl::popMatrices();
+
+	shader.unbind();
+}
+
 void RenderManager::setUp3d()
 {
 	gl::pushMatrices();

@@ -50,6 +50,8 @@ public:
 					 Vec4f specular = Vec4f(1.f, 1.f, 1.f, 1.f),
 					 float shininess = 10.f);
 
+	void renderGoo();
+
 	void renderBarrier(float radius);
 
 	void renderStatic(float radius, StaticModificator::Type type, float opacity);
