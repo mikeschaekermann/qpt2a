@@ -36,9 +36,11 @@
     <ClInclude Include="..\..\src\common\network\messages\ConnectionMessage.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\CellType.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.h" />
+    <ClInclude Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\DynamicModifierType.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\JoinErrorCode.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\MessageType.h" />
+    <ClInclude Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.h" />
     <ClInclude Include="..\..\src\common\network\messages\enum\StaticModifierType.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.h" />
@@ -50,6 +52,12 @@
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideFailure.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideRequest.h" />
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideSuccess.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\GameOver.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinFailure.h" />
     <ClInclude Include="..\..\src\common\network\messages\game\outgame\JoinRequest.h" />
@@ -98,9 +106,11 @@
     <ClCompile Include="..\..\src\common\network\messages\ConnectionMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\CellType.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\CreateCellErrorCode.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\DynamicModifierType.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\JoinErrorCode.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\MessageType.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\enum\StaticModifierType.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellAttack.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\cell\combat\CellDie.cpp" />
@@ -112,6 +122,12 @@
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentAttack.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\EnvironmentMove.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\environment\ResourceBonus.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideFailure.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideRequest.cpp" />
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideSuccess.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\GameOver.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinFailure.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\JoinRequest.cpp" />
@@ -183,7 +199,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)\..\..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>.\obj\$(ProjectName)\$(Configuration)\</IntDir>
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

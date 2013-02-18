@@ -54,7 +54,7 @@
 	<rendering>
 		<camera>
 			<fieldOfView>30</fieldOfView>
-			<nearPlane>1000.0</nearPlane>
+			<nearPlane>400.0</nearPlane>
 			<farPlane>3000.0</farPlane>
 			<distance>
 				<min>200</min>
@@ -75,7 +75,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-		<max>1</max>
+		<max>2</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
@@ -137,6 +137,7 @@
 		<maxPerCell>15</maxPerCell>
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
+		<damage>2.0</damage>
 	</polypetide>
 	<environment>
 		<barriers>
@@ -167,15 +168,26 @@
 			<static>
 				<radioactivity>
 					<position>
-						<x>-50.0</x>
-						<y>0.0</y>
+						<x>150.0</x>
+						<y>180.0</y>
 					</position>
 					<rotation>
-						<x>800.0</x>
-						<y>-200.0</y>
+						<x>0.0</x>
+						<y>0.0</y>
 					</rotation>
-          <radius>200.0</radius>
+          <radius>50.0</radius>
 				</radioactivity>
+        <nutrientsoil>
+					<position>
+						<x>-100.0</x>
+						<y>-150.0</y>
+					</position>
+					<rotation>
+						<x>0.0</x>
+						<y>0.0</y>
+					</rotation>
+          <radius>150.0</radius>
+				</nutrientsoil>
 			</static>
 		</modifiers>
 	</environment>

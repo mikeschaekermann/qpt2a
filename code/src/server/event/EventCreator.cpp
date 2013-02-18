@@ -113,25 +113,72 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 			}
 		}
 
-		/*unsigned int victimIdleCount = 0;
+		vector<unsigned int> victimIdleIds;
 		for (auto it = victimCell->getPolypeptides().begin(); it != victimCell->getPolypeptides().end(); ++it)
 		{
-			if (it->second->getState() == Polypeptide::IDLE) ++victimIdleCount;
+			if (it->second->getState() == Polypeptide::IDLE)
+				victimIdleIds.push_back(it->second->getId());
 		}
 
-		unsigned int attackerIdleCount = 0;
+		vector<unsigned int> attackerIdleIds;
 		for (auto it = attackerCell->getPolypeptides().begin(); it != attackerCell->getPolypeptides().end(); ++it)
 		{
-			if (it->second->getState() == Polypeptide::IDLE) ++attackerIdleCount;
+			if (it->second->getState() == Polypeptide::IDLE)
+				attackerIdleIds.push_back(it->second->getId());
 		}
 
-		unsigned int idleCount = min<unsigned int>(victimIdleCount, attackerIdleCount);
-		for (unsigned int i = 0; i < idleCount; ++i)
+		unsigned int idleCount = min<unsigned int>(victimIdleIds.size(), attackerIdleIds.size());
+		unsigned int i = 0;
+		for (; i < idleCount; ++i)
 		{
 			/// idles make polyfight
+			bool polypeptideVictimDie = randBool();
+			bool polypeptideAttackerDie = randBool();
+			
+			/// send polyfight
+			/**
+			PolipeptideFight * message = new PolipeptideFight();
+			message->polipeptideId1 = victimIdleIds[i];
+			message->polipeptideId2 = attackerIdleIds[i];
+			message->polipeptide1Dies = polypeptideVictimDie;
+			message->polipeptide2Dies = polypeptideAttackerDie;
+			NETWORKMANAGER->sendTo<PolipeptideFight>(message, NETWORKMANAGER->getConnectionEndpoints());
+			*/
+
+			if (polypeptideVictimDie)
+			{
+				delete victimCell->getPolypeptides().find(victimIdleIds[i])->second;
+				victimCell->getPolypeptides().erase(victimIdleIds[i]);
+				/// send polypeptide die
+				/**
+				PolipeptideDie * message = new PolipeptideDie();
+				message->polipeptideId = victimIdleIds[i];
+				NETWORKMANAGER->sendTo<PolipeptideDie>(message, NETWORKMANAGER->getConnectionEndpoints());
+				*/
+			}
+
+			if (polypeptideAttackerDie)
+			{
+				delete attackerCell->getPolypeptides().find(attackerIdleIds[i])->second;
+				attackerCell->getPolypeptides().erase(attackerIdleIds[i]);
+				/// send polypeptide die
+				/**
+				PolipeptideDie * message = new PolipeptideDie();
+				message->polipeptideId = attackerIdleIds[i];
+				NETWORKMANAGER->sendTo<PolipeptideDie>(message, NETWORKMANAGER->getConnectionEndpoints());
+				*/
+			}
 		}
 
-		/// rest make cellfight*/
+		/// rest make cellfight
+		if (victimIdleIds.size() > attackerIdleIds.size())
+		{
+			sendPolypeptideCellAttackMessages(victimIdleIds, attackerCell->getId(), CONFIG_FLOAT1("data.polypeptide.damage"));
+		}
+		else
+		{
+			sendPolypeptideCellAttackMessages(attackerIdleIds, victimCell->getId(), CONFIG_FLOAT1("data.polypeptide.damage"));
+		}
 	}
 
 	return true;
@@ -296,6 +343,20 @@ float EventCreator::getVictimMultiplier(CellServer * victim)
 	}
 
 	return multiplicator;
+}
+
+void EventCreator::sendPolypeptideCellAttackMessages(vector<unsigned int> & polypeptideIds, unsigned int cellId, float damage)
+{
+	for (unsigned int i = 0; i < polypeptideIds.size(); ++i)
+	{
+		/**
+		PolypeptideCellAttack * message = new PolypeptideCellAttack();
+		message->polypeptideId = polypeptideIds[i];
+		message->cellId = cellId;
+		message->damage = damage;
+		NETWORKMANAGER->sendTo<PolypeptideCellAttack>(message, NETWORKMANAGER->getConnectionEndpoints());
+		*/
+	}
 }
 
 EventCreator::EventCreator() { }

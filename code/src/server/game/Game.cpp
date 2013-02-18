@@ -48,6 +48,114 @@ Game::Game()
 	stringstream message;
 	message << "Space for " << CONFIG_INT2("data.players.max", 4) << " players.";
 	LOG_INFO(message.str());
+
+	/**
+		* Build Modifiers and Barriers
+		*/
+
+	vector<float> xPosStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.position.x");
+	vector<float> yPosStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.position.y");
+	vector<float> xRotStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.rotation.x");
+	vector<float> yRotStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.rotation.y");
+	vector<float> radiusStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.radius");
+
+	if (xPosStatics2.size() != yPosStatics2.size() ||
+		xPosStatics2.size() != xRotStatics2.size() ||
+		xPosStatics2.size() != yRotStatics2.size() ||
+		xPosStatics2.size() != radiusStatics2.size())
+	{
+		throw string("Xml structure of the nutrientsoil is inconsistent");
+	}
+	unsigned int nrNutrientsoil = xPosStatics2.size();
+
+	vector<float> xPosStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.position.x");
+	vector<float> yPosStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.position.y");
+	vector<float> xRotStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.rotation.x");
+	vector<float> yRotStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.rotation.y");
+	vector<float> radiusStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.radius");
+
+	if (xPosStatics3.size() != yPosStatics3.size() ||
+		xPosStatics3.size() != xRotStatics3.size() ||
+		xPosStatics3.size() != yRotStatics3.size() ||
+		xPosStatics3.size() != radiusStatics3.size())
+	{
+		throw string("Xml structure of the radioactivity is inconsistent");
+	}
+	unsigned int nrRadioactivity = xPosStatics3.size();
+
+	vector<float> xPosStatics;
+	xPosStatics.insert(xPosStatics.end(), xPosStatics2.begin(), xPosStatics2.end());
+	xPosStatics.insert(xPosStatics.end(), xPosStatics3.begin(), xPosStatics3.end());
+	vector<float> yPosStatics;
+	yPosStatics.insert(yPosStatics.end(), yPosStatics2.begin(), yPosStatics2.end());
+	yPosStatics.insert(yPosStatics.end(), yPosStatics3.begin(), yPosStatics3.end());
+	vector<float> xRotStatics;
+	xRotStatics.insert(xRotStatics.end(), xRotStatics2.begin(), xRotStatics2.end());
+	xRotStatics.insert(xRotStatics.end(), xRotStatics3.begin(), xRotStatics3.end());
+	vector<float> yRotStatics;
+	yRotStatics.insert(yRotStatics.end(), yRotStatics2.begin(), yRotStatics2.end());
+	yRotStatics.insert(yRotStatics.end(), yRotStatics3.begin(), yRotStatics3.end());
+	vector<float> radiusStatics;
+	radiusStatics.insert(radiusStatics.end(), radiusStatics2.begin(), radiusStatics2.end());
+	radiusStatics.insert(radiusStatics.end(), radiusStatics3.begin(), radiusStatics3.end());
+
+	for (unsigned int i = 0; i < xPosStatics.size(); ++i)
+	{
+		StaticModificator::Type type;
+		if (i < nrNutrientsoil)
+		{
+			type = StaticModificator::NUTRIENTSOIL;
+		}
+		else
+		{
+			type = StaticModificator::RADIOACTIVITY;
+		}
+
+		StaticModificatorServer * s = new StaticModificatorServer(Vec3f(xPosStatics[i], yPosStatics[i], 0.f), Vec3f(xRotStatics[i], yRotStatics[i], 0.f), Vec3f::one(), radiusStatics[i], type);
+		if (!isInRadiusOf<float>(s->getPosition(), s->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
+		{
+			throw string("Static modifier could not be created because it is not in the game area");
+		}
+				
+		GAMECONTEXT->getEnvironment().createGameObject(s);
+	}
+	
+	vector<float> xPosBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.position.x");
+	vector<float> yPosBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.position.y");
+	vector<float> xRotBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.rotation.x");
+	vector<float> yRotBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.rotation.y");
+	vector<float> radiusBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.radius");
+
+	if (xPosBarrier.size() != yPosBarrier.size() ||
+		xPosBarrier.size() != xRotBarrier.size() ||
+		xPosBarrier.size() != yRotBarrier.size() ||
+		xPosBarrier.size() != radiusBarrier.size())
+	{
+		throw string("Xml structure of the barriers is inconsistent");
+	}
+
+	for (unsigned int i = 0; i < xPosBarrier.size(); ++i)
+	{
+		BarrierServer * b = new BarrierServer(Vec3f(xPosBarrier[i], yPosBarrier[i], 0.f), Vec3f(xRotBarrier[i], yRotBarrier[i], 0.f), Vec3f::one(), radiusBarrier[i]);
+		if (!isInRadiusOf<float>(b->getPosition(), b->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
+		{
+			throw string("Barrier could not be created because it is not in the game area");
+		}
+		vector<GameObject *> gameObjects;
+
+		const vector<GameObject *> & activeCells = GAMECONTEXT->getActiveCells().findInRadiusOf(b->getPosition(), b->getRadius());
+		const vector<GameObject *> & inactiveCells = GAMECONTEXT->getInactiveCells().findInRadiusOf(b->getPosition(), b->getRadius());
+		const vector<GameObject *> & environment = GAMECONTEXT->getEnvironment().findInRadiusOf(b->getPosition(), b->getRadius());
+				
+		gameObjects.insert(gameObjects.end(), activeCells.begin(), activeCells.end());
+		gameObjects.insert(gameObjects.end(), inactiveCells.begin(), inactiveCells.end());
+
+		if (gameObjects.size() > 0)
+		{
+			throw string("Barrier could not be created because a gameobject is already on this spot");
+		}
+		GAMECONTEXT->getEnvironment().createGameObject(b);
+	}
 }
 
 void Game::join(JoinRequest &request)
@@ -115,115 +223,6 @@ void Game::join(JoinRequest &request)
 	if (GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
 	{
 		using boost::asio::ip::udp;
-
-		/**
-			* Build Modifiers and Barriers
-			*/
-
-		vector<float> xPosBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.position.x");
-		vector<float> yPosBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.position.y");
-		vector<float> xRotBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.rotation.x");
-		vector<float> yRotBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.rotation.y");
-		vector<float> radiusBarrier = CONFIG_FLOATS2("data.environment.barriers", "barrier.radius");
-
-		if (xPosBarrier.size() != yPosBarrier.size() ||
-			xPosBarrier.size() != xRotBarrier.size() ||
-			xPosBarrier.size() != yRotBarrier.size() ||
-			xPosBarrier.size() != radiusBarrier.size())
-		{
-			throw string("Xml structure of the barriers is inconsistent");
-		}
-
-		for (unsigned int i = 0; i < xPosBarrier.size(); ++i)
-		{
-			BarrierServer * b = new BarrierServer(Vec3f(xPosBarrier[i], yPosBarrier[i], 0.f), Vec3f(xRotBarrier[i], yRotBarrier[i], 0.f), Vec3f::one(), radiusBarrier[i]);
-			if (!isInRadiusOf<float>(b->getPosition(), b->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
-			{
-				throw string("Barrier could not be created because it is not in the game area");
-			}
-			vector<GameObject *> gameObjects;
-
-			const vector<GameObject *> & activeCells = GAMECONTEXT->getActiveCells().findInRadiusOf(b->getPosition(), b->getRadius());
-			const vector<GameObject *> & inactiveCells = GAMECONTEXT->getInactiveCells().findInRadiusOf(b->getPosition(), b->getRadius());
-			const vector<GameObject *> & environment = GAMECONTEXT->getEnvironment().findInRadiusOf(b->getPosition(), b->getRadius());
-				
-			gameObjects.insert(gameObjects.end(), activeCells.begin(), activeCells.end());
-			gameObjects.insert(gameObjects.end(), inactiveCells.begin(), inactiveCells.end());
-			gameObjects.insert(gameObjects.end(), environment.begin(), environment.end());
-
-			if (gameObjects.size() > 0)
-			{
-				throw string("Barrier could not be created because a gameobject is already on this spot");
-			}
-			GAMECONTEXT->getEnvironment().createGameObject(b);
-		}
-
-		vector<float> xPosStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.position.x");
-		vector<float> yPosStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.position.y");
-		vector<float> xRotStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.rotation.x");
-		vector<float> yRotStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.rotation.y");
-		vector<float> radiusStatics2 = CONFIG_FLOATS2("data.environment.modifiers.static", "nutrientsoil.radius");
-
-		if (xPosStatics2.size() != yPosStatics2.size() ||
-			xPosStatics2.size() != xRotStatics2.size() ||
-			xPosStatics2.size() != yRotStatics2.size() ||
-			xPosStatics2.size() != radiusStatics2.size())
-		{
-			throw string("Xml structure of the nutrientsoil is inconsistent");
-		}
-		unsigned int nrNutrientsoil = xPosStatics2.size();
-
-		vector<float> xPosStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.position.x");
-		vector<float> yPosStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.position.y");
-		vector<float> xRotStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.rotation.x");
-		vector<float> yRotStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.rotation.y");
-		vector<float> radiusStatics3 = CONFIG_FLOATS2("data.environment.modifiers.static", "radioactivity.radius");
-
-		if (xPosStatics3.size() != yPosStatics3.size() ||
-			xPosStatics3.size() != xRotStatics3.size() ||
-			xPosStatics3.size() != yRotStatics3.size() ||
-			xPosStatics3.size() != radiusStatics3.size())
-		{
-			throw string("Xml structure of the radioactivity is inconsistent");
-		}
-		unsigned int nrRadioactivity = xPosStatics3.size();
-
-		vector<float> xPosStatics;
-		xPosStatics.insert(xPosStatics.end(), xPosStatics2.begin(), xPosStatics2.end());
-		xPosStatics.insert(xPosStatics.end(), xPosStatics3.begin(), xPosStatics3.end());
-		vector<float> yPosStatics;
-		yPosStatics.insert(yPosStatics.end(), yPosStatics2.begin(), yPosStatics2.end());
-		yPosStatics.insert(yPosStatics.end(), yPosStatics3.begin(), yPosStatics3.end());
-		vector<float> xRotStatics;
-		xRotStatics.insert(xRotStatics.end(), xRotStatics2.begin(), xRotStatics2.end());
-		xRotStatics.insert(xRotStatics.end(), xRotStatics3.begin(), xRotStatics3.end());
-		vector<float> yRotStatics;
-		yRotStatics.insert(yRotStatics.end(), yRotStatics2.begin(), yRotStatics2.end());
-		yRotStatics.insert(yRotStatics.end(), yRotStatics3.begin(), yRotStatics3.end());
-		vector<float> radiusStatics;
-		radiusStatics.insert(radiusStatics.end(), radiusStatics2.begin(), radiusStatics2.end());
-		radiusStatics.insert(radiusStatics.end(), radiusStatics3.begin(), radiusStatics3.end());
-
-		for (unsigned int i = 0; i < xPosStatics.size(); ++i)
-		{
-			StaticModificator::Type type;
-			if (i < nrNutrientsoil)
-			{
-				type = StaticModificator::NUTRIENTSOIL;
-			}
-			else
-			{
-				type = StaticModificator::RADIOACTIVITY;
-			}
-
-			StaticModificatorServer * s = new StaticModificatorServer(Vec3f(xPosStatics[i], yPosStatics[i], 0.f), Vec3f(xRotStatics[i], yRotStatics[i], 0.f), Vec3f::one(), radiusStatics[i], type);
-			if (!isInRadiusOf<float>(s->getPosition(), s->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
-			{
-				throw string("Static modifier could not be created because it is not in the game area");
-			}
-				
-			GAMECONTEXT->getEnvironment().createGameObject(s);
-		}
 
 		StartGame * startgame = new StartGame();
 		startgame->worldRadius = worldRadius;
@@ -377,7 +376,6 @@ void Game::createCell(CreateCellRequest & request)
 	}
 }
 
-
 void Game::createPolypetide(CreatePolipeptideRequest & request)
 {
 	LOG_INFO("CreatePolyPeptideRequest received");
@@ -387,6 +385,14 @@ void Game::createPolypetide(CreatePolipeptideRequest & request)
 	if (player == nullptr)
 	{
 		/// No valid player
+		/**
+		CreatePolipeptideFailure * message = new CreatePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = CreatePolipeptideErrorCode::INVALID_PLAYER;
+		message->endpoint = player->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
+		return;
 	}
 
 	CellServer * stemCell = &(player->getStemCell());
@@ -396,10 +402,23 @@ void Game::createPolypetide(CreatePolipeptideRequest & request)
 	if (stemCell->addPolypetide(polypetide))
 	{
 		/// success
+		/**
+		CreatePolipeptideSuccess * message = new CreatePolipeptideSuccess();
+		message->requestId = request.requestId;
+		message->endpoint = player->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
 	}
 	else
 	{
 		/// failure
+		/**
+		CreatePolipeptideFailure * message = new CreatePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = CreatePolipeptideErrorCode::CELL_FULL;
+		message->endpoint = player->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
 	}
 }
 
@@ -414,19 +433,41 @@ void Game::movePolypetide(MovePolipeptideRequest & request)
 	CellServer * fromCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(fromCellId));
 	CellServer * toCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(toCellId));
 
-	if (fromCell == nullptr && toCell == nullptr)
+	if (fromCell == nullptr || toCell == nullptr)
 	{
 		/// either sending cell or receiving cell are not valid
+		/**
+		MovePolipeptideFailure * message = new MovePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = MovePolipeptideErrorCode::INVALID_CELLS;
+		message->endpoint = fromCell->getOwner()->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
+		return;
 	}
 
 	if (fromCell->getOwner() != toCell->getOwner())
 	{
 		/// the cells do not have the same owner
+		/**
+		MovePolipeptideFailure * message = new MovePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = MovePolipeptideErrorCode::DIFFERENT_OWNER;
+		message->endpoint = fromCell->getOwner()->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
 	}
 
 	if (toCell->getPolypeptides().size() + amount >= CONFIG_INT1("data.polypetide.maxPerCell"))
 	{
 		/// target-cell has not enough space
+		/**
+		MovePolipeptideFailure * message = new MovePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = MovePolipeptideErrorCode::TARGETCELL_FULL;
+		message->endpoint = fromCell->getOwner()->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
 	}
 
 	vector<unsigned int> polypeptideIds;
@@ -443,6 +484,12 @@ void Game::movePolypetide(MovePolipeptideRequest & request)
 	}
 
 	/// send success
+	/**
+	MovePolipeptideSuccess * message = new MovePolipeptideSuccess();
+	message->requestId = request.requestId;
+	message->polipeptideIds = polypeptideIds;
+	NETWORKMANAGER->sendTo<MovePolipeptideSuccess>(message, NETWORKMANAGER->getConnectionEndpoints());
+	*/
 }
 	
 PlayerServer* Game::testPlayer(unsigned int playerId)

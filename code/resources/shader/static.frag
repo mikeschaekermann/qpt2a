@@ -21,7 +21,6 @@ void main(void) {
 	vec4 diffColor = diffuseColor * clamp(vertexLightAngle , 0., 1.);
 
 	gl_FragColor = ambientColor + diffColor * (currentRadius / radius);
-	gl_FragColor.a = 0.;
 }
 
 

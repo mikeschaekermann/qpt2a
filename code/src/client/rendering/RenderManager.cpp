@@ -122,7 +122,7 @@ void RenderManager::renderStatic(float radius, StaticModificator::Type type, flo
 	shader.uniform("radius", radius);
 
 	gl::pushModelView();
-		drawSphere(Vec3f(0.f, 0.f, 0.f), radius, (int) radius);
+		gl::drawSphere(Vec3f(0.f, 0.f, 0.f), radius, (int) radius);
 	gl::popModelView();
 
 	shader.unbind();
@@ -131,19 +131,12 @@ void RenderManager::renderStatic(float radius, StaticModificator::Type type, flo
 void RenderManager::setUp3d()
 {
 	gl::pushMatrices();
-	gl::enableDepthWrite();
-	gl::enableDepthRead();
-	gl::setMatrices(cam);
-	gl::enableDepthRead();
-	gl::setMatrices(cam);
+		gl::setMatrices(cam);
 }
 
 void RenderManager::shutdown3d()
 {
 		drawFogOfWar();
-
-		gl::disableDepthWrite();
-		gl::disableDepthRead();
 	gl::popMatrices();
 }
 
