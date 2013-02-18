@@ -24,6 +24,13 @@
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CellNew.h"
 
+#include "../../common/network/messages/game/ingame/polypeptide/creation/CreatePolypeptideRequest.h"
+#include "../../common/network/messages/game/ingame/polypeptide/creation/CreatePolypeptideSuccess.h"
+#include "../../common/network/messages/game/ingame/polypeptide/creation/CreatePolypeptideFailure.h"
+#include "../../common/network/messages/game/ingame/polypeptide/travel/MovePolypeptideRequest.h"
+#include "../../common/network/messages/game/ingame/polypeptide/travel/MovePolypeptideSuccess.h"
+#include "../../common/network/messages/game/ingame/polypeptide/travel/MovePolypeptideFailure.h"
+
 #include "../../common/Config.h"
 #include "../../common/ConfigurationDataHandler.h"
 #include "../../common/GameObjectContainer.h"
@@ -385,13 +392,12 @@ void Game::createPolypetide(CreatePolipeptideRequest & request)
 	if (player == nullptr)
 	{
 		/// No valid player
-		/**
-		CreatePolipeptideFailure * message = new CreatePolipeptideFailure();
+		CreatePolypeptideFailure * message = new CreatePolypeptideFailure();
 		message->requestId = request.requestId;
-		message->error = CreatePolipeptideErrorCode::INVALID_PLAYER;
+		message->errorCode = CreatePolypeptideErrorCode::InvalidPlayer;
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
-		*/
+		
 		return;
 	}
 
@@ -402,23 +408,19 @@ void Game::createPolypetide(CreatePolipeptideRequest & request)
 	if (stemCell->addPolypetide(polypetide))
 	{
 		/// success
-		/**
-		CreatePolipeptideSuccess * message = new CreatePolipeptideSuccess();
+		CreatePolypeptideSuccess * message = new CreatePolypeptideSuccess();
 		message->requestId = request.requestId;
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
-		*/
 	}
 	else
 	{
 		/// failure
-		/**
-		CreatePolipeptideFailure * message = new CreatePolipeptideFailure();
+		CreatePolypeptideFailure * message = new CreatePolypeptideFailure();
 		message->requestId = request.requestId;
-		message->error = CreatePolipeptideErrorCode::CELL_FULL;
+		message->errorCode = CreatePolypeptideErrorCode::CellFull;
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
-		*/
 	}
 }
 
@@ -436,38 +438,32 @@ void Game::movePolypetide(MovePolipeptideRequest & request)
 	if (fromCell == nullptr || toCell == nullptr)
 	{
 		/// either sending cell or receiving cell are not valid
-		/**
-		MovePolipeptideFailure * message = new MovePolipeptideFailure();
+		MovePolypeptideFailure * message = new MovePolypeptideFailure();
 		message->requestId = request.requestId;
-		message->error = MovePolipeptideErrorCode::INVALID_CELLS;
-		message->endpoint = fromCell->getOwner()->getEndpoint();
+		message->errorCode = MovePolypeptideErrorCode::InvalidCells;
+		message->endpoint = GAMECONTEXT->getPlayer(fromCell->getOwner()->getId())->getEndpoint();
 		NETWORKMANAGER->send(message);
-		*/
 		return;
 	}
 
 	if (fromCell->getOwner() != toCell->getOwner())
 	{
 		/// the cells do not have the same owner
-		/**
-		MovePolipeptideFailure * message = new MovePolipeptideFailure();
+		MovePolypeptideFailure * message = new MovePolypeptideFailure();
 		message->requestId = request.requestId;
-		message->error = MovePolipeptideErrorCode::DIFFERENT_OWNER;
-		message->endpoint = fromCell->getOwner()->getEndpoint();
+		message->errorCode = MovePolypeptideErrorCode::DifferentOwner;
+		message->endpoint = GAMECONTEXT->getPlayer(fromCell->getOwner()->getId())->getEndpoint();
 		NETWORKMANAGER->send(message);
-		*/
 	}
 
 	if (toCell->getPolypeptides().size() + amount >= CONFIG_INT1("data.polypetide.maxPerCell"))
 	{
 		/// target-cell has not enough space
-		/**
-		MovePolipeptideFailure * message = new MovePolipeptideFailure();
+		MovePolypeptideFailure * message = new MovePolypeptideFailure();
 		message->requestId = request.requestId;
-		message->error = MovePolipeptideErrorCode::TARGETCELL_FULL;
-		message->endpoint = fromCell->getOwner()->getEndpoint();
+		message->errorCode = MovePolypeptideErrorCode::TargetCellFull;
+		message->endpoint = GAMECONTEXT->getPlayer(fromCell->getOwner()->getId())->getEndpoint();
 		NETWORKMANAGER->send(message);
-		*/
 	}
 
 	vector<unsigned int> polypeptideIds;
@@ -484,12 +480,10 @@ void Game::movePolypetide(MovePolipeptideRequest & request)
 	}
 
 	/// send success
-	/**
-	MovePolipeptideSuccess * message = new MovePolipeptideSuccess();
+	MovePolypeptideSuccess * message = new MovePolypeptideSuccess();
 	message->requestId = request.requestId;
-	message->polipeptideIds = polypeptideIds;
-	NETWORKMANAGER->sendTo<MovePolipeptideSuccess>(message, NETWORKMANAGER->getConnectionEndpoints());
-	*/
+	message->polypeptideIds = polypeptideIds;
+	NETWORKMANAGER->sendTo<MovePolypeptideSuccess>(message, NETWORKMANAGER->getConnectionEndpoints());
 }
 	
 PlayerServer* Game::testPlayer(unsigned int playerId)

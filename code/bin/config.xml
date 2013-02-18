@@ -111,6 +111,12 @@
 		<celldie>
 			<time>1.0</time>
 		</celldie>
+		<polypeptidefight>
+			<time>1.0</time>
+		</polypeptidefight>
+		<polypeptidecellattack>
+			<time>1.0</time>
+		</polypeptidecellattack>
 	</event>
 	<cell>
 		<stemcell>

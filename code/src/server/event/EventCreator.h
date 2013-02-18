@@ -34,7 +34,7 @@ private:
 	void calculateStaticEffects(CellServer & cell);
 	void sendCellCreationMessages(unsigned int requestId, PlayerServer & currentPlayer, CellServer & cell, const int type);
 
-	void sendPolypeptideCellAttackMessages(std::vector<unsigned int> & polypeptideIds, unsigned int cellId, float damage);
+	void createPolypeptideCellAttackEvent(double time, unsigned int attackerCellId, unsigned int attackedCellId, std::vector<unsigned int> & polypeptideIds, float damage);
 
 	EventCreator();
 	EventCreator(const EventCreator & cpy);
