@@ -376,7 +376,6 @@ void Game::createCell(CreateCellRequest & request)
 	}
 }
 
-
 void Game::createPolypetide(CreatePolipeptideRequest & request)
 {
 	LOG_INFO("CreatePolyPeptideRequest received");
@@ -386,6 +385,14 @@ void Game::createPolypetide(CreatePolipeptideRequest & request)
 	if (player == nullptr)
 	{
 		/// No valid player
+		/**
+		CreatePolipeptideFailure * message = new CreatePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = CreatePolipeptideErrorCode::INVALID_PLAYER;
+		message->endpoint = player->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
+		return;
 	}
 
 	CellServer * stemCell = &(player->getStemCell());
@@ -395,10 +402,23 @@ void Game::createPolypetide(CreatePolipeptideRequest & request)
 	if (stemCell->addPolypetide(polypetide))
 	{
 		/// success
+		/**
+		CreatePolipeptideSuccess * message = new CreatePolipeptideSuccess();
+		message->requestId = request.requestId;
+		message->endpoint = player->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
 	}
 	else
 	{
 		/// failure
+		/**
+		CreatePolipeptideFailure * message = new CreatePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = CreatePolipeptideErrorCode::CELL_FULL;
+		message->endpoint = player->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
 	}
 }
 
@@ -413,19 +433,41 @@ void Game::movePolypetide(MovePolipeptideRequest & request)
 	CellServer * fromCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(fromCellId));
 	CellServer * toCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(toCellId));
 
-	if (fromCell == nullptr && toCell == nullptr)
+	if (fromCell == nullptr || toCell == nullptr)
 	{
 		/// either sending cell or receiving cell are not valid
+		/**
+		MovePolipeptideFailure * message = new MovePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = MovePolipeptideErrorCode::INVALID_CELLS;
+		message->endpoint = fromCell->getOwner()->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
+		return;
 	}
 
 	if (fromCell->getOwner() != toCell->getOwner())
 	{
 		/// the cells do not have the same owner
+		/**
+		MovePolipeptideFailure * message = new MovePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = MovePolipeptideErrorCode::DIFFERENT_OWNER;
+		message->endpoint = fromCell->getOwner()->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
 	}
 
 	if (toCell->getPolypeptides().size() + amount >= CONFIG_INT1("data.polypetide.maxPerCell"))
 	{
 		/// target-cell has not enough space
+		/**
+		MovePolipeptideFailure * message = new MovePolipeptideFailure();
+		message->requestId = request.requestId;
+		message->error = MovePolipeptideErrorCode::TARGETCELL_FULL;
+		message->endpoint = fromCell->getOwner()->getEndpoint();
+		NETWORKMANAGER->send(message);
+		*/
 	}
 
 	vector<unsigned int> polypeptideIds;
@@ -442,6 +484,12 @@ void Game::movePolypetide(MovePolipeptideRequest & request)
 	}
 
 	/// send success
+	/**
+	MovePolipeptideSuccess * message = new MovePolipeptideSuccess();
+	message->requestId = request.requestId;
+	message->polipeptideIds = polypeptideIds;
+	NETWORKMANAGER->sendTo<MovePolipeptideSuccess>(message, NETWORKMANAGER->getConnectionEndpoints());
+	*/
 }
 	
 PlayerServer* Game::testPlayer(unsigned int playerId)

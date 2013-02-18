@@ -75,7 +75,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-		<max>1</max>
+		<max>2</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
@@ -137,6 +137,7 @@
 		<maxPerCell>15</maxPerCell>
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
+		<damage>2.0</damage>
 	</polypetide>
 	<environment>
 		<barriers>
