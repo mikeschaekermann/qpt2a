@@ -85,6 +85,8 @@
     <ClInclude Include="..\..\src\server\event\EventCreator.h" />
     <ClInclude Include="..\..\src\Server\event\GameEvent.h" />
     <ClInclude Include="..\..\src\Server\event\EventManager.h" />
+    <ClInclude Include="..\..\src\server\event\PolypeptideCellAttackEvent.h" />
+    <ClInclude Include="..\..\src\server\event\PolypeptideFightEvent.h" />
     <ClInclude Include="..\..\src\Server\game\CellServer.h" />
     <ClInclude Include="..\..\src\Server\game\Game.h" />
     <ClInclude Include="..\..\src\server\game\GameContext.h" />
@@ -154,6 +156,8 @@
     <ClCompile Include="..\..\src\server\event\CellDieEvent.cpp" />
     <ClCompile Include="..\..\src\server\event\EventCreator.cpp" />
     <ClCompile Include="..\..\src\server\event\EventManager.cpp" />
+    <ClCompile Include="..\..\src\server\event\PolypeptideCellAttackEvent.cpp" />
+    <ClCompile Include="..\..\src\server\event\PolypeptideFightEvent.cpp" />
     <ClCompile Include="..\..\src\server\game\Game.cpp" />
     <ClCompile Include="..\..\src\server\game\GameContext.cpp" />
     <ClCompile Include="..\..\src\server\game\IIdentifiable.cpp" />

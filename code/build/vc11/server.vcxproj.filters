@@ -235,6 +235,12 @@
     <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.h">
       <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\server\event\PolypeptideFightEvent.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\event\PolypeptideCellAttackEvent.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -485,6 +491,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.cpp">
       <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\PolypeptideFightEvent.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\PolypeptideCellAttackEvent.cpp">
+      <Filter>Eventlogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

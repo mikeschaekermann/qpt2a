@@ -48,6 +48,7 @@ public:
 	float getMyHue() const;
 	PlayerClient * getPlayerById(unsigned int id) const;
 	float getHueByPlayerId(unsigned int id) const;
+	map<unsigned int, PlayerClient*> const & getPlayers() const;
 	
 	ClientNetworkManager * getNetworkManager();
 	boost::asio::ip::udp::endpoint getServerEndpoint();
