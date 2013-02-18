@@ -24,7 +24,8 @@ void StandardCellClient::drawAtTransformation() const
 			gl::rotate(Vec3f(0, 90, 0));
 			gl::rotate(Vec3f(spikeAngle, 0, 0));
 
-			RenderManager::getInstance()->renderModel("standardCellAttack", "test",
+			RenderManager::getInstance()->renderSlimeShadedModel("standardCellAttack",
+													  position,
 													  Vec4f(0.1f, 0.1f, 0.1f, 1.0f),
 													  Vec4f(0.1f, 0.1f, 0.1f, 1.0f),
 													  Vec4f(0.9f, 0.9f, 0.9f, 1.0f),
@@ -47,7 +48,8 @@ void StandardCellClient::drawAtTransformation() const
 	ColorA specularColor(CM_HSV, h, s, b, o);
 
 	gl::scale(radius, radius, radius);
-	RenderManager::getInstance()->renderModel("standardCell", "test",
+	RenderManager::getInstance()->renderSlimeShadedModel("standardCell",
+											  position,
 											  Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, ambientColor.a),
 											  Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, diffuseColor.a),
 											  Vec4f(specularColor.r, specularColor.g, specularColor.b, specularColor.a),

@@ -40,15 +40,24 @@ RenderManager * const RenderManager::getInstance()
 	return instance;
 }
 
-void RenderManager::renderModel(string modelName,
-							   string shaderName,
-							   Vec4f ambient,
-							   Vec4f diffuse,
-							   Vec4f specular,
-							   float shininess)
+void RenderManager::renderPhongShadedModel(string modelName,
+										   Vec4f ambient,
+										   Vec4f diffuse,
+										   Vec4f specular,
+										   float shininess)
 {
 	auto model = ASSET_MGR->getModel(modelName);
-	auto shader = ASSET_MGR->getShaderProg(shaderName);
+	renderPhongShadedModel(model, ambient,
+						   diffuse, specular, shininess);
+}
+
+void RenderManager::renderPhongShadedModel(TriMesh model,
+										   Vec4f ambient,
+										   Vec4f diffuse,
+										   Vec4f specular,
+										   float shininess)
+{
+	auto shader = ASSET_MGR->getShaderProg(string("phong"));
 
 	shader.bind();
 
@@ -64,6 +73,45 @@ void RenderManager::renderModel(string modelName,
 	gl::popModelView();
 
 	shader.unbind();
+}
+
+void RenderManager::renderSlimeShadedModel(TriMesh model,
+							   Vec3f worldTranslation,
+							   Vec4f ambient,
+							   Vec4f diffuse,
+							   Vec4f specular,
+							   float shininess)
+{
+	auto shader = ASSET_MGR->getShaderProg(string("slime"));
+
+	shader.bind();
+
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * Vec3f(cam.getEyePoint().xy(), 1000.));
+
+	shader.uniform("ambientColor", ambient);
+	shader.uniform("diffuseColor", diffuse);
+	shader.uniform("specularColor", specular);
+	shader.uniform("shininess", shininess);
+	shader.uniform("time", float(getElapsedSeconds()));
+	shader.uniform("translation", worldTranslation);
+
+	gl::pushModelView();
+		gl::draw(model);
+	gl::popModelView();
+
+	shader.unbind();
+}
+
+void RenderManager::renderSlimeShadedModel(string modelName,
+							   Vec3f worldTranslation,
+							   Vec4f ambient,
+							   Vec4f diffuse,
+							   Vec4f specular,
+							   float shininess)
+{
+	auto model = ASSET_MGR->getModel(modelName);
+	renderSlimeShadedModel(model, worldTranslation,
+							ambient, diffuse, specular, shininess);
 }
 
 void RenderManager::renderBarrier(float radius)

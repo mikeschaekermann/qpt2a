@@ -2,7 +2,9 @@
 
 SoundPlayer * SoundPlayer::instance = nullptr;
 
-SoundPlayer::SoundPlayer(void)
+SoundPlayer::SoundPlayer(void) : 
+	numSoundChannels(99),
+	nextChannelId(0)
 {
 	system->set3DListenerAttributes(0, &vPosition, &vVelocity, &vForward, &vUp);
 }
@@ -31,7 +33,7 @@ SoundPlayer * const SoundPlayer::getInstance()
 						concatenate(". This program requires ", FMOD_VERSION));
 		}
 
-		instance->system->init(2, 0, nullptr);
+		instance->system->init(100, 0, nullptr);
 	}
 
 	return instance;
@@ -40,16 +42,17 @@ SoundPlayer * const SoundPlayer::getInstance()
 void SoundPlayer::playSound(string& key)
 {
 	auto sound = AssetManager::getInstance()->getSound(key);
-	system->playSound(FMOD_CHANNEL_FREE, sound, false, &soundChannel);
+	system->playSound(FMOD_CHANNEL_FREE, sound, false, NULL);
 }
 
 void SoundPlayer::playSound(string& key, Vec3f pos, Vec3f vel)
 {
 	auto sound = AssetManager::getInstance()->getSound(key);
-	system->playSound(FMOD_CHANNEL_FREE, sound, true, &soundChannel);
+	
+	system->playSound(FMOD_CHANNEL_FREE, sound, true, &soundChannels[nextChannelId]);
 	FMOD_MODE mode;
 	sound->getMode(&mode);
-	if(mode | FMOD_3D == FMOD_3D)
+	if((mode & FMOD_3D) == FMOD_3D)
 	{
 		FMOD_VECTOR fPos,
 					fVel;
@@ -58,14 +61,23 @@ void SoundPlayer::playSound(string& key, Vec3f pos, Vec3f vel)
 		fPos.y = pos.y;
 		fPos.z = pos.z;
 
-		fVel.x = 0; //vel.x;
-		fVel.y = 0; //vel.y;
-		fVel.z = 0; //vel.z;
+		fVel.x = vel.x;
+		fVel.y = vel.y;
+		fVel.z = vel.z;
 
-		soundChannel->set3DAttributes(&fPos, &fVel);
+		soundChannels[nextChannelId]->set3DAttributes(&fPos, &fVel);
 	}
 
-	soundChannel->setPaused(false);
+	soundChannels[nextChannelId]->setPaused(false);
+
+	if(nextChannelId > numSoundChannels)
+	{
+		nextChannelId = 0;
+	}
+	else
+	{
+		++nextChannelId;
+	}
 }
 
 void SoundPlayer::playMusic(string& key)
@@ -87,7 +99,10 @@ void SoundPlayer::releaseInstance()
 
 void SoundPlayer::stopAll()
 {
-	soundChannel->stop();
+	for(unsigned i = 0; i < numSoundChannels; ++i)
+	{
+		soundChannels[i]->stop();
+	}
 	musicChannel->stop();
 }
 
@@ -106,13 +121,17 @@ void SoundPlayer::setMusicVolume(float volume)
 void SoundPlayer::setSoundVolume(float volume)
 {
 	bool paused = false;
-	soundChannel->getPaused(&paused);
-
-	soundChannel->setPaused(true);
-	soundChannel->setVolume(volume);
-	soundChannel->setPaused(paused);
 	
-	soundVolume = volume;
+	for(unsigned i = 0; i < numSoundChannels; ++i)
+	{
+		soundChannels[i]->getPaused(&paused);
+
+		soundChannels[i]->setPaused(true);
+		soundChannels[i]->setVolume(volume);
+		soundChannels[i]->setPaused(paused);
+	
+		soundVolume = volume;
+	}
 }
 
 void SoundPlayer::setListener3d(ci::Vec3f pos, ci::Vec3f vel, ci::Vec3f forward, ci::Vec3f up)
