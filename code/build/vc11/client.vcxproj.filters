@@ -564,5 +564,11 @@
     <None Include="..\..\resources\shader\fogOfWar.frag">
       <Filter>Rendering\Shader</Filter>
     </None>
+    <None Include="..\..\resources\shader\phong.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\phong.vert">
+      <Filter>Rendering\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
