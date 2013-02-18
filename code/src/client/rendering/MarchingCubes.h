@@ -3,6 +3,7 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/TriMesh.h"
 #include "cinder/Sphere.h"
+#include "boost/thread/mutex.hpp"
 
 using namespace std;
 using namespace ci;
@@ -67,19 +68,23 @@ public:
 	~MarchingCubes();
 
 	MarchingCubes &	addMetaball(Metaball metaball);
-	MarchingCubes &	addMetaball(Sphere metaball);
-	MarchingCubes &	addMetaball(ci::Vec3f center, float radius);
+	MarchingCubes &	addMetaballSphere(Sphere metaball);
+	MarchingCubes &	addMetaballCenterRadius(ci::Vec3f center, float radius);
 	
 	MarchingCubes &	removeMetaball(Metaball metaball);
-	MarchingCubes &	removeMetaball(Sphere metaball);
-	MarchingCubes &	removeMetaball(ci::Vec3f center, float radius);
+	MarchingCubes &	removeMetaballSphere(Sphere metaball);
+	MarchingCubes &	removeMetaballCenterRadius(ci::Vec3f center, float radius);
 	
 	MarchingCubes & calculateMesh();
 	TriMesh const & getMesh() const;
 	bool meshExists() const;
 
+	boost::mutex & getMeshMutex();
+
 private:
 	TriMesh mesh;
+
+	boost::mutex meshMutex;
 
 	ci::Vec3f gridSize;
 	ci::Vec3f cellSize;

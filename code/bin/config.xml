@@ -129,7 +129,7 @@
     <distanceFromCells>5.0</distanceFromCells>
     <grid>
       <cell>
-        <size>20.0</size>
+        <size>15.0</size>
       </cell>
       <isoLevel>10.0</isoLevel>
     </grid>
@@ -160,7 +160,7 @@
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
 		<damage>2.0</damage>
-	</polypetide>
+	</polypeptide>
 	<environment>
 		<barriers>
 			<barrier>

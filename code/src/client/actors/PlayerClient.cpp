@@ -1,5 +1,6 @@
 #include "PlayerClient.h"
 #include "../rendering/RenderManager.h"
+#include "boost/thread.hpp"
 
 PlayerClient::PlayerClient(unsigned int id, string name, bool canManipulate) :
 	Player(id, name),
@@ -78,15 +79,19 @@ MarchingCubes & PlayerClient::getSkin()
 	return skin;
 }
 
-void PlayerClient::drawSkin() const
+void PlayerClient::drawSkin()
 {
 	if (skin.meshExists())
 	{
 		auto ambientColor = Color(CM_HSV, hue, 0.8f, 1.f);
 		auto diffuseColor = Color(CM_HSV, hue, 0.7f, 0.4f);
 		
+		skin.getMeshMutex().lock();
+		auto skinMesh = skin.getMesh();
+		skin.getMeshMutex().unlock();
+
 		RENDER_MGR->renderPhongShadedModel(
-			skin.getMesh(),
+			skinMesh,
 			Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, 0.15f),
 			Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, 0.9f),
 			Vec4f(1.f, 1.f, 1.f, 0.9f),
@@ -97,10 +102,10 @@ void PlayerClient::drawSkin() const
 
 void PlayerClient::addSkinBubble(Sphere bubble)
 {
-	skin.addMetaball(bubble);
+	boost::thread(boost::bind(&MarchingCubes::addMetaballSphere, &skin, bubble));
 }
 
 void PlayerClient::removeSkinBubble(Sphere bubble)
 {
-	skin.removeMetaball(bubble);
+	boost::thread(boost::bind(&MarchingCubes::removeMetaballSphere, &skin, bubble));
 }
