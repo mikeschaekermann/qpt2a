@@ -245,6 +245,9 @@
     <ClCompile Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.cpp">
       <Filter>Network\Messages\Enum</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\rendering\MarchingCubes.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
