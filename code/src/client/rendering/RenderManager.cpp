@@ -41,25 +41,23 @@ RenderManager * const RenderManager::getInstance()
 }
 
 void RenderManager::renderPhongShadedModel(string modelName,
-										   string shaderName,
 										   Vec4f ambient,
 										   Vec4f diffuse,
 										   Vec4f specular,
 										   float shininess)
 {
 	auto model = ASSET_MGR->getModel(modelName);
-	renderPhongShadedModel(model, shaderName, ambient,
+	renderPhongShadedModel(model, ambient,
 						   diffuse, specular, shininess);
 }
 
 void RenderManager::renderPhongShadedModel(TriMesh model,
-										   string shaderName,
 										   Vec4f ambient,
 										   Vec4f diffuse,
 										   Vec4f specular,
 										   float shininess)
 {
-	auto shader = ASSET_MGR->getShaderProg(shaderName);
+	auto shader = ASSET_MGR->getShaderProg(string("phong"));
 
 	shader.bind();
 
@@ -77,16 +75,14 @@ void RenderManager::renderPhongShadedModel(TriMesh model,
 	shader.unbind();
 }
 
-void RenderManager::renderSlimeShadedModel(string modelName,
-							   string shaderName,
+void RenderManager::renderSlimeShadedModel(TriMesh model,
 							   Vec3f worldTranslation,
 							   Vec4f ambient,
 							   Vec4f diffuse,
 							   Vec4f specular,
 							   float shininess)
 {
-	auto model = ASSET_MGR->getModel(modelName);
-	auto shader = ASSET_MGR->getShaderProg(shaderName);
+	auto shader = ASSET_MGR->getShaderProg(string("slime"));
 
 	shader.bind();
 
@@ -104,6 +100,18 @@ void RenderManager::renderSlimeShadedModel(string modelName,
 	gl::popModelView();
 
 	shader.unbind();
+}
+
+void RenderManager::renderSlimeShadedModel(string modelName,
+							   Vec3f worldTranslation,
+							   Vec4f ambient,
+							   Vec4f diffuse,
+							   Vec4f specular,
+							   float shininess)
+{
+	auto model = ASSET_MGR->getModel(modelName);
+	renderSlimeShadedModel(model, worldTranslation,
+							ambient, diffuse, specular, shininess);
 }
 
 void RenderManager::renderBarrier(float radius)
