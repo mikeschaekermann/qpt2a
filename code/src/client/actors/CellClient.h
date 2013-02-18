@@ -17,7 +17,7 @@ public:
 	virtual void setPosition(Vec3f position) { GameObject::setPosition(position); }
 	virtual void drawHealthBar(float healthBarOpacity=1.0);
 	virtual void setRadius(float radius) { GameObject::setRadius(radius); }
-
+	
 protected:
 	float getHealthPercentage() const;
 	float getBrightnessFromHealthPoints() const;

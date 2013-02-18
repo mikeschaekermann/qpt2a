@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../../common/Player.h"
+#include "../rendering/MarchingCubes.h"
+#include "cinder/Sphere.h"
 
 using namespace std;
 
@@ -15,10 +17,16 @@ public:
 	bool operator==(const PlayerClient & otherPlayer) const;
 	float getHue() const { return hue; }
 	void setHue(float newHue) { hue = min<float>(max<float>(newHue, 0.0), 1.0); }
+	
+	MarchingCubes & getSkin();
+	void drawSkin() const;
+	void addSkinBubble(Sphere bubble);
+	void removeSkinBubble(Sphere bubble);
 
 private:
-	void initializeHue();
-
+	MarchingCubes skin;
 	bool m_bCanManipulate;
 	float hue;
+
+	void initializeHue();
 };

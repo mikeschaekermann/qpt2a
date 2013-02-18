@@ -57,12 +57,12 @@ void GameManager::startGame(string playerName)
 {
 	getInstance();
 
+	myPlayer = new PlayerClient(playerName, true);
+
 	JoinRequest *request = new JoinRequest();
 	request->endpoint = serverEndpoint;
 	request->name = playerName;
 	networkManager->send(request);
-
-	myPlayer = new PlayerClient(playerName, true);
 }
 
 void GameManager::startGame(string playerName, string ip)
@@ -184,6 +184,11 @@ float GameManager::getHueByPlayerId(unsigned int id) const
 		assert(false);
 		return 0;
 	}
+}
+
+map<unsigned int, PlayerClient*> const & GameManager::getPlayers() const
+{
+	return players;
 }
 
 void GameManager::addBarrier(unsigned int id, Vec3f position, Vec3f rotation, Vec3f scale, float radius)

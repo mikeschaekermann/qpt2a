@@ -212,6 +212,9 @@
     <ClCompile Include="..\..\src\client\environment\StaticModificatorClient.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\rendering\MarchingCubes.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -457,6 +460,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\client\environment\StaticModificatorClient.h">
       <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\rendering\MarchingCubes.h">
+      <Filter>Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

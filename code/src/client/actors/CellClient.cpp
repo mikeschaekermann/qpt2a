@@ -1,9 +1,11 @@
 #include "CellClient.h"
 #include "../../common/ConfigurationDataHandler.h"
+#include "../managers/GameManager.h"
+#include "cinder/Sphere.h"
 
 void CellClient::drawHealthBar(float healthBarOpacity)
 {
-	if (healthPoints < maxHealthPoints)
+	if (isVisible() && getHealthPoints() < maxHealthPoints)
 	{
 		auto outerHalfSize = Vec2f(
 			CONFIG_FLOAT2("data.ingamefeedback.healthBar.width", 50),
