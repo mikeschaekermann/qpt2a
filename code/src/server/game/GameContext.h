@@ -2,6 +2,8 @@
 
 #include <boost\thread\mutex.hpp>
 
+#include "AttackRelationContainer.h"
+
 #include "../../common/GameObject.h"
 #include "../../common/GameObjectContainer.h"
 
@@ -22,6 +24,7 @@ public:
 	GameObjectContainer<GameObject> & getActiveCells();
 	GameObjectContainer<GameObject> & getInactiveCells();
 	GameObjectContainer<GameObject> & getEnvironment();
+	AttackRelationContainer & getAttackRelations();
 
 	PlayerServer * getPlayer(unsigned id);
 	void addPlayer(PlayerServer * player);
@@ -42,5 +45,6 @@ private:
 	GameObjectContainer<GameObject> activeCells;
 	GameObjectContainer<GameObject> inactiveCells;
 	GameObjectContainer<GameObject> environment;
+	AttackRelationContainer attackRelations;
 	boost::mutex mutex;
 };

@@ -241,6 +241,9 @@
     <ClInclude Include="..\..\src\server\event\PolypeptideCellAttackEvent.h">
       <Filter>Eventlogic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\server\game\AttackRelationContainer.h">
+      <Filter>Gamelogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -497,6 +500,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\PolypeptideCellAttackEvent.cpp">
       <Filter>Eventlogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\game\AttackRelationContainer.cpp">
+      <Filter>Gamelogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

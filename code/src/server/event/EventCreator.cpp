@@ -7,6 +7,8 @@
 #include "../../common/network/messages/game/ingame/cell/creation/CellNew.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellSuccess.h"
 
+#include "../../common/ConfigurationDataHandler.h"
+
 #include "../../common/GameObjectContainer.h"
 
 #include "../game/PlayerServer.h"
@@ -59,7 +61,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 	(*EVENT_MGR) += new BuildingEvent(time, cell.getId());
 
 	// Let the other cells attack this cell
-	createAttackEvent(time, false, cell);
+	//createAttackEvent(time, false, cell);
 	
 	// Inform the clients of the new cell
 	sendCellCreationMessages(requestId, currentPlayer, cell, type);
@@ -79,21 +81,14 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 	 * search for all cells that would be in its attack radius
 	 * reversely all the other cell that are attackers have the current cell in its attack radius
 	 */
-	const vector<GameObject *> & activeVictims =
+	const vector<GameObject *> & gameObjects =
 		GAMECONTEXT->getActiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
-		
-	const vector<GameObject *> & inactiveVictims =
-		GAMECONTEXT->getInactiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
-
-	// Accumulate all possible enemies
-	vector<GameObject *> gameObjects;
-	gameObjects.insert(gameObjects.end(), activeVictims.begin(), activeVictims.end());
-	gameObjects.insert(gameObjects.end(), inactiveVictims.begin(), inactiveVictims.end());
 
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 	{
 		CellServer * victimCell = isAttacker ? dynamic_cast<CellServer *>(*it) : &currentCell;
 		CellServer * attackerCell = isAttacker ? &currentCell : dynamic_cast<CellServer *>(*it);
+		GAMECONTEXT->getAttackRelations().addRelation(*attackerCell, *victimCell);
 		if (attackerCell->getType() == CellServer::STANDARDCELL)
 		{
 			if (victimCell->getOwner()->getId() != attackerCell->getOwner()->getId())
@@ -114,40 +109,24 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 				}
 			}
 		}
-
-		vector<unsigned int> victimIdleIds;
-		for (auto it = victimCell->getPolypeptides().begin(); it != victimCell->getPolypeptides().end(); ++it)
-		{
-			if (it->second->getState() == Polypeptide::IDLE)
-				victimIdleIds.push_back(it->second->getId());
-		}
-
-		vector<unsigned int> attackerIdleIds;
-		for (auto it = attackerCell->getPolypeptides().begin(); it != attackerCell->getPolypeptides().end(); ++it)
-		{
-			if (it->second->getState() == Polypeptide::IDLE)
-				attackerIdleIds.push_back(it->second->getId());
-		}
-
-		unsigned int idleCount = min<unsigned int>(victimIdleIds.size(), attackerIdleIds.size());
-		unsigned int i = 0;
-		for (; i < idleCount; ++i)
-		{
-			(*EVENT_MGR) += new PolypeptideFightEvent(time, victimCell->getId(), attackerCell->getId(), victimIdleIds[i], attackerIdleIds[i]);
-		}
-
-		/// rest make cellfight
-		if (victimIdleIds.size() > attackerIdleIds.size())
-		{
-			createPolypeptideCellAttackEvent(time, victimCell->getId(), attackerCell->getId(), victimIdleIds, CONFIG_FLOAT1("data.polypeptide.damage"));
-		}
-		else
-		{
-			createPolypeptideCellAttackEvent(time, attackerCell->getId(), victimCell->getId(), attackerIdleIds, CONFIG_FLOAT1("data.polypeptide.damage"));
-		}
 	}
+	GAMECONTEXT->getAttackRelations().update();
 
 	return true;
+}
+
+GameEvent * EventCreator::createPolypeptideFightEvent(double startTime, unsigned int cellId1, unsigned int cellId2, unsigned int polypeptideId1, unsigned int polypeptideId2)
+{
+	PolypeptideFightEvent * polypeptideFightEvent = new PolypeptideFightEvent(startTime, cellId1, cellId2, polypeptideId1, polypeptideId2);
+	(*EVENT_MGR) += polypeptideFightEvent;
+	return polypeptideFightEvent;
+}
+
+GameEvent * EventCreator::createPolypeptideCellAttackEvent(double startTime, unsigned int attackerCellId, unsigned int attackedCellId, unsigned int polypeptideId)
+{
+	PolypeptideCellAttackEvent * polypeptideCellAttackEvent = new PolypeptideCellAttackEvent(startTime, attackerCellId, attackedCellId, polypeptideId, CONFIG_FLOAT1("data.polypeptide.damage"));
+	(*EVENT_MGR) += polypeptideCellAttackEvent;
+	return polypeptideCellAttackEvent;
 }
 
 void EventCreator::sendCellCreationMessages(unsigned int requestId, PlayerServer & currentPlayer, CellServer & cell, const int type)

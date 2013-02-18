@@ -424,7 +424,6 @@ void Game::createPolypetide(CreatePolipeptideRequest & request)
 	}
 }
 
-
 void Game::movePolypetide(MovePolipeptideRequest & request)
 {
 	LOG_INFO("MovePolypetideRequest received");
