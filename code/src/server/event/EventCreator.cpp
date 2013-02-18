@@ -95,7 +95,7 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 			{
 				float damage = calculateDamage(attackerCell, victimCell);
 
-				if (damage > 0.f)
+				if (damage > 0.5f)
 				{
 					// Modify damage when cells within a static modifier
 					damage *= getAttackerMultiplier(attackerCell);
