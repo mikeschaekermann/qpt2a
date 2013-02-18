@@ -40,9 +40,10 @@ public:
 private:
 	static SoundPlayer*		instance;
 	FMOD::System*			system;
-	FMOD::Channel*			soundChannel;
+	FMOD::Channel*			soundChannels[99];
 	FMOD::Channel*			musicChannel;
-	FMOD::Channel*			audioInputChannel;
+	unsigned				numSoundChannels,
+							nextChannelId;
 
 	FMOD_VECTOR				vPosition,
 							vVelocity,

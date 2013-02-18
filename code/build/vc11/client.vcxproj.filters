@@ -212,8 +212,38 @@
     <ClCompile Include="..\..\src\client\environment\StaticModificatorClient.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\client\rendering\MarchingCubes.cpp">
-      <Filter>Rendering</Filter>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideSuccess.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideFailure.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideRequest.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.cpp">
+      <Filter>Network\Messages\Enum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -464,6 +494,39 @@
     <ClInclude Include="..\..\src\client\rendering\MarchingCubes.h">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideRequest.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideSuccess.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideFailure.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -535,17 +598,23 @@
     <Filter Include="Screens\GameScreenStates">
       <UniqueIdentifier>{2a317f10-862d-494d-9bf8-5cdc5f046aa4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Polypeptide">
+      <UniqueIdentifier>{769b61ec-65b3-4d1c-85a3-814218e5de50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Polypeptide\Combat">
+      <UniqueIdentifier>{9fdcb2d2-5e25-4a7d-b451-ed415fc43f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Polypeptide\Creation">
+      <UniqueIdentifier>{48e8452b-a694-4975-9a47-05b821863642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Polypeptide\Travel">
+      <UniqueIdentifier>{e1ca7fc7-ad4c-422a-bbb2-74d71a049647}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram11.cd" />
     <None Include="ClassDiagram12.cd" />
-    <None Include="..\..\resources\shader\test.vert">
-      <Filter>Rendering\Shader</Filter>
-    </None>
-    <None Include="..\..\resources\shader\test.frag">
-      <Filter>Rendering\Shader</Filter>
-    </None>
     <None Include="..\..\resources\assets.xml">
       <Filter>Config</Filter>
     </None>
@@ -568,6 +637,18 @@
       <Filter>Rendering\Shader</Filter>
     </None>
     <None Include="..\..\resources\shader\fogOfWar.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\phong.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\phong.vert">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\slime.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\slime.vert">
       <Filter>Rendering\Shader</Filter>
     </None>
   </ItemGroup>

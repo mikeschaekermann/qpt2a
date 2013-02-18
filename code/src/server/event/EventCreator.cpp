@@ -23,6 +23,8 @@
 #include "EventManager.h"
 #include "AttackEvent.h"
 #include "BuildingEvent.h"
+#include "PolypeptideFightEvent.h"
+#include "PolypeptideCellAttackEvent.h"
 
 using namespace std;
 
@@ -108,30 +110,41 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 				}
 				else
 				{
-					LOG_INFO("Bad damage calculation?");
+					LOG_INFO("Negative damage not valid");
 				}
 			}
 		}
 
-		/*unsigned int victimIdleCount = 0;
+		vector<unsigned int> victimIdleIds;
 		for (auto it = victimCell->getPolypeptides().begin(); it != victimCell->getPolypeptides().end(); ++it)
 		{
-			if (it->second->getState() == Polypeptide::IDLE) ++victimIdleCount;
+			if (it->second->getState() == Polypeptide::IDLE)
+				victimIdleIds.push_back(it->second->getId());
 		}
 
-		unsigned int attackerIdleCount = 0;
+		vector<unsigned int> attackerIdleIds;
 		for (auto it = attackerCell->getPolypeptides().begin(); it != attackerCell->getPolypeptides().end(); ++it)
 		{
-			if (it->second->getState() == Polypeptide::IDLE) ++attackerIdleCount;
+			if (it->second->getState() == Polypeptide::IDLE)
+				attackerIdleIds.push_back(it->second->getId());
 		}
 
-		unsigned int idleCount = min<unsigned int>(victimIdleCount, attackerIdleCount);
-		for (unsigned int i = 0; i < idleCount; ++i)
+		unsigned int idleCount = min<unsigned int>(victimIdleIds.size(), attackerIdleIds.size());
+		unsigned int i = 0;
+		for (; i < idleCount; ++i)
 		{
-			/// idles make polyfight
+			(*EVENT_MGR) += new PolypeptideFightEvent(time, victimCell->getId(), attackerCell->getId(), victimIdleIds[i], attackerIdleIds[i]);
 		}
 
-		/// rest make cellfight*/
+		/// rest make cellfight
+		if (victimIdleIds.size() > attackerIdleIds.size())
+		{
+			createPolypeptideCellAttackEvent(time, victimCell->getId(), attackerCell->getId(), victimIdleIds, CONFIG_FLOAT1("data.polypeptide.damage"));
+		}
+		else
+		{
+			createPolypeptideCellAttackEvent(time, attackerCell->getId(), victimCell->getId(), attackerIdleIds, CONFIG_FLOAT1("data.polypeptide.damage"));
+		}
 	}
 
 	return true;
@@ -296,6 +309,14 @@ float EventCreator::getVictimMultiplier(CellServer * victim)
 	}
 
 	return multiplicator;
+}
+
+void EventCreator::createPolypeptideCellAttackEvent(double time, unsigned int attackerCellId, unsigned int attackedCellId, vector<unsigned int> & polypeptideIds, float damage)
+{
+	for (unsigned int i = 0; i < polypeptideIds.size(); ++i)
+	{
+		(*EVENT_MGR) += new PolypeptideCellAttackEvent(time, attackerCellId, attackedCellId, polypeptideIds[i], damage);
+	}
 }
 
 EventCreator::EventCreator() { }

@@ -42,7 +42,7 @@
 		  <collisionHue>0.0</collisionHue>
 		  <noCollisionHue>0.33</noCollisionHue>
 		  <previewOpacity>0.3</previewOpacity>
-		  <incompleteOpacity>0.5</incompleteOpacity>
+		  <incompleteOpacity>0.3</incompleteOpacity>
 		  <completeOpacity>1.0</completeOpacity>
 		</building>
 	</ingamefeedback>
@@ -111,6 +111,12 @@
 		<celldie>
 			<time>1.0</time>
 		</celldie>
+		<polypeptidefight>
+			<time>1.0</time>
+		</polypeptidefight>
+		<polypeptidecellattack>
+			<time>1.0</time>
+		</polypeptidecellattack>
 	</event>
   <skin>
     <distanceFromCells>5.0</distanceFromCells>
@@ -136,10 +142,11 @@
 			<healthpoints>300.0</healthpoints>
 		</bonecell>
 	</cell>
-	<polypetide>
+	<polypeptide>
 		<maxPerCell>15</maxPerCell>
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
+		<damage>2.0</damage>
 	</polypetide>
 	<environment>
 		<barriers>

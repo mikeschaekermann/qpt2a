@@ -202,6 +202,45 @@
     <ClInclude Include="..\..\src\server\game\PolypeptideServer.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideFailure.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideRequest.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideSuccess.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.h">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.h">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\event\PolypeptideFightEvent.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\event\PolypeptideCellAttackEvent.h">
+      <Filter>Eventlogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -248,6 +287,18 @@
     </Filter>
     <Filter Include="Network\Messages\Game\InGame\Environment">
       <UniqueIdentifier>{d80b3f3a-02ab-4a19-a445-ecc0600e5826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Polypeptide">
+      <UniqueIdentifier>{33029d64-9a93-4269-876a-d73831509702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Polypeptide\Combat">
+      <UniqueIdentifier>{d04fb8e4-0ea3-489c-8a03-2ba27f5dbb0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Polypeptide\Creation">
+      <UniqueIdentifier>{50d0699d-32fc-4495-a210-ac891a803e6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages\Game\InGame\Polypeptide\Travel">
+      <UniqueIdentifier>{608d2331-4f2c-45b0-9dcb-c67082c6ce08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +458,45 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\Polypeptide.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideFailure.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideSuccess.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideRequest.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.cpp">
+      <Filter>Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.cpp">
+      <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\PolypeptideFightEvent.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\event\PolypeptideCellAttackEvent.cpp">
+      <Filter>Eventlogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
