@@ -4,6 +4,7 @@
 
 void StandardCellClient::startAttackAnimation()
 {
+	SOUND_PLAYER->playSound(string("cellAttack"), position, Vec3f::zero());
 	spikesScale = 1;
 }
 

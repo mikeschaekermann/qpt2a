@@ -246,7 +246,6 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			if (attacker) dynamic_cast<StandardCellClient *>(attacker)->startAttackAnimation();
 			if (attacked) dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
 
-			SOUND_PLAYER->playSound(string("cellAttack"));
 			if (attacker && attacked)
 			{
 				LOG_INFO("CellAttack: Both available");
