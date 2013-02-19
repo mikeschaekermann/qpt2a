@@ -2,6 +2,7 @@
 
 #include "../actors/GameObjectClient.h"
 #include "../../common/environment/StaticModificator.h"
+#include "../sound/SoundPlayer.h"
 
 class StaticModificatorClient : virtual public GameObjectClient, virtual public StaticModificator
 {
@@ -9,7 +10,11 @@ public:
 	StaticModificatorClient(unsigned id, Vec3f position, Vec3f rotation, Vec3f scale, 
 		float radius, StaticModificator::Type type) :
 		GameObjectClient(), StaticModificator(id, position, rotation, scale, radius, type)
-	{ opacity = .3f; }
+	{
+		opacity = .3f;
+		SOUND_PLAYER->playSound(string("radioactive"), position, Vec3f::zero());
+	}
+
 protected:
 	void drawAtTransformation() const;
 private:

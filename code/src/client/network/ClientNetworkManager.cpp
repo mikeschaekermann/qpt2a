@@ -188,9 +188,6 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			LOG_INFO(message.str());
 			message.str("");
 
-			// Create world
-			GAME_MGR->addPetriDish(startGame->worldRadius);
-
 			// Add all players
 			for (auto it = startGame->players.begin(); it != startGame->players.end(); ++it)
 			{

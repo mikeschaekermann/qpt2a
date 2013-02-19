@@ -430,6 +430,14 @@ vertexShader and fragmentShader are also file paths
   <stream>false</stream>
 </sound>
 
+<sound>
+  <key>radioactive</key>
+  <value>..\..\..\resources\sounds\radioactive.wav</value>
+  <3d>true</3d>
+  <loop>true</loop>
+  <stream>false</stream>
+</sound>
+
 <!-- shader -->
 
 <shader>

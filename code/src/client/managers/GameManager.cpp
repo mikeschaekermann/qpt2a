@@ -83,17 +83,6 @@ void GameManager::draw()
 	SCREEN_MGR->draw();
 }
 
-void GameManager::addPetriDish(float radius)
-{
-	/*GameObjectClient * petriDish = new GameObjectClient();
-	petriDish->setRadius(radius);
-	petriDish->setScale(Vec3f(1, 1, 1 / radius / 2));
-	petriDish->setPosition(Vec3f(0, 0, -1));
-	GAME_SCR.addGameObjectToDraw(petriDish);
-	GAME_SCR.setWorldRadius(radius);
-	GAME_SCR.zoomToWorld();*/
-}
-
 void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition)
 {
 	if (players.find(id) != players.end())
