@@ -122,7 +122,7 @@ void CollisionHandler::calculateBucketMeasures(Circle const & circle)
 {
 	if (area.largestRadius < circle.radius)
 	{
-		float & radius = area.largestRadius = circle.radius;
+		float radius = area.largestRadius = circle.radius;
 		float buffer = 1.f;
 
 		float width = (float) abs(area.dimensions.x2 - area.dimensions.x1);

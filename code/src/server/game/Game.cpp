@@ -403,7 +403,7 @@ void Game::createPolypetide(CreatePolipeptideRequest & request)
 
 	CellServer * stemCell = &(player->getStemCell());
 
-	PolypeptideServer * polypetide = new PolypeptideServer(stemCell->getPosition(), stemCell->getAngle(), player);
+	PolypeptideServer * polypetide = new PolypeptideServer(stemCell->getPosition(), stemCell->getAngle(), stemCell);
 
 	if (stemCell->addPolypetide(polypetide))
 	{

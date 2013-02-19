@@ -12,11 +12,10 @@ class PolypeptideServer :
 	virtual public GameObjectServer
 {
 public:
-	PolypeptideServer(Vec3f position, float angle, Player * owner) :
+	PolypeptideServer(Vec3f position, float angle, Cell * owner) :
 		Polypeptide(position, angle, owner)
 	{
 		this->radius = CONFIG_FLOAT1("data.polypetide.radius");
-		this->healthPoints = CONFIG_FLOAT1("data.polypetide.healthpoints");
 	}
 
 private:
