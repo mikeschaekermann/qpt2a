@@ -1,5 +1,6 @@
 #include "GameScreenStateNeutral.h"
 #include "GameScreenStateInMenu.h"
+#include "GameScreenStateSelectPolypeptides.h"
 #include "../../managers/GameManager.h"
 
 GameScreenStateNeutral::GameScreenStateNeutral(GameScreen * screen):
@@ -19,19 +20,33 @@ bool GameScreenStateNeutral::touchClick(TouchWay touchWay)
 	return false;
 }
 
+bool GameScreenStateNeutral::touchBegan(const TouchWay & touchWay)
+{
+	auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
+
+	if (cellsPicked.size() > 0 && cellsPicked[0]->getPolypeptides().size())
+	{
+		screen->switchToState(new GameScreenStateSelectPolypeptides(screen, cellsPicked[0]));
+	}
+	return true;
+}
+
 void GameScreenStateNeutral::touchMoved(const TouchWay & touchWay)
 {
-	auto& cam = RenderManager::getInstance()->cam;
+	if (touchWay.getTrigger() == TouchWay::RIGHT)
+	{
+		auto& cam = RenderManager::getInstance()->cam;
 	
-	auto curPos2D = touchWay.getCurrentPos();
-	auto prevPos2D = curPos2D - touchWay.getLastDeltaVector();
+		auto curPos2D = touchWay.getCurrentPos();
+		auto prevPos2D = curPos2D - touchWay.getLastDeltaVector();
 
-	auto curPos3D = cam.screenToWorldPlane(curPos2D);
-	auto prevPos3D = cam.screenToWorldPlane(prevPos2D);
+		auto curPos3D = cam.screenToWorldPlane(curPos2D);
+		auto prevPos3D = cam.screenToWorldPlane(prevPos2D);
 
-	auto shift = prevPos3D - curPos3D;
+		auto shift = prevPos3D - curPos3D;
 
-	cam.setPosition(cam.getPosition() + shift);
+		cam.setPosition(cam.getPosition() + shift);
+	}
 }
 
 void GameScreenStateNeutral::onKeyInput(KeyEvent& e)

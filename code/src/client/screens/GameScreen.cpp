@@ -518,6 +518,11 @@ IdGameObjectMap<PolypeptideClient> & GameScreen::getMyPolypeptides()
 	return myPolypeptides;
 }
 
+IdGameObjectMap<PolypeptideClient> & GameScreen::getSelectedPolypeptides()
+{
+	return polypeptidesSelected;
+}
+
 ci::Vec2f GameScreen::worldToScreen(ci::Vec3f position)
 {
 	return RenderManager::getInstance()->cam.worldToScreen(position, (float) getWindowWidth(), (float) getWindowHeight());

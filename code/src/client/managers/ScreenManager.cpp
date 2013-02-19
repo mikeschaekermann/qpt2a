@@ -101,11 +101,13 @@ void ScreenManager::mouseMove( MouseEvent event )
 
 void ScreenManager::touchEnded(TouchWay touchWay)
 {
-	currentScreen->touchEnded(touchWay);
-
 	if (touchWay.isClick())
 	{
 		currentScreen->touchClick(touchWay);
+	}
+	else
+	{
+		currentScreen->touchEnded(touchWay);
 	}
 }
 

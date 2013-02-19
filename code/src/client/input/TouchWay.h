@@ -42,6 +42,8 @@ public:
 	void addPoint(const Vec2f& pos, double time);
 	/// @brief gets the vector of the last motion (i.e. the difference between current and previous touch point positions)
 	Vec2f getLastDeltaVector() const;
+	/// @brief gets the total length of the touch way
+	float getLength() const;
 	/// @brief gets a flag indicating whether this touch way is a simple click (i.e. no drag in between)
 	bool isClick() const;
 	/// @brief gets the trigger method
@@ -52,6 +54,8 @@ private:
 	const int32_t			m_iId;
 	/// touch way consisting of a list of touch points
 	vector<TouchPoint>		m_way;
+	/// length of touch way
+	float wayLength;
 	/// touch way trigger
 	TRIGGER trigger;
 };

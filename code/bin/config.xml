@@ -2,6 +2,7 @@
 <data>
 	<input>
 		<clickPixelTolerance>10</clickPixelTolerance>
+		<clickWayLengthTolerance>15</clickWayLengthTolerance>
 		<text>
 		  <font>Comic Sans MS</font>
 		  <size>34</size>
@@ -45,6 +46,27 @@
 		  <incompleteOpacity>0.3</incompleteOpacity>
 		  <completeOpacity>1.0</completeOpacity>
 		</building>
+		<pickPolypeptides>
+			<maxPickRadius>100.0</maxPickRadius>
+      <maxRadiusColor>
+        <r>1.0</r>
+        <g>0.0</g>
+        <b>0.0</b>
+        <a>1.0</a>
+      </maxRadiusColor>
+      <stepRadiusColor>
+        <r>1.0</r>
+        <g>1.0</g>
+        <b>0.0</b>
+        <a>1.0</a>
+      </stepRadiusColor>
+      <selectRadiusColor>
+        <r>1.0</r>
+        <g>0.0</g>
+        <b>0.0</b>
+        <a>0.3</a>
+      </selectRadiusColor>
+		</pickPolypeptides>
 	</ingamefeedback>
 	<network>
 		<server>

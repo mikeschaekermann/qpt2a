@@ -254,6 +254,12 @@
     <ClCompile Include="..\..\src\client\actors\PolypeptideClient.cpp">
       <Filter>Actors\Polypeptides</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateSelectPolypeptides.cpp">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateMovePolypeptides.cpp">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -541,6 +547,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\client\actors\PolypeptideClient.h">
       <Filter>Actors\Polypeptides</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateSelectPolypeptides.h">
+      <Filter>Screens\GameScreenStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateMovePolypeptides.h">
+      <Filter>Screens\GameScreenStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -41,7 +41,9 @@
     <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.cpp" />
     <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateGameOver.cpp" />
     <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateInMenu.cpp" />
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateMovePolypeptides.cpp" />
     <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.cpp" />
+    <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateSelectPolypeptides.cpp" />
     <ClCompile Include="..\..\src\client\screens\GUIItem.cpp" />
     <ClCompile Include="..\..\src\client\screens\IpInput.cpp" />
     <ClCompile Include="..\..\src\client\screens\MenuScreen.cpp" />
@@ -128,7 +130,9 @@
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateCreateCell.h" />
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateGameOver.h" />
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateInMenu.h" />
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateMovePolypeptides.h" />
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.h" />
+    <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateSelectPolypeptides.h" />
     <ClInclude Include="..\..\src\client\screens\GUIItem.h" />
     <ClInclude Include="..\..\src\client\screens\IpInput.h" />
     <ClInclude Include="..\..\src\client\screens\IScreenItem.h" />
