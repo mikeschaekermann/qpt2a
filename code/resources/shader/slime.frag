@@ -139,6 +139,3 @@ void main(void) {
 
 	gl_FragColor = ambientColor + diffColor + specColor;
 }
-
-
-

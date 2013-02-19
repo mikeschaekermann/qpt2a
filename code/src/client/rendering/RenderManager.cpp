@@ -187,29 +187,27 @@ void RenderManager::renderStatic(float radius, StaticModificator::Type type, flo
 	shader.unbind();
 }
 
-void RenderManager::renderGoo()
+void RenderManager::renderSkin(TriMesh model,
+							   Vec4f ambient,
+							   Vec4f diffuse,
+							   Vec4f specular,
+							   float shininess)
 {
-	auto model = ASSET_MGR->getModel(string("goo"));
-	auto shader = ASSET_MGR->getShaderProg(string("goo"));
+	auto shader = ASSET_MGR->getShaderProg(string("skin"));
 
 	shader.bind();
 
-	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * Vec3f(cam.getEyePoint().xy(), 1000.));
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * lightPos);
 
-	shader.uniform("ambientColor", Vec3f(0.1, 0.1, 0.1));
-	shader.uniform("diffuseColor", Vec3f(0.5, 0.1, 0.1));
-	shader.uniform("specularColor", Vec3f(0.9, 0.9, 0.9));
-	shader.uniform("shininess", float(1000.));
+	shader.uniform("ambientColor", ambient);
+	shader.uniform("diffuseColor", diffuse);
+	shader.uniform("specularColor", specular);
+	shader.uniform("shininess", shininess);
 	shader.uniform("time", float(getElapsedSeconds()));
-	gl::pushMatrices();
-	float scale = CONFIG_FLOAT1("data.world.radius");
-	gl::scale(scale, scale);
-	gl::color(1., 0., 0.);
+
 	gl::pushModelView();
 		gl::draw(model);
 	gl::popModelView();
-	
-	gl::popMatrices();
 
 	shader.unbind();
 }

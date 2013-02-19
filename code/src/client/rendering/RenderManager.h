@@ -51,7 +51,11 @@ public:
 					 Vec4f specular = Vec4f(1.f, 1.f, 1.f, 1.f),
 					 float shininess = 10.f);
 
-	void renderGoo();
+	void renderSkin(TriMesh model,
+					 Vec4f ambient = Vec4f(0.1f, 0.1f, 0.1f, 1.f),
+					 Vec4f diffuse = Vec4f(0.4f, 0.4f, 0.4f, 1.f),
+					 Vec4f specular = Vec4f(1.f, 1.f, 1.f, 1.f),
+					 float shininess = 10.f);
 
 	void renderBarrier(float radius);
 

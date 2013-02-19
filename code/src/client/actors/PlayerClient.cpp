@@ -85,13 +85,22 @@ void PlayerClient::drawSkin() const
 		auto ambientColor = Color(CM_HSV, hue, 0.8f, 1.f);
 		auto diffuseColor = Color(CM_HSV, hue, 0.7f, 0.4f);
 		
-		RENDER_MGR->renderPhongShadedModel(
+		RENDER_MGR->renderSkin(
 			skin.getMesh(),
 			Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, 0.15f),
 			Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, 0.9f),
 			Vec4f(1.f, 1.f, 1.f, 0.9f),
 			5.f
 		);
+
+		///////////// opaque configuration
+		/*RENDER_MGR->renderSkin(
+			skin.getMesh(),
+			Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, 0.9f),
+			Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, 0.8f),
+			Vec4f(1.f, 1.f, 1.f, 1.f),
+			5.f
+		);*/
 	}
 }
 

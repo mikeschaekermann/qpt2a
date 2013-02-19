@@ -138,8 +138,6 @@ void GameScreen::draw()
 
 	containerMutex.unlock();
 
-	RENDER_MGR->renderGoo();
-
 	/// draw player skins
 	for (auto it = GAME_MGR->getPlayers().begin(); it != GAME_MGR->getPlayers().end(); ++it)
 	{

@@ -204,10 +204,10 @@
     </None>
     <None Include="..\..\resources\shader\barrier.frag" />
     <None Include="..\..\resources\shader\barrier.vert" />
-    <None Include="..\..\resources\shader\goo.frag" />
-    <None Include="..\..\resources\shader\goo.vert" />
     <None Include="..\..\resources\shader\phong.frag" />
     <None Include="..\..\resources\shader\phong.vert" />
+    <None Include="..\..\resources\shader\skin.frag" />
+    <None Include="..\..\resources\shader\skin.vert" />
     <None Include="..\..\resources\shader\static.frag" />
     <None Include="..\..\resources\shader\static.vert" />
     <None Include="..\..\resources\shader\fogOfWar.frag" />
