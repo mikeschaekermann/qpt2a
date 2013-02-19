@@ -27,6 +27,7 @@ private:
 	{
 		ci::Area dimensions;
 		ci::Vec2f bucketMeasures;
+		ci::Vec2i bucketCount;
 		float largestRadius;
 	};
 
