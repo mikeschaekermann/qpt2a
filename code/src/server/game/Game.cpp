@@ -383,7 +383,7 @@ void Game::createCell(CreateCellRequest & request)
 	}
 }
 
-void Game::createPolypetide(CreatePolipeptideRequest & request)
+void Game::createPolypetide(CreatePolypeptideRequest & request)
 {
 	LOG_INFO("CreatePolyPeptideRequest received");
 	unsigned int playerId = request.playerId;
@@ -424,7 +424,7 @@ void Game::createPolypetide(CreatePolipeptideRequest & request)
 	}
 }
 
-void Game::movePolypetide(MovePolipeptideRequest & request)
+void Game::movePolypetide(MovePolypeptideRequest & request)
 {
 	LOG_INFO("MovePolypetideRequest received");
 	unsigned int fromCellId = request.fromCellId;

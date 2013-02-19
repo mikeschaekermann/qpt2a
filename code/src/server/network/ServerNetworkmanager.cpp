@@ -4,6 +4,7 @@
 #include "../game/PlayerServer.h"
 #include "../../common/network/messages/game/outgame/JoinRequest.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellRequest.h"
+#include "../../common/network/messages/game/ingame/polypeptide/creation/CreatePolypeptideRequest.h"
 
 using namespace std;
 
@@ -43,6 +44,10 @@ NetworkMessage* ServerNetworkManager::createNetworkMessage(char* data)
 				message = new CreateCellRequest(data, index);
 				break;
 			}
+		case MessageType::CreatePolypeptideRequest:
+			{
+				message = new CreatePolypeptideRequest(data, index);
+			}
 		default:
 			break;
 		}
@@ -63,6 +68,12 @@ void ServerNetworkManager::handleMessage(NetworkMessage* message)
 	if (createCellRequest)
 	{
 		m_game->createCell(*createCellRequest);
+	}
+
+	CreatePolypeptideRequest * createPolypeptideRequest = dynamic_cast<CreatePolypeptideRequest *>(message);
+	if (createPolypeptideRequest)
+	{
+		m_game->createPolypetide(*createPolypeptideRequest);
 	}
 	GAMECONTEXT->getMutex().unlock();
 }

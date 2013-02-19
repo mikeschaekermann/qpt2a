@@ -1,6 +1,7 @@
 #include "GameScreen.h"
 #include "../managers/GameManager.h"
 #include "../../common/network/NetworkManager.h"
+#include "../../common/network/messages/game/ingame/polypeptide/creation/CreatePolypeptideRequest.h"
 #include "../managers/AssetManager.h"
 #include "../actors/CellClient.h"
 #include "../actors/StandardCellClient.h"
@@ -50,6 +51,10 @@ GameScreen::GameScreen()
 		[this]()
 		{
 			LOG_INFO("Create attacker polypeptide button was clicked!");
+			CreatePolypeptideRequest * request = new CreatePolypeptideRequest();
+			request->endpoint = GAME_MGR->getServerEndpoint();
+			NETWORK_MGR->registerCreatePolypeptideRequest(request);
+			NETWORK_MGR->send(request);
 		},
 		Vec2f::zero(),
 		&(ASSET_MGR->getGuiTexture(string("ingame-button-polypeptid-normal"))),

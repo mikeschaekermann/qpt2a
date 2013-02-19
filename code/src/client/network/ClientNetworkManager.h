@@ -2,6 +2,7 @@
 
 #include "../../common/network/NetworkManager.h"
 #include <map>
+#include <set>
 #include <tuple>
 
 using namespace boost::asio::ip;
@@ -24,8 +25,7 @@ public:
 	);
 	virtual void removeCreateCellRequestByParentCell(CellClient * parentCell);
 
-	virtual void registerCreatePolypeptideRequest(CreatePolypeptideRequest * request, PolypeptideClient * polypeptide);
-	virtual void removeCreatePolypeptideRequestByPolypeptide(PolypeptideClient * polypeptide);
+	virtual void registerCreatePolypeptideRequest(CreatePolypeptideRequest * request);
 
 	virtual void registerMovePolypeptideRequest(MovePolypeptideRequest * request, CellClient * fromCell, CellClient * toCell, unsigned int amount);
 	
@@ -37,7 +37,7 @@ protected:
 	
 	std::map<unsigned int, std::pair<CellClient *,CellClient *> >
 		createCellRequestContexts;
-	std::map<unsigned int, PolypeptideClient *> createPolypeptideRequestContexts;
+	std::set<unsigned int> createPolypeptideRequestContexts;
 	std::map<unsigned int, std::tuple<CellClient *, CellClient *, unsigned int> > movePolypeptideRequestContexts;
 	
 	unsigned int nextRequestId;

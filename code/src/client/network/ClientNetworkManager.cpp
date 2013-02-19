@@ -112,6 +112,16 @@ NetworkMessage* ClientNetworkManager::createNetworkMessage(char* data)
 				message = new CreateCellFailure(data, index);
 				break;
 			}
+		case MessageType::CreatePolypeptideSuccess:
+			{
+				message = new CreatePolypeptideSuccess(data, index);
+				break;
+			}
+		case MessageType::CreatePolypeptideFailure:
+			{
+				message = new CreatePolypeptideFailure(data, index);
+				break;
+			}
 
 		default:
 			break;
@@ -387,7 +397,6 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 			if (context != createPolypeptideRequestContexts.end())
 			{
-				auto polypeptide = context->second;
 				/// set values
 				/// add to list
 				createPolypeptideRequestContexts.erase(context);
@@ -407,7 +416,6 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 			if (context != createPolypeptideRequestContexts.end())
 			{
-				auto polypeptide = context->second;
 
 				/// delete polypeptide
 
@@ -546,26 +554,11 @@ void ClientNetworkManager::removeCreateCellRequestByParentCell(CellClient * pare
 	}
 }
 
-void ClientNetworkManager::registerCreatePolypeptideRequest(CreatePolypeptideRequest * request, PolypeptideClient * polypeptide)
+void ClientNetworkManager::registerCreatePolypeptideRequest(CreatePolypeptideRequest * request)
 {
-	createPolypeptideRequestContexts.insert(make_pair(nextRequestId, polypeptide));
+	createPolypeptideRequestContexts.insert(nextRequestId);
 	request->requestId = nextRequestId;
 	++nextRequestId;
-}
-
-void ClientNetworkManager::removeCreatePolypeptideRequestByPolypeptide(PolypeptideClient * polypeptide)
-{
-	for (auto it = createPolypeptideRequestContexts.begin(); it != createPolypeptideRequestContexts.end();)
-	{
-		if (it->second == polypeptide)
-		{
-			it = createPolypeptideRequestContexts.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
 }
 
 void ClientNetworkManager::registerMovePolypeptideRequest(MovePolypeptideRequest * request, CellClient * fromCell, CellClient * toCell, unsigned int amount)
