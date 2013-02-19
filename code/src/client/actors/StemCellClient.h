@@ -15,6 +15,8 @@ public:
  {
   setId(id);
  }
+ 
+ virtual void update(float frameTime) { CellClient::update(frameTime); }
  virtual void setPosition(Vec3f position) { CellClient::setPosition(position); }
  
 private:
