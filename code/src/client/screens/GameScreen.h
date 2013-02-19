@@ -5,6 +5,7 @@
 #include "../../common/Config.h"
 #include "../../common/Player.h"
 #include "../../common/GameObjectContainer.h"
+#include "../actors/PolypeptideClient.h"
 #include <unordered_map>
 #include "../../common/network/messages/enum/CellType.h"
 #include "boost/thread/mutex.hpp"
@@ -97,6 +98,8 @@ public:
 	void removeExploringCell(CellClient * cell);
 	GameObjectContainer<GameObject> & getExploringCells();
 
+	IdGameObjectMap<PolypeptideClient> & getMyPolypeptides();
+
 	bool canCellBePlaced(CellClient * cell);
 
 	void addRenderText(RenderText const & text);
@@ -150,6 +153,9 @@ private:
 
 	/// all cell previews
 	std::set<CellClient *>					cellPreviews;
+
+	/// my polypeptides
+	IdGameObjectMap<PolypeptideClient>		myPolypeptides;
 
 	/// text which should be rendered to the screen
 	std::vector<RenderText> textList;

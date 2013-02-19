@@ -37,6 +37,7 @@
 #include "../screens/GameScreenStates/GameScreenStateGameOver.h"
 #include "../screens/GameScreenStates/GameScreenStateCreateCell.h"
 #include "../screens/ConnectScreen.h"
+#include "../screens/GameScreen.h"
 
 using namespace std;
 
@@ -392,11 +393,21 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			LOG_INFO("CreatePolipeptideSuccess received");
 			unsigned int requestId = createPolySuccess->requestId;
+			unsigned int polypeptideId = createPolySuccess->polypeptideId;
 
 			auto context = createPolypeptideRequestContexts.find(requestId);
 
 			if (context != createPolypeptideRequestContexts.end())
 			{
+				auto stemCell = GAME_MGR->getMyPlayer()->getStemCell();
+
+				PolypeptideClient * polypeptide = new PolypeptideClient();
+				polypeptide->setId(polypeptideId);
+				polypeptide->setOwner(&stemCell);
+
+				stemCell.addPolypetide(polypeptide);
+
+				GAME_SCR.getMyPolypeptides().addGameObject(polypeptide);
 				/// set values
 				/// add to list
 				createPolypeptideRequestContexts.erase(context);

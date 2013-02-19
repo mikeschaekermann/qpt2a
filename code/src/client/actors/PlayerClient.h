@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../common/Player.h"
+#include "../actors/CellClient.h"
 #include "../rendering/MarchingCubes.h"
 #include "cinder/Sphere.h"
 
@@ -15,6 +16,9 @@ public:
 	~PlayerClient(void);
 
 	bool operator==(const PlayerClient & otherPlayer) const;
+
+	virtual CellClient & getStemCell() { return dynamic_cast<CellClient &>(*stemCell); }
+
 	float getHue() const { return hue; }
 	void setHue(float newHue) { hue = min<float>(max<float>(newHue, 0.0), 1.0); }
 	

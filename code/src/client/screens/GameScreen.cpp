@@ -53,6 +53,7 @@ GameScreen::GameScreen()
 			LOG_INFO("Create attacker polypeptide button was clicked!");
 			CreatePolypeptideRequest * request = new CreatePolypeptideRequest();
 			request->endpoint = GAME_MGR->getServerEndpoint();
+			request->playerId = GAME_MGR->getMyPlayer()->getId();
 			NETWORK_MGR->registerCreatePolypeptideRequest(request);
 			NETWORK_MGR->send(request);
 		},
@@ -510,6 +511,11 @@ void GameScreen::switchToState(GameScreenState * newState)
 GameObjectContainer<GameObjectClient> & GameScreen::getGameObjectsToDraw()
 {
 	return gameObjectsToDraw;
+}
+
+IdGameObjectMap<PolypeptideClient> & GameScreen::getMyPolypeptides()
+{
+	return myPolypeptides;
 }
 
 ci::Vec2f GameScreen::worldToScreen(ci::Vec3f position)

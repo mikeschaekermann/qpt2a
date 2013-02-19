@@ -78,3 +78,11 @@ float CellClient::getOpacityFromHealthPoints() const
 {
 	return (getOpacity() * getHealthPercentage());
 }
+
+void CellClient::drawAtTransformation() const
+{
+	for (auto it = polypeptides.begin(); it != polypeptides.end(); ++it)
+	{
+
+	}
+}

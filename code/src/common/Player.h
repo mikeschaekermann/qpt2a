@@ -6,7 +6,7 @@
 #include <vector>
 #include <map>
 
-#include "StemCell.h"
+#include "Cell.h"
 
 using namespace std;
 
@@ -15,15 +15,20 @@ class Player
 public:
 	Player(unsigned int id, string name) :
 		id(id),
-		name(name)
+		name(name),
+		stemCell(nullptr)
 	{
 	}
 
 	unsigned int getId() const { return id; }
 	const string& getName() const { return name; }
+	virtual Cell & getStemCell() { return *stemCell; }
 	void setId(unsigned int newId) { id = newId; }
+	virtual void setStemCell(Cell * stemCell) { this->stemCell = stemCell; }
+
 
 protected:
 	unsigned int id;
 	string name;
+	Cell * stemCell;
 };
