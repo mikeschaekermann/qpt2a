@@ -61,6 +61,10 @@ public:
 
 	void renderStatic(float radius, StaticModificator::Type type, float opacity);
 
+	void renderBlackShadedModel(string modelName);
+	
+	void renderBlackShadedModel(TriMesh& model);
+
 	void setUp3d();
 	void shutdown3d();
 

@@ -11,6 +11,8 @@ class PolypeptideClient :
 public:
 	PolypeptideClient() { }
 
+	virtual void drawAtTransformation();
+
 	virtual void setPosition(Vec3f position) { GameObject::setPosition(position); }
 	virtual void setRadius(float radius) { GameObject::setRadius(radius); }
 	
