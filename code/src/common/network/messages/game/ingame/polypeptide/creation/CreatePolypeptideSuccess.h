@@ -8,6 +8,7 @@ class CreatePolypeptideSuccess : public NetworkMessage
 public:
 	/* Fields */
 	unsigned int requestId;
+	unsigned int polypeptideId;
 
 	/* Constructor / Destructor */
 	CreatePolypeptideSuccess();														/// Default constructor

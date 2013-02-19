@@ -12,7 +12,7 @@ uniform float time;
 
 uniform vec3 translation;
 
-varying vec4 vertexPositionModel;
+varying vec4 vertexPositionWorld;
 varying vec4 vertexPositionEye;
 varying vec4 vertexNormalEye;
 
@@ -112,19 +112,7 @@ float snoise(vec3 v)
 
 
 void main(void) {
-	float t = time / 5.;
-
-	vec4 vertexPositionWorld = vertexPositionModel + vec4(translation, 1.);
-
-	//vec3 uvw = 0.1 * vec3(snoise(vec3(vertexPositionWorld.x * t, 0., 0.)),
-	//	snoise(vec3(0., vertexPositionWorld.y * t, 0.)),
-	//	snoise(vec3(0., 0.,  vertexPositionWorld.z * t)));
-
-	vec3 uvw = vertexPositionWorld.xyz + 0.1*vec3(snoise(vertexPositionWorld.xyz + vec3(0.0, 0.0, t)),
-		snoise(vertexPositionWorld.xyz + vec3(43.0, 17.0, t)),
-		snoise(vertexPositionWorld.xyz + vec3(-17.0, -43.0, t)));
-	
-	float n = snoise(uvw - vec3(0., 0., t));
+	float n = snoise(vertexPositionWorld.xyz + time / 20.);
 
 	vec4 nLightVec = normalize(lightPos - vertexPositionEye);
 	vec4 nVertexNormal = normalize(vertexNormalEye + n);

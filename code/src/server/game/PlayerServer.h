@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <stdexcept>
 
 #include "../../common/network/ConnectionEndpoint.h"
 #include "../../common/Player.h"
@@ -26,10 +27,10 @@ public:
 	}
 	
 	const boost::asio::ip::udp::endpoint & getEndpoint() const { return m_endpoint; }
-	CellServer & getStemCell() { return *stemCell; }
+	virtual CellServer & getStemCell() { return dynamic_cast<CellServer &>(*stemCell); }
+	virtual void setStemCell(Cell * stemCell) { throw logic_error("Not implemented exception"); }
 	bool isDead() const { return dead; }
 	void kill() { dead = true; }
 private:
-	CellServer * stemCell;
 	bool dead;
 };

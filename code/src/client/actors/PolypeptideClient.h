@@ -9,12 +9,13 @@ class PolypeptideClient :
 	virtual public GameObjectClient
 {
 public:
-	PolypeptideClient() { }
+	PolypeptideClient(){}
+
+	virtual void drawAtTransformation() const;
 
 	virtual void setPosition(Vec3f position) { GameObject::setPosition(position); }
 	virtual void setRadius(float radius) { GameObject::setRadius(radius); }
 	
-protected:
 	virtual void setRotation(Vec3f rotation) { GameObject::setRotation(rotation); }
 	virtual void setScale(Vec3f scale) { GameObject::setScale(scale); }
 };

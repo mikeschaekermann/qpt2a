@@ -410,6 +410,7 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 		/// success
 		CreatePolypeptideSuccess * message = new CreatePolypeptideSuccess();
 		message->requestId = request.requestId;
+		message->polypeptideId = polypetide->getId();
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
 	}

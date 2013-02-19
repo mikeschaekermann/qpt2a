@@ -110,6 +110,7 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	auto player = players[id];
 	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0, player);
 	stemCell->setHue(player->getHue());
+	player->setStemCell(stemCell);
 
 	if (ownPlayerAdded)
 	{
