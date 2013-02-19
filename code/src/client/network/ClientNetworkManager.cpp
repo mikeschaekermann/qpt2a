@@ -350,6 +350,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				newCell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));
 				newCell->setHue(GAME_MGR->getMyHue());
 				parentCell->addChild(newCell);
+				/// must be hidden so that the skin is updated later!
+				newCell->hide();
 				GAME_SCR.removeCellPreview(newCell);
 				GAME_SCR.addIncompleteCell(newCell);
 				GAME_SCR.addExploringCell(newCell);
