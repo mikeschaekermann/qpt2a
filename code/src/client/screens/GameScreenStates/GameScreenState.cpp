@@ -13,7 +13,7 @@ void GameScreenState::draw2D() {}
 bool GameScreenState::touchBegan(const TouchWay & touchWay) { return false; }
 void GameScreenState::touchMoved(const TouchWay & touchWay) {}
 bool GameScreenState::mouseMove(MouseEvent event) { return false; }
-void GameScreenState::touchEnded(TouchWay touchWay) {}
+void GameScreenState::touchEnded(const TouchWay & touchWay) {}
 bool GameScreenState::touchClick(TouchWay touchWay) { return false; }
 void GameScreenState::resize(ResizeEvent event) {}
 void GameScreenState::onKeyInput(KeyEvent& e)

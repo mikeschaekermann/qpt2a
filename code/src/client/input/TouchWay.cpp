@@ -32,6 +32,7 @@ Vec2f TouchWay::getCurrentPos() const
 void TouchWay::addPoint(const Vec2f& pos, double time)
 {
 	m_way.push_back(TouchPoint(pos, time));
+	wayLength += getLastDeltaVector().length();
 }
 
 Vec2f TouchWay::getLastDeltaVector() const
@@ -46,11 +47,18 @@ Vec2f TouchWay::getLastDeltaVector() const
 	}
 }
 
+float TouchWay::getLength() const
+{
+	return wayLength;
+}
+
 bool TouchWay::isClick() const
 {
 	auto distance = getStartPos().distance(getCurrentPos());
 	auto clickPixelTolerance = CONFIG_FLOAT1("data.input.clickPixelTolerance");
-	return (distance <= clickPixelTolerance);
+	auto clickWayLengthTolerance = CONFIG_FLOAT1("data.input.clickWayLengthTolerance");
+
+	return (distance <= clickPixelTolerance && wayLength <= clickWayLengthTolerance);
 }
 
 TouchWay::TRIGGER TouchWay::getTrigger() const

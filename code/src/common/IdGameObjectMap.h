@@ -52,6 +52,11 @@ public:
 	{
 		return gameObjectMap.end();
 	}
+
+	virtual void clear()
+	{
+		gameObjectMap.clear();
+	}
 private:
 	MapIdPointer gameObjectMap;
 };

@@ -2,6 +2,7 @@
 #include "GameScreenStateNeutral.h"
 #include "../../rendering/RenderManager.h"
 #include "../../actors/StemCellClient.h"
+#include "GameScreenStateSelectPolypeptides.h"
 
 GameScreenStateInMenu::GameScreenStateInMenu(GameScreen* screen, CellClient * pickedCell):
 	GameScreenState(screen),
@@ -44,6 +45,18 @@ GameScreenStateInMenu::GameScreenStateInMenu(GameScreen* screen, CellClient * pi
 GameScreenStateInMenu::~GameScreenStateInMenu(void)
 {
 	screen->cellMenu->setVisible(false);
+}
+
+bool GameScreenStateInMenu::touchBegan(const TouchWay & touchWay)
+{
+	auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
+
+	/// CAUTION: this only works if the in-game menu buttons do not overlap with the picked cell
+	if (cellsPicked.size() > 0 && cellsPicked[0] == pickedCell && cellsPicked[0]->getPolypeptides().size())
+	{
+		screen->switchToState(new GameScreenStateSelectPolypeptides(screen, pickedCell));
+	}
+	return true;
 }
 
 bool GameScreenStateInMenu::touchClick(TouchWay touchWay)

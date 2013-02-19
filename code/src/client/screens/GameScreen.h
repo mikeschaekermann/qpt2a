@@ -18,6 +18,8 @@ class GameScreenState;
 class GameScreenStateNeutral;
 class GameScreenStateInMenu;
 class GameScreenStateCreateCell;
+class GameScreenStateMovePolypeptides;
+class GameScreenStateSelectPolypeptides;
 
 class GameScreen :
 	public Screen
@@ -28,6 +30,8 @@ public:
 	friend class GameScreenStateInMenu;
 	friend class GameScreenStateCreateCell;
 	friend class GameScreenStateGameOver;
+	friend class GameScreenStateMovePolypeptides;
+	friend class GameScreenStateSelectPolypeptides;
 
 	class RenderText
 	{
@@ -100,6 +104,8 @@ public:
 
 	IdGameObjectMap<PolypeptideClient> & getMyPolypeptides();
 
+	IdGameObjectMap<PolypeptideClient> & getSelectedPolypeptides();
+
 	bool canCellBePlaced(CellClient * cell);
 
 	void addRenderText(RenderText const & text);
@@ -156,6 +162,9 @@ private:
 
 	/// my polypeptides
 	IdGameObjectMap<PolypeptideClient>		myPolypeptides;
+
+	/// selected polypeptides
+	IdGameObjectMap<PolypeptideClient>		polypeptidesSelected;
 
 	/// text which should be rendered to the screen
 	std::vector<RenderText> textList;

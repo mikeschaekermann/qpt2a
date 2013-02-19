@@ -63,6 +63,8 @@ void StandardCellClient::drawAtTransformation() const
 
 void StandardCellClient::update(float frameTime)
 {
+	CellClient::update(frameTime);
+
 	if (spikesCanBeSeen())
 	{
 		spikesScale = spikesScale * pow(CONFIG_FLOAT2("data.cell.standardcell.spikes.shrinkAmountPerSecond", 0.5), frameTime);

@@ -14,6 +14,8 @@ public:
 		setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.completeOpacity", 1.0f));
 	}
 
+	virtual void update(float frameTime);
+
 	virtual void setPosition(Vec3f position) { GameObject::setPosition(position); }
 	virtual void drawHealthBar(float healthBarOpacity=1.0);
 	virtual void setRadius(float radius) { GameObject::setRadius(radius); }

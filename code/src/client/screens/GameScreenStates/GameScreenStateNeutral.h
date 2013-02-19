@@ -8,6 +8,7 @@ public:
 	GameScreenStateNeutral(GameScreen * screen);
 
 	virtual bool touchClick(TouchWay touchWay);
+	virtual bool touchBegan(const TouchWay & touchWay);
 	virtual void touchMoved(const TouchWay & touchWay);
 	virtual void onKeyInput(KeyEvent& e);
 	virtual void mouseWheel(MouseEvent & e);

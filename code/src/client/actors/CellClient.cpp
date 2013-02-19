@@ -3,6 +3,14 @@
 #include "../managers/GameManager.h"
 #include "cinder/Sphere.h"
 
+void CellClient::update(float frameTime)
+{
+	for (auto it = polypeptides.begin(); it != polypeptides.end(); ++it)
+	{
+		it->second->update(frameTime);
+	}
+}
+
 void CellClient::drawHealthBar(float healthBarOpacity)
 {
 	if (isVisible() && getHealthPoints() < maxHealthPoints)
