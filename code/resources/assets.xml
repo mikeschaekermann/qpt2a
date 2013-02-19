@@ -333,11 +333,6 @@ vertexShader and fragmentShader are also file paths
 </model>
 
 <model>
-  <key>infiltrate</key>
-  <value>..\..\..\resources\models\infiltrate.obj</value>
-</model>
-
-<model>
   <key>petriDish</key>
   <value>..\..\..\resources\models\petriDish.obj</value>
 </model>
@@ -368,8 +363,8 @@ vertexShader and fragmentShader are also file paths
 </model>
 
 <model>
-  <key>goo</key>
-  <value>..\..\..\resources\models\goo.obj</value>
+  <key>poly</key>
+  <value>..\..\..\resources\models\poly.obj</value>
 </model>
 
 <!-- sounds -->
@@ -473,4 +468,10 @@ vertexShader and fragmentShader are also file paths
   <key>skin</key>
   <vertexShader>..\..\..\resources\shader\skin.vert</vertexShader>
   <fragmentShader>..\..\..\resources\shader\skin.frag</fragmentShader>
+</shader>
+
+<shader>
+  <key>poly</key>
+  <vertexShader>..\..\..\resources\shader\poly.vert</vertexShader>
+  <fragmentShader>..\..\..\resources\shader\poly.frag</fragmentShader>
 </shader>

@@ -207,6 +207,37 @@ void RenderManager::renderSkin(TriMesh& model,
 	shader.unbind();
 }
 
+void RenderManager::renderBlackShadedModel(string modelName)
+{
+	auto model = ASSET_MGR->getModel(string("poly"));
+	renderBlackShadedModel(model);
+}
+	
+void RenderManager::renderBlackShadedModel(TriMesh& model)
+{
+	Vec4f ambient = Vec4f(0.3f, 0.3f, 0.3f, 1.f);
+	Vec4f diffuse = Vec4f(0.2f, 0.2f, 0.2f, 1.f);
+	Vec4f specular = Vec4f(0.1, 0.1, 0.1, 1.f);
+	float shininess = 10.f;
+
+	auto shader = ASSET_MGR->getShaderProg(string("poly"));
+
+	shader.bind();
+
+	shader.uniform("lightPos", cam.getProjectionMatrix() * cam.getModelViewMatrix() * Vec3f(cam.getEyePoint().xy(), 1000.));
+
+	shader.uniform("ambientColor", ambient);
+	shader.uniform("diffuseColor", diffuse);
+	shader.uniform("specularColor", specular);
+	shader.uniform("shininess", shininess);
+
+	gl::pushModelView();
+		gl::draw(model);
+	gl::popModelView();
+
+	shader.unbind();
+}
+
 void RenderManager::setUp3d()
 {
 	/// enable back-face culling

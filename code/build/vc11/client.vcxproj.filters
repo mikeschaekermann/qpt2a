@@ -675,5 +675,11 @@
     <None Include="..\..\resources\shader\skin.vert">
       <Filter>Rendering\Shader</Filter>
     </None>
+    <None Include="..\..\resources\shader\poly.frag">
+      <Filter>Rendering\Shader</Filter>
+    </None>
+    <None Include="..\..\resources\shader\poly.vert">
+      <Filter>Rendering\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
