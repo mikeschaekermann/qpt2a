@@ -248,6 +248,12 @@
     <ClCompile Include="..\..\src\client\rendering\MarchingCubes.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\common\Polypeptide.cpp">
+      <Filter>Actors\Polypeptides</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\actors\PolypeptideClient.cpp">
+      <Filter>Actors\Polypeptides</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -530,6 +536,12 @@
     <ClInclude Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.h">
       <Filter>Network\Messages\Enum</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\Polypeptide.h">
+      <Filter>Actors\Polypeptides</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\client\actors\PolypeptideClient.h">
+      <Filter>Actors\Polypeptides</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -612,6 +624,9 @@
     </Filter>
     <Filter Include="Screens\GameScreenStates">
       <UniqueIdentifier>{2a317f10-862d-494d-9bf8-5cdc5f046aa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actors\Polypeptides">
+      <UniqueIdentifier>{611edd76-720d-47c2-a92d-c51a93bbd778}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

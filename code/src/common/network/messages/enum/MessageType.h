@@ -21,6 +21,7 @@ public:
 		CellNew,					/// Is sent by the server if when a new Cell appears
 		CellAttack,					/// Is sent by the server when a cell attacks another
 		CellDie,					/// Is sent by the server when a cell dies
+		CreatePolypeptideRequest,
 		CreatePolypeptideSuccess,
 		CreatePolypeptideFailure,
 		MovePolypeptideSuccess,

@@ -2,7 +2,7 @@
 
 CreatePolypeptideFailure::CreatePolypeptideFailure() : NetworkMessage(), requestId(0), errorCode(CreatePolypeptideErrorCode::Invalid)
 {
-	messageType = MessageType::CreateCellFailure;
+	messageType = MessageType::CreatePolypeptideFailure;
 }
 
 CreatePolypeptideFailure::CreatePolypeptideFailure(char* data, unsigned &index) : NetworkMessage(data, index), requestId(0), errorCode(CreatePolypeptideErrorCode::Invalid)
@@ -19,12 +19,12 @@ CreatePolypeptideFailure::CreatePolypeptideFailure(char* data, unsigned &index) 
 
 CreatePolypeptideFailure::CreatePolypeptideFailure(const CreatePolypeptideFailure &other) : NetworkMessage(other), requestId(other.requestId), errorCode(CreatePolypeptideErrorCode::Invalid)
 {
-	messageType = MessageType::CreateCellFailure;
+	messageType = MessageType::CreatePolypeptideFailure;
 }
 
 CreatePolypeptideFailure::CreatePolypeptideFailure(const NetworkMessage &other) : NetworkMessage(other), requestId(0), errorCode(CreatePolypeptideErrorCode::Invalid)
 { 
-	messageType = MessageType::CreateCellFailure;
+	messageType = MessageType::CreatePolypeptideFailure;
 }
 
 CreatePolypeptideFailure::~CreatePolypeptideFailure() 

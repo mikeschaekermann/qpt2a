@@ -65,13 +65,13 @@
 				<vertical>10</vertical>
 			</angle>
 		</camera>
-    <light>
-      <position>
-        <x>200.0</x>
-        <y>-100.0</y>
-        <z>700.0</z>
-      </position>
-    </light>
+		<light>
+		  <position>
+			<x>200.0</x>
+			<y>-100.0</y>
+			<z>700.0</z>
+		  </position>
+		</light>
 	</rendering>
 	<world>
 		<radius>500.0</radius>

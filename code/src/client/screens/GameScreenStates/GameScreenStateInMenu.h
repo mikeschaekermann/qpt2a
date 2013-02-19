@@ -17,4 +17,5 @@ public:
 
 protected:
 	CellClient * pickedCell;
+	bool isStemcell;
 };

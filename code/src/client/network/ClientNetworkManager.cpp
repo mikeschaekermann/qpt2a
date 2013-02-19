@@ -32,6 +32,7 @@
 
 #include "../../client/actors/CellClient.h"
 #include "../../client/actors/StandardCellClient.h"
+#include "../../client/actors/PolypeptideClient.h"
 
 #include "../screens/GameScreenStates/GameScreenStateGameOver.h"
 #include "../screens/GameScreenStates/GameScreenStateCreateCell.h"
@@ -111,6 +112,16 @@ NetworkMessage* ClientNetworkManager::createNetworkMessage(char* data)
 				message = new CreateCellFailure(data, index);
 				break;
 			}
+		case MessageType::CreatePolypeptideSuccess:
+			{
+				message = new CreatePolypeptideSuccess(data, index);
+				break;
+			}
+		case MessageType::CreatePolypeptideFailure:
+			{
+				message = new CreatePolypeptideFailure(data, index);
+				break;
+			}
 
 		default:
 			break;
@@ -175,9 +186,6 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			message << "world radius: " << startGame->worldRadius;
 			LOG_INFO(message.str());
 			message.str("");
-
-			// Create world
-			GAME_MGR->addPetriDish(startGame->worldRadius);
 
 			// Add all players
 			for (auto it = startGame->players.begin(); it != startGame->players.end(); ++it)
@@ -381,7 +389,17 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			LOG_INFO("CreatePolipeptideSuccess received");
 			unsigned int requestId = createPolySuccess->requestId;
+
+			auto context = createPolypeptideRequestContexts.find(requestId);
+
+			if (context != createPolypeptideRequestContexts.end())
+			{
+				/// set values
+				/// add to list
+				createPolypeptideRequestContexts.erase(context);
+			}
 		}
+		break;
 	}
 	case MessageType::CreatePolypeptideFailure:
 	{
@@ -390,6 +408,16 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			LOG_INFO("CreatePolipeptideFailure received");
 			unsigned int requestId = createPolyFailure->requestId;
+
+			auto context = createPolypeptideRequestContexts.find(requestId);
+
+			if (context != createPolypeptideRequestContexts.end())
+			{
+
+				/// delete polypeptide
+
+				createPolypeptideRequestContexts.erase(context);
+			}
 		}
 	}
 	case MessageType::MovePolypeptideSuccess:
@@ -399,6 +427,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			LOG_INFO("MovePolipeptideSuccess received");
 			unsigned int requestId = movePolypeptideSuccess->requestId;
+
+			auto context = movePolypeptideRequestContexts.find(requestId);
+
+			if (context != movePolypeptideRequestContexts.end())
+			{
+				auto fromCell = std::get<0>(context->second);
+				auto toCell = std::get<1>(context->second);
+				auto amount = std::get<2>(context->second);
+				/// make travel
+
+				movePolypeptideRequestContexts.erase(context);
+			}
 		}
 	}
 	case MessageType::MovePolypeptideFailure:
@@ -408,6 +448,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			LOG_INFO("MovePolipeptideFailure received");
 			unsigned int requestId = movePolypeptideFailure->requestId;
+
+			auto context = movePolypeptideRequestContexts.find(requestId);
+
+			if (context != movePolypeptideRequestContexts.end())
+			{
+				auto fromCell = std::get<0>(context->second);
+				auto toCell = std::get<1>(context->second);
+				auto amount = std::get<2>(context->second);
+				/// error reaction
+
+				movePolypeptideRequestContexts.erase(context);
+			}
 		}
 	}
 	case MessageType::PolypeptideDie:
@@ -416,6 +468,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (polypeptideDie)
 		{
 			LOG_INFO("PolipeptideDie received");
+			unsigned int polypeptideId = polypeptideDie->polypeptideId;
 		}
 	}
 	case MessageType::PolypeptideCellAttack:
@@ -424,6 +477,9 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (polypeptideCellAttack)
 		{
 			LOG_INFO("PolipeptideCellAttack received");
+			unsigned int polypeptideId = polypeptideCellAttack->polypeptideId;
+			unsigned int cellId = polypeptideCellAttack->cellId;
+			float damage = polypeptideCellAttack->damage;
 		}
 	}
 	case MessageType::PolypeptideFight:
@@ -432,6 +488,10 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (polypeptideFight)
 		{
 			LOG_INFO("PolipeptideFight received");
+			unsigned int polypeptideId1 = polypeptideFight->polypeptideId1;
+			unsigned int polypeptideId2 = polypeptideFight->polypeptideId2;
+			bool polypeptide1Dies = polypeptideFight->polypeptide1Dies;
+			bool polypeptide2Dies = polypeptideFight->polypeptide2Dies;
 		}
 	}
 	default:
@@ -489,4 +549,18 @@ void ClientNetworkManager::removeCreateCellRequestByParentCell(CellClient * pare
 			++it;
 		}
 	}
+}
+
+void ClientNetworkManager::registerCreatePolypeptideRequest(CreatePolypeptideRequest * request)
+{
+	createPolypeptideRequestContexts.insert(nextRequestId);
+	request->requestId = nextRequestId;
+	++nextRequestId;
+}
+
+void ClientNetworkManager::registerMovePolypeptideRequest(MovePolypeptideRequest * request, CellClient * fromCell, CellClient * toCell, unsigned int amount)
+{
+	movePolypeptideRequestContexts.insert(make_pair(nextRequestId, make_tuple(fromCell, toCell, amount)));
+	request->requestId = nextRequestId;
+	++nextRequestId;
 }

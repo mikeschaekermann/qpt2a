@@ -1,6 +1,7 @@
 #include "GameScreenStateInMenu.h"
 #include "GameScreenStateNeutral.h"
 #include "../../rendering/RenderManager.h"
+#include "../../actors/StemCellClient.h"
 
 GameScreenStateInMenu::GameScreenStateInMenu(GameScreen* screen, CellClient * pickedCell):
 	GameScreenState(screen),
@@ -32,6 +33,7 @@ GameScreenStateInMenu::GameScreenStateInMenu(GameScreen* screen, CellClient * pi
 		}
 
 		screen->cellMenu->setVisible(true);
+		isStemcell = dynamic_cast<StemCellClient *>(pickedCell) != nullptr;
 	}
 	else
 	{
@@ -71,6 +73,10 @@ bool GameScreenStateInMenu::touchClick(TouchWay touchWay)
 bool GameScreenStateInMenu::mouseMove(MouseEvent event)
 {
 	screen->cellMenu->setVisible(true);
+	if (!isStemcell)
+	{
+		screen->cellMenuButtons["polypeptid"]->setVisible(false);
+	}
 
 	return false;
 }

@@ -1,6 +1,7 @@
 #include "GameScreen.h"
 #include "../managers/GameManager.h"
 #include "../../common/network/NetworkManager.h"
+#include "../../common/network/messages/game/ingame/polypeptide/creation/CreatePolypeptideRequest.h"
 #include "../managers/AssetManager.h"
 #include "../actors/CellClient.h"
 #include "../actors/StandardCellClient.h"
@@ -50,6 +51,10 @@ GameScreen::GameScreen()
 		[this]()
 		{
 			LOG_INFO("Create attacker polypeptide button was clicked!");
+			CreatePolypeptideRequest * request = new CreatePolypeptideRequest();
+			request->endpoint = GAME_MGR->getServerEndpoint();
+			NETWORK_MGR->registerCreatePolypeptideRequest(request);
+			NETWORK_MGR->send(request);
 		},
 		Vec2f::zero(),
 		&(ASSET_MGR->getGuiTexture(string("ingame-button-polypeptid-normal"))),
@@ -154,9 +159,23 @@ void GameScreen::draw()
 
 	containerMutex.lock();
 
+	/// draw health bars
+	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
+	{
+		auto cell = dynamic_cast<CellClient *>(it->second);
+
+		if (cell != nullptr)
+		{
+			cell->drawHealthBar();
+		}
+	}
+
+	containerMutex.unlock();
+
+	containerMutex.lock();
+
 	for (auto it = textList.begin(); it != textList.end(); ++it)
 	{
-		/// TODO: Load Font size in float?
 		drawString(it->getText(), worldToScreen(it->getPos()), ColorA(1.f, 0.f, 0.f, 1.f), 
 			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
 	}
@@ -175,32 +194,10 @@ void GameScreen::draw()
 
 			drawString(stringify(ostringstream() << id), idPosition, ColorA(1.f, 0.f, 0.f, 1.f), 
 				Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
-		
-			auto cell = dynamic_cast<CellClient *>(it->second);
-
-			if (cell != nullptr)
-			{
-				cell->drawHealthBar();
-			}
 		}
 
 		containerMutex.unlock();
 	}
-
-	containerMutex.lock();
-
-	/// draw health bars
-	for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
-	{
-		auto cell = dynamic_cast<CellClient *>(it->second);
-
-		if (cell != nullptr)
-		{
-			cell->drawHealthBar();
-		}
-	}
-
-	containerMutex.unlock();
 
 	gl::color(ColorA(1, 1, 1, 1));
 	rootItem->draw();

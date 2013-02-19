@@ -20,6 +20,7 @@
     <ClCompile Include="..\..\src\client\actors\CellClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\GameObjectClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\PlayerClient.cpp" />
+    <ClCompile Include="..\..\src\client\actors\PolypeptideClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\StandardCellClient.cpp" />
     <ClCompile Include="..\..\src\client\actors\StemCellClient.cpp" />
     <ClCompile Include="..\..\src\client\ClientMain.cpp" />
@@ -97,6 +98,7 @@
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\StartGame.cpp" />
     <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
+    <ClCompile Include="..\..\src\common\Polypeptide.cpp" />
     <ClCompile Include="..\..\src\common\StandardCell.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +107,7 @@
     <ClInclude Include="..\..\src\client\actors\CellClient.h" />
     <ClInclude Include="..\..\src\client\actors\GameObjectClient.h" />
     <ClInclude Include="..\..\src\client\actors\PlayerClient.h" />
+    <ClInclude Include="..\..\src\client\actors\PolypeptideClient.h" />
     <ClInclude Include="..\..\src\client\actors\StandardCellClient.h" />
     <ClInclude Include="..\..\src\client\actors\StemCellClient.h" />
     <ClInclude Include="..\..\src\client\ClientMain.h" />
@@ -190,6 +193,7 @@
     <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
     <ClInclude Include="..\..\src\common\Player.h" />
     <ClInclude Include="..\..\src\common\GameObjectContainer.h" />
+    <ClInclude Include="..\..\src\common\Polypeptide.h" />
     <ClInclude Include="..\..\src\common\PositionGameObjectMap.h" />
     <ClInclude Include="..\..\src\common\StandardCell.h" />
     <ClInclude Include="..\..\src\common\StemCell.h" />

@@ -2,7 +2,7 @@
 
 CreatePolypeptideSuccess::CreatePolypeptideSuccess() : NetworkMessage(), requestId(0)
 {
-	messageType = MessageType::CreateCellSuccess;
+	messageType = MessageType::CreatePolypeptideSuccess;
 }
 
 CreatePolypeptideSuccess::CreatePolypeptideSuccess(char* data, unsigned &index) : NetworkMessage(data, index), requestId(0)
@@ -14,12 +14,12 @@ CreatePolypeptideSuccess::CreatePolypeptideSuccess(char* data, unsigned &index) 
 
 CreatePolypeptideSuccess::CreatePolypeptideSuccess(const CreatePolypeptideSuccess &other) : NetworkMessage(other), requestId(other.requestId)
 {
-	messageType = MessageType::CreateCellSuccess;
+	messageType = MessageType::CreatePolypeptideSuccess;
 }
 
 CreatePolypeptideSuccess::CreatePolypeptideSuccess(const NetworkMessage &other) : NetworkMessage(other), requestId(0)
 { 
-	messageType = MessageType::CreateCellSuccess;
+	messageType = MessageType::CreatePolypeptideSuccess;
 }
 
 CreatePolypeptideSuccess::~CreatePolypeptideSuccess() 
