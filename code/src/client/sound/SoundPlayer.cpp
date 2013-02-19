@@ -99,11 +99,16 @@ void SoundPlayer::releaseInstance()
 
 void SoundPlayer::stopAll()
 {
+	stopAllSounds();
+	musicChannel->stop();
+}
+
+void SoundPlayer::stopAllSounds()
+{
 	for(unsigned i = 0; i < numSoundChannels; ++i)
 	{
 		soundChannels[i]->stop();
 	}
-	musicChannel->stop();
 }
 
 void SoundPlayer::setMusicVolume(float volume)
@@ -144,13 +149,13 @@ void SoundPlayer::setListener3d(ci::Vec3f pos, ci::Vec3f vel, ci::Vec3f forward,
 	vVelocity.y = vel.y;
 	vVelocity.z = vel.z;
 
-	vForward.x = forward.x;
-	vForward.y = forward.y;
-	vForward.z = forward.z;
+	vForward.x = 0.; //forward.x;
+	vForward.y = 0.; //forward.y;
+	vForward.z = 1.;//forward.z;
 
-	vUp.x = up.x;
-	vUp.y = up.y;
-	vUp.z = up.z;
+	vUp.x = 0.; //up.x;
+	vUp.y = 0.; //up.y;
+	vUp.z = 1.; //up.z;
 
 	system->set3DListenerAttributes(0, &vPosition, &vVelocity, &vForward, &vUp);
 }

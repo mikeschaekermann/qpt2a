@@ -42,6 +42,8 @@ void GameScreenStateNeutral::onKeyInput(KeyEvent& e)
 	{
 		SCREEN_MGR->openMenuScreen();
 		GAME_MGR->releaseInstance();
+		setFullScreen(false);
+		SOUND_PLAYER->stopAllSounds();
 	}
 	else if(e.getCode() == KeyEvent::KEY_LEFT)
 	{

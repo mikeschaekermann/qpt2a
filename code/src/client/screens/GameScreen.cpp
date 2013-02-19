@@ -70,7 +70,7 @@ GameScreen::~GameScreen(void)
 
 void GameScreen::update(float frameTime)
 {
-	SOUND_PLAYER->setListener3d(Vec3f(RENDER_MGR->cam.getEyePoint().xy(), 0), Vec3f::zero(), Vec3f::zero(), RENDER_MGR->cam.getWorldUp());
+	SOUND_PLAYER->setListener3d(Vec3f(RENDER_MGR->cam.getEyePoint().xy(), 10), Vec3f::zero(), Vec3f::zero(), RENDER_MGR->cam.getWorldUp());
 
 	state->update(frameTime);
 
