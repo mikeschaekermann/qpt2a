@@ -329,8 +329,8 @@ void RenderManager::drawFogOfWar() const
 		if (intersectsViewport)
 		{
 			centers2D[numOfRelevantCells] = center2D;
-			innerRadii2D[numOfRelevantCells] = innerRadius2D;
-			outerRadii2D[numOfRelevantCells] = outerRadius2D;
+			innerRadii2D[numOfRelevantCells] = innerRadius2D * innerRadius2D;
+			outerRadii2D[numOfRelevantCells] = outerRadius2D * outerRadius2D;
 
 			++numOfRelevantCells;
 		}

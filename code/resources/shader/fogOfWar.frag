@@ -19,15 +19,18 @@ void main() {
 
 	for (int i = 0; i < numOfCells; ++i)
 	{
-		float distance = distance(screenPosition, centers2D[i]);
+		float diffX = screenPosition.x - centers2D[i].x;
+		float diffY = screenPosition.y - centers2D[i].y;
 
-		if (distance < innerRadii2D[i])
+		float distanceSq = diffX * diffX + diffY * diffY;
+
+		if (distanceSq < innerRadii2D[i])
 		{
 			opacity = 0.;
 		}
-		else if (distance < outerRadii2D[i])
+		else if (distanceSq < outerRadii2D[i])
 		{
-			float opacityPercentage = (distance - innerRadii2D[i]) / (outerRadii2D[i] - innerRadii2D[i]);
+			float opacityPercentage = (distanceSq - innerRadii2D[i]) / (outerRadii2D[i] - innerRadii2D[i]);
 			float currentOpacity = opacityPercentage * maxOpacity;
 			opacity = min(opacity, currentOpacity);
 		}
