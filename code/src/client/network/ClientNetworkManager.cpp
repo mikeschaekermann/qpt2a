@@ -246,7 +246,6 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			if (attacker) dynamic_cast<StandardCellClient *>(attacker)->startAttackAnimation();
 			if (attacked) dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
 
-			SOUND_PLAYER->playSound(string("cellAttack"));
 			if (attacker && attacked)
 			{
 				LOG_INFO("CellAttack: Both available");
@@ -351,6 +350,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				newCell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));
 				newCell->setHue(GAME_MGR->getMyHue());
 				parentCell->addChild(newCell);
+				/// must be hidden so that the skin is updated later!
+				newCell->hide();
 				GAME_SCR.removeCellPreview(newCell);
 				GAME_SCR.addIncompleteCell(newCell);
 				GAME_SCR.addExploringCell(newCell);

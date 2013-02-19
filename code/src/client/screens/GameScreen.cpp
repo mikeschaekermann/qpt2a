@@ -352,13 +352,6 @@ void GameScreen::addIncompleteCell(CellClient * cell)
 	cellsIncomplete.createGameObject(cell);
 	updateVisibilityOf(cell);
 
-
-		auto owner = GAME_MGR->getPlayerById(cell->getOwner()->getId());
-
-		if (owner != nullptr)
-		{
-			owner->addSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT2("data.skin.distanceFromCells", 10.f)));
-		}
 	addGameObjectToCollide(cell);
 }
 

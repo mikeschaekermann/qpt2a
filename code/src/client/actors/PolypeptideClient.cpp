@@ -2,7 +2,11 @@
 #include "PolypeptideClient.h"
 #include "../rendering/RenderManager.h"
 
-void PolypeptideClient::drawAtTransformation()
+void PolypeptideClient::drawAtTransformation() const
 {
-	RENDER_MGR->renderBlackShadedModel("poly");
+	gl::pushMatrices();
+		auto scale = CONFIG_FLOAT1("data.polypeptide.scale");
+		gl::scale(scale, scale, scale);
+		RENDER_MGR->renderBlackShadedModel("poly");
+	gl::popMatrices();
 }

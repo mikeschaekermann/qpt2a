@@ -35,8 +35,6 @@ void ClientMain::setup()
 
 	ConfigurationDataHandler::getInstance()->readFromXML("..\\..\\config.xml");
 	AssetManager::getInstance()->loadAssets("..\\..\\..\\resources\\assets.xml");
-
-	//setFullScreen(true);
 }
 
 void ClientMain::shutdown()
