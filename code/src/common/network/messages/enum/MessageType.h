@@ -21,6 +21,13 @@ public:
 		CellNew,					/// Is sent by the server if when a new Cell appears
 		CellAttack,					/// Is sent by the server when a cell attacks another
 		CellDie,					/// Is sent by the server when a cell dies
+		CreatePolypeptideSuccess,
+		CreatePolypeptideFailure,
+		MovePolypeptideSuccess,
+		MovePolypeptideFailure,
+		PolypeptideFight,
+		PolypeptideCellAttack,
+		PolypeptideDie,
 		GameOver,					/// Is sent by the server when the game is over
 		EnvironmentAttack,			/// Is sent by the server when the environment attacks a cell
 		EnvironmentMove,			/// Is sent by the server when a dynamic element of the environment moves

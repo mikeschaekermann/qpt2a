@@ -19,12 +19,6 @@ CellDieEvent::CellDieEvent(double startTime, unsigned int cellId) :
 void CellDieEvent::trigger()
 {
 	auto tempCell = GAMECONTEXT->getActiveCells().find(cellId);
-	bool active = true;
-	if (!tempCell) 
-	{
-		tempCell = GAMECONTEXT->getInactiveCells().find(cellId);
-		active = false;
-	}
 
 	if (tempCell != nullptr)
 	{
@@ -42,15 +36,10 @@ void CellDieEvent::trigger()
 
 			NETWORKMANAGER->sendTo<CellDie>(die, NETWORKMANAGER->getConnectionEndpoints());
 			LOG_INFO("CellDie sent");
-
-			if (active)
-			{
-				GAMECONTEXT->getActiveCells().removeGameObject(cell->getId());
-			}
-			else
-			{
-				GAMECONTEXT->getInactiveCells().removeGameObject(cell->getId());
-			}
+			
+			GAMECONTEXT->getAttackRelations().removeRelationsWith(*cell);
+			GAMECONTEXT->getAttackRelations().update();
+			GAMECONTEXT->getActiveCells().removeGameObject(cell->getId());
 		}
 	}
 }

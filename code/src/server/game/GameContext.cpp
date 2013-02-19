@@ -19,6 +19,11 @@ GameObjectContainer<GameObject> & GameContext::getEnvironment()
 	return environment;
 }
 
+AttackRelationContainer & GameContext::getAttackRelations()
+{
+	return attackRelations;
+}
+
 PlayerServer * GameContext::getPlayer(unsigned id)
 {
 	if (playermap.find(id) != playermap.end())

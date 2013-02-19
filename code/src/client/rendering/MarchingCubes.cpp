@@ -25,7 +25,7 @@ MarchingCubes &	MarchingCubes::addMetaball(Metaball metaball)
 	return *this;
 }
 
-MarchingCubes &	MarchingCubes::addMetaball(Sphere ball)
+MarchingCubes &	MarchingCubes::addMetaballSphere(Sphere ball)
 {
 	Metaball metaball(ball);
 	addMetaball(metaball);
@@ -33,7 +33,7 @@ MarchingCubes &	MarchingCubes::addMetaball(Sphere ball)
 	return *this;
 }
 
-MarchingCubes &	MarchingCubes::addMetaball(ci::Vec3f center, float radius)
+MarchingCubes &	MarchingCubes::addMetaballCenterRadius(ci::Vec3f center, float radius)
 {
 	Metaball metaball(Sphere(center, radius));
 	addMetaball(metaball);
@@ -50,7 +50,7 @@ MarchingCubes &	MarchingCubes::removeMetaball(Metaball metaball)
 	return *this;
 }
 
-MarchingCubes &	MarchingCubes::removeMetaball(Sphere ball)
+MarchingCubes &	MarchingCubes::removeMetaballSphere(Sphere ball)
 {
 	Metaball metaball(ball);
 	removeMetaball(metaball);
@@ -58,7 +58,7 @@ MarchingCubes &	MarchingCubes::removeMetaball(Sphere ball)
 	return *this;
 }
 
-MarchingCubes &	MarchingCubes::removeMetaball(ci::Vec3f center, float radius)
+MarchingCubes &	MarchingCubes::removeMetaballCenterRadius(ci::Vec3f center, float radius)
 {
 	Metaball metaball(Sphere(center, radius));
 	removeMetaball(metaball);
@@ -68,7 +68,13 @@ MarchingCubes &	MarchingCubes::removeMetaball(ci::Vec3f center, float radius)
 
 MarchingCubes & MarchingCubes::calculateMesh()
 {
-	mesh = grid.triangulate(isoLevel);
+	auto temporaryMesh = grid.triangulate(isoLevel);
+	
+	meshMutex.lock();
+
+	mesh = temporaryMesh;
+
+	meshMutex.unlock();
 
 	return *this;
 }
@@ -81,6 +87,11 @@ TriMesh const & MarchingCubes::getMesh() const
 bool MarchingCubes::meshExists() const
 {
 	return (mesh.getNumIndices() != 0);
+}
+
+boost::mutex & MarchingCubes::getMeshMutex()
+{
+	return meshMutex;
 }
 
 MarchingCubes::Metaball::Metaball(Sphere ball):

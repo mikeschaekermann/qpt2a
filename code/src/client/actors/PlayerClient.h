@@ -19,7 +19,7 @@ public:
 	void setHue(float newHue) { hue = min<float>(max<float>(newHue, 0.0), 1.0); }
 	
 	MarchingCubes & getSkin();
-	void drawSkin() const;
+	void drawSkin();
 	void addSkinBubble(Sphere bubble);
 	void removeSkinBubble(Sphere bubble);
 

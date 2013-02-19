@@ -86,12 +86,17 @@ void PlayerClient::drawSkin()
 		auto ambientColor = Color(CM_HSV, hue, 0.8f, 1.f);
 		auto diffuseColor = Color(CM_HSV, hue, 0.7f, 0.4f);
 		
+<<<<<<< HEAD
+		RENDER_MGR->renderSkin(
+			skin.getMesh(),
+=======
 		skin.getMeshMutex().lock();
 		auto skinMesh = skin.getMesh();
 		skin.getMeshMutex().unlock();
 
-		RENDER_MGR->renderSkin(
+		RENDER_MGR->renderPhongShadedModel(
 			skinMesh,
+>>>>>>> 79738bab67dcdfbd7b5a9c944e4d20482d300183
 			Vec4f(ambientColor.r, ambientColor.g, ambientColor.b, 0.15f),
 			Vec4f(diffuseColor.r, diffuseColor.g, diffuseColor.b, 0.9f),
 			Vec4f(1.f, 1.f, 1.f, 0.9f),

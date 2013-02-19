@@ -4,6 +4,7 @@ class NetworkManager;
 class PlayerServer;
 class CellServer;
 class PolypeptideServer;
+class GameEvent;
 
 #include <vector>
 
@@ -18,9 +19,13 @@ public:
 
 	void bind(NetworkManager * networkManager);
 
-	bool createBuildEvent(const double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & parentCell, CellServer & cell);
+	bool createBuildEvent(double time, const unsigned int requestId, const int type, const float angle, PlayerServer & currentPlayer, CellServer & parentCell, CellServer & cell);
 
-	bool createAttackEvent(const double time, bool isAttacker, CellServer & currentCell);
+	bool createAttackEvent(double time, bool isAttacker, CellServer & currentCell);
+
+	GameEvent * createPolypeptideFightEvent(double startTime, unsigned int cellId1, unsigned int cellId2, unsigned int polypeptideId1, unsigned int polypeptideId2);
+
+	GameEvent * createPolypeptideCellAttackEvent(double startTime, unsigned int attackerCellId, unsigned int attackedCellId, unsigned int polypeptideId);
 private:
 	static EventCreator * instance;
 

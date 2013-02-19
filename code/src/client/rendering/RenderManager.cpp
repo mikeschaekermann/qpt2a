@@ -62,7 +62,7 @@ void RenderManager::renderPhongShadedModel(string modelName,
 						   diffuse, specular, shininess);
 }
 
-void RenderManager::renderPhongShadedModel(TriMesh model,
+void RenderManager::renderPhongShadedModel(TriMesh& model,
 										   Vec4f ambient,
 										   Vec4f diffuse,
 										   Vec4f specular,
@@ -86,7 +86,7 @@ void RenderManager::renderPhongShadedModel(TriMesh model,
 	shader.unbind();
 }
 
-void RenderManager::renderSlimeShadedModel(TriMesh model,
+void RenderManager::renderSlimeShadedModel(TriMesh& model,
 							   Vec3f worldTranslation,
 							   Vec4f ambient,
 							   Vec4f diffuse,
@@ -187,7 +187,7 @@ void RenderManager::renderStatic(float radius, StaticModificator::Type type, flo
 	shader.unbind();
 }
 
-void RenderManager::renderSkin(TriMesh model,
+void RenderManager::renderSkin(TriMesh& model,
 							   Vec4f ambient,
 							   Vec4f diffuse,
 							   Vec4f specular,

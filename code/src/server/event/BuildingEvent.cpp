@@ -72,5 +72,6 @@ void BuildingEvent::trigger()
 		LOG_INFO("CreateCellComplete sent");
 
 		EVENT_CRTR->createAttackEvent(m_dDeadTime, true, cell);
+		EVENT_CRTR->createAttackEvent(m_dDeadTime, false, cell);
 	}
 }
