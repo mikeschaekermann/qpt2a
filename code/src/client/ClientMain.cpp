@@ -140,12 +140,18 @@ void ClientMain::touchesEnded( TouchEvent event )
 
 void ClientMain::keyDown( KeyEvent event )
 {
+	if(event.getChar() == 'f' || event.getChar() == 'F')
+	{
+		setFullScreen(!isFullScreen());
+	}
+
 	SCREEN_MGR->onKeyInput(event);
 }
 
 void ClientMain::resize( ResizeEvent event )
 {
 	SCREEN_MGR->resize(event);
+	gl::enableAlphaBlending();
 }
 
 CINDER_APP_BASIC( ClientMain, RendererGl )
