@@ -178,7 +178,7 @@
 		</bonecell>
 	</cell>
 	<polypeptide>
-    <scale>30.0</scale>
+		<scale>30.0</scale>
 		<maxPerCell>15</maxPerCell>
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
