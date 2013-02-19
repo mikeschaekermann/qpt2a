@@ -4,6 +4,8 @@
 
 void BoneCellClient::drawAtTransformation() const
 {
+	CellClient::drawAtTransformation();
+
 	gl::pushMatrices();
 
 	auto h = getHue();

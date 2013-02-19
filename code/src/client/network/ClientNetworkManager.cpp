@@ -396,17 +396,16 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 			if (context != createPolypeptideRequestContexts.end())
 			{
-				auto stemCell = GAME_MGR->getMyPlayer()->getStemCell();
+				CellClient & stemCell = GAME_MGR->getMyPlayer()->getStemCell();
 
 				PolypeptideClient * polypeptide = new PolypeptideClient();
 				polypeptide->setId(polypeptideId);
+				polypeptide->setPosition(stemCell.getPosition());
 				polypeptide->setOwner(&stemCell);
 
 				stemCell.addPolypetide(polypeptide);
 
 				GAME_SCR.getMyPolypeptides().addGameObject(polypeptide);
-				/// set values
-				/// add to list
 				createPolypeptideRequestContexts.erase(context);
 			}
 		}

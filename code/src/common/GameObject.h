@@ -52,6 +52,4 @@ private:
 	vector<GameObject*> children;
 	/// all parents in the scene graph
 	vector<GameObject*> parents;
-	
-	GameObject(const GameObject & cpy);
 };

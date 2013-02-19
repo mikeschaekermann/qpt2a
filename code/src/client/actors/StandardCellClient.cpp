@@ -9,6 +9,8 @@ void StandardCellClient::startAttackAnimation()
 
 void StandardCellClient::drawAtTransformation() const
 {
+	CellClient::drawAtTransformation();
+
 	/// draw spikes
 	if (spikesCanBeSeen())
 	{
