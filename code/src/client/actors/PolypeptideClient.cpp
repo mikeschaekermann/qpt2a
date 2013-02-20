@@ -4,17 +4,16 @@
 
 void PolypeptideClient::drawAtTransformation() const
 {
-	gl::pushMatrices();
-		RENDER_MGR->renderBlackShadedModel("poly");
-	gl::popMatrices();
+	RENDER_MGR->renderBlackShadedModel("poly");
 }
 
 void PolypeptideClient::update(float frameTime)
 {
+	updateFollowPoint(frameTime);
 	switch(state)
 	{
 		case Polypeptide::State::IDLE:
-			circularMovement(frameTime);
+			arrivalBehavior(frameTime);
 			break;
 		case Polypeptide::State::TRAVEL:
 			break;
@@ -25,34 +24,26 @@ void PolypeptideClient::update(float frameTime)
 	}
 }
 
-void PolypeptideClient::circularMovement(float frameTime)
+void PolypeptideClient::arrivalBehavior(float frameTime)
 {
-	if(!isInCircularMovement)
-	{
-		auto d = focusCenter - position;
-		auto a = atan2(d.x, d.y);
-
-		auto t = Vec3f(focusCenter.x, focusCenter.y + focusRadius, focusCenter.z);
-		forward = (t - position).normalized();
-		position += forward * speed * frameTime;
-
-		if(position.distance(t) < 1.0)
-		{
-			isInCircularMovement = true;
-			position = t;
-		}
-	}
-	else
-	{
-		auto d = focusCenter - position;
-		auto a = atan2(d.x, d.y);
-		auto r = cos(a) + isInCircularMovement;
-		auto t = Vec3f(r * cos(a), r * sin(a), position.z);
+	auto d = (followPoint - position).normalized();
+	auto newForward = (forward + d * frameTime * polyRotationSpeed * (position.distance(focusCenter) * cellRadius / 100.)).normalized();
 	
-		forward = forward + t.normalized();
-		forward.normalize();
-		position += forward * speed * frameTime;
-	}
+	auto alpha = toDegrees(forward.dot(newForward));
+	rotation.z += alpha;
+	
+	forward = newForward;
+	forward.normalize();
+	position += forward;
+}
+
+void PolypeptideClient::updateFollowPoint(float frameTime)
+{
+	auto distanceVectorToCell = followPoint - focusCenter;
+	auto followPointAngle = atan2(distanceVectorToCell.y, distanceVectorToCell.x);
+	followPointAngle += followPointRotationSpeed * frameTime;
+	auto r = focusRadius + cos(followPointAngle) + (rand() % maxAmplitudeEruption);
+	followPoint = focusCenter + Vec3f(r * cos(followPointAngle), r * sin(followPointAngle), 0);
 }
 
 void PolypeptideClient::setCenterOfFocus(Vec3f center)

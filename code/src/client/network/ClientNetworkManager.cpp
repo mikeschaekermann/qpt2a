@@ -424,7 +424,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			{
 				CellClient & stemCell = GAME_MGR->getMyPlayer()->getStemCell();
 
-				PolypeptideClient * polypeptide = new PolypeptideClient(stemCell.getPosition());
+				PolypeptideClient * polypeptide = new PolypeptideClient(stemCell.getPosition(), 10, stemCell.getRadius());
 				polypeptide->setId(polypeptideId);
 				polypeptide->setPosition(stemCell.getPosition());
 				polypeptide->show();
