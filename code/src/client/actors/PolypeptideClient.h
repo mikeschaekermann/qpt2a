@@ -9,7 +9,7 @@ class PolypeptideClient :
 	virtual public GameObjectClient
 {
 public:
-	PolypeptideClient(){}
+	PolypeptideClient();
 
 	CellClient * getOwner() { return dynamic_cast<CellClient *>(owner); }
 
@@ -20,4 +20,12 @@ public:
 	
 	virtual void setRotation(Vec3f rotation) { GameObject::setRotation(rotation); }
 	virtual void setScale(Vec3f scale) { GameObject::setScale(scale); }
+
+	virtual void setCenterOfFocus(Vec3f center);
+	virtual void setRadiusOfFocus(float radius);
+	virtual void setFocus(Vec3f center, float radius);
+
+private:
+	Vec3f focusCenter;
+	float focusRadius;
 };
