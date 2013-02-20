@@ -100,7 +100,7 @@ bool GameScreenStateInMenu::touchClick(TouchWay touchWay)
 bool GameScreenStateInMenu::mouseMove(MouseEvent event)
 {
 	screen->cellMenu->setVisible(true);
-	if (!isStemcell || pickedCell->getPolypeptides().size() >= CONFIG_INT("data.polypeptide.maxPerCell"))
+	if (!isStemcell || pickedCell->getPolypeptides().size() >= pickedCell->getMaxNumOfPolys())
 	{
 		screen->cellMenuButtons["polypeptid"]->setVisible(false);
 	}

@@ -9,14 +9,17 @@ CellServer::CellServer(Type type, Vec3f position, float angle, Player * owner) :
 		case STEMCELL:
 			this->radius = CONFIG_FLOAT("data.cell.stemcell.radius");
 			this->healthPoints = CONFIG_FLOAT("data.cell.stemcell.healthpoints");
+			this->polyMax = CONFIG_INT("data.polypeptide.maxPerStemCell");
 			break;
 		case STANDARDCELL:
 			this->radius = CONFIG_FLOAT("data.cell.standardcell.radius");
 			this->healthPoints = CONFIG_FLOAT("data.cell.standardcell.healthpoints");
+			this->polyMax = CONFIG_INT("data.polypeptide.maxPerStandardCell");
 			break;
 		case BONECELL:
 			this->radius = CONFIG_FLOAT("data.cell.bonecell.radius");
 			this->healthPoints = CONFIG_FLOAT("data.cell.bonecell.healthpoints");
+			this->polyMax = CONFIG_INT("data.polypeptide.maxPerBoneCell");
 			break;
 	}
 }

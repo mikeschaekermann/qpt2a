@@ -11,10 +11,6 @@ public:
 
 	static PolypeptideCapacityContainer * getInstance();
 
-	void setPolypeptidesPerStandardCell(unsigned int polypeptidesPerStandardCell);
-	void setPolypeptidesPerBoneCell(unsigned int polypeptidesPerBoneCell);
-	void setPolypeptidesPerStemCell(unsigned int polypeptidesPerStemCell);
-
 	unsigned int getNumberOfPolypeptidesAllowed();
 	unsigned int getNumberOfPolypeptidesExisting();
 	/// return is a percentage
@@ -24,9 +20,10 @@ public:
 private:
 	static PolypeptideCapacityContainer * instance;
 
-	unsigned int polypeptidesPerStandardCell;
-	unsigned int polypeptidesPerBoneCell;
-	unsigned int polypeptidesPerStemCell;
+	const float percentageUsable;
+	const unsigned int polypeptidesPerStandardCell;
+	const unsigned int polypeptidesPerBoneCell;
+	const unsigned int polypeptidesPerStemCell;
 
 	PolypeptideCapacityContainer();
 	PolypeptideCapacityContainer(PolypeptideCapacityContainer const &);

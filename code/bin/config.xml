@@ -104,7 +104,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-		<max>2</max>
+		<max>1</max>
 		<player>
 			<startposition>
 				<x>-50.0</x>
@@ -185,6 +185,7 @@
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
 		<damage>2.0</damage>
+    <percentageUsable>0.5</percentageUsable>
 	</polypeptide>
 	<environment>
 		<barriers>

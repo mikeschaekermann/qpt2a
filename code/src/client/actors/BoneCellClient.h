@@ -17,6 +17,7 @@ public:
   BoneCell(position, angle)
  {
 	setId(id);
+	this->polyMax = CONFIG_INT("data.polypeptide.maxPerBoneCell");
  }
 
  virtual void update(float frameTime) { CellClient::update(frameTime); }

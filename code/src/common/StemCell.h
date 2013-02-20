@@ -9,5 +9,5 @@ class StemCell :
 public:
 	StemCell(Vec3f position, float angle) :
 		Cell(position, CONFIG_FLOAT("data.cell.stemcell.radius"), angle, CONFIG_FLOAT("data.cell.stemcell.healthpoints"))
-	{ }
+	{}
 };

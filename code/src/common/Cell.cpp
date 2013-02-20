@@ -1,5 +1,51 @@
 #include "Cell.h"
 
+Cell::Cell() : maxHealthPoints(1.f), polyMax(0)
+{ }
+
+Cell::Cell(Vec3f position, float angle, Player * owner) :
+	owner(owner),
+	maxHealthPoints(1.f),
+	polyMax(0)
+{
+ this->position = position;
+ setAngle(angle);
+}
+
+Cell::Cell(Vec3f position, float radius, float angle, float healthPoints) :
+ healthPoints(healthPoints),
+ maxHealthPoints(healthPoints),
+ polyMax(0)
+{
+ this->position = position;
+ this->radius = radius;
+ this->rotation = Vec3f(0.0f, 0.0f, float(ci::toDegrees(angle)));
+}
+
+Cell::Cell(Vec3f position, float radius, float angle, float healthPoints, Player * owner) :
+ healthPoints(healthPoints),
+ polyMax(0),
+ maxHealthPoints(healthPoints),
+ owner(owner)
+{
+ this->position = position;
+ this->radius = radius;
+ this->rotation = Vec3f(0.0f, 0.0f, float(ci::toDegrees(angle)));
+}
+
+void Cell::decreaseHealthPointsBy(float damage)
+{
+ healthPoints -= damage;
+ LOG_INFO(stringify(ostringstream() << "cell with id: " << id << " has still " << healthPoints << " healthpoints"));
+}
+
+void Cell::completeCell() { isComplete = true; }
+
+void Cell::setPosition(Vec3f position) { throw logic_error("Not implemented exception"); }
+void Cell::setRotation(Vec3f rotation) { throw logic_error("Not implemented exception"); }
+void Cell::setScale(Vec3f scale) { throw logic_error("Not implemented exception"); }
+void Cell::setRadius(float radius) { throw logic_error("Not implemented exception"); }
+
 float Cell::getHealthPoints() const { return healthPoints; }
 
 float Cell::getAngle() const { return ci::toRadians(rotation.z); }
@@ -36,45 +82,7 @@ bool Cell::removePolypeptide(Polypeptide * polypeptide)
 	return false;
 }
 
-Cell::Cell() : maxHealthPoints(1.f), polyMax(CONFIG_INT("data.polypeptide.maxPerCell"))
-{ }
-
-Cell::Cell(Vec3f position, float angle, Player * owner) : owner(owner), maxHealthPoints(1.f), polyMax(CONFIG_INT("data.polypeptide.maxPerCell"))
+unsigned int Cell::getMaxNumOfPolys() const
 {
- this->position = position;
- setAngle(angle);
+	return polyMax;
 }
-
-Cell::Cell(Vec3f position, float radius, float angle, float healthPoints) :
- healthPoints(healthPoints),
- maxHealthPoints(healthPoints),
- polyMax(CONFIG_INT("data.polypeptide.maxPerCell"))
-{
- this->position = position;
- this->radius = radius;
- this->rotation = Vec3f(0.0f, 0.0f, float(ci::toDegrees(angle)));
-}
-
-Cell::Cell(Vec3f position, float radius, float angle, float healthPoints, Player * owner) :
- healthPoints(healthPoints),
- polyMax(CONFIG_INT("data.polypeptide.maxPerCell")),
- maxHealthPoints(healthPoints),
- owner(owner)
-{
- this->position = position;
- this->radius = radius;
- this->rotation = Vec3f(0.0f, 0.0f, float(ci::toDegrees(angle)));
-}
-
-void Cell::decreaseHealthPointsBy(float damage)
-{
- healthPoints -= damage;
- LOG_INFO(stringify(ostringstream() << "cell with id: " << id << " has still " << healthPoints << " healthpoints"));
-}
-
-void Cell::completeCell() { isComplete = true; }
-
-void Cell::setPosition(Vec3f position) { throw logic_error("Not implemented exception"); }
-void Cell::setRotation(Vec3f rotation) { throw logic_error("Not implemented exception"); }
-void Cell::setScale(Vec3f scale) { throw logic_error("Not implemented exception"); }
-void Cell::setRadius(float radius) { throw logic_error("Not implemented exception"); }

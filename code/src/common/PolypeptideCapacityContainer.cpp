@@ -1,4 +1,21 @@
 #include "PolypeptideCapacityContainer.h"
+#include "../common/ConfigurationDataHandler.h"
+
+PolypeptideCapacityContainer::PolypeptideCapacityContainer():
+	percentageUsable(CONFIG_FLOAT("data.polypeptide.percentageUsable")),
+	polypeptidesPerStandardCell(CONFIG_INT("data.polypeptide.maxPerStandardCell")),
+	polypeptidesPerStemCell(CONFIG_INT("data.polypeptide.maxPerStemCell")),
+	polypeptidesPerBoneCell(CONFIG_INT("data.polypeptide.maxPerBoneCell"))
+{
+}
+
+PolypeptideCapacityContainer::PolypeptideCapacityContainer(PolypeptideCapacityContainer const &):
+	percentageUsable(CONFIG_FLOAT("data.polypeptide.percentageUsable")),
+	polypeptidesPerStandardCell(CONFIG_INT("data.polypeptide.maxPerStandardCell")),
+	polypeptidesPerStemCell(CONFIG_INT("data.polypeptide.maxPerStemCell")),
+	polypeptidesPerBoneCell(CONFIG_INT("data.polypeptide.maxPerBoneCell"))
+{
+}
 
 PolypeptideCapacityContainer * PolypeptideCapacityContainer::getInstance()
 {
@@ -9,27 +26,15 @@ PolypeptideCapacityContainer * PolypeptideCapacityContainer::getInstance()
 	return instance;
 }
 
-void PolypeptideCapacityContainer::setPolypeptidesPerStandardCell(unsigned int polypeptidesPerStandardCell)
-{
-	this->polypeptidesPerStandardCell = polypeptidesPerStandardCell;
-}
-
-void PolypeptideCapacityContainer::setPolypeptidesPerBoneCell(unsigned int polypeptidesPerBoneCell)
-{
-	this->polypeptidesPerBoneCell = polypeptidesPerBoneCell;
-}
-
-void PolypeptideCapacityContainer::setPolypeptidesPerStemCell(unsigned int polypeptidesPerStemCell)
-{
-	this->polypeptidesPerStemCell = polypeptidesPerStemCell;
-}
-
 unsigned int PolypeptideCapacityContainer::getNumberOfPolypeptidesAllowed()
 {
-	return 
-		NumberOfStandardCells * polypeptidesPerStandardCell +
-		NumberOfBoneCells * polypeptidesPerBoneCell +
-		polypeptidesPerStemCell;
+	unsigned int totalNumber =	NumberOfStandardCells * polypeptidesPerStandardCell + 
+								NumberOfBoneCells * polypeptidesPerBoneCell +
+								polypeptidesPerStemCell;
+
+	unsigned int relativeNumber = ceil(totalNumber * percentageUsable);
+
+	return relativeNumber;
 }
 
 unsigned int PolypeptideCapacityContainer::getNumberOfPolypeptidesExisting()
@@ -47,8 +52,6 @@ int PolypeptideCapacityContainer::getRemainingNumberOfPolypeptidesAllowed()
 	return getNumberOfPolypeptidesAllowed() - getNumberOfPolypeptidesExisting();
 }
 
-PolypeptideCapacityContainer::PolypeptideCapacityContainer() {}
-PolypeptideCapacityContainer::PolypeptideCapacityContainer(PolypeptideCapacityContainer const &) {}
 PolypeptideCapacityContainer * PolypeptideCapacityContainer::operator=(PolypeptideCapacityContainer const &) { return nullptr; }
 
 PolypeptideCapacityContainer * PolypeptideCapacityContainer::instance = nullptr;
