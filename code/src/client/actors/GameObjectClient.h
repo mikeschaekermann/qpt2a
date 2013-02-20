@@ -15,7 +15,7 @@ public:
 		visible(false)
 	{}
 	
-	void draw() const;
+	virtual void draw() const;
 	
 	float getOpacity() const { return opacity; }
 	void setOpacity(float newOpacity) { opacity = min<float>(max<float>(newOpacity, 0.0), 1.0); }

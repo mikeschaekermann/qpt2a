@@ -183,6 +183,8 @@
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
 		<damage>2.0</damage>
+    <speed>10.0</speed>
+    <rotationSpeed>100.0</rotationSpeed>
 	</polypeptide>
 	<environment>
 		<barriers>

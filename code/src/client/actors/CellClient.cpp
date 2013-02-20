@@ -87,11 +87,13 @@ float CellClient::getOpacityFromHealthPoints() const
 	return (getOpacity() * getHealthPercentage());
 }
 
-void CellClient::drawAtTransformation() const
+void CellClient::draw() const
 {
+	GameObjectClient::draw();
+
 	for (auto it = polypeptides.begin(); it != polypeptides.end(); ++it)
 	{
 		auto polypeptide = dynamic_cast<PolypeptideClient *>(it->second);
-		polypeptide->drawAtTransformation();
+		polypeptide->draw();
 	}
 }
