@@ -21,8 +21,11 @@ public:
 		focusRadius(focusRadius),
 		cellRadius(cellRadius),
 		selfDestruct(false),
-		dieTrying(false)
+		dieTrying(false),
+		wayBackFromFocus(false)
 	{
+		this->cellRadius = cellRadius;
+
 		scale = Vec3f(
 			CONFIG_FLOAT("data.polypeptide.scale"),
 			CONFIG_FLOAT("data.polypeptide.scale"),
@@ -30,10 +33,11 @@ public:
 		);
 
 		float followPointAngle = toRadians(float(rand() % 361));
-		followPoint = Vec3f(focusRadius * cos(followPointAngle), focusRadius * sin(followPointAngle), focusCenter.z);
+		followPoint = Vec3f(focusCenter.x + (focusRadius * cos(followPointAngle)), focusCenter.y + (focusRadius * sin(followPointAngle)), focusCenter.z);
 	}
 
-	PolypeptideClient();
+	PolypeptideClient() {}
+	~PolypeptideClient();
 
 	CellClient * getOwner();
 
@@ -49,22 +53,25 @@ public:
 	virtual void setRadiusOfFocus(float radius);
 	virtual void setFocus(Vec3f center, float radius);
 
+	virtual void setOwner(Cell* owner);
+
 	void setAttackOptions(bool selfDestruct, bool dieTrying = false);
 
 protected:
 	bool selfDestruct;
-	/// flag that indicates whether poly dies in the middle of the attack
 	bool dieTrying;
+	bool wayBackFromFocus;
+	
 	float cellRadius;
 	float speed;
 	float polyRotationSpeed;
 	float followPointRotationSpeed;
 	int maxAmplitudeEruption;
-	bool isInCircularMovement;
 	Vec3f forward;
 
 	virtual void drawAtTransformation() const;
 	void arrivalBehavior(float frameTime);
+	void attackBehavior(float frameTime);
 	void updateFollowPoint(float frameTime);
 
 private:

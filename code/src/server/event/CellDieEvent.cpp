@@ -60,6 +60,7 @@ void CellDieEvent::trigger()
 					{
 						LOG_INFO("PolypeptideDie sent because capacity is low");
 						PolypeptideDie * message = new PolypeptideDie();
+						message->cellId = curCell->getId();
 						message->polypeptideId = it->second->getId();
 						message->endpoint = player->getEndpoint();
 						NETWORKMANAGER->send(message);

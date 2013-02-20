@@ -489,6 +489,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 						Polypeptide * polypeptide = fromCell->getPolypeptides().find(*it)->second;
 						toCell->addPolypeptide(polypeptide);
 						fromCell->removePolypeptide(polypeptide);
+
+						polypeptide->setOwner(toCell);
 						
 						auto polypeptideInSelectionList = GAME_SCR.getSelectedPolypeptides().find(*it);
 						if (polypeptideInSelectionList != nullptr)
@@ -628,10 +630,11 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide = new PolypeptideClient();
 				polypeptide->setId(polypeptideId);
 				polypeptide->setPosition(attackerCell->getPosition());
+				GAME_SCR.addGameObjectToDraw(polypeptide);
 			}
 
 			polypeptide->setState(Polypeptide::CELLFIGHT);
-			polypeptide->setAttackOptions();
+			polypeptide->setAttackOptions(false, false);
 			polypeptide->setFocus(attackedCell->getPosition(), attackedCell->getRadius());
 			attackedCell->decreaseHealthPointsBy(damage);
 		}

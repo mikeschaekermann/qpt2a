@@ -6,6 +6,8 @@ class PolypeptideFight : public NetworkMessage
 {
 public:
 	/* Fields */
+	unsigned int cell1Id;
+	unsigned int cell2Id;
 	unsigned int polypeptideId1;
 	unsigned int polypeptideId2;
 	bool polypeptide1Dies;
