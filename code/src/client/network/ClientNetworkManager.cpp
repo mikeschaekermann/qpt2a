@@ -482,6 +482,17 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 						Polypeptide * polypeptide = fromCell->getPolypeptides().find(*it)->second;
 						toCell->addPolypeptide(polypeptide);
 						fromCell->removePolypeptide(polypeptide);
+						
+						auto polypeptideInSelectionList = GAME_SCR.getSelectedPolypeptides().find(*it);
+						if (polypeptideInSelectionList != nullptr)
+						{
+							GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptideInSelectionList);
+						}
+						else
+						{
+							LOG_ERROR("Tried to move polypeptide which the client does not have in its list!");
+							assert(false);
+						}
 					}
 				}
 
@@ -519,6 +530,19 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			LOG_INFO("PolypeptideDie received");
 			unsigned int polypeptideId = polypeptideDie->polypeptideId;
+
+			auto polypeptide = GAME_SCR.getSelectedPolypeptides().find(polypeptideId);
+			if (polypeptide != nullptr)
+			{
+				polypeptide->getOwner()->removePolypeptide(polypeptide);
+				GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptide);
+				delete polypeptide;
+			}
+			else
+			{
+				LOG_ERROR("Tried to delete polypeptide which the client does not have in its list!");
+				assert(false);
+			}
 		}
 		break;
 	}
@@ -531,6 +555,26 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			unsigned int polypeptideId = polypeptideCellAttack->polypeptideId;
 			unsigned int cellId = polypeptideCellAttack->cellId;
 			float damage = polypeptideCellAttack->damage;
+
+			auto gameObject = GAME_SCR.getGameObjectsToDraw().find(cellId);
+
+			if (gameObject != nullptr)
+			{
+				auto cell = dynamic_cast<CellClient *>(gameObject);
+				cell->decreaseHealthPointsBy(damage);
+				
+				auto polypeptide = GAME_SCR.getSelectedPolypeptides().find(polypeptideId);
+				if (polypeptide != nullptr)
+				{
+					polypeptide->setState(Polypeptide::CELLFIGHT);
+					polypeptide->setFocus(cell->getPosition(), cell->getRadius());
+				}
+				else
+				{
+					LOG_ERROR("Tried to put polypeptide into attack state which the client does not have in its list!");
+					assert(false);
+				}
+			}
 		}
 		break;
 	}
