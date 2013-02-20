@@ -268,6 +268,9 @@ TriMesh MarchingCubes::Grid::triangulate(float isoLevel)
 	return surface;
 }
 
+/// @brief	method to triangulate a grid cell using the Marching Cubes algorithm,
+///			adapted from http://paulbourke.net/geometry/polygonise/
+
 list<MarchingCubes::Triangle> MarchingCubes::Grid::triangulate(GridCell cell, float isoLevel)
 {
 	list<Triangle> triangles;
