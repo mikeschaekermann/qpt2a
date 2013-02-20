@@ -488,6 +488,11 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 						{
 							GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptideInSelectionList);
 						}
+						else
+						{
+							LOG_ERROR("Tried to move polypeptide which client does not have in its list!");
+							assert(false);
+						}
 					}
 				}
 
@@ -525,6 +530,19 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			LOG_INFO("PolypeptideDie received");
 			unsigned int polypeptideId = polypeptideDie->polypeptideId;
+
+			auto polypeptideInSelectionList = GAME_SCR.getSelectedPolypeptides().find(polypeptideId);
+			if (polypeptideInSelectionList != nullptr)
+			{
+				polypeptideInSelectionList->getOwner()->removePolypeptide(polypeptideInSelectionList);
+				GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptideInSelectionList);
+				delete polypeptideInSelectionList;
+			}
+			else
+			{
+				LOG_ERROR("Tried to delete polypeptide which client does not have in its list!");
+				assert(false);
+			}
 		}
 		break;
 	}
