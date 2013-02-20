@@ -11,7 +11,7 @@
 
 CellDieEvent::CellDieEvent(double startTime, unsigned int cellId) :
 	cellId(cellId),
-	GameEvent(startTime, CONFIG_FLOAT1("data.event.celldie.time"))
+	GameEvent(startTime, CONFIG_FLOAT("data.event.celldie.time"))
 {
 	
 }

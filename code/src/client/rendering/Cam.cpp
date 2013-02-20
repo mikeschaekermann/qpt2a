@@ -24,13 +24,13 @@ Cam & Cam::setPosition(Vec3f newPosition)
 {
 	position = newPosition;
 
-	auto minDistance = max<float>(1.1 * getNearClip(), CONFIG_FLOAT2("data.rendering.camera.distance.min", 100));
-	auto maxDistance = min<float>(0.9 * getFarClip(), CONFIG_FLOAT2("data.rendering.camera.distance.max", 1000));
+	auto minDistance = max<float>(1.1 * getNearClip(), CONFIG_FLOAT("data.rendering.camera.distance.min"));
+	auto maxDistance = min<float>(0.9 * getFarClip(), CONFIG_FLOAT("data.rendering.camera.distance.max"));
 
 	position.z = min<float>(max<float>(position.z, minDistance), maxDistance);
 
-	float horizontalAngle = ci::toRadians(CONFIG_FLOAT2("data.rendering.camera.angle.horizontal", 45));
-	float verticalAngle = ci::toRadians(CONFIG_FLOAT2("data.rendering.camera.angle.vertical", 10));
+	float horizontalAngle = ci::toRadians(CONFIG_FLOAT("data.rendering.camera.angle.horizontal"));
+	float verticalAngle = ci::toRadians(CONFIG_FLOAT("data.rendering.camera.angle.vertical"));
 
 	focus.x = position.x + cos(horizontalAngle) * sin(verticalAngle) * position.z;
 	focus.y = position.y + sin(horizontalAngle) * sin(verticalAngle) * position.z;

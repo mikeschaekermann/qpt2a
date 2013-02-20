@@ -11,7 +11,7 @@ class BoneCellClient :
 public:
  BoneCellClient(unsigned int id, Vec3f position, float angle, PlayerClient * owner) :
   GameObject(),
-  Cell(position, CONFIG_FLOAT1("data.cell.bonecell.radius"), angle, CONFIG_FLOAT1("data.cell.bonecell.healthpoints"), owner),
+  Cell(position, CONFIG_FLOAT("data.cell.bonecell.radius"), angle, CONFIG_FLOAT("data.cell.bonecell.healthpoints"), owner),
   GameObjectClient(),
   CellClient(),
   BoneCell(position, angle)

@@ -25,11 +25,11 @@ void TextInput::draw()
 	if (renderBox)
 	{
 		GUIItem::draw();
-		ci::gl::drawString(text, this->position + Vec2f(20, 15), ci::ColorA::white(), cinder::Font(CONFIG_STRING2("data.input.text.font", "Arial"), CONFIG_FLOAT2("data.input.text.size", 34)));
+		ci::gl::drawString(text, this->position + Vec2f(20, 15), ci::ColorA::white(), cinder::Font(CONFIG_STRING("data.input.text.font"), CONFIG_FLOAT("data.input.text.size")));
 	}
 	else
 	{
-		ci::gl::drawString(text, this->position + Vec2f(20, 15), ci::ColorA(0.42f, 0.81f, 0.22f), cinder::Font(CONFIG_STRING2("data.input.text.font", "Arial"), CONFIG_FLOAT2("data.input.text.size", 34)));
+		ci::gl::drawString(text, this->position + Vec2f(20, 15), ci::ColorA(0.42f, 0.81f, 0.22f), cinder::Font(CONFIG_STRING("data.input.text.font"), CONFIG_FLOAT("data.input.text.size")));
 	}
 	
 }

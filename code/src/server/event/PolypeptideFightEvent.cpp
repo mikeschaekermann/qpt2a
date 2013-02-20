@@ -14,7 +14,7 @@ PolypeptideFightEvent::PolypeptideFightEvent(double startTime, unsigned int cell
 	cellId2(cellId2),
 	polypeptideId1(polypeptideId1),
 	polypeptideId2(polypeptideId2),
-	GameEvent(startTime, CONFIG_FLOAT1("data.event.polypeptidefight.time"))
+	GameEvent(startTime, CONFIG_FLOAT("data.event.polypeptidefight.time"))
 { }
 
 void PolypeptideFightEvent::trigger()

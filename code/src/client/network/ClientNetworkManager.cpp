@@ -278,7 +278,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				cellVec.normalize();
 				ci::Vec3f textPos = attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 3.f);
 				
-				float deathTime = (float) getElapsedSeconds() + CONFIG_FLOAT2("data.ingamefeedback.renderedDamage.displaytime", 5.f);
+				float deathTime = (float) getElapsedSeconds() + CONFIG_FLOAT("data.ingamefeedback.renderedDamage.displaytime");
 				string text = stringify(ostringstream() << "-" << ceil((float) cellAttack->damage));
 				GameScreen::RenderText renderText(deathTime, textPos, text);
 				
@@ -372,7 +372,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				newCell->setAngle(createCellSuccess->angle);
 				newCell->setId(createCellSuccess->cellId);
 				newCell->addParent(parentCell);
-				newCell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));
+				newCell->setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.incompleteOpacity"));
 				newCell->setHue(GAME_MGR->getMyHue());
 				parentCell->addChild(newCell);
 				/// must be hidden so that the skin is updated later!

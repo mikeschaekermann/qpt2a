@@ -53,7 +53,7 @@ Game::Game()
 	LOG_INFO("Game created");
 		
 	stringstream message;
-	message << "Space for " << CONFIG_INT2("data.players.max", 4) << " players.";
+	message << "Space for " << CONFIG_INT("data.players.max") << " players.";
 	LOG_INFO(message.str());
 
 	/**
@@ -119,7 +119,7 @@ Game::Game()
 		}
 
 		StaticModificatorServer * s = new StaticModificatorServer(Vec3f(xPosStatics[i], yPosStatics[i], 0.f), Vec3f(xRotStatics[i], yRotStatics[i], 0.f), Vec3f::one(), radiusStatics[i], type);
-		if (!isInRadiusOf<float>(s->getPosition(), s->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
+		if (!isInRadiusOf<float>(s->getPosition(), s->getRadius(), Vec3f::zero(), CONFIG_FLOAT("data.world.radius")))
 		{
 			throw string("Static modifier could not be created because it is not in the game area");
 		}
@@ -144,7 +144,7 @@ Game::Game()
 	for (unsigned int i = 0; i < xPosBarrier.size(); ++i)
 	{
 		BarrierServer * b = new BarrierServer(Vec3f(xPosBarrier[i], yPosBarrier[i], 0.f), Vec3f(xRotBarrier[i], yRotBarrier[i], 0.f), Vec3f::one(), radiusBarrier[i]);
-		if (!isInRadiusOf<float>(b->getPosition(), b->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
+		if (!isInRadiusOf<float>(b->getPosition(), b->getRadius(), Vec3f::zero(), CONFIG_FLOAT("data.world.radius")))
 		{
 			throw string("Barrier could not be created because it is not in the game area");
 		}
@@ -170,7 +170,7 @@ void Game::join(JoinRequest &request)
 	LOG_INFO("JoinRequest received");
 	string playerName = request.name;
 		
-	if(GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
+	if(GAMECONTEXT->getPlayerMap().size() == CONFIG_INT("data.players.max"))
 	{
 		JoinFailure * failure = new JoinFailure(request);
 		failure->errorCode = JoinErrorCode::GameIsFull;
@@ -203,8 +203,8 @@ void Game::join(JoinRequest &request)
 	Vec3f startPosition(xPositions[GAMECONTEXT->getPlayerMap().size()], yPositions[GAMECONTEXT->getPlayerMap().size()], 0.f);
 
 	/// get the stemcell- and world-radius information
-	float stemcellRadius = CONFIG_FLOAT1("data.cell.stemcell.radius");
-	float worldRadius = CONFIG_FLOAT1("data.world.radius");
+	float stemcellRadius = CONFIG_FLOAT("data.cell.stemcell.radius");
+	float worldRadius = CONFIG_FLOAT("data.world.radius");
 
 	/// test if the stemcell is inside the world
 	if (!isInRadiusOf(startPosition, stemcellRadius, Vec3f(0.f, 0.f, 0.f), worldRadius))
@@ -227,7 +227,7 @@ void Game::join(JoinRequest &request)
 	NETWORKMANAGER->send(success);
 	LOG_INFO("JoinSuccess sent");
 
-	if (GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
+	if (GAMECONTEXT->getPlayerMap().size() == CONFIG_INT("data.players.max"))
 	{
 		using boost::asio::ip::udp;
 
@@ -333,15 +333,15 @@ void Game::createCell(CreateCellRequest & request)
 		switch (type.getType())
 		{
 		case CellType::StemCell:
-			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.stemcell.radius"), position);
+			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.stemcell.radius"), position);
 			cell = new CellServer(CellServer::STEMCELL, position, angle, &player);
 			break;
 		case CellType::StandardCell:
-			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.standardcell.radius"), position);
+			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.standardcell.radius"), position);
 			cell = new CellServer(CellServer::STANDARDCELL, position, angle, &player);
 			break;
 		case CellType::BoneCell:
-			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.bonecell.radius"), position);
+			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.bonecell.radius"), position);
 			cell = new CellServer(CellServer::BONECELL, position, angle, &player);
 			break;
 		default:
@@ -466,7 +466,7 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 		return;
 	}
 
-	if (toCell->getPolypeptides().size() + amount > CONFIG_INT1("data.polypeptide.maxPerCell"))
+	if (toCell->getPolypeptides().size() + amount > unsigned int(CONFIG_INT("data.polypeptide.maxPerCell")))
 	{
 		/// target-cell has not enough space
 		LOG_INFO("MovePolypeptideFailure TargetCellFull sent");

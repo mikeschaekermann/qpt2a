@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\src\server\event\PolypeptideCellAttackEvent.cpp" />
     <ClCompile Include="..\..\src\server\event\PolypeptideFightEvent.cpp" />
     <ClCompile Include="..\..\src\server\game\AttackRelationContainer.cpp" />
+    <ClCompile Include="..\..\src\server\game\CellServer.cpp" />
     <ClCompile Include="..\..\src\server\game\Game.cpp" />
     <ClCompile Include="..\..\src\server\game\GameContext.cpp" />
     <ClCompile Include="..\..\src\server\game\IIdentifiable.cpp" />

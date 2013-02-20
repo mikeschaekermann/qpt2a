@@ -5,7 +5,7 @@
 void PolypeptideClient::drawAtTransformation() const
 {
 	gl::pushMatrices();
-		auto scale = CONFIG_FLOAT1("data.polypeptide.scale");
+		auto scale = CONFIG_FLOAT("data.polypeptide.scale");
 		gl::scale(scale, scale, scale);
 		RENDER_MGR->renderBlackShadedModel("poly");
 	gl::popMatrices();

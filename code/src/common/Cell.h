@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "Polypeptide.h"
 
+
 #include "../common/ConfigurationDataHandler.h"
 
 class Player;
@@ -19,41 +20,21 @@ public:
 
  void completeCell();
 
- float getHealthPoints() const { return healthPoints; }
+ float getHealthPoints() const;
 
- float getAngle() const { return ci::toRadians(rotation.z); }
- void setAngle(float angle) { rotation.z = ci::toDegrees(angle); }
+ float getAngle() const;
+ void setAngle(float angle);
 
- bool getIsComplete() const { return isComplete; }
+ bool getIsComplete() const;
 
- const Player * getOwner() const { return owner; }
- void setOwner( const Player * owner) { this->owner = owner; }
+ const Player * getOwner() const;
+ void setOwner( const Player * owner);
 
- std::map<unsigned int, Polypeptide *> & getPolypeptides()
- {
-	 return polypeptides;
- }
+ std::map<unsigned int, Polypeptide *> & getPolypeptides();
 
- bool addPolypeptide(Polypeptide * polypeptide)
- {
-	 if (polypeptides.size() < polyMax)
-	 {
-		 polypeptide->setOwner(this);
-		 return polypeptides.insert(make_pair(polypeptide->getId(), polypeptide)).second;
-	 }
-	 return false;
- }
+ bool addPolypeptide(Polypeptide * polypeptide);
 
- bool removePolypeptide(Polypeptide * polypeptide)
- {
-	 auto it = polypeptides.find(polypeptide->getId());
-	 if (it != polypeptides.end())
-	 {
-		polypeptides.erase(it);
-		return true;
-	 }
-	 return false;
- }
+ bool removePolypeptide(Polypeptide * polypeptide);
 
 protected:
  float healthPoints;
@@ -68,8 +49,8 @@ protected:
  Cell(Vec3f position, float radius, float angle, float healthPoints);
  Cell(Vec3f position, float radius, float angle, float healthPoints, Player * owner);
 
- virtual void setPosition(Vec3f position) { throw logic_error("Not implemented exception"); }
- virtual void setRotation(Vec3f rotation) { throw logic_error("Not implemented exception"); }
- virtual void setScale(Vec3f scale) { throw logic_error("Not implemented exception"); }
- virtual void setRadius(float radius) { throw logic_error("Not implemented exception"); }
+ virtual void setPosition(Vec3f position);
+ virtual void setRotation(Vec3f rotation);
+ virtual void setScale(Vec3f scale);
+ virtual void setRadius(float radius);
 };

@@ -82,7 +82,7 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 	 * reversely all the other cell that are attackers have the current cell in its attack radius
 	 */
 	const vector<GameObject *> & gameObjects =
-		GAMECONTEXT->getActiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT1("data.cell.standardcell.attackradius"));
+		GAMECONTEXT->getActiveCells().findInRadiusOf(currentCell.getPosition(), currentCell.getRadius() + CONFIG_FLOAT("data.cell.standardcell.attackradius"));
 
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 	{
@@ -124,7 +124,7 @@ GameEvent * EventCreator::createPolypeptideFightEvent(double startTime, unsigned
 
 GameEvent * EventCreator::createPolypeptideCellAttackEvent(double startTime, unsigned int attackerCellId, unsigned int attackedCellId, unsigned int polypeptideId)
 {
-	PolypeptideCellAttackEvent * polypeptideCellAttackEvent = new PolypeptideCellAttackEvent(startTime, attackerCellId, attackedCellId, polypeptideId, CONFIG_FLOAT1("data.polypeptide.damage"));
+	PolypeptideCellAttackEvent * polypeptideCellAttackEvent = new PolypeptideCellAttackEvent(startTime, attackerCellId, attackedCellId, polypeptideId, CONFIG_FLOAT("data.polypeptide.damage"));
 	(*EVENT_MGR) += polypeptideCellAttackEvent;
 	return polypeptideCellAttackEvent;
 }
@@ -171,7 +171,7 @@ void EventCreator::calculateStaticEffects(CellServer & cell)
 bool EventCreator::checkInWorldRadius(unsigned int requestId, CellServer & cell, const PlayerServer & player)
 {
 	// The cell has to be in the world to be placed!
-	if (!isInRadiusOf<float>(cell.getPosition(), cell.getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
+	if (!isInRadiusOf<float>(cell.getPosition(), cell.getRadius(), Vec3f::zero(), CONFIG_FLOAT("data.world.radius")))
 	{
 		CreateCellFailure *failure = new CreateCellFailure();
 		failure->endpoint = player.getEndpoint();
@@ -239,8 +239,8 @@ float EventCreator::calculateDamage(CellServer * attacker, CellServer * victim)
 		ci::Vec3f attacker2VictimDir = victim->getPosition() - attacker->getPosition();
 		attacker2VictimDir.normalize();
 
-		float maxSpikeLength = CONFIG_FLOAT1("data.cell.standardcell.attackradius");
-		float distanceDropOffDegree = CONFIG_FLOAT1("data.cell.standardcell.distanceDropOffDegree");
+		float maxSpikeLength = CONFIG_FLOAT("data.cell.standardcell.attackradius");
+		float distanceDropOffDegree = CONFIG_FLOAT("data.cell.standardcell.distanceDropOffDegree");
 		float attackAngle = acosf(attackerDir.dot(attacker2VictimDir)) * 180.f / float(M_PI);
 		float spikeLength = maxSpikeLength * min<float>(max<float>((distanceDropOffDegree - attackAngle) / distanceDropOffDegree, 0.f), 1.f);
 		float punctureDepth = spikeLength - ((victim->getPosition() - attacker->getPosition()).length() - attacker->getRadius() - victim->getRadius());

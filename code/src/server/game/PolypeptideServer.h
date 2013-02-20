@@ -15,7 +15,7 @@ public:
 	PolypeptideServer(Vec3f position, float angle, Cell * owner) :
 		Polypeptide(position, angle, owner)
 	{
-		this->radius = CONFIG_FLOAT1("data.polypeptide.radius");
+		this->radius = CONFIG_FLOAT("data.polypeptide.radius");
 	}
 
 private:

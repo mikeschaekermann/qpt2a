@@ -56,8 +56,8 @@ float TouchWay::getLength() const
 bool TouchWay::isClick() const
 {
 	auto distance = getStartPos().distance(getCurrentPos());
-	auto clickPixelTolerance = CONFIG_FLOAT1("data.input.clickPixelTolerance");
-	auto clickWayLengthTolerance = CONFIG_FLOAT1("data.input.clickWayLengthTolerance");
+	auto clickPixelTolerance = CONFIG_FLOAT("data.input.clickPixelTolerance");
+	auto clickWayLengthTolerance = CONFIG_FLOAT("data.input.clickWayLengthTolerance");
 
 	return (distance <= clickPixelTolerance && wayLength <= clickWayLengthTolerance);
 }

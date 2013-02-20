@@ -10,7 +10,7 @@ boost::mutex AssetManager::instanceMutex;
 
 AssetManager::AssetManager(void)
 {
-	SOUND_PLAYER->set3DSettings(CONFIG_FLOAT1("data.sound.doppler"), CONFIG_FLOAT1("data.sound.distance"), CONFIG_FLOAT1("data.sound.rollOff"));
+	SOUND_PLAYER->set3DSettings(CONFIG_FLOAT("data.sound.doppler"), CONFIG_FLOAT("data.sound.distance"), CONFIG_FLOAT("data.sound.rollOff"));
 }
 
 AssetManager::~AssetManager(void)

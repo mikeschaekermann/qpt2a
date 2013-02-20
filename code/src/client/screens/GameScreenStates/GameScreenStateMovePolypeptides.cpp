@@ -70,6 +70,7 @@ bool GameScreenStateMovePolypeptides::touchBegan(const TouchWay & touchWay)
 
 void GameScreenStateMovePolypeptides::touchMoved(const TouchWay & touchWay)
 {
+	position = touchWay.getCurrentPos();
 	GameScreenState::touchMoved(touchWay);
 }
 

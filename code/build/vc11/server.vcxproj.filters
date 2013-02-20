@@ -504,6 +504,9 @@
     <ClCompile Include="..\..\src\server\game\AttackRelationContainer.cpp">
       <Filter>Gamelogic</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\game\CellServer.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

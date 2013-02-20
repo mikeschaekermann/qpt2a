@@ -16,11 +16,11 @@ void CellClient::drawHealthBar(float healthBarOpacity)
 	if (isVisible() && getHealthPoints() < maxHealthPoints)
 	{
 		auto outerHalfSize = Vec2f(
-			CONFIG_FLOAT2("data.ingamefeedback.healthBar.width", 50),
-			CONFIG_FLOAT2("data.ingamefeedback.healthBar.height", 10)
+			CONFIG_FLOAT("data.ingamefeedback.healthBar.width"),
+			CONFIG_FLOAT("data.ingamefeedback.healthBar.height")
 		);
 
-		auto cornerRadius = CONFIG_FLOAT2("data.ingamefeedback.healthBar.cornerRadius", 5);
+		auto cornerRadius = CONFIG_FLOAT("data.ingamefeedback.healthBar.cornerRadius");
 
 		auto position2D = getPosition2D();
 
@@ -28,9 +28,9 @@ void CellClient::drawHealthBar(float healthBarOpacity)
 		auto outerBottomRight = position2D + outerHalfSize;
 	
 		ColorA borderColor(
-			CONFIG_FLOAT2("data.ingamefeedback.healthBar.borderColor.r", 0.f),
-			CONFIG_FLOAT2("data.ingamefeedback.healthBar.borderColor.g", 0.f),
-			CONFIG_FLOAT2("data.ingamefeedback.healthBar.borderColor.b", 0.f),
+			CONFIG_FLOAT("data.ingamefeedback.healthBar.borderColor.r"),
+			CONFIG_FLOAT("data.ingamefeedback.healthBar.borderColor.g"),
+			CONFIG_FLOAT("data.ingamefeedback.healthBar.borderColor.b"),
 			healthBarOpacity
 		);
 
@@ -46,23 +46,23 @@ void CellClient::drawHealthBar(float healthBarOpacity)
 		innerBottomRight.x += (innerHalfSize.x * 2) * healthInPercent;
 
 		ColorA barColor;
-		auto criticalPercentage = CONFIG_FLOAT2("data.ingamefeedback.healthBar.criticalPercentage", 0.3f);
+		auto criticalPercentage = CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalPercentage");
 
 		if (healthInPercent > criticalPercentage)
 		{
 			barColor = ColorA(
-				CONFIG_FLOAT2("data.ingamefeedback.healthBar.goodColor.r", 0.f),
-				CONFIG_FLOAT2("data.ingamefeedback.healthBar.goodColor.g", 1.f),
-				CONFIG_FLOAT2("data.ingamefeedback.healthBar.goodColor.b", 0.f),
+				CONFIG_FLOAT("data.ingamefeedback.healthBar.goodColor.r"),
+				CONFIG_FLOAT("data.ingamefeedback.healthBar.goodColor.g"),
+				CONFIG_FLOAT("data.ingamefeedback.healthBar.goodColor.b"),
 				healthBarOpacity
 			);
 		}
 		else
 		{
 			barColor = ColorA(
-				CONFIG_FLOAT2("data.ingamefeedback.healthBar.criticalColor.r", 1.f),
-				CONFIG_FLOAT2("data.ingamefeedback.healthBar.criticalColor.g", 0.f),
-				CONFIG_FLOAT2("data.ingamefeedback.healthBar.criticalColor.b", 0.f),
+				CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalColor.r"),
+				CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalColor.g"),
+				CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalColor.b"),
 				healthBarOpacity
 			);
 		}

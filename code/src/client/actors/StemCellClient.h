@@ -9,7 +9,7 @@ class StemCellClient :
 {
 public:
  StemCellClient(unsigned int id, Vec3f position, float angle, PlayerClient * owner) :
-  Cell(position, CONFIG_FLOAT1("data.cell.stemcell.radius"), angle, CONFIG_FLOAT1("data.cell.stemcell.healthpoints"), owner),
+  Cell(position, CONFIG_FLOAT("data.cell.stemcell.radius"), angle, CONFIG_FLOAT("data.cell.stemcell.healthpoints"), owner),
   CellClient(),
   StemCell(position, angle)
  {
