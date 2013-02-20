@@ -6,10 +6,12 @@
 void PolypeptideClient::drawAtTransformation() const
 {
 	RENDER_MGR->renderBlackShadedModel("poly");
-	popMatrices();
+	
+	// follow points debug code
+	/*popMatrices();
 	pushMatrices();
 	translate(followPoint);
-	drawSphere(Vec3f::zero(), 3);
+	drawSphere(Vec3f::zero(), 3);*/
 }
 
 void PolypeptideClient::update(float frameTime)
@@ -32,7 +34,7 @@ void PolypeptideClient::update(float frameTime)
 void PolypeptideClient::arrivalBehavior(float frameTime)
 {
 	auto d = (followPoint - position).normalized();
-	auto newForward = (forward + d * frameTime * (polyRotationSpeed / cellRadius * 40.)
+	auto newForward = (forward + d * frameTime * (polyRotationSpeed / cellRadius * 60.)
 		* (position.distance(focusCenter)
 		/ (cellRadius * 10.))).normalized();
 	
