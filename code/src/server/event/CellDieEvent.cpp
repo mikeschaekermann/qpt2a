@@ -85,8 +85,8 @@ void CellDieEvent::trigger()
 			NETWORKMANAGER->sendTo<CellDie>(die, NETWORKMANAGER->getConnectionEndpoints());
 			LOG_INFO("CellDie sent");
 			
-			GAMECONTEXT->getAttackRelations().removeRelationsWith(*cell);
-			GAMECONTEXT->getAttackRelations().update();
+			GAMECONTEXT->getAttackRelations().removeRelationsFor(*cell);
+			GAMECONTEXT->getAttackRelations().updateRelationsFor(*cell);
 			GAMECONTEXT->getActiveCells().removeGameObject(cell->getId());
 		}
 	}

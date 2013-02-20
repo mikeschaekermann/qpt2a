@@ -585,7 +585,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				auto cell = dynamic_cast<CellClient *>(gameObject);
 				cell->decreaseHealthPointsBy(damage);
 				
-				auto polypeptide = GAME_SCR.getSelectedPolypeptides().find(polypeptideId);
+				auto polypeptide = GAME_SCR.getMyPolypeptides().find(polypeptideId);
 				if (polypeptide != nullptr)
 				{
 					polypeptide->setState(Polypeptide::CELLFIGHT);

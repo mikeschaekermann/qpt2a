@@ -110,7 +110,6 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 			}
 		}
 	}
-	GAMECONTEXT->getAttackRelations().update();
 
 	return true;
 }
