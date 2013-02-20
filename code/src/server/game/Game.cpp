@@ -484,7 +484,7 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 		return;
 	}
 
-	if (toCell->getPolypeptides().size() + amount > unsigned int(CONFIG_INT("data.polypeptide.maxPerCell")))
+	/*if (toCell->getPolypeptides().size() + amount > unsigned int(CONFIG_INT("data.polypeptide.maxPerCell")))
 	{
 		/// target-cell has not enough space
 		LOG_INFO("MovePolypeptideFailure TargetCellFull sent");
@@ -495,7 +495,23 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 		NETWORKMANAGER->send(message);
 
 		return;
+	}*/
+
+	unsigned int numberOfTravelingCells = 0;
+	switch(toCell->getType())
+	{
+	case CellServer::STEMCELL:
+		numberOfTravelingCells = CONFIG_INT("data.polypeptide.maxPerStemCell");
+		break;
+	case CellServer::STANDARDCELL:
+		numberOfTravelingCells = CONFIG_INT("data.polypeptide.maxPerStandardCell");
+		break;
+	case CellServer::BONECELL:
+		numberOfTravelingCells = CONFIG_INT("data.polypeptide.maxPerBoneCell");
+		break;
 	}
+	numberOfTravelingCells -= toCell->getPolypeptides().size();
+	amount = min(amount, numberOfTravelingCells);
 
 	vector<unsigned int> polypeptideIds;
 	auto it = fromCell->getPolypeptides().begin();
