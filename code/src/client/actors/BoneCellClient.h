@@ -17,10 +17,14 @@ public:
   BoneCell(position, angle)
  {
 	setId(id);
+	this->polyMax = CONFIG_INT("data.polypeptide.maxPerBoneCell");
  }
 
  virtual void update(float frameTime) { CellClient::update(frameTime); }
  virtual void setPosition(Vec3f position) { CellClient::setPosition(position); }
+
+ virtual void increaseGlobalTypeCounter() const;
+ virtual void decreaseGlobalTypeCounter() const;
 
 private:
  virtual void setId(unsigned int id) { CellClient::setId(id); }

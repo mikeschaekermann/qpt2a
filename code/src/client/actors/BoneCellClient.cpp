@@ -1,6 +1,7 @@
 #include "BoneCellClient.h"
 #include "../rendering/RenderManager.h"
 #include <cmath>
+#include "../../common/PolypeptideCapacityContainer.h"
 
 void BoneCellClient::drawAtTransformation() const
 {
@@ -24,4 +25,22 @@ void BoneCellClient::drawAtTransformation() const
 											  4.f);
 
 	gl::popMatrices();
+}
+
+void BoneCellClient::increaseGlobalTypeCounter() const
+{
+	++(POLYCAPACITY->NumberOfBoneCells);
+}
+
+void BoneCellClient::decreaseGlobalTypeCounter() const
+{
+	if (POLYCAPACITY->NumberOfBoneCells == 0)
+	{
+		LOG_ERROR("Tried to remove a bone cell although the bone cell counter is already zero.");
+		assert(false);
+	}
+	else
+	{
+		--(POLYCAPACITY->NumberOfBoneCells);
+	}
 }

@@ -36,8 +36,11 @@
 
 #include "../screens/GameScreenStates/GameScreenStateGameOver.h"
 #include "../screens/GameScreenStates/GameScreenStateCreateCell.h"
+#include "../screens/GameScreenStates/GameScreenStateNeutral.h"
 #include "../screens/ConnectScreen.h"
 #include "../screens/GameScreen.h"
+
+#include "../../common/PolypeptideCapacityContainer.h"
 
 using namespace std;
 
@@ -310,6 +313,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 					if (cellClient->getOwner() == GAME_MGR->getMyPlayer())
 					{
 						GAME_SCR.removeExploringCell(cellClient);
+						cellClient->decreaseGlobalTypeCounter();
 					}
 				}
 				GAME_SCR.removeGameObjectToUpdate(cellObject);
@@ -324,22 +328,20 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 	case MessageType::CellNew:
 	{
 		CellNew *cellNew = dynamic_cast<CellNew*> (message);
-		if (cellNew && cellNew->playerId != GAME_MGR->getMyPlayer()->getId())
+		if (cellNew)
 		{
 			LOG_INFO("CellNew received");
 
-			GAME_SCR.addIncompleteCell(
-				cellNew->playerId, 
-				cellNew->type.getType(),
-				cellNew->cellId,
-				cellNew->position,
-				cellNew->angle
-			);
-
-			LOG_INFO("cell angle raw (should be radians):");
-			LOG_INFO(cellNew->angle);
-			LOG_INFO("cell angle degrees:");
-			LOG_INFO(ci::toDegrees(cellNew->angle));
+			if (cellNew->playerId != GAME_MGR->getMyPlayer()->getId())
+			{
+				GAME_SCR.addIncompleteCell(
+					cellNew->playerId, 
+					cellNew->type.getType(),
+					cellNew->cellId,
+					cellNew->position,
+					cellNew->angle
+				);
+			}
 		}
 		break;
 	}
@@ -374,6 +376,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				newCell->addParent(parentCell);
 				newCell->setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.incompleteOpacity"));
 				newCell->setHue(GAME_MGR->getMyHue());
+				newCell->increaseGlobalTypeCounter();
+
 				parentCell->addChild(newCell);
 				/// must be hidden so that the skin is updated later!
 				newCell->hide();
@@ -429,6 +433,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide->setPosition(stemCell.getPosition());
 				polypeptide->show();
 				polypeptide->setOwner(&stemCell);
+
+				++(POLYCAPACITY->NumberOfPolypeptides);
 
 				stemCell.addPolypeptide(polypeptide);
 
@@ -497,6 +503,11 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 					}
 				}
 
+				if (GAME_SCR.getSelectedPolypeptides().getSize() == 0)
+				{
+					GAME_SCR.switchToState(new GameScreenStateNeutral(&GAME_SCR));
+				}
+
 				movePolypeptideRequestContexts.erase(context);
 			}
 		}
@@ -537,6 +548,17 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			{
 				polypeptide->getOwner()->removePolypeptide(polypeptide);
 				GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptide);
+
+				if (POLYCAPACITY->NumberOfPolypeptides == 0)
+				{
+					LOG_ERROR("Tried to remove a polypeptide although the polypeptide counter is already zero.");
+					assert(false);
+				}
+				else
+				{
+					--(POLYCAPACITY->NumberOfPolypeptides);
+				}
+
 				delete polypeptide;
 			}
 			else

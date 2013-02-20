@@ -37,8 +37,9 @@ private:
 	void makeRelations();
 	void refillRelations();
 	void removeRelationsWith(unsigned int cellId);
-	std::set<unsigned int> & addRelationKeyElement(unsigned int key, unsigned int element);
+	void addRelationKeyElement(unsigned int key, unsigned int element);
 
+	bool isUpdated;
 	std::map<unsigned int, std::set<unsigned int> > relationKey;
 	std::map<set<unsigned int>, Relation> relations;
 };

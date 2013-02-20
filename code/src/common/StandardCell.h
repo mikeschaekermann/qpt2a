@@ -11,5 +11,5 @@ public:
 
 	StandardCell(Vec3f position, float angle) :
 		Cell(position, CONFIG_FLOAT("data.cell.standardcell.radius"), angle, CONFIG_FLOAT("data.cell.standardcell.healthpoints"))
-	{ }
+	{}
 };

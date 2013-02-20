@@ -58,10 +58,6 @@ Game::Game()
 	message << "Space for " << CONFIG_INT("data.players.max") << " players.";
 	LOG_INFO(message.str());
 
-	POLYCAPACITY->setPolypeptidesPerStemCell(CONFIG_INT("data.polypeptide.maxPerStemCell"));
-	POLYCAPACITY->setPolypeptidesPerStandardCell(CONFIG_INT("data.polypeptide.maxPerStandardCell"));
-	POLYCAPACITY->setPolypeptidesPerBoneCell(CONFIG_INT("data.polypeptide.maxPerBoneCell"));
-
 	/**
 		* Build Modifiers and Barriers
 		*/

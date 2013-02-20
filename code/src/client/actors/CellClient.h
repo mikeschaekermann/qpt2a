@@ -22,6 +22,9 @@ public:
 	
 	virtual void draw() const;
 
+	virtual void increaseGlobalTypeCounter() const {};
+	virtual void decreaseGlobalTypeCounter() const {};
+	
 protected:
 	float getHealthPercentage() const;
 	float getBrightnessFromHealthPoints() const;

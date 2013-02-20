@@ -8,8 +8,14 @@ using namespace std;
 AttackRelationContainer & AttackRelationContainer::addRelation(CellServer & cell1, CellServer & cell2)
 {
 	addRelationKeyElement(cell1.getId(), cell2.getId());
-	auto & elements = addRelationKeyElement(cell2.getId(), cell1.getId());
-	relations.insert(make_pair(elements, Relation()));
+	addRelationKeyElement(cell2.getId(), cell1.getId());
+	auto & key = make_set(cell1.getId(), cell2.getId());
+	auto & relation = relations
+		.insert(make_pair(key, Relation())).first->second;
+	relation.cellId1 = cell1.getId();
+	relation.cellId2 = cell2.getId();
+
+	isUpdated = false;
 
 	return *this;
 }
@@ -18,14 +24,21 @@ AttackRelationContainer & AttackRelationContainer::removeRelationsWith(CellServe
 {
 	removeRelationsWith(cell.getId());
 
+	isUpdated = false;
+
 	return *this;
 }
 
 AttackRelationContainer & AttackRelationContainer::update()
 {
-	resetRelations();
-	makeRelations();
-	refillRelations();
+	if (!isUpdated)
+	{
+		resetRelations();
+		makeRelations();
+		refillRelations();
+
+		isUpdated = true;
+	}
 
 	return *this;
 }
@@ -67,7 +80,10 @@ void AttackRelationContainer::makeRelations()
 			//removeRelationsWith(keyIt->first); -> iterator problem pointing somewhere else
 		}
 
-		auto elementsIt = keyIt->second.begin();		
+		auto elementsIt = keyIt->second.begin();
+		if (elementsIt == keyIt->second.end()) continue;
+		/// loop through polypeptides
+		/// polypeptides will be assigned to other cells circular
 		for (auto polyIt = cell->getPolypeptides().begin(); polyIt != cell->getPolypeptides().end(); ++polyIt, ++elementsIt)
 		{
 			auto polyId = polyIt->second->getId();
@@ -75,7 +91,8 @@ void AttackRelationContainer::makeRelations()
 			/// for circular loop
 			if (elementsIt == keyIt->second.end()) elementsIt = keyIt->second.begin();
 
-			auto relationIt = relations.find(make_set(cellId, *elementsIt));
+			/// find iterator of current cell and circular looping cells
+			auto & relationIt = relations.find(make_set(cellId, *elementsIt));
 			if (relationIt != relations.end())
 			{
 				auto & relation = relationIt->second;
@@ -152,17 +169,24 @@ void AttackRelationContainer::removeRelationsWith(unsigned int cellId)
 	{
 		for (auto it = keyIt->second.begin(); it != keyIt->second.end(); ++it)
 		{
+			/// delete relations
 			relations.erase(make_set(cellId, *it));
+			
+			/// delete key in references
+			auto & otherKeyIt = relationKey.find(*it);
+			if (otherKeyIt != relationKey.end())
+			{
+				otherKeyIt->second.erase(cellId);
+			}
 		}
 	}
+	/// delte key with references
 	relationKey.erase(cellId);
 }
 
-set<unsigned int> & AttackRelationContainer::addRelationKeyElement(unsigned int key, unsigned int element)
+void AttackRelationContainer::addRelationKeyElement(unsigned int key, unsigned int element)
 {
-	relationKey.insert(make_pair(key, set<unsigned int>()));
-	auto & elements = relationKey.find(key)->second;
+	auto & it = relationKey.insert(make_pair(key, set<unsigned int>())).first;
+	auto & elements = it->second;
 	elements.insert(element);
-
-	return elements;
 }

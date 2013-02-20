@@ -11,22 +11,24 @@ public:
 
 	static PolypeptideCapacityContainer * getInstance();
 
-	void setPolypeptidesPerStandardCell(unsigned int polypeptidesPerStandardCell);
-	void setPolypeptidesPerBoneCell(unsigned int polypeptidesPerBoneCell);
-	void setPolypeptidesPerStemCell(unsigned int polypeptidesPerStemCell);
-
-	unsigned int getNumberOfPolypeptidesAllowed();
-	unsigned int getNumberOfPolypeptidesExisting();
+	unsigned int getNumberOfPolypeptidesAllowed() const;
+	unsigned int getNumberOfPolypeptidesExisting() const;
 	/// return is a percentage
-	float getExistingPerAllowed();
+	float getExistingPerAllowed() const;
 	/// returns how many places are left
-	int getRemainingNumberOfPolypeptidesAllowed();
+	int getRemainingNumberOfPolypeptidesAllowed() const;
+	/// returns a flag indicating whether
+	/// the poly capacity is full,
+	/// i.e. no more polys can be added
+	bool isFull() const;
+
 private:
 	static PolypeptideCapacityContainer * instance;
 
-	unsigned int polypeptidesPerStandardCell;
-	unsigned int polypeptidesPerBoneCell;
-	unsigned int polypeptidesPerStemCell;
+	const float percentageUsable;
+	const unsigned int polypeptidesPerStandardCell;
+	const unsigned int polypeptidesPerBoneCell;
+	const unsigned int polypeptidesPerStemCell;
 
 	PolypeptideCapacityContainer();
 	PolypeptideCapacityContainer(PolypeptideCapacityContainer const &);

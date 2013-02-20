@@ -23,37 +23,41 @@ void PolypeptideCellAttackEvent::trigger()
 	auto attackedCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(attackedCellId));
 	if (attackerCell != nullptr && attackedCell != nullptr)
 	{
-		auto polypeptide = attackedCell->getPolypeptides().find(polypeptideId)->second;
-		if (polypeptide != nullptr && polypeptide->getState() == Polypeptide::CELLFIGHT)
+		auto & polypeptideIt = attackerCell->getPolypeptides().find(polypeptideId);
+		if (polypeptideIt != attackerCell->getPolypeptides().end())
 		{
-			attackedCell->decreaseHealthPointsBy(damage);
-
-			PolypeptideCellAttack * polypeptideCellAttack = new PolypeptideCellAttack;
-			polypeptideCellAttack->polypeptideId = polypeptideId;
-			polypeptideCellAttack->cellId = attackedCellId;
-			polypeptideCellAttack->damage = damage;
-			NETWORKMANAGER->sendTo<PolypeptideCellAttack>(polypeptideCellAttack, NETWORKMANAGER->getConnectionEndpoints());
-
-			if (attackedCell->getHealthPoints() < 0.f)
+			auto & polypeptide = polypeptideIt->second;
+			if (polypeptide != nullptr && polypeptide->getState() == Polypeptide::CELLFIGHT)
 			{
-				(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT("data.event.celldie.time"), attackedCell->getId());
+				attackedCell->decreaseHealthPointsBy(damage);
 
-				if (attackedCell->getType() == CellServer::STEMCELL)
+				PolypeptideCellAttack * polypeptideCellAttack = new PolypeptideCellAttack;
+				polypeptideCellAttack->polypeptideId = polypeptideId;
+				polypeptideCellAttack->cellId = attackedCellId;
+				polypeptideCellAttack->damage = damage;
+				NETWORKMANAGER->sendTo<PolypeptideCellAttack>(polypeptideCellAttack, NETWORKMANAGER->getConnectionEndpoints());
+
+				if (attackedCell->getHealthPoints() < 0.f)
 				{
-					PlayerServer * player = GAMECONTEXT->getPlayer(attackedCell->getOwner()->getId());
+					(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT("data.event.celldie.time"), attackedCell->getId());
 
-					GameOver * gameOver = new GameOver();
-					gameOver->playerId = player->getId();
+					if (attackedCell->getType() == CellServer::STEMCELL)
+					{
+						PlayerServer * player = GAMECONTEXT->getPlayer(attackedCell->getOwner()->getId());
 
-					NETWORKMANAGER->sendTo<GameOver>(gameOver, NETWORKMANAGER->getConnectionEndpoints());
-					LOG_INFO("GameOver sent");
+						GameOver * gameOver = new GameOver();
+						gameOver->playerId = player->getId();
+
+						NETWORKMANAGER->sendTo<GameOver>(gameOver, NETWORKMANAGER->getConnectionEndpoints());
+						LOG_INFO("GameOver sent");
 			
-					player->kill();
+						player->kill();
+					}
 				}
-			}
-			else
-			{
-				(*EVENT_MGR) += new PolypeptideCellAttackEvent(this->m_dDeadTime, attackerCellId, attackedCellId, polypeptideId, damage);
+				else
+				{
+					(*EVENT_MGR) += new PolypeptideCellAttackEvent(this->m_dDeadTime, attackerCellId, attackedCellId, polypeptideId, damage);
+				}
 			}
 		}
 	}

@@ -115,6 +115,8 @@ public:
 	void updateVisibleGameObjects();
 	void updateVisibilityOf(GameObjectClient * gameObject);
 
+	void drawPolypeptideBar() const;
+
 	boost::mutex & getContainerMutex();
 
 private:

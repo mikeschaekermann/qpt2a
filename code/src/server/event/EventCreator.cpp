@@ -88,11 +88,11 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 	{
 		CellServer * victimCell = isAttacker ? dynamic_cast<CellServer *>(*it) : &currentCell;
 		CellServer * attackerCell = isAttacker ? &currentCell : dynamic_cast<CellServer *>(*it);
-		GAMECONTEXT->getAttackRelations().addRelation(*attackerCell, *victimCell);
 		if (attackerCell->getType() == CellServer::STANDARDCELL)
 		{
 			if (victimCell->getOwner()->getId() != attackerCell->getOwner()->getId())
 			{
+				GAMECONTEXT->getAttackRelations().addRelation(*attackerCell, *victimCell);
 				float damage = calculateDamage(attackerCell, victimCell);
 
 				if (damage > 0.5f)

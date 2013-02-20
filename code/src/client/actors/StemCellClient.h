@@ -14,6 +14,7 @@ public:
   StemCell(position, angle)
  {
   setId(id);
+  this->polyMax = CONFIG_INT("data.polypeptide.maxPerStemCell");
  }
  
  virtual void update(float frameTime) { CellClient::update(frameTime); }

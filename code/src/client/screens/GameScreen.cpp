@@ -12,6 +12,7 @@
 #include "../../common/network/messages/enum/CellType.h"
 #include "../rendering/RenderManager.h"
 #include <ostream>
+#include "../../common/PolypeptideCapacityContainer.h"
 
 GameScreen::GameScreen()
 {
@@ -200,6 +201,8 @@ void GameScreen::draw()
 		containerMutex.unlock();
 	}
 
+	drawPolypeptideBar();
+
 	gl::color(ColorA(1, 1, 1, 1));
 	rootItem->draw();
 }
@@ -387,8 +390,8 @@ void GameScreen::addIncompleteCell(
 	case CellType::BoneCell:
 		{
 			cell = new BoneCellClient(cellId, position, angle, player);
-			break;
 		}
+		break;
 	}
 
 	cell->setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.incompleteOpacity"));
@@ -564,6 +567,15 @@ void GameScreen::updateVisibleGameObjects()
 	{
 		updateVisibilityOf(it->second);
 	}
+}
+
+void GameScreen::drawPolypeptideBar() const
+{
+	gl::color(0.0f, 0.0f, 0.1f, 0.4);
+	gl::drawSolidRect(Rectf(Vec2f::zero(), Vec2f(20, getWindowHeight())));
+
+	gl::color(0.0f, 0.0f, 0.1f, 0.4);
+	gl::drawSolidRect(Rectf(Vec2f(0, getWindowHeight() * (1 - POLYCAPACITY->getExistingPerAllowed())), Vec2f(20, getWindowHeight())));
 }
 
 boost::mutex & GameScreen::getContainerMutex()
