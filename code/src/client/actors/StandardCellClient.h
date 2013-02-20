@@ -18,7 +18,8 @@ public:
   spikesScale(1.0)
  {
 	setId(id);
-	
+	this->polyMax = CONFIG_INT("data.polypeptide.maxPerStandardCell");
+
 	auto distanceDropOffDegree = CONFIG_FLOAT("data.cell.standardcell.distanceDropOffDegree");
 	auto attackRadius = CONFIG_FLOAT("data.cell.standardcell.attackradius");
 	auto numOfSpikesOnEachSide = CONFIG_INT("data.cell.standardcell.spikes.numberOnEachSide");
