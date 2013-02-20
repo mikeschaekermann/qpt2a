@@ -21,6 +21,9 @@ public:
 	virtual void setRadius(float radius) { GameObject::setRadius(radius); }
 
 	virtual void drawAtTransformation() const;
+
+	virtual void increaseGlobalTypeCounter() const {};
+	virtual void decreaseGlobalTypeCounter() const {};
 	
 protected:
 	float getHealthPercentage() const;
