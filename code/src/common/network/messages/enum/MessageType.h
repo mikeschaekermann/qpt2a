@@ -24,6 +24,7 @@ public:
 		CreatePolypeptideRequest,
 		CreatePolypeptideSuccess,
 		CreatePolypeptideFailure,
+		MovePolypeptideRequest,
 		MovePolypeptideSuccess,
 		MovePolypeptideFailure,
 		PolypeptideFight,

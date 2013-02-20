@@ -11,6 +11,8 @@ class PolypeptideClient :
 public:
 	PolypeptideClient(){}
 
+	CellClient * getOwner() { return dynamic_cast<CellClient *>(owner); }
+
 	virtual void drawAtTransformation() const;
 
 	virtual void setPosition(Vec3f position) { GameObject::setPosition(position); }

@@ -40,7 +40,7 @@ void GameScreenStateSelectPolypeptides::touchEnded(const TouchWay & touchWay)
 	auto it = pickedCell->getPolypeptides().begin();
 	for (unsigned int i = 0; i < numberOfPolypeptidesSelected && it != pickedCell->getPolypeptides().end(); ++i, ++it)
 	{
-		GAME_SCR.getSelectedPolypeptides().addGameObject(dynamic_cast<PolypeptideClient* >(it->second));
+		screen->getSelectedPolypeptides().addGameObject(dynamic_cast<PolypeptideClient* >(it->second));
 	}
 	screen->switchToState(new GameScreenStateMovePolypeptides(screen));
 }

@@ -2,7 +2,7 @@
 
 MovePolypeptideSuccess::MovePolypeptideSuccess() : NetworkMessage(), requestId(0), polypeptideIds(0)
 {
-	messageType = MessageType::CreateCellSuccess;
+	messageType = MessageType::MovePolypeptideSuccess;
 }
 
 MovePolypeptideSuccess::MovePolypeptideSuccess(char* data, unsigned &index) : NetworkMessage(data, index), requestId(0), polypeptideIds(0)
@@ -21,12 +21,12 @@ MovePolypeptideSuccess::MovePolypeptideSuccess(char* data, unsigned &index) : Ne
 
 MovePolypeptideSuccess::MovePolypeptideSuccess(const MovePolypeptideSuccess &other) : NetworkMessage(other), requestId(other.requestId), polypeptideIds(other.polypeptideIds)
 {
-	messageType = MessageType::CreateCellSuccess;
+	messageType = MessageType::MovePolypeptideSuccess;
 }
 
 MovePolypeptideSuccess::MovePolypeptideSuccess(const NetworkMessage &other) : NetworkMessage(other), requestId(0), polypeptideIds(0)
 { 
-	messageType = MessageType::CreateCellSuccess;
+	messageType = MessageType::MovePolypeptideSuccess;
 }
 
 MovePolypeptideSuccess::~MovePolypeptideSuccess() 

@@ -26,10 +26,10 @@ public:
  void setAngle(float angle) { rotation.z = ci::toDegrees(angle); }
 
  const Cell * getOwner() const { return owner; }
- void setOwner( const Cell * owner) { this->owner = owner; }
+ void setOwner( Cell * owner) { this->owner = owner; }
 protected:
  State state;
- const Cell * owner;
+ Cell * owner;
 
  Polypeptide(void);
  Polypeptide(Vec3f position, float angle, Cell * owner);

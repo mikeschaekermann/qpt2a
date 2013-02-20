@@ -16,29 +16,26 @@ bool GameScreenStateMovePolypeptides::touchClick(TouchWay touchWay)
 
 	if (cellsPicked.size() > 0)
 	{
-		CellClient * fromCell = nullptr;
-		auto picked = GAME_SCR.getCellsPicked(touchWay.getCurrentPos());
-		if (GAME_SCR.getSelectedPolypeptides().begin() != GAME_SCR.getSelectedPolypeptides().end())
+		if (screen->getSelectedPolypeptides().getSize() != 0)
 		{
-			for (auto it = picked.begin(); it != picked.end(); ++it)
-			{
-				if ((*it)->getId() == GAME_SCR.getSelectedPolypeptides().begin()->second->getOwner()->getId())
-				{
-					fromCell = *it;
-					break;
-				}
-			}
-			if (fromCell != nullptr && fromCell != cellsPicked[0])
+			auto fromCell = screen->getSelectedPolypeptides().begin()->second->getOwner();
+			auto toCell = cellsPicked[0];
+
+			if (fromCell != nullptr && fromCell != toCell)
 			{
 				MovePolypeptideRequest * request = new MovePolypeptideRequest();
+				request->fromCellId = fromCell->getId();
+				request->toCellId = toCell->getId();
+				request->amount = screen->getSelectedPolypeptides().getSize();
+				request->endpoint = GAME_MGR->getServerEndpoint();
 				NETWORK_MGR->registerMovePolypeptideRequest(request, 
 					fromCell,
-					cellsPicked[0],
-					GAME_SCR.getSelectedPolypeptides().getSize());
+					toCell,
+					screen->getSelectedPolypeptides().getSize());
 				NETWORK_MGR->send(request);
 				LOG_INFO("MovePolypeptideRequest sent");
 			}
-			GAME_SCR.getSelectedPolypeptides().clear();
+			screen->getSelectedPolypeptides().clear();
 		}
 	}
 
