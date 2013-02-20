@@ -32,7 +32,7 @@ PolypeptideCapacityContainer * PolypeptideCapacityContainer::getInstance()
 	return instance;
 }
 
-unsigned int PolypeptideCapacityContainer::getNumberOfPolypeptidesAllowed()
+unsigned int PolypeptideCapacityContainer::getNumberOfPolypeptidesAllowed() const
 {
 	unsigned int totalNumber =	NumberOfStandardCells * polypeptidesPerStandardCell + 
 								NumberOfBoneCells * polypeptidesPerBoneCell +
@@ -43,19 +43,24 @@ unsigned int PolypeptideCapacityContainer::getNumberOfPolypeptidesAllowed()
 	return relativeNumber;
 }
 
-unsigned int PolypeptideCapacityContainer::getNumberOfPolypeptidesExisting()
+unsigned int PolypeptideCapacityContainer::getNumberOfPolypeptidesExisting() const
 {
 	return NumberOfPolypeptides;
 }
 
-float PolypeptideCapacityContainer::getExistingPerAllowed()
+float PolypeptideCapacityContainer::getExistingPerAllowed() const
 {
 	return (float)getNumberOfPolypeptidesExisting() / (float)getNumberOfPolypeptidesAllowed();
 }
 
-int PolypeptideCapacityContainer::getRemainingNumberOfPolypeptidesAllowed()
+int PolypeptideCapacityContainer::getRemainingNumberOfPolypeptidesAllowed() const
 {
 	return getNumberOfPolypeptidesAllowed() - getNumberOfPolypeptidesExisting();
+}
+
+bool PolypeptideCapacityContainer::isFull() const
+{
+	return (getRemainingNumberOfPolypeptidesAllowed() <= 0);
 }
 
 PolypeptideCapacityContainer * PolypeptideCapacityContainer::operator=(PolypeptideCapacityContainer const &) { return nullptr; }

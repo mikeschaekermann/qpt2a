@@ -15,7 +15,7 @@ public:
 	virtual bool touchBegan(const TouchWay & touchWay);
 	virtual void touchMoved(const TouchWay & touchWay);
 	virtual bool touchClick(TouchWay touchWay);
-	virtual bool mouseMove(MouseEvent event);
+	virtual void update(float frametime);
 
 protected:
 	CellClient * pickedCell;

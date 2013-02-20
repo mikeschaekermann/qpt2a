@@ -3,7 +3,7 @@
 #include "../../rendering/RenderManager.h"
 #include "../../actors/StemCellClient.h"
 #include "GameScreenStateSelectPolypeptides.h"
-
+#include "../../../common/PolypeptideCapacityContainer.h"
 GameScreenStateInMenu::GameScreenStateInMenu(GameScreen* screen, CellClient * pickedCell):
 	GameScreenState(screen),
 	pickedCell(pickedCell)
@@ -49,14 +49,6 @@ GameScreenStateInMenu::~GameScreenStateInMenu(void)
 
 bool GameScreenStateInMenu::touchBegan(const TouchWay & touchWay)
 {
-	/*auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
-
-	/// CAUTION: this only works if the in-game menu buttons do not overlap with the picked cell
-	if (cellsPicked.size() > 0 && cellsPicked[0] == pickedCell && cellsPicked[0]->getPolypeptides().size())
-	{
-		screen->switchToState(new GameScreenStateSelectPolypeptides(screen, pickedCell));
-	}
-	return true;*/
 	return GameScreenState::touchBegan(touchWay);
 }
 
@@ -97,13 +89,15 @@ bool GameScreenStateInMenu::touchClick(TouchWay touchWay)
 	return GameScreenState::touchClick(touchWay);
 }
 
-bool GameScreenStateInMenu::mouseMove(MouseEvent event)
+void GameScreenStateInMenu::update(float frametime)
 {
 	screen->cellMenu->setVisible(true);
-	if (!isStemcell || pickedCell->getPolypeptides().size() >= pickedCell->getMaxNumOfPolys())
+
+	bool ownCellFull = pickedCell->getPolypeptides().size() >= pickedCell->getMaxNumOfPolys();
+	bool globalCapacityFull = POLYCAPACITY->isFull();
+
+	if (!isStemcell || ownCellFull || globalCapacityFull)
 	{
 		screen->cellMenuButtons["polypeptid"]->setVisible(false);
 	}
-
-	return false;
 }
