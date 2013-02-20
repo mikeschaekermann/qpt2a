@@ -9,7 +9,8 @@ TouchWay::TouchWay(): m_iId(0), m_way() {};
 TouchWay::TouchWay(int32_t id, const Vec2f& startPos, double startTime, TRIGGER trigger):
 	m_way(),
 	m_iId(id),
-	trigger(trigger)
+	trigger(trigger),
+	wayLength(0)
 {
 	m_way.push_back(TouchPoint(startPos, startTime));
 }
