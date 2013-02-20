@@ -4,6 +4,8 @@
 #include "../../client/actors/GameObjectClient.h"
 #include "../../common/ConfigurationDataHandler.h"
 
+class CellClient;
+
 class PolypeptideClient :
 	virtual public Polypeptide,
 	virtual public GameObjectClient
@@ -31,7 +33,7 @@ public:
 
 	PolypeptideClient();
 
-	CellClient * getOwner() { return dynamic_cast<CellClient *>(owner); }
+	CellClient * getOwner();
 
 	virtual void update(float frameTime);
 

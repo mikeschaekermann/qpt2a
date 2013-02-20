@@ -2,6 +2,7 @@
 #include "../../common/ConfigurationDataHandler.h"
 #include "../managers/GameManager.h"
 #include "cinder/Sphere.h"
+#include "PolypeptideClient.h"
 
 void CellClient::update(float frameTime)
 {
@@ -96,4 +97,19 @@ void CellClient::draw() const
 		auto polypeptide = dynamic_cast<PolypeptideClient *>(it->second);
 		polypeptide->draw();
 	}
+}
+
+bool CellClient::addPolypeptide(Polypeptide * polypeptide)
+{
+	if (Cell::addPolypeptide(polypeptide))
+	{
+		auto polypeptideClient = dynamic_cast<PolypeptideClient *>(polypeptide);
+		if (polypeptideClient != nullptr)
+		{
+			polypeptideClient->setFocus(position, radius);
+		}
+		return true;
+	}
+
+	return false;
 }

@@ -66,6 +66,7 @@ bool Cell::addPolypeptide(Polypeptide * polypeptide)
 	if (polypeptides.size() < polyMax)
 	{
 		polypeptide->setOwner(this);
+
 		return polypeptides.insert(make_pair(polypeptide->getId(), polypeptide)).second;
 	}
 	return false;

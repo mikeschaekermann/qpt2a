@@ -1,6 +1,7 @@
 #include "CellClient.h"
 #include "PolypeptideClient.h"
 #include "../rendering/RenderManager.h"
+#include "CellClient.h"
 
 void PolypeptideClient::drawAtTransformation() const
 {
@@ -60,4 +61,9 @@ void PolypeptideClient::setFocus(Vec3f center, float radius)
 {
 	setCenterOfFocus(center);
 	setRadiusOfFocus(radius);
+}
+
+CellClient * PolypeptideClient::getOwner()
+{
+	return dynamic_cast<CellClient *>(owner);
 }

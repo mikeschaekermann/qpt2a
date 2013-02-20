@@ -24,6 +24,8 @@ public:
 
 	virtual void increaseGlobalTypeCounter() const {};
 	virtual void decreaseGlobalTypeCounter() const {};
+
+	virtual bool addPolypeptide(Polypeptide * polypeptide);
 	
 protected:
 	float getHealthPercentage() const;
