@@ -5,8 +5,7 @@
 #include "../../managers/GameManager.h"
 
 GameScreenStateMovePolypeptides::GameScreenStateMovePolypeptides(GameScreen * screen):
-	GameScreenState(screen),
-	neutralState(screen)
+	GameScreenState(screen)
 {
 }
 
@@ -15,7 +14,6 @@ void GameScreenStateMovePolypeptides::draw2D()
 	
 	glPushAttrib(GL_COLOR);
 	{
-		
 		glColor4f(ColorA(1.f, 0.f, 0.f, 1.f));
 		auto polypeptides = screen->getSelectedPolypeptides();
 		unsigned int i = 0;
@@ -67,12 +65,12 @@ bool GameScreenStateMovePolypeptides::touchClick(TouchWay touchWay)
 
 bool GameScreenStateMovePolypeptides::touchBegan(const TouchWay & touchWay)
 {
-	return GameScreenState::touchBegan(touchWay);
+	return false;
 }
 
 void GameScreenStateMovePolypeptides::touchMoved(const TouchWay & touchWay)
 {
-	neutralState.touchMoved(touchWay);
+	GameScreenState::touchMoved(touchWay);
 }
 
 bool GameScreenStateMovePolypeptides::mouseMove(MouseEvent event) 

@@ -133,6 +133,21 @@ NetworkMessage* ClientNetworkManager::createNetworkMessage(char* data)
 				message = new MovePolypeptideFailure(data, index);
 				break;
 			}
+		case MessageType::PolypeptideCellAttack:
+			{
+				message = new PolypeptideCellAttack(data, index);
+				break;
+			}
+		case MessageType::PolypeptideFight:
+			{
+				message = new PolypeptideFight(data, index);
+				break;
+			}
+		case MessageType::PolypeptideDie:
+			{
+				message = new PolypeptideDie(data, index);
+				break;
+			}
 
 		default:
 			break;

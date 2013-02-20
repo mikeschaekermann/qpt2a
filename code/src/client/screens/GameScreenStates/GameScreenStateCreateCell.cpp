@@ -136,3 +136,7 @@ bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)
 
 	return false;
 }
+
+void GameScreenStateCreateCell::touchMoved(const TouchWay & touchWay)
+{
+}

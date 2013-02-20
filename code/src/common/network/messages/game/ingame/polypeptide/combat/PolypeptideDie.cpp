@@ -2,7 +2,7 @@
 
 PolypeptideDie::PolypeptideDie() : NetworkMessage(), polypeptideId(0)
 {
-	messageType = MessageType::CellDie;
+	messageType = MessageType::PolypeptideDie;
 }
 
 PolypeptideDie::PolypeptideDie(char* data, unsigned &index) : NetworkMessage(data, index), polypeptideId(0)
@@ -14,12 +14,12 @@ PolypeptideDie::PolypeptideDie(char* data, unsigned &index) : NetworkMessage(dat
 
 PolypeptideDie::PolypeptideDie(const PolypeptideDie &other) : NetworkMessage(other), polypeptideId(other.polypeptideId)
 { 
-	messageType = MessageType::CellDie;
+	messageType = MessageType::PolypeptideDie;
 }
 
 PolypeptideDie::PolypeptideDie(const NetworkMessage &other) : NetworkMessage(other), polypeptideId(0)
 { 
-	messageType = MessageType::CellDie;
+	messageType = MessageType::PolypeptideDie;
 }
 
 PolypeptideDie::~PolypeptideDie() 

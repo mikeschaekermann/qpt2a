@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data>
 	<input>
-		<clickPixelTolerance>10</clickPixelTolerance>
-		<clickWayLengthTolerance>15</clickWayLengthTolerance>
+		<clickPixelTolerance>30</clickPixelTolerance>
+		<clickWayLengthTolerance>30</clickWayLengthTolerance>
 		<text>
 		  <font>Comic Sans MS</font>
 		  <size>34</size>

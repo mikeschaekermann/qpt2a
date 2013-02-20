@@ -16,6 +16,5 @@ public:
 	virtual bool mouseMove(MouseEvent event);
 
 private:
-	GameScreenStateNeutral neutralState;
 	ci::Vec2f position;
 };

@@ -2,7 +2,7 @@
 
 PolypeptideFight::PolypeptideFight() : NetworkMessage(), polypeptideId1(0), polypeptideId2(0), polypeptide1Dies(0), polypeptide2Dies(0)
 {
-	messageType = MessageType::CellDie;
+	messageType = MessageType::PolypeptideFight;
 }
 
 PolypeptideFight::PolypeptideFight(char* data, unsigned &index) : NetworkMessage(data, index), polypeptideId1(0), polypeptideId2(0), polypeptide1Dies(0), polypeptide2Dies(0)
@@ -27,12 +27,12 @@ PolypeptideFight::PolypeptideFight(char* data, unsigned &index) : NetworkMessage
 PolypeptideFight::PolypeptideFight(const PolypeptideFight &other) : NetworkMessage(other), 
 	polypeptideId1(other.polypeptideId1), polypeptideId2(other.polypeptideId2), polypeptide1Dies(other.polypeptide1Dies), polypeptide2Dies(other.polypeptide2Dies)
 { 
-	messageType = MessageType::CellDie;
+	messageType = MessageType::PolypeptideFight;
 }
 
 PolypeptideFight::PolypeptideFight(const NetworkMessage &other) : NetworkMessage(other), polypeptideId1(0), polypeptideId2(0), polypeptide1Dies(0), polypeptide2Dies(0)
 { 
-	messageType = MessageType::CellDie;
+	messageType = MessageType::PolypeptideFight;
 }
 
 PolypeptideFight::~PolypeptideFight() 
