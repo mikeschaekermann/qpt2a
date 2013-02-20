@@ -2,6 +2,7 @@
 #include "../../common/ConfigurationDataHandler.h"
 #include "../managers/GameManager.h"
 #include "cinder/Sphere.h"
+#include "PolypeptideClient.h"
 
 void CellClient::update(float frameTime)
 {
@@ -87,11 +88,28 @@ float CellClient::getOpacityFromHealthPoints() const
 	return (getOpacity() * getHealthPercentage());
 }
 
-void CellClient::drawAtTransformation() const
+void CellClient::draw() const
 {
+	GameObjectClient::draw();
+
 	for (auto it = polypeptides.begin(); it != polypeptides.end(); ++it)
 	{
 		auto polypeptide = dynamic_cast<PolypeptideClient *>(it->second);
-		polypeptide->drawAtTransformation();
+		polypeptide->draw();
 	}
+}
+
+bool CellClient::addPolypeptide(Polypeptide * polypeptide)
+{
+	if (Cell::addPolypeptide(polypeptide))
+	{
+		auto polypeptideClient = dynamic_cast<PolypeptideClient *>(polypeptide);
+		if (polypeptideClient != nullptr)
+		{
+			polypeptideClient->setFocus(position, radius);
+		}
+		return true;
+	}
+
+	return false;
 }

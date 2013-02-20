@@ -19,11 +19,13 @@ public:
 	virtual void setPosition(Vec3f position) { GameObject::setPosition(position); }
 	virtual void drawHealthBar(float healthBarOpacity=1.0);
 	virtual void setRadius(float radius) { GameObject::setRadius(radius); }
-
-	virtual void drawAtTransformation() const;
+	
+	virtual void draw() const;
 
 	virtual void increaseGlobalTypeCounter() const {};
 	virtual void decreaseGlobalTypeCounter() const {};
+
+	virtual bool addPolypeptide(Polypeptide * polypeptide);
 	
 protected:
 	float getHealthPercentage() const;

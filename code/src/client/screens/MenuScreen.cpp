@@ -69,6 +69,7 @@ MenuScreen::MenuScreen()
 			});
 			sleep(500);
 			GAME_MGR->startGame("Mike");
+			setFullScreen(true);
 		},
 		Vec2f(CONFIG_FLOAT("data.menu.menuscreen.start.x"), CONFIG_FLOAT("data.menu.menuscreen.start.y")),
 		startServerTextureBasic,

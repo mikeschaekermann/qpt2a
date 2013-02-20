@@ -19,14 +19,15 @@ public:
 		POLYPEPTIDEFIGHT
 	};
 
- void setState(State state) { this->state = state; }
- State getState() const { return state; }
+	void setState(State state) { this->state = state; }
+	State getState() const { return state; }
 
- float getAngle() const { return ci::toRadians(rotation.z); }
- void setAngle(float angle) { rotation.z = ci::toDegrees(angle); }
+	float getAngle() const { return ci::toRadians(rotation.z); }
+	void setAngle(float angle) { rotation.z = ci::toDegrees(angle); }
 
- const Cell * getOwner() const { return owner; }
- void setOwner( Cell * owner) { this->owner = owner; }
+	const Cell * getOwner() const { return owner; }
+	void setOwner( Cell * owner) { this->owner = owner; }
+
 protected:
  State state;
  Cell * owner;

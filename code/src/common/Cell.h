@@ -31,8 +31,8 @@ public:
  void setOwner( const Player * owner);
 
  std::map<unsigned int, Polypeptide *> & getPolypeptides();
- bool addPolypeptide(Polypeptide * polypeptide);
- bool removePolypeptide(Polypeptide * polypeptide);
+ virtual bool addPolypeptide(Polypeptide * polypeptide);
+ virtual bool removePolypeptide(Polypeptide * polypeptide);
  unsigned int getMaxNumOfPolys() const;
  bool isFull();
 

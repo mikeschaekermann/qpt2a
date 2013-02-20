@@ -3,8 +3,6 @@
 
 void StemCellClient::drawAtTransformation() const
 {
-	CellClient::drawAtTransformation();
-
 	auto h = getHue();
 	auto s = getSaturation();
 	auto b = getBrightnessFromHealthPoints();

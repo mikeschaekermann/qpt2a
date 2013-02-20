@@ -8,13 +8,13 @@ void GameObjectClient::draw() const
 	{
 		pushMatrices();
 
-		translate(position);
-		rotate(rotation);
-		gl::scale(scale);
+		translate(GameObject::position);
+		rotate(GameObject::rotation);
+		gl::scale(GameObject::scale);
 
 		drawAtTransformation();
 
-		popMatrices();	
+		popMatrices();
 	}
 }
 

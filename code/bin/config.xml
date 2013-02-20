@@ -185,7 +185,11 @@
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
 		<damage>2.0</damage>
+    <speed>1.0</speed>
     <percentageUsable>0.5</percentageUsable>
+    <rotationSpeed>4.0</rotationSpeed>
+    <pointRotationSpeed>2.0</pointRotationSpeed>
+    <maxPointAmplitudeEruption>5</maxPointAmplitudeEruption>
 	</polypeptide>
 	<environment>
 		<barriers>

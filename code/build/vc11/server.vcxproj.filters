@@ -5,10 +5,10 @@
       <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\event\BuildingEvent.h">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\event\AttackEvent.h">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\CellCollisionBehavior.h">
       <Filter>Common</Filter>
@@ -140,13 +140,13 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\event\EventManager.h">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Server\event\GameEvent.h">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\event\EventCreator.h">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\network\messages\enum\DynamicModifierType.h">
       <Filter>Network\Messages\Enum</Filter>
@@ -182,7 +182,7 @@
       <Filter>Gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\event\CellDieEvent.h">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\Cell.h">
       <Filter>Objects</Filter>
@@ -236,10 +236,10 @@
       <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\event\PolypeptideFightEvent.h">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\event\PolypeptideCellAttackEvent.h">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\game\AttackRelationContainer.h">
       <Filter>Gamelogic</Filter>
@@ -251,9 +251,6 @@
   <ItemGroup>
     <Filter Include="Gamelogic">
       <UniqueIdentifier>{868b33a6-5fcb-4649-8b11-f53c406d64b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Eventlogic">
-      <UniqueIdentifier>{6f568755-2dbb-4475-b441-4ae79a524778}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{a4fb2bda-a748-4b28-b6f6-af4050e87560}</UniqueIdentifier>
@@ -306,6 +303,9 @@
     <Filter Include="Network\Messages\Game\InGame\Polypeptide\Travel">
       <UniqueIdentifier>{608d2331-4f2c-45b0-9dcb-c67082c6ce08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Eventlogic">
+      <UniqueIdentifier>{6f568755-2dbb-4475-b441-4ae79a524778}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\common\IdGameObjectMap.cpp">
@@ -316,7 +316,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\server\Main.cpp" />
     <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp">
       <Filter>Common</Filter>
@@ -409,13 +409,13 @@
       <Filter>Environment</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\EventManager.cpp">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\AttackEvent.cpp">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\EventCreator.cpp">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\enum\StaticModifierType.cpp">
       <Filter>Network\Messages\Enum</Filter>
@@ -451,7 +451,7 @@
       <Filter>Gamelogic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\CellDieEvent.cpp">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\Cell.cpp">
       <Filter>Objects</Filter>
@@ -499,10 +499,10 @@
       <Filter>Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\PolypeptideFightEvent.cpp">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\event\PolypeptideCellAttackEvent.cpp">
-      <Filter>Eventlogic</Filter>
+      <Filter>Objects\Eventlogic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\game\AttackRelationContainer.cpp">
       <Filter>Gamelogic</Filter>
