@@ -149,7 +149,7 @@ void EventCreator::sendCellCreationMessages(unsigned int requestId, PlayerServer
 	cellNew->position[0] = cell.getPosition()[0];
 	cellNew->position[1] = cell.getPosition()[1];
 	cellNew->angle = cell.getAngle();
-	cellNew->type = type;
+	cellNew->type = CellType::Type(type);
 
 	NETWORKMANAGER->sendTo<CellNew>(cellNew, NETWORKMANAGER->getConnectionEndpoints());
 	LOG_INFO("CellNew sent");
