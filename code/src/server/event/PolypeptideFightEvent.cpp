@@ -29,6 +29,10 @@ void PolypeptideFightEvent::trigger()
 		if (polypeptide1 != nullptr && polypeptide2 != nullptr &&
 			(polypeptide1->getState() & polypeptide2->getState()) == Polypeptide::POLYPEPTIDEFIGHT)
 		{
+			vector<ConnectionEndpoint> players;
+			players.push_back(*(GAMECONTEXT->getPlayer(cell1->getOwner()->getId())));
+			players.push_back(*(GAMECONTEXT->getPlayer(cell1->getOwner()->getId())));
+
 			bool polypeptide1Dies = ci::randBool();
 			bool polypeptide2Dies = ci::randBool();
 			PolypeptideFight * polypeptideFight = new PolypeptideFight();
@@ -36,7 +40,7 @@ void PolypeptideFightEvent::trigger()
 			polypeptideFight->polypeptideId2 = polypeptideId2;
 			polypeptideFight->polypeptide1Dies = polypeptide1Dies;
 			polypeptideFight->polypeptide2Dies = polypeptide2Dies;
-			NETWORKMANAGER->sendTo<PolypeptideFight>(polypeptideFight, NETWORKMANAGER->getConnectionEndpoints());
+			NETWORKMANAGER->sendTo<PolypeptideFight>(polypeptideFight, players);
 
 			if (!polypeptide1Dies && polypeptide2Dies)
 			{
@@ -55,7 +59,7 @@ void PolypeptideFightEvent::trigger()
 			{
 				PolypeptideDie * polypeptideDie = new PolypeptideDie();
 				polypeptideDie->polypeptideId = polypeptideId1;
-				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, NETWORKMANAGER->getConnectionEndpoints());
+				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, players);
 
 				cell1->removePolypeptide(polypeptide1);
 				delete polypeptide1;
@@ -67,7 +71,7 @@ void PolypeptideFightEvent::trigger()
 			{
 				PolypeptideDie * polypeptideDie = new PolypeptideDie();
 				polypeptideDie->polypeptideId = polypeptideId2;
-				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, NETWORKMANAGER->getConnectionEndpoints());
+				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, players);
 
 				cell2->removePolypeptide(polypeptide2);
 				delete polypeptide2;

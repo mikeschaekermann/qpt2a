@@ -31,11 +31,15 @@ void PolypeptideCellAttackEvent::trigger()
 			{
 				attackedCell->decreaseHealthPointsBy(damage);
 
+				vector<ConnectionEndpoint> players;
+				players.push_back(*(GAMECONTEXT->getPlayer(attackerCell->getOwner()->getId())));
+				players.push_back(*(GAMECONTEXT->getPlayer(attackedCell->getOwner()->getId())));
+
 				PolypeptideCellAttack * polypeptideCellAttack = new PolypeptideCellAttack;
 				polypeptideCellAttack->polypeptideId = polypeptideId;
 				polypeptideCellAttack->cellId = attackedCellId;
 				polypeptideCellAttack->damage = damage;
-				NETWORKMANAGER->sendTo<PolypeptideCellAttack>(polypeptideCellAttack, NETWORKMANAGER->getConnectionEndpoints());
+				NETWORKMANAGER->sendTo<PolypeptideCellAttack>(polypeptideCellAttack, players);
 
 				if (attackedCell->getHealthPoints() < 0.f)
 				{

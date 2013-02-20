@@ -16,7 +16,6 @@ PolypeptideCellAttack::PolypeptideCellAttack(char* data, unsigned &index) : Netw
 	index += sizeof(cellId);
 
 	memcpy(&damage, &data[index], sizeof(damage));
-	damage = ntohl(damage);
 	index += sizeof(damage);
 }
 
@@ -46,9 +45,8 @@ unsigned PolypeptideCellAttack::writeToArray(char* data, unsigned start)
 	memcpy(&data[index], &networkcellId, sizeof(networkcellId));
 	index += sizeof(networkcellId);
 
-	unsigned networkdamage = htonl(damage);
-	memcpy(&data[index], &networkdamage, sizeof(networkdamage));
-	index += sizeof(networkdamage);
+	memcpy(&data[index], &damage, sizeof(damage));
+	index += sizeof(damage);
 	
 	return index;
 }
