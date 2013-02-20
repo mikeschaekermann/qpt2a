@@ -482,6 +482,12 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 						Polypeptide * polypeptide = fromCell->getPolypeptides().find(*it)->second;
 						toCell->addPolypeptide(polypeptide);
 						fromCell->removePolypeptide(polypeptide);
+						
+						auto polypeptideInSelectionList = GAME_SCR.getSelectedPolypeptides().find(*it);
+						if (polypeptideInSelectionList != nullptr)
+						{
+							GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptideInSelectionList);
+						}
 					}
 				}
 

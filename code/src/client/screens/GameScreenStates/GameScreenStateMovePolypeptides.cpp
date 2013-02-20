@@ -57,7 +57,6 @@ bool GameScreenStateMovePolypeptides::touchClick(TouchWay touchWay)
 		}
 	}
 	
-	screen->getSelectedPolypeptides().clear();
 	screen->switchToState(new GameScreenStateNeutral(screen));
 
 	return true;
