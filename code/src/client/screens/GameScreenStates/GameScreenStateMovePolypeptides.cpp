@@ -35,10 +35,10 @@ bool GameScreenStateMovePolypeptides::touchClick(TouchWay touchWay)
 				NETWORK_MGR->send(request);
 				LOG_INFO("MovePolypeptideRequest sent");
 			}
-			screen->getSelectedPolypeptides().clear();
 		}
 	}
-
+	
+	screen->getSelectedPolypeptides().clear();
 	screen->switchToState(new GameScreenStateNeutral(screen));
 
 	return true;

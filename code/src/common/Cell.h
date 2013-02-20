@@ -34,16 +34,17 @@ public:
 	 return polypeptides;
  }
 
- bool addPolypetide(Polypeptide * polypeptide)
+ bool addPolypeptide(Polypeptide * polypeptide)
  {
 	 if (polypeptides.size() < polyMax)
 	 {
+		 polypeptide->setOwner(this);
 		 return polypeptides.insert(make_pair(polypeptide->getId(), polypeptide)).second;
 	 }
 	 return false;
  }
 
- bool removePolypetide(Polypeptide * polypeptide)
+ bool removePolypeptide(Polypeptide * polypeptide)
  {
 	 auto it = polypeptides.find(polypeptide->getId());
 	 if (it != polypeptides.end())

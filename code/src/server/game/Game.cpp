@@ -406,7 +406,7 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 
 	PolypeptideServer * polypetide = new PolypeptideServer(stemCell->getPosition(), stemCell->getAngle(), stemCell);
 
-	if (stemCell->addPolypetide(polypetide))
+	if (stemCell->addPolypeptide(polypetide))
 	{
 		/// success
 		LOG_INFO("CreatePolypeptideSuccess sent");
@@ -480,7 +480,8 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 	}
 
 	vector<unsigned int> polypeptideIds;
-	for (auto it = fromCell->getPolypeptides().begin(); it != fromCell->getPolypeptides().end(); ++it)
+	auto it = fromCell->getPolypeptides().begin();
+	for (unsigned int i = 0; i < amount && it != fromCell->getPolypeptides().end(); ++i, ++it)
 	{
 		polypeptideIds.push_back(it->second->getId());
 	}
@@ -488,8 +489,8 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 	for (auto it = polypeptideIds.begin(); it != polypeptideIds.end(); ++it)
 	{
 		Polypeptide * polypeptide = fromCell->getPolypeptides().find(*it)->second;
-		toCell->addPolypetide(polypeptide);
-		fromCell->removePolypetide(polypeptide);
+		toCell->addPolypeptide(polypeptide);
+		fromCell->removePolypeptide(polypeptide);
 	}
 
 	/// send success
@@ -497,7 +498,7 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 	MovePolypeptideSuccess * message = new MovePolypeptideSuccess();
 	message->requestId = request.requestId;
 	message->polypeptideIds = polypeptideIds;
-	GAMECONTEXT->getPlayer(fromCell->getOwner()->getId())->getEndpoint();
+	message->endpoint = GAMECONTEXT->getPlayer(fromCell->getOwner()->getId())->getEndpoint();
 	NETWORKMANAGER->send(message);
 }
 	

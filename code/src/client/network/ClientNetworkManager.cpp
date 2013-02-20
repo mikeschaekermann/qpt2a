@@ -123,6 +123,16 @@ NetworkMessage* ClientNetworkManager::createNetworkMessage(char* data)
 				message = new CreatePolypeptideFailure(data, index);
 				break;
 			}
+		case MessageType::MovePolypeptideSuccess:
+			{
+				message = new MovePolypeptideSuccess(data, index);
+				break;
+			}
+		case MessageType::MovePolypeptideFailure:
+			{
+				message = new MovePolypeptideFailure(data, index);
+				break;
+			}
 
 		default:
 			break;
@@ -404,7 +414,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide->setPosition(stemCell.getPosition());
 				polypeptide->setOwner(&stemCell);
 
-				stemCell.addPolypetide(polypeptide);
+				stemCell.addPolypeptide(polypeptide);
 
 				GAME_SCR.getMyPolypeptides().addGameObject(polypeptide);
 				createPolypeptideRequestContexts.erase(context);
@@ -430,14 +440,16 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				createPolypeptideRequestContexts.erase(context);
 			}
 		}
+		break;
 	}
 	case MessageType::MovePolypeptideSuccess:
 	{
 		MovePolypeptideSuccess * movePolypeptideSuccess = dynamic_cast<MovePolypeptideSuccess *>(message);
 		if (movePolypeptideSuccess)
 		{
-			LOG_INFO("MovePolipeptideSuccess received");
+			LOG_INFO("MovePolypeptideSuccess received");
 			unsigned int requestId = movePolypeptideSuccess->requestId;
+			auto polypeptideIds = movePolypeptideSuccess->polypeptideIds;
 
 			auto context = movePolypeptideRequestContexts.find(requestId);
 
@@ -448,16 +460,27 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				auto amount = std::get<2>(context->second);
 				/// make travel
 
+				if (polypeptideIds.size() <= amount)
+				{
+					for (auto it = polypeptideIds.begin(); it != polypeptideIds.end(); ++it)
+					{
+						Polypeptide * polypeptide = fromCell->getPolypeptides().find(*it)->second;
+						toCell->addPolypeptide(polypeptide);
+						fromCell->removePolypeptide(polypeptide);
+					}
+				}
+
 				movePolypeptideRequestContexts.erase(context);
 			}
 		}
+		break;
 	}
 	case MessageType::MovePolypeptideFailure:
 	{
 		MovePolypeptideFailure * movePolypeptideFailure = dynamic_cast<MovePolypeptideFailure *>(message);
 		if (movePolypeptideFailure)
 		{
-			LOG_INFO("MovePolipeptideFailure received");
+			LOG_INFO("MovePolypeptideFailure received");
 			unsigned int requestId = movePolypeptideFailure->requestId;
 
 			auto context = movePolypeptideRequestContexts.find(requestId);
@@ -472,38 +495,42 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				movePolypeptideRequestContexts.erase(context);
 			}
 		}
+		break;
 	}
 	case MessageType::PolypeptideDie:
 	{
 		PolypeptideDie * polypeptideDie = dynamic_cast<PolypeptideDie *>(message);
 		if (polypeptideDie)
 		{
-			LOG_INFO("PolipeptideDie received");
+			LOG_INFO("PolypeptideDie received");
 			unsigned int polypeptideId = polypeptideDie->polypeptideId;
 		}
+		break;
 	}
 	case MessageType::PolypeptideCellAttack:
 	{
 		PolypeptideCellAttack * polypeptideCellAttack = dynamic_cast<PolypeptideCellAttack *>(message);
 		if (polypeptideCellAttack)
 		{
-			LOG_INFO("PolipeptideCellAttack received");
+			LOG_INFO("PolypeptideCellAttack received");
 			unsigned int polypeptideId = polypeptideCellAttack->polypeptideId;
 			unsigned int cellId = polypeptideCellAttack->cellId;
 			float damage = polypeptideCellAttack->damage;
 		}
+		break;
 	}
 	case MessageType::PolypeptideFight:
 	{
 		PolypeptideFight * polypeptideFight = dynamic_cast<PolypeptideFight *>(message);
 		if (polypeptideFight)
 		{
-			LOG_INFO("PolipeptideFight received");
+			LOG_INFO("PolypeptideFight received");
 			unsigned int polypeptideId1 = polypeptideFight->polypeptideId1;
 			unsigned int polypeptideId2 = polypeptideFight->polypeptideId2;
 			bool polypeptide1Dies = polypeptideFight->polypeptide1Dies;
 			bool polypeptide2Dies = polypeptideFight->polypeptide2Dies;
 		}
+		break;
 	}
 	default:
 	{

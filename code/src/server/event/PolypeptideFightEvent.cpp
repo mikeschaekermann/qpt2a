@@ -56,7 +56,7 @@ void PolypeptideFightEvent::trigger()
 				polypeptideDie->polypeptideId = polypeptideId1;
 				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, NETWORKMANAGER->getConnectionEndpoints());
 
-				cell1->removePolypetide(polypeptide1);
+				cell1->removePolypeptide(polypeptide1);
 				delete polypeptide1;
 			}
 
@@ -66,7 +66,7 @@ void PolypeptideFightEvent::trigger()
 				polypeptideDie->polypeptideId = polypeptideId2;
 				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, NETWORKMANAGER->getConnectionEndpoints());
 
-				cell2->removePolypetide(polypeptide2);
+				cell2->removePolypeptide(polypeptide2);
 				delete polypeptide2;
 			}
 		}

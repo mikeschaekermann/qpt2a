@@ -11,11 +11,18 @@ MovePolypeptideSuccess::MovePolypeptideSuccess(char* data, unsigned &index) : Ne
 	requestId = ntohl(requestId);
 	index += sizeof(requestId);
 
-	for (auto it = polypeptideIds.begin(); it != polypeptideIds.end(); ++it)
+	unsigned int polypeptideIdCount;
+	memcpy(&polypeptideIdCount, &data[index], sizeof(polypeptideIdCount));
+	polypeptideIdCount = ntohl(polypeptideIdCount);
+	index += sizeof(polypeptideIdCount);
+
+	for (unsigned int i = 0; i < polypeptideIdCount; ++i)
 	{
-		memcpy(&(*it), &data[index], sizeof(*it));
-		(*it) = ntohl(*it);
-		index += sizeof(*it);
+		unsigned int polypeptideId;
+		memcpy(&polypeptideId, &data[index], sizeof(polypeptideId));
+		polypeptideId = ntohl(polypeptideId);
+		index += sizeof(polypeptideId);
+		polypeptideIds.push_back(polypeptideId);
 	}
 }
 
@@ -42,7 +49,14 @@ unsigned MovePolypeptideSuccess::writeToArray(char* data, unsigned start)
 
 	unsigned polypeptideIdsCount = htonl(polypeptideIds.size());
 	memcpy(&data[index], &polypeptideIdsCount, sizeof(polypeptideIdsCount));
-	index += sizeof(sizeof(unsigned int) * polypeptideIds.size());
+	index += sizeof(polypeptideIdsCount);
+
+	for (auto it = polypeptideIds.begin(); it != polypeptideIds.end(); ++it)
+	{
+		unsigned int networkpolypeptideId = htonl(*it);
+		memcpy(&data[index], &networkpolypeptideId, sizeof(networkpolypeptideId));
+		index += sizeof(networkpolypeptideId);
+	}
 	
 	return index;
 }
@@ -51,5 +65,6 @@ unsigned MovePolypeptideSuccess::calculateSize()
 {
 	return NetworkMessage::calculateSize() 
 		+ sizeof(requestId)
+		+ sizeof(unsigned int)
 		+ (sizeof(unsigned int) * polypeptideIds.size());
 }
