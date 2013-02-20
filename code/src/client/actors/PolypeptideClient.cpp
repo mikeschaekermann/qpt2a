@@ -86,6 +86,7 @@ void PolypeptideClient::attackBehavior(float frameTime)
 		else
 		{
 			setState(Polypeptide::IDLE);
+			setFocus(owner->getPosition(), owner->getRadius());
 
 			if (selfDestruct)
 			{
