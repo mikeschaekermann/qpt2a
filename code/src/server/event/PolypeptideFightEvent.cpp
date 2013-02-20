@@ -36,6 +36,8 @@ void PolypeptideFightEvent::trigger()
 			bool polypeptide1Dies = ci::randBool();
 			bool polypeptide2Dies = ci::randBool();
 			PolypeptideFight * polypeptideFight = new PolypeptideFight();
+			polypeptideFight->cell1Id = cell1->getId();
+			polypeptideFight->cell2Id = cell2->getId();
 			polypeptideFight->polypeptideId1 = polypeptideId1;
 			polypeptideFight->polypeptideId2 = polypeptideId2;
 			polypeptideFight->polypeptide1Dies = polypeptide1Dies;
@@ -57,10 +59,6 @@ void PolypeptideFightEvent::trigger()
 
 			if (polypeptide1Dies)
 			{
-				PolypeptideDie * polypeptideDie = new PolypeptideDie();
-				polypeptideDie->polypeptideId = polypeptideId1;
-				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, players);
-
 				cell1->removePolypeptide(polypeptide1);
 				delete polypeptide1;
 				--(POLYCAPACITY->NumberOfPolypeptides);
@@ -69,10 +67,6 @@ void PolypeptideFightEvent::trigger()
 
 			if (polypeptide2Dies)
 			{
-				PolypeptideDie * polypeptideDie = new PolypeptideDie();
-				polypeptideDie->polypeptideId = polypeptideId2;
-				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, players);
-
 				cell2->removePolypeptide(polypeptide2);
 				delete polypeptide2;
 				--(POLYCAPACITY->NumberOfPolypeptides);

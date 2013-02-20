@@ -6,8 +6,9 @@ class PolypeptideCellAttack : public NetworkMessage
 {
 public:
 	/* Fields */
+	unsigned int attackerCellId;
+	unsigned int attackedCellId;
 	unsigned int polypeptideId;
-	unsigned int cellId;
 	float damage;
 
 	/* Constructor / Destructor */

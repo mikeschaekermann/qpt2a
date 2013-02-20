@@ -1,12 +1,20 @@
 #include "PolypeptideFight.h"
 
-PolypeptideFight::PolypeptideFight() : NetworkMessage(), polypeptideId1(0), polypeptideId2(0), polypeptide1Dies(0), polypeptide2Dies(0)
+PolypeptideFight::PolypeptideFight() : NetworkMessage(), cell1Id(0), cell2Id(0), polypeptideId1(0), polypeptideId2(0), polypeptide1Dies(0), polypeptide2Dies(0)
 {
 	messageType = MessageType::PolypeptideFight;
 }
 
-PolypeptideFight::PolypeptideFight(char* data, unsigned &index) : NetworkMessage(data, index), polypeptideId1(0), polypeptideId2(0), polypeptide1Dies(0), polypeptide2Dies(0)
+PolypeptideFight::PolypeptideFight(char* data, unsigned &index) : NetworkMessage(data, index), cell1Id(0), cell2Id(0), polypeptideId1(0), polypeptideId2(0), polypeptide1Dies(0), polypeptide2Dies(0)
 {
+	memcpy(&cell1Id, &data[index], sizeof(cell1Id));
+	cell1Id = ntohl(cell1Id);
+	index += sizeof(cell1Id);
+
+	memcpy(&cell2Id, &data[index], sizeof(cell2Id));
+	cell2Id = ntohl(cell2Id);
+	index += sizeof(cell2Id);
+
 	memcpy(&polypeptideId1, &data[index], sizeof(polypeptideId1));
 	polypeptideId1 = ntohl(polypeptideId1);
 	index += sizeof(polypeptideId1);
@@ -25,12 +33,12 @@ PolypeptideFight::PolypeptideFight(char* data, unsigned &index) : NetworkMessage
 }
 
 PolypeptideFight::PolypeptideFight(const PolypeptideFight &other) : NetworkMessage(other), 
-	polypeptideId1(other.polypeptideId1), polypeptideId2(other.polypeptideId2), polypeptide1Dies(other.polypeptide1Dies), polypeptide2Dies(other.polypeptide2Dies)
+	cell1Id(other.cell1Id), cell2Id(other.cell1Id), polypeptideId1(other.polypeptideId1), polypeptideId2(other.polypeptideId2), polypeptide1Dies(other.polypeptide1Dies), polypeptide2Dies(other.polypeptide2Dies)
 { 
 	messageType = MessageType::PolypeptideFight;
 }
 
-PolypeptideFight::PolypeptideFight(const NetworkMessage &other) : NetworkMessage(other), polypeptideId1(0), polypeptideId2(0), polypeptide1Dies(0), polypeptide2Dies(0)
+PolypeptideFight::PolypeptideFight(const NetworkMessage &other) : NetworkMessage(other), cell1Id(0), cell2Id(0), polypeptideId1(0), polypeptideId2(0), polypeptide1Dies(0), polypeptide2Dies(0)
 { 
 	messageType = MessageType::PolypeptideFight;
 }
@@ -42,6 +50,14 @@ unsigned PolypeptideFight::writeToArray(char* data, unsigned start)
 {
 	unsigned index = NetworkMessage::writeToArray(data);
 	
+	unsigned networkcell1Id = htonl(cell1Id);
+	memcpy(&data[index], &networkcell1Id, sizeof(networkcell1Id));
+	index += sizeof(networkcell1Id);
+
+	unsigned networkcell2Id = htonl(cell2Id);
+	memcpy(&data[index], &networkcell2Id, sizeof(networkcell2Id));
+	index += sizeof(networkcell2Id);
+
 	unsigned networkpolypeptideId1 = htonl(polypeptideId1);
 	memcpy(&data[index], &networkpolypeptideId1, sizeof(networkpolypeptideId1));
 	index += sizeof(networkpolypeptideId1);
@@ -63,7 +79,9 @@ unsigned PolypeptideFight::writeToArray(char* data, unsigned start)
 
 unsigned PolypeptideFight::calculateSize()
 {
-	return NetworkMessage::calculateSize() 
+	return NetworkMessage::calculateSize()
+		+ sizeof(cell1Id)
+		+ sizeof(cell2Id)
 		+ sizeof(polypeptideId1)
 		+ sizeof(polypeptideId2)
 		+ sizeof(polypeptide1Dies)

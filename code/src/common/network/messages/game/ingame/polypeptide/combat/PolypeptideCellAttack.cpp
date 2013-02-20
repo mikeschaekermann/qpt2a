@@ -1,31 +1,35 @@
 #include "PolypeptideCellAttack.h"
 
-PolypeptideCellAttack::PolypeptideCellAttack() : NetworkMessage(), polypeptideId(0), cellId(0), damage(0.f)
+PolypeptideCellAttack::PolypeptideCellAttack() : NetworkMessage(), attackerCellId(0), attackedCellId(0), polypeptideId(0), damage(0.f)
 {
 	messageType = MessageType::PolypeptideCellAttack;
 }
 
-PolypeptideCellAttack::PolypeptideCellAttack(char* data, unsigned &index) : NetworkMessage(data, index), polypeptideId(0), cellId(0), damage(0.f)
+PolypeptideCellAttack::PolypeptideCellAttack(char* data, unsigned &index) : NetworkMessage(data, index), attackerCellId(0), attackedCellId(0), polypeptideId(0), damage(0.f)
 {
+	memcpy(&attackerCellId, &data[index], sizeof(attackerCellId));
+	attackerCellId = ntohl(attackerCellId);
+	index += sizeof(attackerCellId);
+
+	memcpy(&attackedCellId, &data[index], sizeof(attackedCellId));
+	attackedCellId = ntohl(attackedCellId);
+	index += sizeof(attackedCellId);
+
 	memcpy(&polypeptideId, &data[index], sizeof(polypeptideId));
 	polypeptideId = ntohl(polypeptideId);
 	index += sizeof(polypeptideId);
-
-	memcpy(&cellId, &data[index], sizeof(cellId));
-	cellId = ntohl(cellId);
-	index += sizeof(cellId);
 
 	memcpy(&damage, &data[index], sizeof(damage));
 	index += sizeof(damage);
 }
 
 PolypeptideCellAttack::PolypeptideCellAttack(const PolypeptideCellAttack &other) : NetworkMessage(other), 
-	polypeptideId(other.polypeptideId), cellId(other.cellId), damage(other.damage)
+	attackerCellId(other.attackerCellId), attackedCellId(other.attackedCellId), polypeptideId(other.polypeptideId), damage(other.damage)
 { 
 	messageType = MessageType::PolypeptideCellAttack;
 }
 
-PolypeptideCellAttack::PolypeptideCellAttack(const NetworkMessage &other) : NetworkMessage(other), polypeptideId(0), cellId(0), damage(0.f)
+PolypeptideCellAttack::PolypeptideCellAttack(const NetworkMessage &other) : NetworkMessage(other), attackerCellId(0), attackedCellId(0), polypeptideId(0), damage(0.f)
 { 
 	messageType = MessageType::PolypeptideCellAttack;
 }
@@ -36,14 +40,18 @@ PolypeptideCellAttack::~PolypeptideCellAttack()
 unsigned PolypeptideCellAttack::writeToArray(char* data, unsigned start)
 {
 	unsigned index = NetworkMessage::writeToArray(data);
+
+	unsigned networkattackerCellId = htonl(attackerCellId);
+	memcpy(&data[index], &networkattackerCellId, sizeof(networkattackerCellId));
+	index += sizeof(networkattackerCellId);
 	
+	unsigned networkattackedCellId = htonl(attackedCellId);
+	memcpy(&data[index], &networkattackedCellId, sizeof(networkattackedCellId));
+	index += sizeof(networkattackedCellId);
+
 	unsigned networkpolypeptideId = htonl(polypeptideId);
 	memcpy(&data[index], &networkpolypeptideId, sizeof(networkpolypeptideId));
 	index += sizeof(networkpolypeptideId);
-
-	unsigned networkcellId = htonl(cellId);
-	memcpy(&data[index], &networkcellId, sizeof(networkcellId));
-	index += sizeof(networkcellId);
 
 	memcpy(&data[index], &damage, sizeof(damage));
 	index += sizeof(damage);
@@ -54,7 +62,8 @@ unsigned PolypeptideCellAttack::writeToArray(char* data, unsigned start)
 unsigned PolypeptideCellAttack::calculateSize()
 {
 	return NetworkMessage::calculateSize()
+		+ sizeof(attackerCellId)
+		+ sizeof(attackedCellId)
 		+ sizeof(polypeptideId)
-		+ sizeof(cellId)
 		+ sizeof(damage);
 }
