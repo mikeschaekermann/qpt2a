@@ -18,9 +18,10 @@ public:
 		maxAmplitudeEruption(CONFIG_INT("data.polypeptide.maxPointAmplitudeEruption")),
 		forward(Vec3f(1, 0, 0)),
 		focusCenter(focusCenter),
-		focusRadius(focusRadius),
-		cellRadius(cellRadius)
+		focusRadius(focusRadius)
 	{
+		this->cellRadius = cellRadius;
+
 		scale = Vec3f(
 			CONFIG_FLOAT("data.polypeptide.scale"),
 			CONFIG_FLOAT("data.polypeptide.scale"),
@@ -28,7 +29,7 @@ public:
 		);
 
 		float followPointAngle = toRadians(float(rand() % 361));
-		followPoint = Vec3f(focusRadius * cos(followPointAngle), focusRadius * sin(followPointAngle), focusCenter.z);
+		followPoint = Vec3f(focusCenter.x + (focusRadius * cos(followPointAngle)), focusCenter.y + (focusRadius * sin(followPointAngle)), focusCenter.z);
 	}
 
 	PolypeptideClient();
@@ -47,13 +48,14 @@ public:
 	virtual void setRadiusOfFocus(float radius);
 	virtual void setFocus(Vec3f center, float radius);
 
+	virtual void setOwner(Cell* owner);
+
 protected:
 	float cellRadius;
 	float speed;
 	float polyRotationSpeed;
 	float followPointRotationSpeed;
 	int maxAmplitudeEruption;
-	bool isInCircularMovement;
 	Vec3f forward;
 
 	virtual void drawAtTransformation() const;
