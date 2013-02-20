@@ -576,28 +576,64 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			LOG_INFO("PolypeptideCellAttack received");
 			unsigned int polypeptideId = polypeptideCellAttack->polypeptideId;
-			unsigned int cellId = polypeptideCellAttack->cellId;
+			unsigned int attackedCellId = polypeptideCellAttack->attackedCellId;
+			unsigned int attackerCellId = polypeptideCellAttack->attackerCellId;
 			float damage = polypeptideCellAttack->damage;
 
-			auto gameObject = GAME_SCR.getGameObjectsToDraw().find(cellId);
-
-			if (gameObject != nullptr)
+			auto attackedObject = GAME_SCR.getGameObjectsToDraw().find(attackedCellId);
+			if (attackedObject == nullptr)
 			{
-				auto cell = dynamic_cast<CellClient *>(gameObject);
-				cell->decreaseHealthPointsBy(damage);
-				
-				auto polypeptide = GAME_SCR.getMyPolypeptides().find(polypeptideId);
-				if (polypeptide != nullptr)
-				{
-					polypeptide->setState(Polypeptide::CELLFIGHT);
-					polypeptide->setFocus(cell->getPosition(), cell->getRadius());
-				}
-				else
-				{
-					LOG_ERROR("Tried to put polypeptide into attack state which the client does not have in its list!");
-					assert(false);
-				}
+				LOG_ERROR("Attacked object does not exist!");
+				assert(false);
 			}
+
+			auto attackerObject = GAME_SCR.getGameObjectsToDraw().find(attackerCellId);
+			if (attackerObject == nullptr)
+			{
+				LOG_ERROR("Attacker object does not exist!");
+				assert(false);
+			}
+
+			auto attackedCell = dynamic_cast<CellClient *>(attackedObject);
+			if (attackedCell == nullptr)
+			{
+				LOG_ERROR("Attacked object is not of type CellClient!");
+				assert(false);
+			}
+
+			auto attackerCell = dynamic_cast<CellClient *>(attackerObject);
+			if (attackerCell == nullptr)
+			{
+				LOG_ERROR("Attacker object is not of type CellClient!");
+				assert(false);
+			}
+
+			bool ownCell = attackedCell->getOwner() == GAME_MGR->getMyPlayer();
+				
+			auto polypeptide = GAME_SCR.getMyPolypeptides().find(polypeptideId);
+			bool ownPoly = polypeptide != nullptr;
+
+			/// something terribly wrong is happening here:
+			/// a) my own poly is attacking me
+			/// b) I am getting a message that does not affect me at all!
+			if (ownCell == ownPoly)
+			{
+				LOG_ERROR("Either the attacking poly or the cell being attacked must be mine and the other one must not be mine!");
+				assert(false);
+			}
+
+			/// other player's poly is attacking!
+			if (!ownPoly)
+			{
+				polypeptide = new PolypeptideClient();
+				polypeptide->setId(polypeptideId);
+				polypeptide->setPosition(attackerCell->getPosition());
+			}
+
+			polypeptide->setState(Polypeptide::CELLFIGHT);
+			polypeptide->setAttackOptions();
+			polypeptide->setFocus(attackedCell->getPosition(), attackedCell->getRadius());
+			attackedCell->decreaseHealthPointsBy(damage);
 		}
 		break;
 	}

@@ -4,6 +4,8 @@
 #include "../../client/actors/GameObjectClient.h"
 #include "../../common/ConfigurationDataHandler.h"
 
+class PolypeptideClient;
+
 class CellClient :
 	virtual public Cell,
 	virtual public GameObjectClient
@@ -26,7 +28,7 @@ public:
 	virtual void decreaseGlobalTypeCounter() const {};
 
 	virtual bool addPolypeptide(Polypeptide * polypeptide);
-	
+
 protected:
 	float getHealthPercentage() const;
 	float getBrightnessFromHealthPoints() const;

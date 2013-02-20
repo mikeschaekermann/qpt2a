@@ -19,7 +19,9 @@ public:
 		forward(Vec3f(1, 0, 0)),
 		focusCenter(focusCenter),
 		focusRadius(focusRadius),
-		cellRadius(cellRadius)
+		cellRadius(cellRadius),
+		selfDestruct(false),
+		dieTrying(false)
 	{
 		scale = Vec3f(
 			CONFIG_FLOAT("data.polypeptide.scale"),
@@ -47,7 +49,12 @@ public:
 	virtual void setRadiusOfFocus(float radius);
 	virtual void setFocus(Vec3f center, float radius);
 
+	void setAttackOptions(bool selfDestruct, bool dieTrying = false);
+
 protected:
+	bool selfDestruct;
+	/// flag that indicates whether poly dies in the middle of the attack
+	bool dieTrying;
 	float cellRadius;
 	float speed;
 	float polyRotationSpeed;

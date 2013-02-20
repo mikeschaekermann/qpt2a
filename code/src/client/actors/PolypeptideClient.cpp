@@ -67,3 +67,9 @@ CellClient * PolypeptideClient::getOwner()
 {
 	return dynamic_cast<CellClient *>(owner);
 }
+
+void PolypeptideClient::setAttackOptions(bool selfDestruct, bool dieTrying = false)
+{
+	this->selfDestruct = selfDestruct;
+	this->dieTrying = dieTrying;
+}
