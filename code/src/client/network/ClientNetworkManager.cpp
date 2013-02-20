@@ -543,6 +543,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (polypeptideDie)
 		{
 			LOG_INFO("PolypeptideDie received");
+			/*
 			unsigned int polypeptideId = polypeptideDie->polypeptideId;
 
 			auto polypeptide = GAME_SCR.getSelectedPolypeptides().find(polypeptideId);
@@ -568,6 +569,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				LOG_ERROR("Tried to delete polypeptide which the client does not have in its list!");
 				assert(false);
 			}
+			*/
 		}
 		break;
 	}
@@ -646,10 +648,12 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (polypeptideFight)
 		{
 			LOG_INFO("PolypeptideFight received");
+			/*
 			unsigned int polypeptideId1 = polypeptideFight->polypeptideId1;
 			unsigned int polypeptideId2 = polypeptideFight->polypeptideId2;
 			bool polypeptide1Dies = polypeptideFight->polypeptide1Dies;
 			bool polypeptide2Dies = polypeptideFight->polypeptide2Dies;
+			*/
 		}
 		break;
 	}
