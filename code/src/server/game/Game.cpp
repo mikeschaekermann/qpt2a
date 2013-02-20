@@ -31,6 +31,8 @@
 #include "../../common/network/messages/game/ingame/polypeptide/travel/MovePolypeptideSuccess.h"
 #include "../../common/network/messages/game/ingame/polypeptide/travel/MovePolypeptideFailure.h"
 
+#include "../../common/PolypeptideCapacityContainer.h"
+
 #include "../../common/Config.h"
 #include "../../common/ConfigurationDataHandler.h"
 #include "../../common/GameObjectContainer.h"
@@ -55,6 +57,10 @@ Game::Game()
 	stringstream message;
 	message << "Space for " << CONFIG_INT("data.players.max") << " players.";
 	LOG_INFO(message.str());
+
+	POLYCAPACITY->setPolypeptidesPerStemCell(CONFIG_INT("data.polypeptide.maxPerStemCell"));
+	POLYCAPACITY->setPolypeptidesPerStandardCell(CONFIG_INT("data.polypeptide.maxPerStandardCell"));
+	POLYCAPACITY->setPolypeptidesPerBoneCell(CONFIG_INT("data.polypeptide.maxPerBoneCell"));
 
 	/**
 		* Build Modifiers and Barriers
@@ -332,17 +338,15 @@ void Game::createCell(CreateCellRequest & request)
 		Vec3f position;
 		switch (type.getType())
 		{
-		case CellType::StemCell:
-			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.stemcell.radius"), position);
-			cell = new CellServer(CellServer::STEMCELL, position, angle, &player);
-			break;
 		case CellType::StandardCell:
 			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.standardcell.radius"), position);
 			cell = new CellServer(CellServer::STANDARDCELL, position, angle, &player);
+			++(POLYCAPACITY->NumberOfStandardCells);
 			break;
 		case CellType::BoneCell:
 			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.bonecell.radius"), position);
 			cell = new CellServer(CellServer::BONECELL, position, angle, &player);
+			++(POLYCAPACITY->NumberOfBoneCells);
 			break;
 		default:
 			LOG_INFO(stringify(ostringstream() << "Unknown CellType: " << type.getType()));
@@ -357,9 +361,6 @@ void Game::createCell(CreateCellRequest & request)
 			string typeName;
 			switch(type.getType())
 			{
-				case CellType::StemCell:
-					typeName = "StemCell";
-					break;
 				case CellType::StandardCell:
 					typeName = "StandardCell";
 					break;
@@ -402,6 +403,19 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 		return;
 	}
 
+	if (POLYCAPACITY->getRemainingNumberOfPolypeptidesAllowed() == 0)
+	{
+		/// No additional poly is allowed
+		LOG_INFO("CreatePolypeptideFailure InvalidPlayer sent");
+		CreatePolypeptideFailure * message = new CreatePolypeptideFailure();
+		message->requestId = request.requestId;
+		message->errorCode = CreatePolypeptideErrorCode::NoPolypeptideCapacities;
+		message->endpoint = player->getEndpoint();
+		NETWORKMANAGER->send(message);
+		
+		return;
+	}
+
 	CellServer * stemCell = &(player->getStemCell());
 
 	PolypeptideServer * polypetide = new PolypeptideServer(stemCell->getPosition(), stemCell->getAngle(), stemCell);
@@ -416,6 +430,8 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
 
+		++(POLYCAPACITY->NumberOfPolypeptides);
+
 		return;
 	}
 	else
@@ -427,6 +443,8 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 		message->errorCode = CreatePolypeptideErrorCode::CellFull;
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
+
+		delete polypetide;
 	}
 }
 

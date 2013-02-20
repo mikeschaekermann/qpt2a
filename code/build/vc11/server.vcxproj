@@ -74,6 +74,7 @@
     <ClInclude Include="..\..\src\common\network\NetworkManager.h" />
     <ClInclude Include="..\..\src\common\Player.h" />
     <ClInclude Include="..\..\src\common\Polypeptide.h" />
+    <ClInclude Include="..\..\src\common\PolypeptideCapacityContainer.h" />
     <ClInclude Include="..\..\src\common\StandardCell.h" />
     <ClInclude Include="..\..\src\common\StemCell.h" />
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h" />
@@ -149,6 +150,7 @@
     <ClCompile Include="..\..\src\common\network\messages\NetworkMessage.cpp" />
     <ClCompile Include="..\..\src\common\network\NetworkManager.cpp" />
     <ClCompile Include="..\..\src\common\Polypeptide.cpp" />
+    <ClCompile Include="..\..\src\common\PolypeptideCapacityContainer.cpp" />
     <ClCompile Include="..\..\src\common\StandardCell.cpp" />
     <ClCompile Include="..\..\src\server\environment\BarrierServer.cpp" />
     <ClCompile Include="..\..\src\server\environment\StaticModificatorServer.cpp" />

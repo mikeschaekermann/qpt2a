@@ -179,7 +179,9 @@
 	</cell>
 	<polypeptide>
 		<scale>30.0</scale>
-		<maxPerCell>15</maxPerCell>
+		<maxPerStemCell>15</maxPerStemCell>
+    <maxPerStandardCell>5</maxPerStandardCell>
+    <maxPerBoneCell>20</maxPerBoneCell>
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
 		<damage>2.0</damage>

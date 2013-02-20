@@ -7,6 +7,7 @@
 #include "../../common/network/NetworkManager.h"
 #include "../../common/network/messages/game/ingame/polypeptide/combat/PolypeptideFight.h"
 #include "../../common/network/messages/game/ingame/polypeptide/combat/PolypeptideDie.h"
+#include "../../common/PolypeptideCapacityContainer.h"
 #include <cinder/Rand.h>
 
 PolypeptideFightEvent::PolypeptideFightEvent(double startTime, unsigned int cellId1, unsigned int cellId2, unsigned int polypeptideId1, unsigned int polypeptideId2) :
@@ -58,6 +59,8 @@ void PolypeptideFightEvent::trigger()
 
 				cell1->removePolypeptide(polypeptide1);
 				delete polypeptide1;
+				--(POLYCAPACITY->NumberOfPolypeptides);
+				GAMECONTEXT->getAttackRelations().update();
 			}
 
 			if (polypeptide2Dies)
@@ -68,6 +71,8 @@ void PolypeptideFightEvent::trigger()
 
 				cell2->removePolypeptide(polypeptide2);
 				delete polypeptide2;
+				--(POLYCAPACITY->NumberOfPolypeptides);
+				GAMECONTEXT->getAttackRelations().update();
 			}
 		}
 	}

@@ -244,6 +244,9 @@
     <ClInclude Include="..\..\src\server\game\AttackRelationContainer.h">
       <Filter>Gamelogic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\PolypeptideCapacityContainer.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -505,6 +508,9 @@
       <Filter>Gamelogic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\game\CellServer.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\PolypeptideCapacityContainer.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
