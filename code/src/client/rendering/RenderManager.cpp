@@ -9,26 +9,26 @@ RenderManager::RenderManager()
 {
 	auto screenSize = getWindowSize();
 	cam = Cam(screenSize.x, screenSize.y,
-			  CONFIG_FLOAT1("data.rendering.camera.fieldOfView"),
-			  CONFIG_FLOAT1("data.rendering.camera.nearPlane"),
-			  CONFIG_FLOAT1("data.rendering.camera.farPlane"));
+			  CONFIG_FLOAT("data.rendering.camera.fieldOfView"),
+			  CONFIG_FLOAT("data.rendering.camera.nearPlane"),
+			  CONFIG_FLOAT("data.rendering.camera.farPlane"));
 
 	cam
 		.setPosition(Vec3f( 0.0f, 0.0f, 0.0f ))
 		.setFocus(Vec3f::zero());
 
-	fogOfWarOpacity = CONFIG_FLOAT2("data.world.fogOfWar.opacity", 0.9);
-	fogOfWarInnerRadius = CONFIG_FLOAT2("data.world.fogOfWar.innerRadius", 20);
-	fogOfWarOuterRadius = CONFIG_FLOAT2("data.world.fogOfWar.outerRadius", 20);
+	fogOfWarOpacity = CONFIG_FLOAT("data.world.fogOfWar.opacity");
+	fogOfWarInnerRadius = CONFIG_FLOAT("data.world.fogOfWar.innerRadius");
+	fogOfWarOuterRadius = CONFIG_FLOAT("data.world.fogOfWar.outerRadius");
 
 	gl::enableAlphaBlending();
 
 	initializeFogOfWar();
 
 	lightPos = Vec3f(
-		CONFIG_FLOAT2("data.world.light.position.x", 100.f),
-		CONFIG_FLOAT2("data.world.light.position.y", -100.f),
-		CONFIG_FLOAT2("data.world.light.position.z", 700.f)
+		CONFIG_FLOAT("data.world.light.position.x"),
+		CONFIG_FLOAT("data.world.light.position.y"),
+		CONFIG_FLOAT("data.world.light.position.z")
 	);
 }
 
@@ -263,7 +263,7 @@ void RenderManager::zoomToWorld()
 {
 	/// world radius = sin(camera's fov / 2) * camera's distance
 	/// camera's distance = world radius / sin(camera's fov / 2)
-	float worldRadius = CONFIG_FLOAT1("data.world.radius");
+	float worldRadius = CONFIG_FLOAT("data.world.radius");
 	float camDistance = worldRadius / (float) sin(cam.getFov() / 2.f / 180.f * M_PI);
 
 	cam.setPosition(Vec3f(0, 0, camDistance));

@@ -14,7 +14,7 @@ ConnectScreen::ConnectScreen()
 	rootItem->addSubItem(
 		this,
 		[]() {},
-		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.background.x", 0), CONFIG_FLOAT2("data.menu.connectcreen.background.y", 0)),
+		Vec2f(CONFIG_FLOAT("data.menu.connectcreen.background.x"), CONFIG_FLOAT("data.menu.connectcreen.background.y")),
 		background,
 		background,
 		background
@@ -24,7 +24,7 @@ ConnectScreen::ConnectScreen()
 	rootItem->addSubItem(
 		this,
 		[]() {},
-		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.headline.x", 0), CONFIG_FLOAT2("data.menu.connectcreen.headline.y", 0)),
+		Vec2f(CONFIG_FLOAT("data.menu.connectcreen.headline.x"), CONFIG_FLOAT("data.menu.connectcreen.headline.y")),
 		headline,
 		headline,
 		headline
@@ -35,7 +35,7 @@ ConnectScreen::ConnectScreen()
 	TextInput *nameTextBox = new TextInput(
 		this, 
 		[]() { },
-		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.username.x", 100), CONFIG_FLOAT2("data.menu.connectcreen.username.y", 40)), 
+		Vec2f(CONFIG_FLOAT("data.menu.connectcreen.username.x"), CONFIG_FLOAT("data.menu.connectcreen.username.y")), 
 		nameBox, 
 		nameBox, 
 		nameBox
@@ -48,7 +48,7 @@ ConnectScreen::ConnectScreen()
 	messageBox = new TextInput(
 		this, 
 		[]() { },
-		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.messagebox.x", 100), CONFIG_FLOAT2("data.menu.connectcreen.messagebox.y", 650)), 
+		Vec2f(CONFIG_FLOAT("data.menu.connectcreen.messagebox.x"), CONFIG_FLOAT("data.menu.connectcreen.messagebox.y")), 
 		nameBox, 
 		nameBox, 
 		nameBox
@@ -65,7 +65,7 @@ ConnectScreen::ConnectScreen()
 		{
 			
 		},
-		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.server.x", 100), CONFIG_FLOAT2("data.menu.connectcreen.server.y", 150)),
+		Vec2f(CONFIG_FLOAT("data.menu.connectcreen.server.x"), CONFIG_FLOAT("data.menu.connectcreen.server.y")),
 		ipBox,
 		ipBox,
 		ipBox)
@@ -83,7 +83,7 @@ ConnectScreen::ConnectScreen()
 			connectTimeout = 5.f;
 			GAME_MGR->startGame(nameBoxItem->getValue(), ipBoxItem->getValue());
 		},
-		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.connect.x", 100), CONFIG_FLOAT2("data.menu.connectcreen.connect.y", 220)),
+		Vec2f(CONFIG_FLOAT("data.menu.connectcreen.connect.x"), CONFIG_FLOAT("data.menu.connectcreen.connect.y")),
 		connectTextureBasic,
 		connectTextureClick,
 		connectTextureHover
@@ -104,7 +104,7 @@ ConnectScreen::ConnectScreen()
 			connectButton->setVisible(true);
 			messageBox->setValue("");
 		},
-		Vec2f(CONFIG_FLOAT2("data.menu.connectcreen.back.x", 100), CONFIG_FLOAT2("data.menu.connectcreen.back.y", 300)),
+		Vec2f(CONFIG_FLOAT("data.menu.connectcreen.back.x"), CONFIG_FLOAT("data.menu.connectcreen.back.y")),
 		backBasic,
 		backClick,
 		backHover

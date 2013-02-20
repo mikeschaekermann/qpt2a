@@ -9,21 +9,23 @@ class PolypeptideClient :
 	virtual public GameObjectClient
 {
 public:
-	PolypeptideClient(Vec3f rotationPoint) :
-		speed(CONFIG_FLOAT1("data.polypeptide.speed")),
+	PolypeptideClient(Vec3f focusCenter, float focusRadius) :
+		speed(CONFIG_FLOAT("data.polypeptide.speed")),
 		forward(Vec3f(1, 0, 0)),
-		rotationPoint(rotationPoint),
-		isOnIdleCircle(false),
-		idleRadius(15)
+		focusCenter(focusCenter),
+		focusRadius(focusRadius),
+		isInCircularMovement(false)
 	{
 		scale = Vec3f(
-			CONFIG_FLOAT1("data.polypeptide.scale"),
-			CONFIG_FLOAT1("data.polypeptide.scale"),
-			CONFIG_FLOAT1("data.polypeptide.scale")
+			CONFIG_FLOAT("data.polypeptide.scale"),
+			CONFIG_FLOAT("data.polypeptide.scale"),
+			CONFIG_FLOAT("data.polypeptide.scale")
 		);
 	}
 
-	void setRotationPoint(Vec3f rotationPoint) { this->rotationPoint = rotationPoint; }
+	PolypeptideClient();
+
+	CellClient * getOwner() { return dynamic_cast<CellClient *>(owner); }
 
 	virtual void update(float frameTime);
 
@@ -33,13 +35,19 @@ public:
 	virtual void setRotation(Vec3f rotation) { GameObjectClient::setRotation(rotation); }
 	virtual void setScale(Vec3f scale) { GameObjectClient::setScale(scale); }
 
+	virtual void setCenterOfFocus(Vec3f center);
+	virtual void setRadiusOfFocus(float radius);
+	virtual void setFocus(Vec3f center, float radius);
+
 protected:
-	float idleRadius;
 	float speed;
-	bool isOnIdleCircle;
+	bool isInCircularMovement;
 	Vec3f forward;
-	Vec3f rotationPoint;
 
 	virtual void drawAtTransformation() const;
-	void moveIdleFormation(float frameTime);
+	void circularMovement(float frameTime);
+
+private:
+	Vec3f focusCenter;
+	float focusRadius;
 };

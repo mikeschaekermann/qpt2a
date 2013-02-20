@@ -11,7 +11,7 @@ IpInput::IpInput(Screen* screen, std::function<void()> callback, ci::Vec2f posit
 			  clickTexture
 	)
 {
-	this->text = CONFIG_STRING2("data.network.server.ip", "127.0.0.1");
+	this->text = CONFIG_STRING("data.network.server.ip");
 }
 
 IpInput::~IpInput(void)

@@ -11,7 +11,7 @@ class StandardCellClient :
 public:
  StandardCellClient(unsigned int id, Vec3f position, float angle, PlayerClient * owner) :
   GameObject(),
-  Cell(position, CONFIG_FLOAT1("data.cell.standardcell.radius"), angle, CONFIG_FLOAT1("data.cell.standardcell.healthpoints"), owner),
+  Cell(position, CONFIG_FLOAT("data.cell.standardcell.radius"), angle, CONFIG_FLOAT("data.cell.standardcell.healthpoints"), owner),
   GameObjectClient(),
   CellClient(),
   StandardCell(position, angle),
@@ -19,9 +19,9 @@ public:
  {
 	setId(id);
 	
-	auto distanceDropOffDegree = CONFIG_FLOAT2("data.cell.standardcell.distanceDropOffDegree", 70);
-	auto attackRadius = CONFIG_FLOAT2("data.cell.standardcell.attackradius", 20);
-	auto numOfSpikesOnEachSide = CONFIG_INT2("data.cell.standardcell.spikes.numberOnEachSide", 10);
+	auto distanceDropOffDegree = CONFIG_FLOAT("data.cell.standardcell.distanceDropOffDegree");
+	auto attackRadius = CONFIG_FLOAT("data.cell.standardcell.attackradius");
+	auto numOfSpikesOnEachSide = CONFIG_INT("data.cell.standardcell.spikes.numberOnEachSide");
 	int directions[2] = {-1, 1};
 
 	spikesAngleRadiusList.push_back(make_pair(0.f, radius + attackRadius));

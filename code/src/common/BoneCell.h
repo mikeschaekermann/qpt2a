@@ -8,6 +8,6 @@ class BoneCell :
 {
 public:
 	BoneCell(Vec3f position, float angle) :
-		Cell(position, CONFIG_FLOAT1("data.cell.bonecell.radius"), angle, CONFIG_FLOAT1("data.cell.bonecell.healthpoints"))
+		Cell(position, CONFIG_FLOAT("data.cell.bonecell.radius"), angle, CONFIG_FLOAT("data.cell.bonecell.healthpoints"))
 	{ }
 };

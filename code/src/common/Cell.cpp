@@ -1,9 +1,45 @@
 #include "Cell.h"
 
-Cell::Cell() : maxHealthPoints(1.f), polyMax(CONFIG_INT1("data.polypeptide.maxPerCell"))
+float Cell::getHealthPoints() const { return healthPoints; }
+
+float Cell::getAngle() const { return ci::toRadians(rotation.z); }
+void Cell::setAngle(float angle) { rotation.z = ci::toDegrees(angle); }
+
+bool Cell::getIsComplete() const { return isComplete; }
+
+const Player * Cell::getOwner() const { return owner; }
+void Cell::setOwner( const Player * owner) { this->owner = owner; }
+
+std::map<unsigned int, Polypeptide *> & Cell::getPolypeptides()
+{
+	return polypeptides;
+}
+
+bool Cell::addPolypeptide(Polypeptide * polypeptide)
+{
+	if (polypeptides.size() < polyMax)
+	{
+		polypeptide->setOwner(this);
+		return polypeptides.insert(make_pair(polypeptide->getId(), polypeptide)).second;
+	}
+	return false;
+}
+
+bool Cell::removePolypeptide(Polypeptide * polypeptide)
+{
+	auto it = polypeptides.find(polypeptide->getId());
+	if (it != polypeptides.end())
+	{
+	polypeptides.erase(it);
+	return true;
+	}
+	return false;
+}
+
+Cell::Cell() : maxHealthPoints(1.f), polyMax(CONFIG_INT("data.polypeptide.maxPerCell"))
 { }
 
-Cell::Cell(Vec3f position, float angle, Player * owner) : owner(owner), maxHealthPoints(1.f), polyMax(CONFIG_INT1("data.polypeptide.maxPerCell"))
+Cell::Cell(Vec3f position, float angle, Player * owner) : owner(owner), maxHealthPoints(1.f), polyMax(CONFIG_INT("data.polypeptide.maxPerCell"))
 {
  this->position = position;
  setAngle(angle);
@@ -12,7 +48,7 @@ Cell::Cell(Vec3f position, float angle, Player * owner) : owner(owner), maxHealt
 Cell::Cell(Vec3f position, float radius, float angle, float healthPoints) :
  healthPoints(healthPoints),
  maxHealthPoints(healthPoints),
- polyMax(CONFIG_INT1("data.polypeptide.maxPerCell"))
+ polyMax(CONFIG_INT("data.polypeptide.maxPerCell"))
 {
  this->position = position;
  this->radius = radius;
@@ -21,7 +57,7 @@ Cell::Cell(Vec3f position, float radius, float angle, float healthPoints) :
 
 Cell::Cell(Vec3f position, float radius, float angle, float healthPoints, Player * owner) :
  healthPoints(healthPoints),
- polyMax(CONFIG_INT1("data.polypeptide.maxPerCell")),
+ polyMax(CONFIG_INT("data.polypeptide.maxPerCell")),
  maxHealthPoints(healthPoints),
  owner(owner)
 {
@@ -37,3 +73,8 @@ void Cell::decreaseHealthPointsBy(float damage)
 }
 
 void Cell::completeCell() { isComplete = true; }
+
+void Cell::setPosition(Vec3f position) { throw logic_error("Not implemented exception"); }
+void Cell::setRotation(Vec3f rotation) { throw logic_error("Not implemented exception"); }
+void Cell::setScale(Vec3f scale) { throw logic_error("Not implemented exception"); }
+void Cell::setRadius(float radius) { throw logic_error("Not implemented exception"); }

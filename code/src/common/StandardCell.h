@@ -10,6 +10,6 @@ public:
 	static const float m_fAttackRadius;
 
 	StandardCell(Vec3f position, float angle) :
-		Cell(position, CONFIG_FLOAT1("data.cell.standardcell.radius"), angle, CONFIG_FLOAT1("data.cell.standardcell.healthpoints"))
+		Cell(position, CONFIG_FLOAT("data.cell.standardcell.radius"), angle, CONFIG_FLOAT("data.cell.standardcell.healthpoints"))
 	{ }
 };

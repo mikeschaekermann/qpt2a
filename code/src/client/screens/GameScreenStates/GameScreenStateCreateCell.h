@@ -15,6 +15,7 @@ public:
 	virtual bool mouseMove(MouseEvent event);
 	virtual void draw3D();
 	virtual bool touchBegan(const TouchWay & touchWay);
+	virtual void touchMoved(const TouchWay & touchWay);
 
 protected:
 	CellClient * pickedCell;

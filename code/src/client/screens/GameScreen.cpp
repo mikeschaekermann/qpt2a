@@ -18,7 +18,7 @@ GameScreen::GameScreen()
 	state = new GameScreenStateNeutral(this);
 	RenderManager::getInstance()->zoomToWorld();
 
-	worldRadius = CONFIG_FLOAT1("data.world.radius");
+	worldRadius = CONFIG_FLOAT("data.world.radius");
 
 	cellMenu = rootItem->addSubItem(this, nullptr);
 
@@ -178,7 +178,7 @@ void GameScreen::draw()
 	for (auto it = textList.begin(); it != textList.end(); ++it)
 	{
 		drawString(it->getText(), worldToScreen(it->getPos()), ColorA(1.f, 0.f, 0.f, 1.f), 
-			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
+			Font(CONFIG_STRING("data.ingamefeedback.renderedDamage.font"), (float) CONFIG_INT("data.ingamefeedback.renderedDamage.size")));
 	}
 
 	containerMutex.unlock();
@@ -194,7 +194,7 @@ void GameScreen::draw()
 			auto id = it->second->getId();
 
 			drawString(stringify(ostringstream() << id), idPosition, ColorA(1.f, 0.f, 0.f, 1.f), 
-				Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
+				Font(CONFIG_STRING("data.ingamefeedback.renderedDamage.font"), (float) CONFIG_INT("data.ingamefeedback.renderedDamage.size")));
 		}
 
 		containerMutex.unlock();
@@ -302,7 +302,7 @@ void GameScreen::removeGameObjectToDraw(GameObjectClient * gameObject)
 
 		if (owner != nullptr)
 		{
-			owner->removeSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT2("data.skin.distanceFromCells", 10.f)));
+			owner->removeSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT("data.skin.distanceFromCells")));
 		}
 	}
 	
@@ -391,7 +391,7 @@ void GameScreen::addIncompleteCell(
 		}
 	}
 
-	cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));
+	cell->setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.incompleteOpacity"));
 	cell->setHue(GAME_MGR->getHueByPlayerId(playerId));
 
 	addIncompleteCell(cell);
@@ -403,7 +403,7 @@ void GameScreen::completeCellById(unsigned int id)
 
 	if (cell != nullptr)
 	{
-		cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.completeOpacity", 1.0f));
+		cell->setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.completeOpacity"));
 
 		removeIncompleteCell(cell);
 		addGameObjectToDraw(cell);
@@ -450,7 +450,7 @@ void GameScreen::addExploringCell(CellClient * cell)
 	auto area = new CellClient();
 	area->setId(cell->getId());
 	area->setPosition(cell->getPosition());
-	area->setRadius(cell->getRadius() + CONFIG_FLOAT2("data.world.fogOfWar.innerRadius", 20) + CONFIG_FLOAT2("data.world.fogOfWar.outerRadius", 20));
+	area->setRadius(cell->getRadius() + CONFIG_FLOAT("data.world.fogOfWar.innerRadius") + CONFIG_FLOAT("data.world.fogOfWar.outerRadius"));
 	
 	visibleAreas.createGameObject(area);
 
@@ -541,11 +541,11 @@ void GameScreen::updateVisibilityOf(GameObjectClient * gameObject)
 		{
 			if (newVisible)
 			{
-				owner->addSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT2("data.skin.distanceFromCells", 10.f)));
+				owner->addSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT("data.skin.distanceFromCells")));
 			}
 			else
 			{
-				owner->removeSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT2("data.skin.distanceFromCells", 10.f)));
+				owner->removeSkinBubble(Sphere(cell->getPosition(), cell->getRadius() + CONFIG_FLOAT("data.skin.distanceFromCells")));
 			}
 		}
 	}

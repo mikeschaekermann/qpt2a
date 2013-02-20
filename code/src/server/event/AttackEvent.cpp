@@ -14,7 +14,7 @@ AttackEvent::AttackEvent(double startTime, unsigned int attackerId, unsigned int
 	damage(damage),
 	attackerId(attackerId),
 	attackedId(attackedId),
-	GameEvent(startTime, CONFIG_FLOAT1("data.event.attack.time"))
+	GameEvent(startTime, CONFIG_FLOAT("data.event.attack.time"))
 { }
 
 void AttackEvent::trigger()
@@ -41,7 +41,7 @@ void AttackEvent::trigger()
 
 		if (attacked->getHealthPoints() < 0.f)
 		{
-			(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT1("data.event.celldie.time"), attacked->getId());
+			(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT("data.event.celldie.time"), attacked->getId());
 
 			if (attacked->getType() == CellServer::STEMCELL)
 			{

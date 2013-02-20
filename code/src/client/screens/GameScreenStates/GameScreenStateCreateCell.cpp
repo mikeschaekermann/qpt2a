@@ -20,7 +20,7 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellCl
 	else
 	{
 		screen->switchToState(new GameScreenStateNeutral(screen));
-		cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.previewOpacity", 0.3f));
+		cell->setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.previewOpacity"));
 	}
 }
 
@@ -45,7 +45,7 @@ GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellTy
 			}
 		}
 
-		cell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.previewOpacity", 0.3f));
+		cell->setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.previewOpacity"));
 		cell->setHue(GAME_MGR->getMyHue());
 		cell->setOwner(GAME_MGR->getMyPlayer());
 		cell->show();
@@ -77,11 +77,11 @@ bool GameScreenStateCreateCell::mouseMove(MouseEvent event)
 
 			if (!screen->canCellBePlaced(cell))
 			{
-				cell->setHue(CONFIG_FLOAT2("data.ingamefeedback.building.collisionHue", 0.0f));
+				cell->setHue(CONFIG_FLOAT("data.ingamefeedback.building.collisionHue"));
 			}
 			else
 			{
-				cell->setHue(CONFIG_FLOAT2("data.ingamefeedback.building.noCollisionHue", 0.33f));
+				cell->setHue(CONFIG_FLOAT("data.ingamefeedback.building.noCollisionHue"));
 			}
 		}
 
@@ -135,4 +135,8 @@ bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)
 	screen->switchToState(new GameScreenStateNeutral(screen));
 
 	return false;
+}
+
+void GameScreenStateCreateCell::touchMoved(const TouchWay & touchWay)
+{
 }

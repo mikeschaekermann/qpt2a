@@ -14,7 +14,7 @@ void PolypeptideClient::update(float frameTime)
 	switch(state)
 	{
 		case Polypeptide::State::IDLE:
-			moveIdleFormation(frameTime);
+			circularMovement(frameTime);
 			break;
 		case Polypeptide::State::TRAVEL:
 			break;
@@ -25,27 +25,48 @@ void PolypeptideClient::update(float frameTime)
 	}
 }
 
-void PolypeptideClient::moveIdleFormation(float frameTime)
+void PolypeptideClient::circularMovement(float frameTime)
 {
-	if(!isOnIdleCircle)
+	if(!isInCircularMovement)
 	{
-		forward = Vec3f(0, 1, 0);
+		auto d = focusCenter - position;
+		auto a = atan2(d.x, d.y);
+
+		auto t = Vec3f(focusCenter.x, focusCenter.y + focusRadius, focusCenter.z);
+		forward = (t - position).normalized();
 		position += forward * speed * frameTime;
 
-		if(position.y > rotationPoint.y + idleRadius)
+		if(position.distance(t) < 1.0)
 		{
-			isOnIdleCircle = true;
+			isInCircularMovement = true;
+			position = t;
 		}
 	}
 	else
 	{
-		auto d = rotationPoint - position;
+		auto d = focusCenter - position;
 		auto a = atan2(d.x, d.y);
-		auto r = cos(a) + idleRadius;
+		auto r = cos(a) + isInCircularMovement;
 		auto t = Vec3f(r * cos(a), r * sin(a), position.z);
 	
 		forward = forward + t.normalized();
 		forward.normalize();
 		position += forward * speed * frameTime;
 	}
+}
+
+void PolypeptideClient::setCenterOfFocus(Vec3f center)
+{
+	focusCenter = center;
+}
+
+void PolypeptideClient::setRadiusOfFocus(float radius)
+{
+	focusRadius = radius;
+}
+
+void PolypeptideClient::setFocus(Vec3f center, float radius)
+{
+	setCenterOfFocus(center);
+	setRadiusOfFocus(radius);
 }

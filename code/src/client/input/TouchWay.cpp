@@ -9,7 +9,8 @@ TouchWay::TouchWay(): m_iId(0), m_way() {};
 TouchWay::TouchWay(int32_t id, const Vec2f& startPos, double startTime, TRIGGER trigger):
 	m_way(),
 	m_iId(id),
-	trigger(trigger)
+	trigger(trigger),
+	wayLength(0)
 {
 	m_way.push_back(TouchPoint(startPos, startTime));
 }
@@ -55,8 +56,8 @@ float TouchWay::getLength() const
 bool TouchWay::isClick() const
 {
 	auto distance = getStartPos().distance(getCurrentPos());
-	auto clickPixelTolerance = CONFIG_FLOAT1("data.input.clickPixelTolerance");
-	auto clickWayLengthTolerance = CONFIG_FLOAT1("data.input.clickWayLengthTolerance");
+	auto clickPixelTolerance = CONFIG_FLOAT("data.input.clickPixelTolerance");
+	auto clickWayLengthTolerance = CONFIG_FLOAT("data.input.clickWayLengthTolerance");
 
 	return (distance <= clickPixelTolerance && wayLength <= clickWayLengthTolerance);
 }

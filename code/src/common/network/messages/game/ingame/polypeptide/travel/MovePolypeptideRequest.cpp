@@ -2,7 +2,7 @@
 
 MovePolypeptideRequest::MovePolypeptideRequest() : NetworkMessage(), requestId(0), fromCellId(0), toCellId(0), amount(0)
 {
-	messageType = MessageType::CreateCellRequest;
+	messageType = MessageType::MovePolypeptideRequest;
 }
 
 MovePolypeptideRequest::MovePolypeptideRequest(char* data, unsigned &index) : NetworkMessage(data, index), requestId(0), fromCellId(0), toCellId(0), amount(0)
@@ -20,18 +20,19 @@ MovePolypeptideRequest::MovePolypeptideRequest(char* data, unsigned &index) : Ne
 	index += sizeof(toCellId);
 
 	memcpy(&amount, &data[index], sizeof(amount));
+	amount = ntohl(amount);
 	index += sizeof(amount);
 }
 
 MovePolypeptideRequest::MovePolypeptideRequest(const MovePolypeptideRequest &other) : NetworkMessage(other), 
 	requestId(other.requestId), fromCellId(other.fromCellId), toCellId(other.toCellId), amount(other.amount)
 {
-	messageType = MessageType::CreateCellRequest;
+	messageType = MessageType::MovePolypeptideRequest;
 }
 
 MovePolypeptideRequest::MovePolypeptideRequest(const NetworkMessage &other) : NetworkMessage(other), requestId(0), fromCellId(0), toCellId(0), amount(0)
 { 
-	messageType = MessageType::CreateCellRequest;
+	messageType = MessageType::MovePolypeptideRequest;
 }
 
 MovePolypeptideRequest::~MovePolypeptideRequest() 

@@ -5,8 +5,8 @@
 GameScreenStateGameOver::GameScreenStateGameOver(GameScreen * screen):
 	GameScreenState(screen),
 	layerOpacity(0),
-	maxLayerOpacity(CONFIG_FLOAT2("data.ingamefeedback.gameOver.maxLayerOpacity", 0.5f)),
-	layerOpacityChangeSpeed(CONFIG_FLOAT2("data.ingamefeedback.gameOver.layerOpacityChangeSpeed", 0.25f))
+	maxLayerOpacity(CONFIG_FLOAT("data.ingamefeedback.gameOver.maxLayerOpacity")),
+	layerOpacityChangeSpeed(CONFIG_FLOAT("data.ingamefeedback.gameOver.layerOpacityChangeSpeed"))
 {
 }
 

@@ -8,16 +8,16 @@ PlayerClient::PlayerClient(unsigned int id, string name, bool canManipulate) :
 	hue(0.5),
 	skin(
 		Vec3f(
-			2 * CONFIG_FLOAT1("data.world.radius"),
-			2 * CONFIG_FLOAT1("data.world.radius"),
+			2 * CONFIG_FLOAT("data.world.radius"),
+			2 * CONFIG_FLOAT("data.world.radius"),
 			200
 		),
 		Vec3f(
-			CONFIG_FLOAT2("data.skin.grid.cell.size", 15.f),
-			CONFIG_FLOAT2("data.skin.grid.cell.size", 15.f),
-			CONFIG_FLOAT2("data.skin.grid.cell.size", 15.f)
+			CONFIG_FLOAT("data.skin.grid.cell.size"),
+			CONFIG_FLOAT("data.skin.grid.cell.size"),
+			CONFIG_FLOAT("data.skin.grid.cell.size")
 		),
-		CONFIG_FLOAT2("data.skin.grid.isoLevel", 10.f)
+		CONFIG_FLOAT("data.skin.grid.isoLevel")
 	)
 {
 	initializeHue();
@@ -29,16 +29,16 @@ PlayerClient::PlayerClient(string name, bool canManipulate) :
 	hue(0.5),
 	skin(
 		Vec3f(
-			2 * CONFIG_FLOAT1("data.world.radius"),
-			2 * CONFIG_FLOAT1("data.world.radius"),
+			2 * CONFIG_FLOAT("data.world.radius"),
+			2 * CONFIG_FLOAT("data.world.radius"),
 			200
 		),
 		Vec3f(
-			CONFIG_FLOAT2("data.skin.grid.cell.size", 15.f),
-			CONFIG_FLOAT2("data.skin.grid.cell.size", 15.f),
-			CONFIG_FLOAT2("data.skin.grid.cell.size", 15.f)
+			CONFIG_FLOAT("data.skin.grid.cell.size"),
+			CONFIG_FLOAT("data.skin.grid.cell.size"),
+			CONFIG_FLOAT("data.skin.grid.cell.size")
 		),
-		CONFIG_FLOAT2("data.skin.grid.isoLevel", 10.f)
+		CONFIG_FLOAT("data.skin.grid.isoLevel")
 	)
 {
 	initializeHue();

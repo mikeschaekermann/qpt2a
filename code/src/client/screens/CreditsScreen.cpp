@@ -14,7 +14,7 @@ CreditsScreen::CreditsScreen()
 	rootItem->addSubItem(
 		this,
 		[]() {},
-		Vec2f(CONFIG_FLOAT2("data.menu.creditscreen.background.x", 0), CONFIG_FLOAT2("data.menu.creditscreen.background.y", 0)),
+		Vec2f(CONFIG_FLOAT("data.menu.creditscreen.background.x"), CONFIG_FLOAT("data.menu.creditscreen.background.y")),
 		background,
 		background,
 		background
@@ -24,7 +24,7 @@ CreditsScreen::CreditsScreen()
 	rootItem->addSubItem(
 		this,
 		[]() {},
-		Vec2f(CONFIG_FLOAT2("data.menu.creditscreen.content.x", 0), CONFIG_FLOAT2("data.menu.creditscreen.content.y", 0)),
+		Vec2f(CONFIG_FLOAT("data.menu.creditscreen.content.x"), CONFIG_FLOAT("data.menu.creditscreen.content.y")),
 		content,
 		content,
 		content
@@ -39,7 +39,7 @@ CreditsScreen::CreditsScreen()
 		{
 			SCREEN_MGR->openMenuScreen();
 		},
-		Vec2f(CONFIG_FLOAT2("data.menu.creditscreen.back.x", 100), CONFIG_FLOAT2("data.menu.creditscreen.back.y", 300)),
+		Vec2f(CONFIG_FLOAT("data.menu.creditscreen.back.x"), CONFIG_FLOAT("data.menu.creditscreen.back.y")),
 		backBasic,
 		backClick,
 		backHover

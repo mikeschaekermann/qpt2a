@@ -14,7 +14,7 @@ PolypeptideCellAttackEvent::PolypeptideCellAttackEvent(double startTime, unsigne
 	attackedCellId(attackedCellId),
 	polypeptideId(polypeptideId),
 	damage(damage),
-	GameEvent(startTime, CONFIG_FLOAT1("data.event.polypeptidecellattack.time"))
+	GameEvent(startTime, CONFIG_FLOAT("data.event.polypeptidecellattack.time"))
 { }
 
 void PolypeptideCellAttackEvent::trigger()
@@ -36,7 +36,7 @@ void PolypeptideCellAttackEvent::trigger()
 
 			if (attackedCell->getHealthPoints() < 0.f)
 			{
-				(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT1("data.event.celldie.time"), attackedCell->getId());
+				(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT("data.event.celldie.time"), attackedCell->getId());
 
 				if (attackedCell->getType() == CellServer::STEMCELL)
 				{

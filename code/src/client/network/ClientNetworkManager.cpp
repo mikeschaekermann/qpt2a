@@ -123,6 +123,31 @@ NetworkMessage* ClientNetworkManager::createNetworkMessage(char* data)
 				message = new CreatePolypeptideFailure(data, index);
 				break;
 			}
+		case MessageType::MovePolypeptideSuccess:
+			{
+				message = new MovePolypeptideSuccess(data, index);
+				break;
+			}
+		case MessageType::MovePolypeptideFailure:
+			{
+				message = new MovePolypeptideFailure(data, index);
+				break;
+			}
+		case MessageType::PolypeptideCellAttack:
+			{
+				message = new PolypeptideCellAttack(data, index);
+				break;
+			}
+		case MessageType::PolypeptideFight:
+			{
+				message = new PolypeptideFight(data, index);
+				break;
+			}
+		case MessageType::PolypeptideDie:
+			{
+				message = new PolypeptideDie(data, index);
+				break;
+			}
 
 		default:
 			break;
@@ -253,7 +278,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				cellVec.normalize();
 				ci::Vec3f textPos = attacked->getPosition() + (cellVec * (attacker->getPosition() - attacked->getPosition()).length() / 3.f);
 				
-				float deathTime = (float) getElapsedSeconds() + CONFIG_FLOAT2("data.ingamefeedback.renderedDamage.displaytime", 5.f);
+				float deathTime = (float) getElapsedSeconds() + CONFIG_FLOAT("data.ingamefeedback.renderedDamage.displaytime");
 				string text = stringify(ostringstream() << "-" << ceil((float) cellAttack->damage));
 				GameScreen::RenderText renderText(deathTime, textPos, text);
 				
@@ -347,7 +372,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				newCell->setAngle(createCellSuccess->angle);
 				newCell->setId(createCellSuccess->cellId);
 				newCell->addParent(parentCell);
-				newCell->setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.incompleteOpacity", 0.5f));
+				newCell->setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.incompleteOpacity"));
 				newCell->setHue(GAME_MGR->getMyHue());
 				parentCell->addChild(newCell);
 				/// must be hidden so that the skin is updated later!
@@ -405,7 +430,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide->show();
 				polypeptide->setOwner(&stemCell);
 
-				stemCell.addPolypetide(polypeptide);
+				stemCell.addPolypeptide(polypeptide);
 
 				GAME_SCR.getMyPolypeptides().addGameObject(polypeptide);
 				createPolypeptideRequestContexts.erase(context);
@@ -431,14 +456,16 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				createPolypeptideRequestContexts.erase(context);
 			}
 		}
+		break;
 	}
 	case MessageType::MovePolypeptideSuccess:
 	{
 		MovePolypeptideSuccess * movePolypeptideSuccess = dynamic_cast<MovePolypeptideSuccess *>(message);
 		if (movePolypeptideSuccess)
 		{
-			LOG_INFO("MovePolipeptideSuccess received");
+			LOG_INFO("MovePolypeptideSuccess received");
 			unsigned int requestId = movePolypeptideSuccess->requestId;
+			auto polypeptideIds = movePolypeptideSuccess->polypeptideIds;
 
 			auto context = movePolypeptideRequestContexts.find(requestId);
 
@@ -449,16 +476,38 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				auto amount = std::get<2>(context->second);
 				/// make travel
 
+				if (polypeptideIds.size() <= amount)
+				{
+					for (auto it = polypeptideIds.begin(); it != polypeptideIds.end(); ++it)
+					{
+						Polypeptide * polypeptide = fromCell->getPolypeptides().find(*it)->second;
+						toCell->addPolypeptide(polypeptide);
+						fromCell->removePolypeptide(polypeptide);
+						
+						auto polypeptideInSelectionList = GAME_SCR.getSelectedPolypeptides().find(*it);
+						if (polypeptideInSelectionList != nullptr)
+						{
+							GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptideInSelectionList);
+						}
+						else
+						{
+							LOG_ERROR("Tried to move polypeptide which the client does not have in its list!");
+							assert(false);
+						}
+					}
+				}
+
 				movePolypeptideRequestContexts.erase(context);
 			}
 		}
+		break;
 	}
 	case MessageType::MovePolypeptideFailure:
 	{
 		MovePolypeptideFailure * movePolypeptideFailure = dynamic_cast<MovePolypeptideFailure *>(message);
 		if (movePolypeptideFailure)
 		{
-			LOG_INFO("MovePolipeptideFailure received");
+			LOG_INFO("MovePolypeptideFailure received");
 			unsigned int requestId = movePolypeptideFailure->requestId;
 
 			auto context = movePolypeptideRequestContexts.find(requestId);
@@ -473,38 +522,75 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				movePolypeptideRequestContexts.erase(context);
 			}
 		}
+		break;
 	}
 	case MessageType::PolypeptideDie:
 	{
 		PolypeptideDie * polypeptideDie = dynamic_cast<PolypeptideDie *>(message);
 		if (polypeptideDie)
 		{
-			LOG_INFO("PolipeptideDie received");
+			LOG_INFO("PolypeptideDie received");
 			unsigned int polypeptideId = polypeptideDie->polypeptideId;
+
+			auto polypeptide = GAME_SCR.getSelectedPolypeptides().find(polypeptideId);
+			if (polypeptide != nullptr)
+			{
+				polypeptide->getOwner()->removePolypeptide(polypeptide);
+				GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptide);
+				delete polypeptide;
+			}
+			else
+			{
+				LOG_ERROR("Tried to delete polypeptide which the client does not have in its list!");
+				assert(false);
+			}
 		}
+		break;
 	}
 	case MessageType::PolypeptideCellAttack:
 	{
 		PolypeptideCellAttack * polypeptideCellAttack = dynamic_cast<PolypeptideCellAttack *>(message);
 		if (polypeptideCellAttack)
 		{
-			LOG_INFO("PolipeptideCellAttack received");
+			LOG_INFO("PolypeptideCellAttack received");
 			unsigned int polypeptideId = polypeptideCellAttack->polypeptideId;
 			unsigned int cellId = polypeptideCellAttack->cellId;
 			float damage = polypeptideCellAttack->damage;
+
+			auto gameObject = GAME_SCR.getGameObjectsToDraw().find(cellId);
+
+			if (gameObject != nullptr)
+			{
+				auto cell = dynamic_cast<CellClient *>(gameObject);
+				cell->decreaseHealthPointsBy(damage);
+				
+				auto polypeptide = GAME_SCR.getSelectedPolypeptides().find(polypeptideId);
+				if (polypeptide != nullptr)
+				{
+					polypeptide->setState(Polypeptide::CELLFIGHT);
+					polypeptide->setFocus(cell->getPosition(), cell->getRadius());
+				}
+				else
+				{
+					LOG_ERROR("Tried to put polypeptide into attack state which the client does not have in its list!");
+					assert(false);
+				}
+			}
 		}
+		break;
 	}
 	case MessageType::PolypeptideFight:
 	{
 		PolypeptideFight * polypeptideFight = dynamic_cast<PolypeptideFight *>(message);
 		if (polypeptideFight)
 		{
-			LOG_INFO("PolipeptideFight received");
+			LOG_INFO("PolypeptideFight received");
 			unsigned int polypeptideId1 = polypeptideFight->polypeptideId1;
 			unsigned int polypeptideId2 = polypeptideFight->polypeptideId2;
 			bool polypeptide1Dies = polypeptideFight->polypeptide1Dies;
 			bool polypeptide2Dies = polypeptideFight->polypeptide2Dies;
 		}
+		break;
 	}
 	default:
 	{

@@ -6,7 +6,7 @@
 GameScreenStateSelectPolypeptides::GameScreenStateSelectPolypeptides(GameScreen * screen, CellClient * pickedCell):
 	GameScreenState(screen),
 	hasDragged(false),
-	maxPickRadius(CONFIG_FLOAT2("data.ingamefeedback.pickPolypeptides.maxPickRadius", 100.f)),
+	maxPickRadius(CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.maxPickRadius")),
 	pickedCell(pickedCell),
 	numberOfPolypeptidesSelected(0),
 	pickRadius(0)
@@ -20,6 +20,11 @@ bool GameScreenStateSelectPolypeptides::touchClick(TouchWay touchWay)
 {
 	screen->switchToState(new GameScreenStateInMenu(screen, pickedCell));
 	return true;
+}
+
+bool GameScreenStateSelectPolypeptides::touchBegan(const TouchWay & touchWay)
+{
+	return false;
 }
 
 void GameScreenStateSelectPolypeptides::touchMoved(const TouchWay & touchWay)
@@ -40,7 +45,7 @@ void GameScreenStateSelectPolypeptides::touchEnded(const TouchWay & touchWay)
 	auto it = pickedCell->getPolypeptides().begin();
 	for (unsigned int i = 0; i < numberOfPolypeptidesSelected && it != pickedCell->getPolypeptides().end(); ++i, ++it)
 	{
-		GAME_SCR.getSelectedPolypeptides().addGameObject(dynamic_cast<PolypeptideClient* >(it->second));
+		screen->getSelectedPolypeptides().addGameObject(dynamic_cast<PolypeptideClient* >(it->second));
 	}
 	screen->switchToState(new GameScreenStateMovePolypeptides(screen));
 }
@@ -50,10 +55,10 @@ void GameScreenStateSelectPolypeptides::draw2D()
 	if (hasDragged)
 	{
 		gl::color(ColorA(
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.stepRadiusColor.r"),
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.stepRadiusColor.g"),
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.stepRadiusColor.b"),
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.stepRadiusColor.a")
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.stepRadiusColor.r"),
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.stepRadiusColor.g"),
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.stepRadiusColor.b"),
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.stepRadiusColor.a")
 		));
 
 		for (unsigned int i = 1; i < polypeptideCount; ++i)
@@ -62,21 +67,21 @@ void GameScreenStateSelectPolypeptides::draw2D()
 		}
 
 		gl::color(ColorA(
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.maxRadiusColor.r"),
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.maxRadiusColor.g"),
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.maxRadiusColor.b"),
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.maxRadiusColor.a")
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.maxRadiusColor.r"),
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.maxRadiusColor.g"),
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.maxRadiusColor.b"),
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.maxRadiusColor.a")
 		));
 		gl::drawStrokedCircle(pickedCell->getPosition2D(), maxPickRadius);
 
 		gl::drawString(stringify(ostringstream() << numberOfPolypeptidesSelected), center, ColorA(1.f, 1.f, 1.f, 1.f), 
-			Font(CONFIG_STRING2("data.ingamefeedback.renderedDamage.font", "Comic Sans MS"), (float) CONFIG_INT2("data.ingamefeedback.renderedDamage.size", 18)));
+			Font(CONFIG_STRING("data.ingamefeedback.renderedDamage.font"), (float) CONFIG_INT("data.ingamefeedback.renderedDamage.size")));
 	
 		gl::color(ColorA(
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.selectRadiusColor.r"),
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.selectRadiusColor.g"),
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.selectRadiusColor.b"),
-			CONFIG_FLOAT1("data.ingamefeedback.pickPolypeptides.selectRadiusColor.a")
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.selectRadiusColor.r"),
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.selectRadiusColor.g"),
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.selectRadiusColor.b"),
+			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.selectRadiusColor.a")
 		));
 		gl::drawSolidCircle(center, numberOfPolypeptidesSelected * onePolypeptideDistance);
 	}

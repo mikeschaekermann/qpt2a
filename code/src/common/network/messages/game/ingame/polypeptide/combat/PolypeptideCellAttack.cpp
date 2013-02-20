@@ -2,7 +2,7 @@
 
 PolypeptideCellAttack::PolypeptideCellAttack() : NetworkMessage(), polypeptideId(0), cellId(0), damage(0.f)
 {
-	messageType = MessageType::CellDie;
+	messageType = MessageType::PolypeptideCellAttack;
 }
 
 PolypeptideCellAttack::PolypeptideCellAttack(char* data, unsigned &index) : NetworkMessage(data, index), polypeptideId(0), cellId(0), damage(0.f)
@@ -23,12 +23,12 @@ PolypeptideCellAttack::PolypeptideCellAttack(char* data, unsigned &index) : Netw
 PolypeptideCellAttack::PolypeptideCellAttack(const PolypeptideCellAttack &other) : NetworkMessage(other), 
 	polypeptideId(other.polypeptideId), cellId(other.cellId), damage(other.damage)
 { 
-	messageType = MessageType::CellDie;
+	messageType = MessageType::PolypeptideCellAttack;
 }
 
 PolypeptideCellAttack::PolypeptideCellAttack(const NetworkMessage &other) : NetworkMessage(other), polypeptideId(0), cellId(0), damage(0.f)
 { 
-	messageType = MessageType::CellDie;
+	messageType = MessageType::PolypeptideCellAttack;
 }
 
 PolypeptideCellAttack::~PolypeptideCellAttack() 

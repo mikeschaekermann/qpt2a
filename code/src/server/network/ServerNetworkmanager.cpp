@@ -5,6 +5,7 @@
 #include "../../common/network/messages/game/outgame/JoinRequest.h"
 #include "../../common/network/messages/game/ingame/cell/creation/CreateCellRequest.h"
 #include "../../common/network/messages/game/ingame/polypeptide/creation/CreatePolypeptideRequest.h"
+#include "../../common/network/messages/game/ingame/polypeptide/travel/MovePolypeptideRequest.h"
 
 using namespace std;
 
@@ -47,6 +48,12 @@ NetworkMessage* ServerNetworkManager::createNetworkMessage(char* data)
 		case MessageType::CreatePolypeptideRequest:
 			{
 				message = new CreatePolypeptideRequest(data, index);
+				break;
+			}
+		case MessageType::MovePolypeptideRequest:
+			{
+				message = new MovePolypeptideRequest(data, index);
+				break;
 			}
 		default:
 			break;
@@ -74,6 +81,12 @@ void ServerNetworkManager::handleMessage(NetworkMessage* message)
 	if (createPolypeptideRequest)
 	{
 		m_game->createPolypetide(*createPolypeptideRequest);
+	}
+
+	MovePolypeptideRequest * movePolypeptideRequest = dynamic_cast<MovePolypeptideRequest *>(message);
+	if (movePolypeptideRequest)
+	{
+		m_game->movePolypetide(*movePolypeptideRequest);
 	}
 	GAMECONTEXT->getMutex().unlock();
 }

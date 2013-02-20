@@ -21,10 +21,10 @@ GameScreenStateInMenu::GameScreenStateInMenu(GameScreen* screen, CellClient * pi
 
 			auto createCellButtonSize = ASSET_MGR->getGuiTexture(string("ingame-button-" + name + "-normal")).getSize();
 			auto createCellButtonRadius = 0.25 * (createCellButtonSize.x + createCellButtonSize.y);
-			auto createCellButtonAngle = CONFIG_FLOAT2("data.menu.ingame.create." + name + ".angle", 45) / 180.0 * M_PI;
+			auto createCellButtonAngle = CONFIG_FLOAT("data.menu.ingame.create." + name + ".angle") / 180.0 * M_PI;
 			auto cellEdgePoint3D = pickedCell->getPosition() + Vec3f((float) cos(createCellButtonAngle) * pickedCell->getRadius(), (float) sin(createCellButtonAngle) * pickedCell->getRadius(), 0.f);
 			auto cellEdgePoint2D = RenderManager::getInstance()->cam.worldToScreen(cellEdgePoint3D, (float) getWindowWidth(), (float) getWindowHeight());
-			auto createCellButtonDistance = CONFIG_FLOAT2("data.menu.ingame.create." + name + ".distance", 30) + createCellButtonRadius;
+			auto createCellButtonDistance = CONFIG_FLOAT("data.menu.ingame.create." + name + ".distance") + createCellButtonRadius;
 			auto createCellButtonOffsetFromEdge2D = Vec2f((float) (cos(createCellButtonAngle) * createCellButtonDistance), (float) (-sin(createCellButtonAngle) * createCellButtonDistance));
 			auto createCellButtonCenter = cellEdgePoint2D + createCellButtonOffsetFromEdge2D;
 			auto createCellButtonOffset = createCellButtonSize / (-2);
@@ -49,44 +49,58 @@ GameScreenStateInMenu::~GameScreenStateInMenu(void)
 
 bool GameScreenStateInMenu::touchBegan(const TouchWay & touchWay)
 {
-	auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
+	/*auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
 
 	/// CAUTION: this only works if the in-game menu buttons do not overlap with the picked cell
 	if (cellsPicked.size() > 0 && cellsPicked[0] == pickedCell && cellsPicked[0]->getPolypeptides().size())
 	{
 		screen->switchToState(new GameScreenStateSelectPolypeptides(screen, pickedCell));
 	}
-	return true;
+	return true;*/
+	return GameScreenState::touchBegan(touchWay);
+}
+
+void GameScreenStateInMenu::touchMoved(const TouchWay & touchWay)
+{
+	bool isMouseOverMenuItem = false;
+	auto cellMenuButtons = screen->cellMenuButtons;
+
+	for (auto it = cellMenuButtons.begin(); it != cellMenuButtons.end(); ++it)
+	{
+		if (isMouseOverMenuItem |= it->second->isMouseOverItem(touchWay.getCurrentPos()))
+			return;
+	}
+
+	GameScreenState::touchMoved(touchWay);
+
+	for (auto it = cellMenuButtons.begin(); it != cellMenuButtons.end(); ++it)
+	{
+		auto button = it->second;
+		button->setPosition(button->getPosition() + touchWay.getLastDeltaVector());
+	}
 }
 
 bool GameScreenStateInMenu::touchClick(TouchWay touchWay)
 {
+	
 	if (touchWay.getTrigger() == TouchWay::LEFT)
 	{
 		auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
 
-		if (cellsPicked.size() == 0)
+		if (cellsPicked.size() > 0 && cellsPicked[0] == pickedCell)
 		{
 			screen->switchToState(new GameScreenStateNeutral(screen));
 			return false;
 		}
-		else if (cellsPicked[0] != pickedCell)
-		{
-			screen->switchToState(new GameScreenStateInMenu(screen, cellsPicked[0]));
-		}
-	}
-	else
-	{
-		screen->switchToState(new GameScreenStateNeutral(screen));
 	}
 
-	return false;
+	return GameScreenState::touchClick(touchWay);
 }
 
 bool GameScreenStateInMenu::mouseMove(MouseEvent event)
 {
 	screen->cellMenu->setVisible(true);
-	if (!isStemcell)
+	if (!isStemcell || pickedCell->getPolypeptides().size() >= CONFIG_INT("data.polypeptide.maxPerCell"))
 	{
 		screen->cellMenuButtons["polypeptid"]->setVisible(false);
 	}

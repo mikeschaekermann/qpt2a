@@ -10,43 +10,17 @@ GameScreenStateNeutral::GameScreenStateNeutral(GameScreen * screen):
 
 bool GameScreenStateNeutral::touchClick(TouchWay touchWay)
 {
-	auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
-
-	if (cellsPicked.size() > 0)
-	{
-		screen->switchToState(new GameScreenStateInMenu(screen, cellsPicked[0]));
-		return true;
-	}
-	return false;
+	return GameScreenState::touchClick(touchWay);
 }
 
 bool GameScreenStateNeutral::touchBegan(const TouchWay & touchWay)
 {
-	auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
-
-	if (cellsPicked.size() > 0 && cellsPicked[0]->getPolypeptides().size())
-	{
-		screen->switchToState(new GameScreenStateSelectPolypeptides(screen, cellsPicked[0]));
-	}
-	return true;
+	return GameScreenState::touchBegan(touchWay);
 }
 
 void GameScreenStateNeutral::touchMoved(const TouchWay & touchWay)
 {
-	if (touchWay.getTrigger() == TouchWay::RIGHT)
-	{
-		auto& cam = RenderManager::getInstance()->cam;
-	
-		auto curPos2D = touchWay.getCurrentPos();
-		auto prevPos2D = curPos2D - touchWay.getLastDeltaVector();
-
-		auto curPos3D = cam.screenToWorldPlane(curPos2D);
-		auto prevPos3D = cam.screenToWorldPlane(prevPos2D);
-
-		auto shift = prevPos3D - curPos3D;
-
-		cam.setPosition(cam.getPosition() + shift);
-	}
+	return GameScreenState::touchMoved(touchWay);
 }
 
 void GameScreenStateNeutral::onKeyInput(KeyEvent& e)

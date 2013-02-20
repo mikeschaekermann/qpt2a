@@ -18,9 +18,9 @@
 
 BuildingEvent::BuildingEvent(double startTime, unsigned int cellId) :
 	cellId(cellId),
-	GameEvent(startTime, CONFIG_FLOAT1("data.event.build.time"))
+	GameEvent(startTime, CONFIG_FLOAT("data.event.build.time"))
 	{ 
-		double duration = CONFIG_FLOAT1("data.event.build.time");
+		double duration = CONFIG_FLOAT("data.event.build.time");
 
 		auto & cell = *(dynamic_cast<CellServer *>(GAMECONTEXT->getInactiveCells().find(cellId)));
 

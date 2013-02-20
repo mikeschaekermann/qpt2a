@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data>
 	<input>
-		<clickPixelTolerance>10</clickPixelTolerance>
-		<clickWayLengthTolerance>15</clickWayLengthTolerance>
+		<clickPixelTolerance>30</clickPixelTolerance>
+		<clickWayLengthTolerance>30</clickWayLengthTolerance>
 		<text>
 		  <font>Comic Sans MS</font>
 		  <size>34</size>
@@ -104,7 +104,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-		<max>1</max>
+		<max>2</max>
 		<player>
 			<startposition>
 				<x>35.0</x>
@@ -178,8 +178,10 @@
 		</bonecell>
 	</cell>
 	<polypeptide>
-    <scale>30.0</scale>
-		<maxPerCell>15</maxPerCell>
+		<scale>30.0</scale>
+		<maxPerStemCell>15</maxPerStemCell>
+    <maxPerStandardCell>5</maxPerStandardCell>
+    <maxPerBoneCell>20</maxPerBoneCell>
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
 		<damage>2.0</damage>

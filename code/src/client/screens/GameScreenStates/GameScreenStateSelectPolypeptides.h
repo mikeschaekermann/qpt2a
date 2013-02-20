@@ -8,6 +8,7 @@ public:
 	GameScreenStateSelectPolypeptides(GameScreen * screen, CellClient * pickedCell);
 
 	virtual bool touchClick(TouchWay touchWay);
+	virtual bool touchBegan(const TouchWay & touchWay);
 	virtual void touchMoved(const TouchWay & touchWay);
 	virtual void touchEnded(const TouchWay & touchWay);
 	virtual void draw2D();

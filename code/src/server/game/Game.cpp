@@ -31,6 +31,8 @@
 #include "../../common/network/messages/game/ingame/polypeptide/travel/MovePolypeptideSuccess.h"
 #include "../../common/network/messages/game/ingame/polypeptide/travel/MovePolypeptideFailure.h"
 
+#include "../../common/PolypeptideCapacityContainer.h"
+
 #include "../../common/Config.h"
 #include "../../common/ConfigurationDataHandler.h"
 #include "../../common/GameObjectContainer.h"
@@ -53,8 +55,12 @@ Game::Game()
 	LOG_INFO("Game created");
 		
 	stringstream message;
-	message << "Space for " << CONFIG_INT2("data.players.max", 4) << " players.";
+	message << "Space for " << CONFIG_INT("data.players.max") << " players.";
 	LOG_INFO(message.str());
+
+	POLYCAPACITY->setPolypeptidesPerStemCell(CONFIG_INT("data.polypeptide.maxPerStemCell"));
+	POLYCAPACITY->setPolypeptidesPerStandardCell(CONFIG_INT("data.polypeptide.maxPerStandardCell"));
+	POLYCAPACITY->setPolypeptidesPerBoneCell(CONFIG_INT("data.polypeptide.maxPerBoneCell"));
 
 	/**
 		* Build Modifiers and Barriers
@@ -119,7 +125,7 @@ Game::Game()
 		}
 
 		StaticModificatorServer * s = new StaticModificatorServer(Vec3f(xPosStatics[i], yPosStatics[i], 0.f), Vec3f(xRotStatics[i], yRotStatics[i], 0.f), Vec3f::one(), radiusStatics[i], type);
-		if (!isInRadiusOf<float>(s->getPosition(), s->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
+		if (!isInRadiusOf<float>(s->getPosition(), s->getRadius(), Vec3f::zero(), CONFIG_FLOAT("data.world.radius")))
 		{
 			throw string("Static modifier could not be created because it is not in the game area");
 		}
@@ -144,7 +150,7 @@ Game::Game()
 	for (unsigned int i = 0; i < xPosBarrier.size(); ++i)
 	{
 		BarrierServer * b = new BarrierServer(Vec3f(xPosBarrier[i], yPosBarrier[i], 0.f), Vec3f(xRotBarrier[i], yRotBarrier[i], 0.f), Vec3f::one(), radiusBarrier[i]);
-		if (!isInRadiusOf<float>(b->getPosition(), b->getRadius(), Vec3f::zero(), CONFIG_FLOAT1("data.world.radius")))
+		if (!isInRadiusOf<float>(b->getPosition(), b->getRadius(), Vec3f::zero(), CONFIG_FLOAT("data.world.radius")))
 		{
 			throw string("Barrier could not be created because it is not in the game area");
 		}
@@ -170,7 +176,7 @@ void Game::join(JoinRequest &request)
 	LOG_INFO("JoinRequest received");
 	string playerName = request.name;
 		
-	if(GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
+	if(GAMECONTEXT->getPlayerMap().size() == CONFIG_INT("data.players.max"))
 	{
 		JoinFailure * failure = new JoinFailure(request);
 		failure->errorCode = JoinErrorCode::GameIsFull;
@@ -203,8 +209,8 @@ void Game::join(JoinRequest &request)
 	Vec3f startPosition(xPositions[GAMECONTEXT->getPlayerMap().size()], yPositions[GAMECONTEXT->getPlayerMap().size()], 0.f);
 
 	/// get the stemcell- and world-radius information
-	float stemcellRadius = CONFIG_FLOAT1("data.cell.stemcell.radius");
-	float worldRadius = CONFIG_FLOAT1("data.world.radius");
+	float stemcellRadius = CONFIG_FLOAT("data.cell.stemcell.radius");
+	float worldRadius = CONFIG_FLOAT("data.world.radius");
 
 	/// test if the stemcell is inside the world
 	if (!isInRadiusOf(startPosition, stemcellRadius, Vec3f(0.f, 0.f, 0.f), worldRadius))
@@ -227,7 +233,7 @@ void Game::join(JoinRequest &request)
 	NETWORKMANAGER->send(success);
 	LOG_INFO("JoinSuccess sent");
 
-	if (GAMECONTEXT->getPlayerMap().size() == CONFIG_INT2("data.players.max", 4))
+	if (GAMECONTEXT->getPlayerMap().size() == CONFIG_INT("data.players.max"))
 	{
 		using boost::asio::ip::udp;
 
@@ -332,17 +338,15 @@ void Game::createCell(CreateCellRequest & request)
 		Vec3f position;
 		switch (type.getType())
 		{
-		case CellType::StemCell:
-			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.stemcell.radius"), position);
-			cell = new CellServer(CellServer::STEMCELL, position, angle, &player);
-			break;
 		case CellType::StandardCell:
-			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.standardcell.radius"), position);
+			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.standardcell.radius"), position);
 			cell = new CellServer(CellServer::STANDARDCELL, position, angle, &player);
+			++(POLYCAPACITY->NumberOfStandardCells);
 			break;
 		case CellType::BoneCell:
-			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT1("data.cell.bonecell.radius"), position);
+			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.bonecell.radius"), position);
 			cell = new CellServer(CellServer::BONECELL, position, angle, &player);
+			++(POLYCAPACITY->NumberOfBoneCells);
 			break;
 		default:
 			LOG_INFO(stringify(ostringstream() << "Unknown CellType: " << type.getType()));
@@ -357,9 +361,6 @@ void Game::createCell(CreateCellRequest & request)
 			string typeName;
 			switch(type.getType())
 			{
-				case CellType::StemCell:
-					typeName = "StemCell";
-					break;
 				case CellType::StandardCell:
 					typeName = "StandardCell";
 					break;
@@ -392,9 +393,23 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 	if (player == nullptr)
 	{
 		/// No valid player
+		LOG_INFO("CreatePolypeptideFailure InvalidPlayer sent");
 		CreatePolypeptideFailure * message = new CreatePolypeptideFailure();
 		message->requestId = request.requestId;
 		message->errorCode = CreatePolypeptideErrorCode::InvalidPlayer;
+		message->endpoint = player->getEndpoint();
+		NETWORKMANAGER->send(message);
+		
+		return;
+	}
+
+	if (POLYCAPACITY->getRemainingNumberOfPolypeptidesAllowed() == 0)
+	{
+		/// No additional poly is allowed
+		LOG_INFO("CreatePolypeptideFailure InvalidPlayer sent");
+		CreatePolypeptideFailure * message = new CreatePolypeptideFailure();
+		message->requestId = request.requestId;
+		message->errorCode = CreatePolypeptideErrorCode::NoPolypeptideCapacities;
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
 		
@@ -405,23 +420,31 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 
 	PolypeptideServer * polypetide = new PolypeptideServer(stemCell->getPosition(), stemCell->getAngle(), stemCell);
 
-	if (stemCell->addPolypetide(polypetide))
+	if (stemCell->addPolypeptide(polypetide))
 	{
 		/// success
+		LOG_INFO("CreatePolypeptideSuccess sent");
 		CreatePolypeptideSuccess * message = new CreatePolypeptideSuccess();
 		message->requestId = request.requestId;
 		message->polypeptideId = polypetide->getId();
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
+
+		++(POLYCAPACITY->NumberOfPolypeptides);
+
+		return;
 	}
 	else
 	{
 		/// failure
+		LOG_INFO("CreatePolypeptideFailure CellFull sent");
 		CreatePolypeptideFailure * message = new CreatePolypeptideFailure();
 		message->requestId = request.requestId;
 		message->errorCode = CreatePolypeptideErrorCode::CellFull;
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
+
+		delete polypetide;
 	}
 }
 
@@ -438,36 +461,61 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 	if (fromCell == nullptr || toCell == nullptr)
 	{
 		/// either sending cell or receiving cell are not valid
+		LOG_INFO("MovePolypeptideFailure InvalidCells sent");
 		MovePolypeptideFailure * message = new MovePolypeptideFailure();
 		message->requestId = request.requestId;
 		message->errorCode = MovePolypeptideErrorCode::InvalidCells;
 		message->endpoint = GAMECONTEXT->getPlayer(fromCell->getOwner()->getId())->getEndpoint();
 		NETWORKMANAGER->send(message);
+
 		return;
 	}
 
 	if (fromCell->getOwner() != toCell->getOwner())
 	{
 		/// the cells do not have the same owner
+		LOG_INFO("MovePolypeptideFailure DifferentOwner sent");
 		MovePolypeptideFailure * message = new MovePolypeptideFailure();
 		message->requestId = request.requestId;
 		message->errorCode = MovePolypeptideErrorCode::DifferentOwner;
 		message->endpoint = GAMECONTEXT->getPlayer(fromCell->getOwner()->getId())->getEndpoint();
 		NETWORKMANAGER->send(message);
+
+		return;
 	}
 
-	if (toCell->getPolypeptides().size() + amount >= CONFIG_INT1("data.polypetide.maxPerCell"))
+	/*if (toCell->getPolypeptides().size() + amount > unsigned int(CONFIG_INT("data.polypeptide.maxPerCell")))
 	{
 		/// target-cell has not enough space
+		LOG_INFO("MovePolypeptideFailure TargetCellFull sent");
 		MovePolypeptideFailure * message = new MovePolypeptideFailure();
 		message->requestId = request.requestId;
 		message->errorCode = MovePolypeptideErrorCode::TargetCellFull;
 		message->endpoint = GAMECONTEXT->getPlayer(fromCell->getOwner()->getId())->getEndpoint();
 		NETWORKMANAGER->send(message);
+
+		return;
+	}*/
+
+	unsigned int numberOfTravelingCells = 0;
+	switch(toCell->getType())
+	{
+	case CellServer::STEMCELL:
+		numberOfTravelingCells = CONFIG_INT("data.polypeptide.maxPerStemCell");
+		break;
+	case CellServer::STANDARDCELL:
+		numberOfTravelingCells = CONFIG_INT("data.polypeptide.maxPerStandardCell");
+		break;
+	case CellServer::BONECELL:
+		numberOfTravelingCells = CONFIG_INT("data.polypeptide.maxPerBoneCell");
+		break;
 	}
+	numberOfTravelingCells -= toCell->getPolypeptides().size();
+	amount = min(amount, numberOfTravelingCells);
 
 	vector<unsigned int> polypeptideIds;
-	for (auto it = fromCell->getPolypeptides().begin(); it != fromCell->getPolypeptides().end(); ++it)
+	auto it = fromCell->getPolypeptides().begin();
+	for (unsigned int i = 0; i < amount && it != fromCell->getPolypeptides().end(); ++i, ++it)
 	{
 		polypeptideIds.push_back(it->second->getId());
 	}
@@ -475,15 +523,17 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 	for (auto it = polypeptideIds.begin(); it != polypeptideIds.end(); ++it)
 	{
 		Polypeptide * polypeptide = fromCell->getPolypeptides().find(*it)->second;
-		toCell->addPolypetide(polypeptide);
-		fromCell->removePolypetide(polypeptide);
+		toCell->addPolypeptide(polypeptide);
+		fromCell->removePolypeptide(polypeptide);
 	}
 
 	/// send success
+	LOG_INFO("MovePolypeptideSuccess sent");
 	MovePolypeptideSuccess * message = new MovePolypeptideSuccess();
 	message->requestId = request.requestId;
 	message->polypeptideIds = polypeptideIds;
-	NETWORKMANAGER->sendTo<MovePolypeptideSuccess>(message, NETWORKMANAGER->getConnectionEndpoints());
+	message->endpoint = GAMECONTEXT->getPlayer(fromCell->getOwner()->getId())->getEndpoint();
+	NETWORKMANAGER->send(message);
 }
 	
 PlayerServer* Game::testPlayer(unsigned int playerId)

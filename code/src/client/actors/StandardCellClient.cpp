@@ -65,7 +65,7 @@ void StandardCellClient::update(float frameTime)
 
 	if (spikesCanBeSeen())
 	{
-		spikesScale = spikesScale * pow(CONFIG_FLOAT2("data.cell.standardcell.spikes.shrinkAmountPerSecond", 0.5), frameTime);
+		spikesScale = spikesScale * pow(CONFIG_FLOAT("data.cell.standardcell.spikes.shrinkAmountPerSecond"), frameTime);
 	}
 }
 

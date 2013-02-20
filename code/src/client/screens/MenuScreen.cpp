@@ -12,7 +12,7 @@ MenuScreen::MenuScreen()
 	rootItem->addSubItem(
 		this,
 		[]() {},
-		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.background.x", 0), CONFIG_FLOAT2("data.menu.menuscreen.background.y", 0)),
+		Vec2f(CONFIG_FLOAT("data.menu.menuscreen.background.x"), CONFIG_FLOAT("data.menu.menuscreen.background.y")),
 		background,
 		background,
 		background
@@ -27,7 +27,7 @@ MenuScreen::MenuScreen()
 		{
 			SCREEN_MGR->openConnectScreen();
 		},
-		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.connect.x", 100), CONFIG_FLOAT2("data.menu.menuscreen.connect.y", 50)),
+		Vec2f(CONFIG_FLOAT("data.menu.menuscreen.connect.x"), CONFIG_FLOAT("data.menu.menuscreen.connect.y")),
 		connectTextureBasic,
 		connectTextureClick,
 		connectTextureHover
@@ -71,7 +71,7 @@ MenuScreen::MenuScreen()
 			GAME_MGR->startGame("Mike");
 			setFullScreen(true);
 		},
-		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.start.x", 100), CONFIG_FLOAT2("data.menu.menuscreen.start.y", 200)),
+		Vec2f(CONFIG_FLOAT("data.menu.menuscreen.start.x"), CONFIG_FLOAT("data.menu.menuscreen.start.y")),
 		startServerTextureBasic,
 		startServerTextureClick,
 		startServerTextureHover
@@ -86,7 +86,7 @@ MenuScreen::MenuScreen()
 		{
 			SCREEN_MGR->openCreditsScreen();
 		},
-		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.credits.x", 100), CONFIG_FLOAT2("data.menu.menuscreen.credits.y", 300)),
+		Vec2f(CONFIG_FLOAT("data.menu.menuscreen.credits.x"), CONFIG_FLOAT("data.menu.menuscreen.credits.y")),
 		creditsTextureBasic,
 		creditsTextureClick,
 		creditsTextureHover
@@ -101,7 +101,7 @@ MenuScreen::MenuScreen()
 		{
 			GAME_MGR->quit();
 		},
-		Vec2f(CONFIG_FLOAT2("data.menu.menuscreen.exit.x", 100), CONFIG_FLOAT2("data.menu.menuscreen.exit.y", 400)),
+		Vec2f(CONFIG_FLOAT("data.menu.menuscreen.exit.x"), CONFIG_FLOAT("data.menu.menuscreen.exit.y")),
 		exitButtonBasic,
 		exitButtonClick,
 		exitButtonHover

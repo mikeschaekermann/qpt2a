@@ -11,6 +11,7 @@ public:
 		Invalid,					/// Determines that this is an invalid error code
 		InvalidPlayer,			/// This position is already occupied by another cell
 		CellFull,				/// The given identifier is already used by another cell
+		NoPolypeptideCapacities,
 		Last_Value					/// Is the last valid error code
 	};
 	

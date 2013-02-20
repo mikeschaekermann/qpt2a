@@ -21,49 +21,22 @@ public:
 		BONECELL
 	};
 
-	CellServer(Type type, Vec3f position, float angle, Player * owner) :
-		Cell(position, angle, owner),
-		type(type)
-	{
-		switch(type)
-		{
-			case STEMCELL:
-				this->radius = CONFIG_FLOAT1("data.cell.stemcell.radius");
-				this->healthPoints = CONFIG_FLOAT1("data.cell.stemcell.healthpoints");
-				break;
-			case STANDARDCELL:
-				this->radius = CONFIG_FLOAT1("data.cell.standardcell.radius");
-				this->healthPoints = CONFIG_FLOAT1("data.cell.standardcell.healthpoints");
-				break;
-			case BONECELL:
-				this->radius = CONFIG_FLOAT1("data.cell.bonecell.radius");
-				this->healthPoints = CONFIG_FLOAT1("data.cell.bonecell.healthpoints");
-				break;
-		}
-	}
+	CellServer(Type type, Vec3f position, float angle, Player * owner);
 
-	void getNextCellPositionByAngle(float angle, float nextCellRadius, Vec3f & outPosition) const
-	{
-		outPosition = position;
-		outPosition.x += cosf(angle) * (0.1f + nextCellRadius + this->radius);
-		outPosition.y += sinf(angle) * (0.1f + nextCellRadius + this->radius);
-	}
+	void getNextCellPositionByAngle(float angle, float nextCellRadius, Vec3f & outPosition) const;
 
-	Type getType() const { return type; }
+	Type getType() const;
 
-	vector<StaticModificatorServer *> getStaticModificator() const { return staticModificators; }
+	vector<StaticModificatorServer *> getStaticModificator() const;
 
-	void addStaticModificator(StaticModificatorServer * staticModificator)
-	{
-		staticModificators.push_back(staticModificator);
-	}
+	void addStaticModificator(StaticModificatorServer * staticModificator);
 
 private:
-	virtual void setId(unsigned int id) { GameObjectServer::setId(id); }
-	virtual void setPosition(Vec3f position) { Cell::setPosition(position); }
-	virtual void setRotation(Vec3f rotation) { Cell::setRotation(rotation); }
-	virtual void setScale(Vec3f scale) { Cell::setScale(scale); }
-	virtual void setRadius(float radius) { Cell::setRadius(radius); }
+	virtual void setId(unsigned int id);
+	virtual void setPosition(Vec3f position);
+	virtual void setRotation(Vec3f rotation);
+	virtual void setScale(Vec3f scale);
+	virtual void setRadius(float radius);
 
 	vector<StaticModificatorServer *> staticModificators;
 

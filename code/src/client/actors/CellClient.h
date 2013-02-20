@@ -11,7 +11,7 @@ class CellClient :
 public:
 	CellClient()
 	{
-		setOpacity(CONFIG_FLOAT2("data.ingamefeedback.building.completeOpacity", 1.0f));
+		setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.completeOpacity"));
 	}
 
 	virtual void update(float frameTime);

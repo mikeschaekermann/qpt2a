@@ -7,6 +7,7 @@
 #include "../../common/network/NetworkManager.h"
 #include "../../common/network/messages/game/ingame/polypeptide/combat/PolypeptideFight.h"
 #include "../../common/network/messages/game/ingame/polypeptide/combat/PolypeptideDie.h"
+#include "../../common/PolypeptideCapacityContainer.h"
 #include <cinder/Rand.h>
 
 PolypeptideFightEvent::PolypeptideFightEvent(double startTime, unsigned int cellId1, unsigned int cellId2, unsigned int polypeptideId1, unsigned int polypeptideId2) :
@@ -14,7 +15,7 @@ PolypeptideFightEvent::PolypeptideFightEvent(double startTime, unsigned int cell
 	cellId2(cellId2),
 	polypeptideId1(polypeptideId1),
 	polypeptideId2(polypeptideId2),
-	GameEvent(startTime, CONFIG_FLOAT1("data.event.polypeptidefight.time"))
+	GameEvent(startTime, CONFIG_FLOAT("data.event.polypeptidefight.time"))
 { }
 
 void PolypeptideFightEvent::trigger()
@@ -56,8 +57,10 @@ void PolypeptideFightEvent::trigger()
 				polypeptideDie->polypeptideId = polypeptideId1;
 				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, NETWORKMANAGER->getConnectionEndpoints());
 
-				cell1->removePolypetide(polypeptide1);
+				cell1->removePolypeptide(polypeptide1);
 				delete polypeptide1;
+				--(POLYCAPACITY->NumberOfPolypeptides);
+				GAMECONTEXT->getAttackRelations().update();
 			}
 
 			if (polypeptide2Dies)
@@ -66,8 +69,10 @@ void PolypeptideFightEvent::trigger()
 				polypeptideDie->polypeptideId = polypeptideId2;
 				NETWORKMANAGER->sendTo<PolypeptideDie>(polypeptideDie, NETWORKMANAGER->getConnectionEndpoints());
 
-				cell2->removePolypetide(polypeptide2);
+				cell2->removePolypeptide(polypeptide2);
 				delete polypeptide2;
+				--(POLYCAPACITY->NumberOfPolypeptides);
+				GAMECONTEXT->getAttackRelations().update();
 			}
 		}
 	}

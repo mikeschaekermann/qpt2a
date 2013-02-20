@@ -128,10 +128,10 @@ void CollisionHandler::calculateBucketMeasures(Circle const & circle)
 		float width = (float) abs(area.dimensions.x2 - area.dimensions.x1);
 		float height = (float) abs(area.dimensions.y2 - area.dimensions.y1);
 
-		area.bucketCount.x = max<int>(width / (2 * radius + buffer), 1);
+		area.bucketCount.x = (float)max<int>(width / (2 * radius + buffer), 1);
 		area.bucketMeasures.x = width / area.bucketCount.x;
 
-		area.bucketCount.y = max<int>(height / (2 * radius + buffer), 1);
+		area.bucketCount.y = (float)max<int>(height / (2 * radius + buffer), 1);
 		area.bucketMeasures.y = height / area.bucketCount.y;
 
 		buckets.clear();
