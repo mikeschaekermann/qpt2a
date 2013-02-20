@@ -173,23 +173,23 @@
 			</spikes>
 		</standardcell>
 		<bonecell>
-			<radius>15.0</radius>
+			<radius>30.0</radius>
 			<healthpoints>300.0</healthpoints>
 		</bonecell>
 	</cell>
 	<polypeptide>
-		<scale>30.0</scale>
+		<scale>50.0</scale>
 		<maxPerStemCell>15</maxPerStemCell>
     <maxPerStandardCell>5</maxPerStandardCell>
     <maxPerBoneCell>20</maxPerBoneCell>
 		<radius>5.0</radius>
 		<healthpoints>1.0</healthpoints>
 		<damage>2.0</damage>
-    <speed>1.0</speed>
+    <speed>100.0</speed>
     <percentageUsable>0.5</percentageUsable>
-    <rotationSpeed>4.0</rotationSpeed>
-    <pointRotationSpeed>2.0</pointRotationSpeed>
-    <maxPointAmplitudeEruption>5</maxPointAmplitudeEruption>
+    <rotationSpeed>200.0</rotationSpeed>
+    <pointRotationSpeed>5.0</pointRotationSpeed>
+    <maxPointAmplitudeEruption>10</maxPointAmplitudeEruption>
 	</polypeptide>
 	<environment>
 		<barriers>
