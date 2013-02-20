@@ -23,6 +23,9 @@ public:
  virtual void update(float frameTime) { CellClient::update(frameTime); }
  virtual void setPosition(Vec3f position) { CellClient::setPosition(position); }
 
+ virtual void increaseGlobalTypeCounter() const;
+ virtual void decreaseGlobalTypeCounter() const;
+
 private:
  virtual void setId(unsigned int id) { CellClient::setId(id); }
  virtual void setRotation(Vec3f rotation) { CellClient::setRotation(rotation); }

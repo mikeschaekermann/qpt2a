@@ -5,7 +5,10 @@ PolypeptideCapacityContainer::PolypeptideCapacityContainer():
 	percentageUsable(CONFIG_FLOAT("data.polypeptide.percentageUsable")),
 	polypeptidesPerStandardCell(CONFIG_INT("data.polypeptide.maxPerStandardCell")),
 	polypeptidesPerStemCell(CONFIG_INT("data.polypeptide.maxPerStemCell")),
-	polypeptidesPerBoneCell(CONFIG_INT("data.polypeptide.maxPerBoneCell"))
+	polypeptidesPerBoneCell(CONFIG_INT("data.polypeptide.maxPerBoneCell")),
+	NumberOfPolypeptides(0),
+	NumberOfStandardCells(0),
+	NumberOfBoneCells(0)
 {
 }
 
@@ -13,7 +16,10 @@ PolypeptideCapacityContainer::PolypeptideCapacityContainer(PolypeptideCapacityCo
 	percentageUsable(CONFIG_FLOAT("data.polypeptide.percentageUsable")),
 	polypeptidesPerStandardCell(CONFIG_INT("data.polypeptide.maxPerStandardCell")),
 	polypeptidesPerStemCell(CONFIG_INT("data.polypeptide.maxPerStemCell")),
-	polypeptidesPerBoneCell(CONFIG_INT("data.polypeptide.maxPerBoneCell"))
+	polypeptidesPerBoneCell(CONFIG_INT("data.polypeptide.maxPerBoneCell")),
+	NumberOfPolypeptides(0),
+	NumberOfStandardCells(0),
+	NumberOfBoneCells(0)
 {
 }
 
@@ -44,7 +50,7 @@ unsigned int PolypeptideCapacityContainer::getNumberOfPolypeptidesExisting()
 
 float PolypeptideCapacityContainer::getExistingPerAllowed()
 {
-	return getNumberOfPolypeptidesExisting() / getNumberOfPolypeptidesAllowed();
+	return (float)getNumberOfPolypeptidesExisting() / (float)getNumberOfPolypeptidesAllowed();
 }
 
 int PolypeptideCapacityContainer::getRemainingNumberOfPolypeptidesAllowed()

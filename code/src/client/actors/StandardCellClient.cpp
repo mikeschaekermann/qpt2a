@@ -1,6 +1,7 @@
 #include "StandardCellClient.h"
 #include "../rendering/RenderManager.h"
 #include <cmath>
+#include "../../common/PolypeptideCapacityContainer.h"
 
 void StandardCellClient::startAttackAnimation()
 {
@@ -74,4 +75,22 @@ void StandardCellClient::update(float frameTime)
 bool StandardCellClient::spikesCanBeSeen() const
 {
 	return (spikesScale * spikesAngleRadiusList.begin()->second >= radius);
+}
+
+void StandardCellClient::increaseGlobalTypeCounter() const
+{
+	++(POLYCAPACITY->NumberOfStandardCells);
+}
+
+void StandardCellClient::decreaseGlobalTypeCounter() const
+{
+	if (POLYCAPACITY->NumberOfStandardCells == 0)
+	{
+		LOG_ERROR("Tried to remove a standard cell although the standard cell counter is already zero.");
+		assert(false);
+	}
+	else
+	{
+		--(POLYCAPACITY->NumberOfStandardCells);
+	}
 }
