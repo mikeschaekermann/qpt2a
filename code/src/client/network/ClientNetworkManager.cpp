@@ -36,6 +36,7 @@
 
 #include "../screens/GameScreenStates/GameScreenStateGameOver.h"
 #include "../screens/GameScreenStates/GameScreenStateCreateCell.h"
+#include "../screens/GameScreenStates/GameScreenStateNeutral.h"
 #include "../screens/ConnectScreen.h"
 #include "../screens/GameScreen.h"
 
@@ -499,6 +500,11 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 							assert(false);
 						}
 					}
+				}
+
+				if (GAME_SCR.getSelectedPolypeptides().getSize() == 0)
+				{
+					GAME_SCR.switchToState(new GameScreenStateNeutral(&GAME_SCR));
 				}
 
 				movePolypeptideRequestContexts.erase(context);

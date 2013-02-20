@@ -29,11 +29,11 @@
 			<g>0.9</g>
 			<b>0.1</b>
 		  </goodColor>
-		  <ciriticalColor>
+		  <criticalColor>
 			<r>0.8</r>
 			<g>0.1</g>
 			<b>0.1</b>
-		  </ciriticalColor>
+		  </criticalColor>
 		</healthBar>
 		<gameOver>
 		  <maxLayerOpacity>0.5</maxLayerOpacity>
@@ -107,14 +107,14 @@
 		<max>1</max>
 		<player>
 			<startposition>
-				<x>35.0</x>
-				<y>90.0</y>
+				<x>-50.0</x>
+				<y>100.0</y>
 			</startposition>
 		</player>
 		<player>
 			<startposition>
-				<x>0.0</x>
-				<y>-150.0</y>
+				<x>-50.0</x>
+				<y>-100.0</y>
 			</startposition>
 		</player>
 		<player>
@@ -307,6 +307,10 @@
 				<x>160</x>
 				<y>515</y>
 			</back>
+      <messagebox>
+        <x>100.0</x>
+        <y>650.0</y>
+      </messagebox>
 		</connectcreen>
 		<creditscreen>
 			<background>
