@@ -86,3 +86,8 @@ unsigned int Cell::getMaxNumOfPolys() const
 {
 	return polyMax;
 }
+
+bool Cell::isFull()
+{
+	return getPolypeptides().size() == polyMax;
+}

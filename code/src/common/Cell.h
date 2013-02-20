@@ -34,6 +34,7 @@ public:
  bool addPolypeptide(Polypeptide * polypeptide);
  bool removePolypeptide(Polypeptide * polypeptide);
  unsigned int getMaxNumOfPolys() const;
+ bool isFull();
 
 protected:
  float healthPoints;
