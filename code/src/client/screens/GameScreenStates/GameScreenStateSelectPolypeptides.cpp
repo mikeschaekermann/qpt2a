@@ -22,6 +22,11 @@ bool GameScreenStateSelectPolypeptides::touchClick(TouchWay touchWay)
 	return true;
 }
 
+bool GameScreenStateSelectPolypeptides::touchBegan(const TouchWay & touchWay)
+{
+	return false;
+}
+
 void GameScreenStateSelectPolypeptides::touchMoved(const TouchWay & touchWay)
 {
 	if (!touchWay.isClick())

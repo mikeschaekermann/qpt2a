@@ -466,7 +466,7 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 		return;
 	}
 
-	if (toCell->getPolypeptides().size() + amount >= CONFIG_INT1("data.polypeptide.maxPerCell"))
+	if (toCell->getPolypeptides().size() + amount > CONFIG_INT1("data.polypeptide.maxPerCell"))
 	{
 		/// target-cell has not enough space
 		LOG_INFO("MovePolypeptideFailure TargetCellFull sent");

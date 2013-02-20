@@ -49,38 +49,52 @@ GameScreenStateInMenu::~GameScreenStateInMenu(void)
 
 bool GameScreenStateInMenu::touchBegan(const TouchWay & touchWay)
 {
-	auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
+	/*auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
 
 	/// CAUTION: this only works if the in-game menu buttons do not overlap with the picked cell
 	if (cellsPicked.size() > 0 && cellsPicked[0] == pickedCell && cellsPicked[0]->getPolypeptides().size())
 	{
 		screen->switchToState(new GameScreenStateSelectPolypeptides(screen, pickedCell));
 	}
-	return true;
+	return true;*/
+	return GameScreenState::touchBegan(touchWay);
+}
+
+void GameScreenStateInMenu::touchMoved(const TouchWay & touchWay)
+{
+	bool isMouseOverMenuItem = false;
+	auto cellMenuButtons = screen->cellMenuButtons;
+
+	for (auto it = cellMenuButtons.begin(); it != cellMenuButtons.end(); ++it)
+	{
+		if (isMouseOverMenuItem |= it->second->isMouseOverItem(touchWay.getCurrentPos()))
+			return;
+	}
+
+	GameScreenState::touchMoved(touchWay);
+
+	for (auto it = cellMenuButtons.begin(); it != cellMenuButtons.end(); ++it)
+	{
+		auto button = it->second;
+		button->setPosition(button->getPosition() + touchWay.getLastDeltaVector());
+	}
 }
 
 bool GameScreenStateInMenu::touchClick(TouchWay touchWay)
 {
+	
 	if (touchWay.getTrigger() == TouchWay::LEFT)
 	{
 		auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
 
-		if (cellsPicked.size() == 0)
+		if (cellsPicked.size() > 0 && cellsPicked[0] == pickedCell)
 		{
 			screen->switchToState(new GameScreenStateNeutral(screen));
 			return false;
 		}
-		else if (cellsPicked[0] != pickedCell)
-		{
-			screen->switchToState(new GameScreenStateInMenu(screen, cellsPicked[0]));
-		}
-	}
-	else
-	{
-		screen->switchToState(new GameScreenStateNeutral(screen));
 	}
 
-	return false;
+	return GameScreenState::touchClick(touchWay);
 }
 
 bool GameScreenStateInMenu::mouseMove(MouseEvent event)

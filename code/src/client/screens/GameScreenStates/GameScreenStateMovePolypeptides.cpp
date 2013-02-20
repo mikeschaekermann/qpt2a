@@ -10,6 +10,27 @@ GameScreenStateMovePolypeptides::GameScreenStateMovePolypeptides(GameScreen * sc
 {
 }
 
+void GameScreenStateMovePolypeptides::draw2D()
+{
+	
+	glPushAttrib(GL_COLOR);
+	{
+		
+		glColor4f(ColorA(1.f, 0.f, 0.f, 1.f));
+		auto polypeptides = screen->getSelectedPolypeptides();
+		unsigned int i = 0;
+		for (auto it = polypeptides.begin(); it != polypeptides.end(); ++it)
+		{
+			float angle = 360.f / polypeptides.getSize();
+			float distance = 15.f + polypeptides.getSize();
+			Vec2f pos = position + Vec2f(cosf(toRadians(angle * i)) * distance, sinf(toRadians(angle * i)) * distance);
+			gl::drawSolidCircle(position + Vec2f(cosf(toRadians(angle * i)) * distance, sinf(toRadians(angle * i)) * distance), 5.f);
+			++i;
+		}
+	}
+	glPopAttrib();
+}
+
 bool GameScreenStateMovePolypeptides::touchClick(TouchWay touchWay)
 {
 	auto cellsPicked = screen->getCellsPicked(touchWay.getCurrentPos());
@@ -44,7 +65,18 @@ bool GameScreenStateMovePolypeptides::touchClick(TouchWay touchWay)
 	return true;
 }
 
+bool GameScreenStateMovePolypeptides::touchBegan(const TouchWay & touchWay)
+{
+	return GameScreenState::touchBegan(touchWay);
+}
+
 void GameScreenStateMovePolypeptides::touchMoved(const TouchWay & touchWay)
 {
 	neutralState.touchMoved(touchWay);
+}
+
+bool GameScreenStateMovePolypeptides::mouseMove(MouseEvent event) 
+{ 
+	position = event.getPos();
+	return false; 
 }

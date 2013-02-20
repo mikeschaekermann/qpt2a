@@ -13,6 +13,7 @@ public:
 	virtual ~GameScreenStateInMenu(void);
 	
 	virtual bool touchBegan(const TouchWay & touchWay);
+	virtual void touchMoved(const TouchWay & touchWay);
 	virtual bool touchClick(TouchWay touchWay);
 	virtual bool mouseMove(MouseEvent event);
 

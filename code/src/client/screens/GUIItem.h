@@ -23,6 +23,7 @@ public:
 	virtual void onKeyInput(KeyEvent& e);
 
 	void setPosition(ci::Vec2f newPosition);
+	ci::Vec2f getPosition() const { return position; }
 	void setVisible(bool visible, bool recursively = true);
 
 	virtual string const & getValue() { return defaultValue; }
