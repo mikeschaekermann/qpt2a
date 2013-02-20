@@ -427,6 +427,7 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 		NETWORKMANAGER->send(message);
 
 		++(POLYCAPACITY->NumberOfPolypeptides);
+		GAMECONTEXT->getAttackRelations().updateRelationsFor(*stemCell);
 
 		return;
 	}
@@ -522,6 +523,9 @@ void Game::movePolypetide(MovePolypeptideRequest & request)
 		toCell->addPolypeptide(polypeptide);
 		fromCell->removePolypeptide(polypeptide);
 	}
+
+	GAMECONTEXT->getAttackRelations().updateRelationsFor(*fromCell);
+	GAMECONTEXT->getAttackRelations().updateRelationsFor(*toCell);
 
 	/// send success
 	LOG_INFO("MovePolypeptideSuccess sent");

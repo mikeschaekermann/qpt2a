@@ -7,38 +7,23 @@ using namespace std;
 
 AttackRelationContainer & AttackRelationContainer::addRelation(CellServer & cell1, CellServer & cell2)
 {
-	addRelationKeyElement(cell1.getId(), cell2.getId());
-	addRelationKeyElement(cell2.getId(), cell1.getId());
-	auto & key = make_set(cell1.getId(), cell2.getId());
-	auto & relation = relations
-		.insert(make_pair(key, Relation())).first->second;
-	relation.cellId1 = cell1.getId();
-	relation.cellId2 = cell2.getId();
-
-	isUpdated = false;
+	createRelation(cell1, cell2);
+	updateRelationsFor(cell1);
+	updateRelationsFor(cell2);
 
 	return *this;
 }
 
-AttackRelationContainer & AttackRelationContainer::removeRelationsWith(CellServer & cell)
+AttackRelationContainer & AttackRelationContainer::removeRelationsFor(CellServer & cell)
 {
-	removeRelationsWith(cell.getId());
-
-	isUpdated = false;
+	removeRelationsFor(cell.getId());
 
 	return *this;
 }
 
-AttackRelationContainer & AttackRelationContainer::update()
+AttackRelationContainer & AttackRelationContainer::updateRelationsFor(CellServer & cell)
 {
-	if (!isUpdated)
-	{
-		resetRelations();
-		makeRelations();
-		refillRelations();
-
-		isUpdated = true;
-	}
+	loopThroughRelations(cell);
 
 	return *this;
 }
@@ -51,40 +36,27 @@ set<unsigned int> AttackRelationContainer::make_set(unsigned int key1, unsigned 
 	return key;
 }
 
-void AttackRelationContainer::resetRelations()
+void AttackRelationContainer::createRelation(CellServer & cell1, CellServer & cell2)
 {
-	for (auto it = relations.begin(); it != relations.end(); ++it)
-	{
-		it->second.polypeptideIds1.clear();
-		it->second.polypeptideIds2.clear();
-
-		for (auto eIt = it->second.events.begin(); eIt != it->second.events.end(); ++eIt)
-		{
-			(*eIt)->setTerminated();
-		}
-		it->second.events.clear();
-	}
+	auto cellId1 = cell1.getId();
+	auto cellId2 = cell2.getId();
+	addRelationKeyElement(cellId1, cellId2);
+	addRelationKeyElement(cellId2, cellId1);
+	auto & key = make_set(cellId1, cellId2);
+	auto & relation = relations
+		.insert(make_pair(key, Relation(cell1, cell2))).first->second;
 }
 
-void AttackRelationContainer::makeRelations()
+void AttackRelationContainer::loopThroughRelations(CellServer & cell)
 {
-	for (auto keyIt = relationKey.begin(); keyIt != relationKey.end(); ++keyIt)
+	auto & keyIt = relationKey.find(cell.getId());
+	if (keyIt != relationKey.end())
 	{
-		auto cellId = keyIt->first;
-
-		CellServer * cell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId));
-		if (cell == nullptr)
-		{
-			/// something is wrong
-			/// remove cell from container
-			//removeRelationsWith(keyIt->first); -> iterator problem pointing somewhere else
-		}
-
 		auto elementsIt = keyIt->second.begin();
-		if (elementsIt == keyIt->second.end()) continue;
+		if (elementsIt == keyIt->second.end()) return;
 		/// loop through polypeptides
 		/// polypeptides will be assigned to other cells circular
-		for (auto polyIt = cell->getPolypeptides().begin(); polyIt != cell->getPolypeptides().end(); ++polyIt, ++elementsIt)
+		for (auto polyIt = cell.getPolypeptides().begin(); polyIt != cell.getPolypeptides().end(); ++polyIt, ++elementsIt)
 		{
 			auto polyId = polyIt->second->getId();
 
@@ -92,77 +64,92 @@ void AttackRelationContainer::makeRelations()
 			if (elementsIt == keyIt->second.end()) elementsIt = keyIt->second.begin();
 
 			/// find iterator of current cell and circular looping cells
-			auto & relationIt = relations.find(make_set(cellId, *elementsIt));
+			auto & relationIt = relations.find(make_set(cell.getId(), *elementsIt));
 			if (relationIt != relations.end())
 			{
 				auto & relation = relationIt->second;
-				auto polypeptideIds = relation[cellId];
-				if (polypeptideIds != nullptr)
-				{
-					polypeptideIds->insert(polyId);
-				}
+
+				resetRelations(relation);
+
+				fillRelations(relation, cell, polyId);
+
+				eventRelations(relation);
 			}
 		}
 	}
 }
 
-void AttackRelationContainer::refillRelations()
+void AttackRelationContainer::resetRelations(Relation & relation)
 {
-	for (auto it = relations.begin(); it != relations.end(); ++it)
-	{
-		auto & polypeptideIds1 = it->second.polypeptideIds1;
-		auto & polypeptideIds2 = it->second.polypeptideIds2;
+	relation.polypeptideIds1.clear();
+	relation.polypeptideIds2.clear();
 
-		auto p1It = polypeptideIds1.begin();
-		auto p2It = polypeptideIds2.begin();
-		for (;p1It != polypeptideIds1.end() && p2It != polypeptideIds2.end(); ++p1It, ++p2It)
-		{
-			dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(it->second.cellId1))
-				->getPolypeptides().find(*p1It)->second->setState(Polypeptide::POLYPEPTIDEFIGHT);
-			dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(it->second.cellId2))
-				->getPolypeptides().find(*p2It)->second->setState(Polypeptide::POLYPEPTIDEFIGHT);
+	for (auto eIt = relation.events.begin(); eIt != relation.events.end(); ++eIt)
+	{
+		(*eIt)->setTerminated();
+	}
+	relation.events.clear();
+}
+
+void AttackRelationContainer::fillRelations(Relation & relation, CellServer & cell, unsigned int polyId)
+{
+	auto polypeptideIds = relation[cell.getId()];
+	if (polypeptideIds != nullptr)
+	{
+		polypeptideIds->insert(polyId);
+	}
+}
+
+void AttackRelationContainer::eventRelations(Relation & relation)
+{
+	auto & polypeptideIds1 = relation.polypeptideIds1;
+	auto & polypeptideIds2 = relation.polypeptideIds2;
+
+	auto p1It = polypeptideIds1.begin();
+	auto p2It = polypeptideIds2.begin();
+	for (;p1It != polypeptideIds1.end() && p2It != polypeptideIds2.end(); ++p1It, ++p2It)
+	{
+		relation.cell1.getPolypeptides().find(*p1It)->second->setState(Polypeptide::POLYPEPTIDEFIGHT);
+		relation.cell2.getPolypeptides().find(*p2It)->second->setState(Polypeptide::POLYPEPTIDEFIGHT);
 			
-			it->second.events.insert(
-				EVENT_CRTR->createPolypeptideFightEvent(
+		relation.events.insert(
+			EVENT_CRTR->createPolypeptideFightEvent(
+				EVENT_MGR->getTime(),
+				relation.cell1.getId(),
+				relation.cell2.getId(),
+				*p1It,
+				*p2It));
+	}
+
+	if (p1It != polypeptideIds1.end())
+	{
+		for (; p1It != polypeptideIds1.end(); ++p1It)
+		{
+			relation.cell1.getPolypeptides().find(*p1It)->second->setState(Polypeptide::CELLFIGHT);
+			relation.events.insert(
+				EVENT_CRTR->createPolypeptideCellAttackEvent(
 					EVENT_MGR->getTime(),
-					it->second.cellId1,
-					it->second.cellId2,
-					*p1It,
+					relation.cell1.getId(),
+					relation.cell2.getId(),
+					*p1It));
+		}
+	}
+	else
+	{
+		for (; p2It != polypeptideIds2.end(); ++p2It)
+		{
+			relation.cell2.getPolypeptides().find(*p2It)->second->setState(Polypeptide::CELLFIGHT);
+			relation.events.insert(
+				EVENT_CRTR->createPolypeptideCellAttackEvent(
+					EVENT_MGR->getTime(),
+					relation.cell2.getId(),
+					relation.cell1.getId(),
 					*p2It));
 		}
-
-		if (p1It != polypeptideIds1.end())
-		{
-			for (; p1It != polypeptideIds1.end(); ++p1It)
-			{
-				dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(it->second.cellId1))
-					->getPolypeptides().find(*p1It)->second->setState(Polypeptide::CELLFIGHT);
-				it->second.events.insert(
-					EVENT_CRTR->createPolypeptideCellAttackEvent(
-						EVENT_MGR->getTime(),
-						it->second.cellId1,
-						it->second.cellId2,
-						*p1It));
-			}
-		}
-		else
-		{
-			for (; p2It != polypeptideIds2.end(); ++p2It)
-			{
-				dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(it->second.cellId2))
-					->getPolypeptides().find(*p2It)->second->setState(Polypeptide::CELLFIGHT);
-				it->second.events.insert(
-					EVENT_CRTR->createPolypeptideCellAttackEvent(
-						EVENT_MGR->getTime(),
-						it->second.cellId2,
-						it->second.cellId1,
-						*p2It));
-			}
-		}
 	}
 }
 
-void AttackRelationContainer::removeRelationsWith(unsigned int cellId)
+void AttackRelationContainer::removeRelationsFor(unsigned int cellId)
 {
 	auto & keyIt = relationKey.find(cellId);
 	if (keyIt != relationKey.end())
@@ -180,7 +167,7 @@ void AttackRelationContainer::removeRelationsWith(unsigned int cellId)
 			}
 		}
 	}
-	/// delte key with references
+	/// delete key with references
 	relationKey.erase(cellId);
 }
 
@@ -190,3 +177,8 @@ void AttackRelationContainer::addRelationKeyElement(unsigned int key, unsigned i
 	auto & elements = it->second;
 	elements.insert(element);
 }
+
+AttackRelationContainer::Relation::Relation(CellServer & cell1, CellServer & cell2) :
+	cell1(cell1),
+	cell2(cell2)
+{ }
