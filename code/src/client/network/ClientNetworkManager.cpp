@@ -543,14 +543,15 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (polypeptideDie)
 		{
 			LOG_INFO("PolypeptideDie received");
-			/*
+			
 			unsigned int polypeptideId = polypeptideDie->polypeptideId;
 
-			auto polypeptide = GAME_SCR.getSelectedPolypeptides().find(polypeptideId);
+			auto polypeptide = GAME_SCR.getMyPolypeptides().find(polypeptideId);
 			if (polypeptide != nullptr)
 			{
 				polypeptide->getOwner()->removePolypeptide(polypeptide);
 				GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptide);
+				GAME_SCR.getMyPolypeptides().removeGameObject(polypeptide);
 
 				if (POLYCAPACITY->NumberOfPolypeptides == 0)
 				{
@@ -569,7 +570,6 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				LOG_ERROR("Tried to delete polypeptide which the client does not have in its list!");
 				assert(false);
 			}
-			*/
 		}
 		break;
 	}
@@ -653,12 +653,79 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (polypeptideFight)
 		{
 			LOG_INFO("PolypeptideFight received");
-			/*
+
+			unsigned int cellId1 = polypeptideFight->cell1Id;
+			unsigned int cellId2 = polypeptideFight->cell2Id;
 			unsigned int polypeptideId1 = polypeptideFight->polypeptideId1;
 			unsigned int polypeptideId2 = polypeptideFight->polypeptideId2;
 			bool polypeptide1Dies = polypeptideFight->polypeptide1Dies;
 			bool polypeptide2Dies = polypeptideFight->polypeptide2Dies;
-			*/
+
+			auto cellObject1 = GAME_SCR.getGameObjectsToDraw().find(cellId1);
+			if (cellObject1 == nullptr)
+			{
+				LOG_ERROR("Parent cell of poly #1 could not be found!");
+				assert(false);
+			}
+
+			auto cellObject2 = GAME_SCR.getGameObjectsToDraw().find(cellId2);
+			if (cellObject2 == nullptr)
+			{
+				LOG_ERROR("Parent cell of poly #2 could not be found!");
+				assert(false);
+			}
+
+			auto cellClient1 = dynamic_cast<CellClient *>(cellObject1);
+			if (cellClient1 == nullptr)
+			{
+				LOG_ERROR("Parent cell of poly #1 is not of type CellClient!");
+				assert(false);
+			}
+
+			auto cellClient2 = dynamic_cast<CellClient *>(cellObject2);
+			if (cellClient2 == nullptr)
+			{
+				LOG_ERROR("Parent cell of poly #2 is not of type CellClient!");
+				assert(false);
+			}
+
+			auto polyObject1 = GAME_SCR.getMyPolypeptides().find(polypeptideId1);
+			if (cellObject1 == nullptr)
+			{
+				polyObject1 = new PolypeptideClient();
+				polyObject1->setId(polypeptideId1);
+				polyObject1->setPosition(cellClient1->getPosition());
+				polyObject1->setAttackOptions(cellClient1->getPosition(), true, polypeptide1Dies);
+				polyObject1->setOwner(cellClient1);
+				GAME_SCR.addGameObjectToDraw(polyObject1);
+			}
+			else
+			{
+				polyObject1->setAttackOptions(cellClient1->getPosition(), false, polypeptide1Dies);
+			}
+
+			auto polyObject2 = GAME_SCR.getMyPolypeptides().find(polypeptideId2);
+			if (cellObject2 == nullptr)
+			{
+				polyObject2 = new PolypeptideClient();
+				polyObject2->setId(polypeptideId2);
+				polyObject2->setPosition(cellClient2->getPosition());
+				polyObject2->setAttackOptions(cellClient2->getPosition(), true, polypeptide2Dies);
+				polyObject2->setOwner(cellClient2);
+				GAME_SCR.addGameObjectToDraw(polyObject2);
+			}
+			else
+			{
+				polyObject2->setAttackOptions(cellClient2->getPosition(), false, polypeptide2Dies);
+			}
+
+			auto focusCenter = (polyObject1->getPosition() + polyObject2->getPosition()) * 0.5f;
+
+			polyObject1->setFocus(focusCenter, cellClient1->getRadius());
+			polyObject1->setState(Polypeptide::POLYPEPTIDEFIGHT);
+
+			polyObject2->setFocus(focusCenter, cellClient2->getRadius());
+			polyObject2->setState(Polypeptide::POLYPEPTIDEFIGHT);
 		}
 		break;
 	}
