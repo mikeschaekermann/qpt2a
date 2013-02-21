@@ -640,9 +640,9 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide->setAttackOptions(false, false);
 			}
 
-			polypeptide->setState(Polypeptide::CELLFIGHT);
 			polypeptide->setFocus(attackedCell->getPosition(), attackedCell->getRadius());
 			attackedCell->decreaseHealthPointsBy(damage);
+			polypeptide->setState(Polypeptide::CELLFIGHT);
 		}
 		break;
 	}
