@@ -18,7 +18,11 @@ public:
 		maxAmplitudeEruption(CONFIG_INT("data.polypeptide.maxPointAmplitudeEruption")),
 		forward(Vec3f(1, 0, 0)),
 		focusCenter(focusCenter),
-		focusRadius(focusRadius)
+		focusRadius(focusRadius),
+		cellRadius(cellRadius),
+		selfDestruct(false),
+		dieTrying(false),
+		wayBackFromFocus(false)
 	{
 		this->cellRadius = cellRadius;
 
@@ -32,7 +36,8 @@ public:
 		followPoint = Vec3f(focusCenter.x + (focusRadius * cos(followPointAngle)), focusCenter.y + (focusRadius * sin(followPointAngle)), focusCenter.z);
 	}
 
-	PolypeptideClient();
+	PolypeptideClient() {}
+	~PolypeptideClient();
 
 	CellClient * getOwner();
 
@@ -50,7 +55,13 @@ public:
 
 	virtual void setOwner(Cell* owner);
 
+	void setAttackOptions(bool selfDestruct, bool dieTrying = false);
+
 protected:
+	bool selfDestruct;
+	bool dieTrying;
+	bool wayBackFromFocus;
+	
 	float cellRadius;
 	float speed;
 	float polyRotationSpeed;
@@ -60,6 +71,7 @@ protected:
 
 	virtual void drawAtTransformation() const;
 	void arrivalBehavior(float frameTime);
+	void attackBehavior(float frameTime);
 	void updateFollowPoint(float frameTime);
 
 private:

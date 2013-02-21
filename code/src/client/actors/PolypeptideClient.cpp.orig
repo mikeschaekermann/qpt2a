@@ -2,36 +2,29 @@
 #include "PolypeptideClient.h"
 #include "../rendering/RenderManager.h"
 #include "CellClient.h"
-#include "../managers/GameManager.h"
-
-PolypeptideClient::~PolypeptideClient()
-{
-	if (selfDestruct)
-	{
-		GAME_SCR.removeGameObjectToUpdate(this);
-		GAME_SCR.removeGameObjectToDraw(this);
-		/// TODO delete from other containers my own polys could be in!
-	}
-}
 
 void PolypeptideClient::drawAtTransformation() const
 {
 	RENDER_MGR->renderBlackShadedModel("poly");
+	
+	// follow points debug code
+	/*popMatrices();
+	pushMatrices();
+	translate(followPoint);
+	drawSphere(Vec3f::zero(), 3);*/
 }
 
 void PolypeptideClient::update(float frameTime)
 {
 	updateFollowPoint(frameTime);
-
 	switch(state)
 	{
 		case Polypeptide::State::IDLE:
 			arrivalBehavior(frameTime);
 			break;
-		case Polypeptide::State::CELLFIGHT:
-			attackBehavior(frameTime);
-			break;
 		case Polypeptide::State::TRAVEL:
+			break;
+		case Polypeptide::State::CELLFIGHT:
 			break;
 		case Polypeptide::State::POLYPEPTIDEFIGHT:
 			break;
@@ -51,49 +44,6 @@ void PolypeptideClient::arrivalBehavior(float frameTime)
 	forward = newForward;
 	forward.normalize();
 	position += forward * frameTime * speed * cellRadius / 100.;
-}
-
-void PolypeptideClient::attackBehavior(float frameTime)
-{
-	Vec3f currentTarget;
-
-	if (!wayBackFromFocus)
-	{
-		currentTarget = focusCenter;
-	}
-	else
-	{
-		currentTarget = owner->getPosition();
-	}
-
-	auto distance = currentTarget - position;
-	position += distance * 0.6;
-
-	/// current target is reached
-	if (position.distance(currentTarget) < 20)
-	{
-		/// on its way to the attack target
-		if (!wayBackFromFocus)
-		{
-			wayBackFromFocus = true;
-
-			if (dieTrying)
-			{
-				delete this;
-			}
-		}
-		/// on its way back to its origin
-		else
-		{
-			setState(Polypeptide::IDLE);
-			setFocus(owner->getPosition(), owner->getRadius());
-
-			if (selfDestruct)
-			{
-				delete this;
-			}
-		}
-	}
 }
 
 void PolypeptideClient::updateFollowPoint(float frameTime)
@@ -126,16 +76,17 @@ CellClient * PolypeptideClient::getOwner()
 	return dynamic_cast<CellClient *>(owner);
 }
 
+<<<<<<< HEAD
+void PolypeptideClient::setAttackOptions(bool selfDestruct, bool dieTrying = false)
+{
+	this->selfDestruct = selfDestruct;
+	this->dieTrying = dieTrying;
+=======
 void PolypeptideClient::setOwner(Cell* owner)
 {
 	Polypeptide::setOwner(owner);
 
 	cellRadius = owner->getRadius();
 	focusRadius = cellRadius - 20 < 1 ? 1 : cellRadius - 20;
-}
-
-void PolypeptideClient::setAttackOptions(bool selfDestruct, bool dieTrying)
-{
-	this->selfDestruct = selfDestruct;
-	this->dieTrying = dieTrying;
+>>>>>>> 62dd55bf141926574d521167d6a715c70a575a4d
 }

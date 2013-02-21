@@ -6,6 +6,7 @@ class PolypeptideDie : public NetworkMessage
 {
 public:
 	/* Fields */
+	unsigned int cellId;
 	unsigned int polypeptideId;
 
 	/* Constructor / Destructor */
