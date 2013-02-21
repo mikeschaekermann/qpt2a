@@ -192,5 +192,5 @@ void PolypeptideClient::setAttackOptions(Vec3f originPoint, bool selfDestruct, b
 	this->selfDestruct = selfDestruct;
 	this->dieTrying = dieTrying;
 	this->wayBackFromFocus = false;
-	SOUND_PLAYER->playSound(string("cellDie"), position, Vec3f::zero());
+	SOUND_PLAYER->playSound(string("polyAttack"), position, Vec3f::zero());
 }
