@@ -12,7 +12,6 @@
 #include "../../common/environment/StaticModificator.h"
 
 #define GAME_MGR GameManager::getInstance()
-#define GAME_SCR SCREEN_MGR->getGameScreen()
 #define NETWORK_MGR GAME_MGR->getNetworkManager()
 
 class GameManager

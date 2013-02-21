@@ -26,5 +26,5 @@ void GameObjectClient::drawAtTransformation() const
 
 Vec2f GameObjectClient::getPosition2D() const
 {
-	return GAME_SCR.worldToScreen(getPosition());
+	return GAME_SCR->worldToScreen(getPosition());
 }

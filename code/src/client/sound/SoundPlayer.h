@@ -2,12 +2,10 @@
 
 #include "../managers/AssetManager.h"
 #include "../../common/Config.h"
-
 #include <string>
-
 #include "cinder/Vector.h"
-
 #include "fmod.hpp"
+#include "boost/thread/mutex.hpp"
 
 using namespace std;
 
@@ -17,6 +15,7 @@ class SoundPlayer
 {
 public:
 	static SoundPlayer * const getInstance();
+	static void releaseInstance();
 
 	void setMusicVolume(float volume);
 	float getMusicVolume() { return musicVolume; }
@@ -36,10 +35,9 @@ public:
 
 	void update();
 
-	void releaseInstance();
-
 private:
 	static SoundPlayer*		instance;
+	static boost::mutex		instanceMutex;
 	FMOD::System*			system;
 	FMOD::Channel*			soundChannels[99];
 	FMOD::Channel*			musicChannel;

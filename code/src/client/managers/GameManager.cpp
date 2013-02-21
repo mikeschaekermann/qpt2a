@@ -7,6 +7,7 @@
 #include "../environment/BarrierClient.h"
 #include "../environment/StaticModificatorClient.h"
 #include "../sound/SoundPlayer.h"
+#include "../../common/PolypeptideCapacityContainer.h"
 
 #include "cinder/app/AppBasic.h"
 
@@ -27,6 +28,7 @@ GameManager::GameManager(void):
 
 GameManager::~GameManager(void)
 {
+	/// delete players
 	for (auto it = players.begin(); it != players.end(); ++it)
 	{
 		if (it->second != nullptr)
@@ -36,10 +38,15 @@ GameManager::~GameManager(void)
 	}
 
 	SCREEN_MGR->refreshGameScreen();
-
+	
+	/// stop network manager thread
+	/// and delete the instance
 	networkManager->stop();
 	networkManagerThread.join();
 	delete networkManager;
+
+	/// release singleton instances
+	PolypeptideCapacityContainer::releaseInstance();
 }
 
 GameManager * const GameManager::getInstance()
@@ -115,12 +122,12 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 
 	if (ownPlayerAdded)
 	{
-		GAME_SCR.addCellToPick(stemCell);
-		GAME_SCR.addExploringCell(stemCell);
+		GAME_SCR->addCellToPick(stemCell);
+		GAME_SCR->addExploringCell(stemCell);
 	}
 	
-	GAME_SCR.addGameObjectToDraw(stemCell);
-	GAME_SCR.addGameObjectToCollide(stemCell);
+	GAME_SCR->addGameObjectToDraw(stemCell);
+	GAME_SCR->addGameObjectToCollide(stemCell);
 }
 
 void GameManager::setMyPlayerId(unsigned int id)
@@ -187,15 +194,15 @@ void GameManager::addBarrier(unsigned int id, Vec3f position, Vec3f rotation, Ve
 	BarrierClient * barrier = new BarrierClient(id, position, rotation, scale, radius);
 	
 	
-	GAME_SCR.addGameObjectToDraw(barrier);
-	GAME_SCR.addGameObjectToCollide(barrier);
+	GAME_SCR->addGameObjectToDraw(barrier);
+	GAME_SCR->addGameObjectToCollide(barrier);
 }
 
 void GameManager::addStaticModifier(unsigned int id, Vec3f position, Vec3f rotation, Vec3f scale, float radius, StaticModificator::Type type)
 {
 	StaticModificatorClient * staticModificator = new StaticModificatorClient(id, position, rotation, scale, radius, type);
-	GAME_SCR.addGameObjectToDraw(staticModificator);
-	GAME_SCR.updateVisibilityOf(staticModificator);
+	GAME_SCR->addGameObjectToDraw(staticModificator);
+	GAME_SCR->updateVisibilityOf(staticModificator);
 }
 
 ClientNetworkManager * GameManager::getNetworkManager()

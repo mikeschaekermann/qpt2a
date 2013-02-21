@@ -125,7 +125,7 @@ bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)
 				pickedCell
 			);
 
-			GAME_SCR.addCellPreview(cell);
+			GAME_SCR->addCellPreview(cell);
 
 			NETWORK_MGR->send(createCellRequest);
 			LOG_INFO("CreateCellRequest sent");

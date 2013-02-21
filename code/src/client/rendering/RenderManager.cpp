@@ -4,6 +4,7 @@
 #include "../managers/GameManager.h"
 
 RenderManager* RenderManager::instance = nullptr;
+boost::mutex RenderManager::instanceMutex;
 
 RenderManager::RenderManager()
 {
@@ -38,12 +39,25 @@ RenderManager::~RenderManager()
 
 RenderManager * const RenderManager::getInstance()
 {
+	instanceMutex.lock();
 	if(instance == nullptr)
 	{
 		instance = new RenderManager();
 	}
+	instanceMutex.unlock();
 
 	return instance;
+}
+
+void RenderManager::releaseInstance()
+{
+	instanceMutex.lock();
+	if(instance != nullptr)
+	{
+		delete instance;
+		instance = nullptr;
+	}
+	instanceMutex.unlock();
 }
 
 void RenderManager::renderPhongShadedModel(string modelName,
@@ -285,9 +299,9 @@ void RenderManager::drawFogOfWar() const
 	auto fogOfWarShaderProgram = ASSET_MGR->getShaderProg(string("fogOfWar"));
 	fogOfWarShaderProgram.bind();
 
-	GAME_SCR.getContainerMutex().lock();
+	GAME_SCR->getContainerMutex().lock();
 
-	auto& cellsExploring = GAME_SCR.getExploringCells();
+	auto& cellsExploring = GAME_SCR->getExploringCells();
 	int numOfCells = cellsExploring.getSize();
 
 	Vec2f * centers2D = new Vec2f[numOfCells];
@@ -334,7 +348,7 @@ void RenderManager::drawFogOfWar() const
 		}
 	}
 
-	GAME_SCR.getContainerMutex().unlock();
+	GAME_SCR->getContainerMutex().unlock();
 
 	fogOfWarShaderProgram.uniform("screenSize", Vec2f(getWindowWidth(), getWindowHeight()));
 	fogOfWarShaderProgram.uniform("numOfCells", numOfRelevantCells);
