@@ -5,6 +5,7 @@
 #include "../../common/Config.h"
 #include "../../common/Player.h"
 #include "../../common/GameObjectContainer.h"
+#include "../../common/PolypeptideCapacityContainer.h"
 #include "../actors/PolypeptideClient.h"
 #include <unordered_map>
 #include "../../common/network/messages/enum/CellType.h"
@@ -83,6 +84,7 @@ public:
 	void removeCellToPick(CellClient * cell);
 	void pickCell(CellClient * cell);
 	void unpickCells();
+	CellClient * getPickedCell();
 
 	void addIncompleteCell(CellClient * cell);
 	void addIncompleteCell(
@@ -119,6 +121,8 @@ public:
 
 	boost::mutex & getContainerMutex();
 
+	PolypeptideCapacityContainer * getPolypeptideCapacityContainer();
+
 private:
 	vector<CellClient *> getCellsPicked(Vec2f position);
 
@@ -131,6 +135,8 @@ private:
 	/// in-game menu for cell actions
 	GUIItem * cellMenu;
 	unordered_map<string, GUIItem *> cellMenuButtons;
+
+	PolypeptideCapacityContainer polypeptideCapacityContainer;
 
 	/// mutex for container manipulation and reading
 	boost::mutex containerMutex;

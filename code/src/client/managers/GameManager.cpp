@@ -44,9 +44,6 @@ GameManager::~GameManager(void)
 	networkManager->stop();
 	networkManagerThread.join();
 	delete networkManager;
-
-	/// release singleton instances
-	PolypeptideCapacityContainer::releaseInstance();
 }
 
 GameManager * const GameManager::getInstance()

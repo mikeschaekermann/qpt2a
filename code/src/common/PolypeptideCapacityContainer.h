@@ -1,18 +1,12 @@
 #pragma once
 
-#include "boost/thread/mutex.hpp"
-
-#define POLYCAPACITY PolypeptideCapacityContainer::getInstance()
-
 class PolypeptideCapacityContainer
 {
 public:
+	PolypeptideCapacityContainer();
 	unsigned int NumberOfPolypeptides;
 	unsigned int NumberOfStandardCells;
 	unsigned int NumberOfBoneCells;
-
-	static PolypeptideCapacityContainer * getInstance();
-	static void releaseInstance();
 
 	unsigned int getNumberOfPolypeptidesAllowed() const;
 	unsigned int getNumberOfPolypeptidesExisting() const;
@@ -26,15 +20,8 @@ public:
 	bool isFull() const;
 
 private:
-	static PolypeptideCapacityContainer * instance;
-	static boost::mutex instanceMutex;
-
 	const float percentageUsable;
 	const unsigned int polypeptidesPerStandardCell;
 	const unsigned int polypeptidesPerBoneCell;
 	const unsigned int polypeptidesPerStemCell;
-
-	PolypeptideCapacityContainer();
-	PolypeptideCapacityContainer(PolypeptideCapacityContainer const &);
-	PolypeptideCapacityContainer * operator=(PolypeptideCapacityContainer const &);
 };

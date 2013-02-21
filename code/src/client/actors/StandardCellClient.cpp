@@ -1,7 +1,7 @@
 #include "StandardCellClient.h"
 #include "../rendering/RenderManager.h"
+#include "../managers/GameManager.h"
 #include <cmath>
-#include "../../common/PolypeptideCapacityContainer.h"
 
 void StandardCellClient::startAttackAnimation()
 {

@@ -9,6 +9,7 @@
 #define SCREEN_MGR ScreenManager::getInstance()
 #define CONN_SCR SCREEN_MGR->getConnectScreen()
 #define GAME_SCR SCREEN_MGR->getGameScreen()
+#define POLYCAPACITY GAME_SCR->getPolypeptideCapacityContainer()
 
 class Screen;
 class GameScreen;

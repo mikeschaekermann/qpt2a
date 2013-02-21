@@ -27,9 +27,9 @@ RenderManager::RenderManager()
 	initializeFogOfWar();
 
 	lightPos = Vec3f(
-		CONFIG_FLOAT("data.world.light.position.x"),
-		CONFIG_FLOAT("data.world.light.position.y"),
-		CONFIG_FLOAT("data.world.light.position.z")
+		CONFIG_FLOAT("data.rendering.light.position.x"),
+		CONFIG_FLOAT("data.rendering.light.position.y"),
+		CONFIG_FLOAT("data.rendering.light.position.z")
 	);
 }
 

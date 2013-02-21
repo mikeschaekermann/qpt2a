@@ -61,7 +61,7 @@ void PolypeptideFightEvent::trigger()
 			{
 				cell1->removePolypeptide(polypeptide1);
 				delete polypeptide1;
-				--(POLYCAPACITY->NumberOfPolypeptides);
+				--(POLYCAPACITY(cell1->getOwner()->getId())->NumberOfPolypeptides);
 				GAMECONTEXT->getAttackRelations().updateRelationsFor(*cell1);
 			}
 
@@ -69,7 +69,7 @@ void PolypeptideFightEvent::trigger()
 			{
 				cell2->removePolypeptide(polypeptide2);
 				delete polypeptide2;
-				--(POLYCAPACITY->NumberOfPolypeptides);
+				--(POLYCAPACITY(cell2->getOwner()->getId())->NumberOfPolypeptides);
 				GAMECONTEXT->getAttackRelations().updateRelationsFor(*cell2);
 			}
 		}
