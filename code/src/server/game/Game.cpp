@@ -220,6 +220,7 @@ void Game::join(JoinRequest &request)
 		") joined the game at the position: (" << startPosition.x << "/" << startPosition.y << ")"));
 
 	GAMECONTEXT->addPlayer(p);
+	GAMECONTEXT->addPolypeptideCapacityContainer(p->getId(), new PolypeptideCapacityContainer());
 
 	GAMECONTEXT->getActiveCells().createGameObject(&(p->getStemCell()));
 
@@ -337,12 +338,12 @@ void Game::createCell(CreateCellRequest & request)
 		case CellType::StandardCell:
 			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.standardcell.radius"), position);
 			cell = new CellServer(CellServer::STANDARDCELL, position, angle, &player);
-			++(POLYCAPACITY->NumberOfStandardCells);
+			++(POLYCAPACITY(player.getId())->NumberOfStandardCells);
 			break;
 		case CellType::BoneCell:
 			parentCell->getNextCellPositionByAngle(angle, CONFIG_FLOAT("data.cell.bonecell.radius"), position);
 			cell = new CellServer(CellServer::BONECELL, position, angle, &player);
-			++(POLYCAPACITY->NumberOfBoneCells);
+			++(POLYCAPACITY(player.getId())->NumberOfBoneCells);
 			break;
 		default:
 			LOG_INFO(stringify(ostringstream() << "Unknown CellType: " << type.getType()));
@@ -399,7 +400,7 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 		return;
 	}
 
-	if (POLYCAPACITY->getRemainingNumberOfPolypeptidesAllowed() == 0)
+	if (POLYCAPACITY(player->getId())->getRemainingNumberOfPolypeptidesAllowed() == 0)
 	{
 		/// No additional poly is allowed
 		LOG_INFO("CreatePolypeptideFailure InvalidPlayer sent");
@@ -426,7 +427,7 @@ void Game::createPolypetide(CreatePolypeptideRequest & request)
 		message->endpoint = player->getEndpoint();
 		NETWORKMANAGER->send(message);
 
-		++(POLYCAPACITY->NumberOfPolypeptides);
+		++(POLYCAPACITY(player->getId())->NumberOfPolypeptides);
 		GAMECONTEXT->getAttackRelations().updateRelationsFor(*stemCell);
 
 		return;

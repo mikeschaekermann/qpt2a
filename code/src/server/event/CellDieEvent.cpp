@@ -35,19 +35,20 @@ void CellDieEvent::trigger()
 				(*EVENT_MGR) += new CellDieEvent(getDeadTime(), (*it)->getId());
 			}
 
+			auto player = GAMECONTEXT->getPlayer(cell->getOwner()->getId());
+
 			if (cell->getType() == CellServer::STANDARDCELL)
 			{
-				--(POLYCAPACITY->NumberOfStandardCells);
+				--(POLYCAPACITY(player->getId())->NumberOfStandardCells);
 			}
 			else if (cell->getType() == CellServer::BONECELL)
 			{
-				--(POLYCAPACITY->NumberOfBoneCells);
+				--(POLYCAPACITY(player->getId())->NumberOfBoneCells);
 			}
 
-			if (POLYCAPACITY->getRemainingNumberOfPolypeptidesAllowed() < 0)
+			if (POLYCAPACITY(player->getId())->getRemainingNumberOfPolypeptidesAllowed() < 0)
 			{
-				auto player = GAMECONTEXT->getPlayer(cell->getOwner()->getId());
-				auto nrOfPolys = -POLYCAPACITY->getRemainingNumberOfPolypeptidesAllowed();
+				unsigned int nrOfPolys = -POLYCAPACITY(player->getId())->getRemainingNumberOfPolypeptidesAllowed();
 
 				queue<CellServer *> q;
 				q.push(&(player->getStemCell()));
@@ -77,7 +78,7 @@ void CellDieEvent::trigger()
 					}
 				}
 
-				POLYCAPACITY->NumberOfPolypeptides -= nrOfPolys;
+				POLYCAPACITY(player->getId())->NumberOfPolypeptides -= nrOfPolys;
 			}
 
 			CellDie * die = new CellDie();

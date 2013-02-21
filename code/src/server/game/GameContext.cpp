@@ -44,6 +44,27 @@ std::map<unsigned, PlayerServer *> & GameContext::getPlayerMap()
 	return playermap;
 }
 
+PolypeptideCapacityContainer * GameContext::getPolypeptideCapacityContainer(unsigned int id)
+{
+	if (polypeptideCapacityContainers.find(id) != polypeptideCapacityContainers.end())
+	{
+		return polypeptideCapacityContainers[id];
+	}
+
+	return nullptr;
+}
+
+void GameContext::addPolypeptideCapacityContainer(unsigned int id, PolypeptideCapacityContainer * polypeptideCapacityContainer)
+{
+	polypeptideCapacityContainers.insert(make_pair(id, polypeptideCapacityContainer));
+}
+
+std::map<unsigned int, PolypeptideCapacityContainer *> & GameContext::getPolypeptideCapacityContainer()
+{
+	return polypeptideCapacityContainers;
+}
+
+
 GameContext * GameContext::getInstance()
 {
 	if (!instance)
