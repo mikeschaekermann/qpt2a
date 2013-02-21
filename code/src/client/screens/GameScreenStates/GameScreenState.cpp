@@ -68,7 +68,7 @@ bool GameScreenState::touchClick(TouchWay touchWay)
 void GameScreenState::resize(ResizeEvent event) {}
 void GameScreenState::onKeyInput(KeyEvent& e)
 {
-	if (e.getCode() == KeyEvent::KEY_ESCAPE)
+	if (e.getCode() == KeyEvent::KEY_ESCAPE || e.getChar() == 'f')
 	{
 		screen->switchToState(new GameScreenStateNeutral(screen));
 	}

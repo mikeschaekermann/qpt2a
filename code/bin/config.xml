@@ -35,6 +35,21 @@
 			<b>0.1</b>
 		  </criticalColor>
 		</healthBar>
+		<polypeptideBar>
+			<background>
+				<r>0.1</r>
+				<g>0.1</g>
+				<b>0.1</b>
+				<a>0.4</a>
+			</background>
+			<foreground>
+				<r>0.10980392</r>
+				<g>0.67843137</g>
+				<b>0.52156862</b>
+				<a>1.0</a>
+			</foreground>
+			<width>20.0</width>
+		</polypeptideBar>
 		<gameOver>
 		  <maxLayerOpacity>0.5</maxLayerOpacity>
 		  <layerOpacityChangeSpeed>0.25</layerOpacityChangeSpeed>
@@ -48,24 +63,30 @@
 		</building>
 		<pickPolypeptides>
 			<maxPickRadius>100.0</maxPickRadius>
-      <maxRadiusColor>
-        <r>1.0</r>
-        <g>0.0</g>
-        <b>0.0</b>
-        <a>1.0</a>
-      </maxRadiusColor>
-      <stepRadiusColor>
-        <r>1.0</r>
-        <g>1.0</g>
-        <b>0.0</b>
-        <a>1.0</a>
-      </stepRadiusColor>
-      <selectRadiusColor>
-        <r>1.0</r>
-        <g>0.0</g>
-        <b>0.0</b>
-        <a>0.3</a>
-      </selectRadiusColor>
+			<maxRadiusColor>
+				<r>0.10980392</r>
+				<g>0.67843137</g>
+				<b>0.52156862</b>
+				<a>0.6</a>
+			</maxRadiusColor>
+			<stepRadiusColor>
+				<r>0.10980392</r>
+				<g>0.67843137</g>
+				<b>0.52156862</b>
+				<a>0.6</a>
+			</stepRadiusColor>
+			<selectRadiusColor>
+				<r>0.10980392</r>
+				<g>0.67843137</g>
+				<b>0.52156862</b>
+				<a>0.2</a>
+			</selectRadiusColor>
+			<movingPolypeptideColor>
+				<r>0.10980392</r>
+				<g>0.67843137</g>
+				<b>0.52156862</b>
+				<a>1.0</a>
+			</movingPolypeptideColor>
 		</pickPolypeptides>
 	</ingamefeedback>
 	<network>
@@ -104,7 +125,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-		<max>2</max>
+		<max>1</max>
 		<player>
 			<startposition>
 				<x>-50.0</x>

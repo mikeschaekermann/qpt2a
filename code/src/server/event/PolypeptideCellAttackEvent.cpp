@@ -8,6 +8,7 @@
 #include "../../common/network/NetworkManager.h"
 #include "../../common/network/messages/game/ingame/polypeptide/combat/PolypeptideCellAttack.h"
 #include "../../common/network/messages/game/outgame/GameOver.h"
+#include <cinder/Rand.h>
 
 PolypeptideCellAttackEvent::PolypeptideCellAttackEvent(double startTime, unsigned int attackerCellId, unsigned int attackedCellId, unsigned int polypeptideId, float damage) :
 	attackerCellId(attackerCellId),
@@ -39,7 +40,7 @@ void PolypeptideCellAttackEvent::trigger()
 				polypeptideCellAttack->attackerCellId = attackerCell->getId();
 				polypeptideCellAttack->attackedCellId = attackedCell->getId();
 				polypeptideCellAttack->polypeptideId = polypeptideId;
-				polypeptideCellAttack->damage = damage;
+				polypeptideCellAttack->damage = ci::randFloat(0.5f, 2.0f) * damage;
 				NETWORKMANAGER->sendTo<PolypeptideCellAttack>(polypeptideCellAttack, players);
 
 				if (attackedCell->getHealthPoints() < 0.f)

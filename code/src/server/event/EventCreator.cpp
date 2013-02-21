@@ -88,7 +88,9 @@ bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellSer
 	{
 		CellServer * victimCell = isAttacker ? dynamic_cast<CellServer *>(*it) : &currentCell;
 		CellServer * attackerCell = isAttacker ? &currentCell : dynamic_cast<CellServer *>(*it);
-		if (victimCell->getOwner()->getId() != attackerCell->getOwner()->getId())
+		bool areCompleted = victimCell->getIsComplete() && attackerCell->getIsComplete();
+		bool areFoes = victimCell->getOwner()->getId() != attackerCell->getOwner()->getId();
+		if (areCompleted && areFoes)
 		{
 			GAMECONTEXT->getAttackRelations().addRelation(*attackerCell, *victimCell);
 			if (attackerCell->getType() == CellServer::STANDARDCELL)

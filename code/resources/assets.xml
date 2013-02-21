@@ -473,7 +473,6 @@ vertexShader and fragmentShader are also file paths
 </shader>
 
 <!-- Movies -->
-
 <movie>
   <key>intro</key>
   <value>..\..\..\resources\movies\intro.mov</value>
