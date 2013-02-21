@@ -3,15 +3,24 @@
 #include "../screens/GameScreen.h"
 #include "../screens/ConnectScreen.h"
 #include "../screens/CreditsScreen.h"
+#include "../screens/IntroScreen.h"
 
 ScreenManager::ScreenManager(void):
 	m_backgroundScreen(nullptr),
 	menuScreen(new MenuScreen()),
 	gameScreen(new GameScreen()),
 	connectScreen(new ConnectScreen()),
-	creditsScreen(new CreditsScreen())
+	creditsScreen(new CreditsScreen()),
+	introScreen(nullptr)
 {
-	openMenuScreen();
+	try
+	{
+		openIntroScreen();
+	}
+	catch(...)
+	{
+		openMenuScreen();
+	}
 }
 
 ScreenManager::~ScreenManager(void)
@@ -40,6 +49,17 @@ void ScreenManager::draw()
 	{
 		m_backgroundScreen->draw();
 	}
+}
+
+void ScreenManager::openIntroScreen()
+{
+	if(introScreen)
+	{
+		delete introScreen;
+	}
+	
+	introScreen = new IntroScreen();
+	currentScreen = introScreen;
 }
 
 void ScreenManager::openScreen()

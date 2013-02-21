@@ -91,10 +91,12 @@ void AssetManager::loadAssets(string filePath)
 			try
 			{
 				key = it->getChild("key").getValue();
-				MovieGl movie(it->getChild("value").getValue());
+				auto filePath = it->getChild("value").getValue();
+				MovieGl movie(filePath);
+				
 				movieMap.insert(pair<string, qtime::MovieGl>(key, movie));
 			}
-			catch(...)
+			catch(exception& e)
 			{
 				LOG_ERROR("Movie could not be loaded. Movie name: " + key);
 			}
