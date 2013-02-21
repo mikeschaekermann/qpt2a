@@ -489,7 +489,11 @@ vector<CellClient *> GameScreen::getCellsPicked(Vec2f position)
 {
 	auto pointInWorldPlane = RenderManager::getInstance()->cam.screenToWorldPlane(position);
 	
-	return cellsToPick.pick(pointInWorldPlane);
+	containerMutex.lock();
+	auto pickedCells = cellsToPick.pick(pointInWorldPlane);
+	containerMutex.unlock();
+
+	return pickedCells;
 }
 
 bool GameScreen::canCellBePlaced(CellClient * cell)

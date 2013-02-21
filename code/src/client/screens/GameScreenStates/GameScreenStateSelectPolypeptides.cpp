@@ -42,11 +42,14 @@ void GameScreenStateSelectPolypeptides::touchMoved(const TouchWay & touchWay)
 
 void GameScreenStateSelectPolypeptides::touchEnded(const TouchWay & touchWay)
 {
+	GAME_SCR.getContainerMutex().lock();
 	auto it = pickedCell->getPolypeptides().begin();
 	for (unsigned int i = 0; i < numberOfPolypeptidesSelected && it != pickedCell->getPolypeptides().end(); ++i, ++it)
 	{
 		screen->getSelectedPolypeptides().addGameObject(dynamic_cast<PolypeptideClient* >(it->second));
 	}
+	GAME_SCR.getContainerMutex().unlock();
+
 	screen->switchToState(new GameScreenStateMovePolypeptides(screen));
 }
 
