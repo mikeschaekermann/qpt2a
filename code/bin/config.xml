@@ -125,7 +125,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-		<max>2</max>
+		<max>1</max>
 		<player>
 			<startposition>
 				<x>-50.0</x>

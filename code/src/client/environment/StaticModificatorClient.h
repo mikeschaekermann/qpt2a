@@ -12,7 +12,14 @@ public:
 		GameObjectClient(), StaticModificator(id, position, rotation, scale, radius, type)
 	{
 		opacity = .3f;
-		SOUND_PLAYER->playSound(string("radioactive"), position, Vec3f::zero());
+		if(type == StaticModificator::Type::RADIOACTIVITY)
+		{
+			SOUND_PLAYER->playSound(string("radioactive"), position, Vec3f::zero());
+		}
+		else if(type == StaticModificator::Type::NUTRIENTSOIL)
+		{
+			SOUND_PLAYER->playSound(string("nutriensoil"), position, Vec3f::zero());
+		}
 	}
 
 protected:
