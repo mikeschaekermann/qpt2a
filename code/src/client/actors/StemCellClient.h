@@ -19,6 +19,8 @@ public:
  
  virtual void update(float frameTime) { CellClient::update(frameTime); }
  virtual void setPosition(Vec3f position) { CellClient::setPosition(position); }
+
+ virtual bool addPolypeptide(Polypeptide * polypeptide) { return CellClient::addPolypeptide(polypeptide); }
  
 private:
  virtual void setId(unsigned int id) { CellClient::setId(id); }
