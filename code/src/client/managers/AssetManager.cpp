@@ -91,8 +91,21 @@ void AssetManager::loadAssets(string filePath)
 			try
 			{
 				key = it->getChild("key").getValue();
-				tmpFilePath = getAppPath().string().substr(0, 19) + it->getChild("value").getValue().substr(9);
-				MovieGl movie(tmpFilePath);
+				auto value = it->getChild("value").getValue();
+
+				const unsigned BUFSIZE = 4096;
+
+				TCHAR* relPath = new TCHAR[value.size() + 1];
+				std::copy(value.begin(), value.end(), relPath);
+				TCHAR buffer[BUFSIZE] = TEXT("");
+				TCHAR** lppPart = {NULL};
+
+				GetFullPathName(relPath,
+					BUFSIZE,
+					buffer,
+					lppPart);
+
+				MovieGl movie(buffer);
 				
 				movieMap.insert(pair<string, qtime::MovieGl>(key, movie));
 			}
