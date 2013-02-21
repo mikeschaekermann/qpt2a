@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "..\vc11\server.vc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "networkTest", "..\vc11\networkTest.vcxproj", "{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "..\vc11\Setup.vdproj", "{832FC2AF-B1E1-4FF9-94A8-25DD2622DB20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,8 +24,8 @@ Global
 		{01B47039-3133-407A-944A-3F554A017C2C}.Release|Win32.Build.0 = Release|Win32
 		{7C072AE6-2637-47ED-A4D2-637EECF59EE7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{7C072AE6-2637-47ED-A4D2-637EECF59EE7}.Debug|Win32.Build.0 = Debug|Win32
-		{7C072AE6-2637-47ED-A4D2-637EECF59EE7}.Final|Win32.ActiveCfg = Release|Win32
-		{7C072AE6-2637-47ED-A4D2-637EECF59EE7}.Final|Win32.Build.0 = Release|Win32
+		{7C072AE6-2637-47ED-A4D2-637EECF59EE7}.Final|Win32.ActiveCfg = Final|Win32
+		{7C072AE6-2637-47ED-A4D2-637EECF59EE7}.Final|Win32.Build.0 = Final|Win32
 		{7C072AE6-2637-47ED-A4D2-637EECF59EE7}.Release|Win32.ActiveCfg = Release|Win32
 		{7C072AE6-2637-47ED-A4D2-637EECF59EE7}.Release|Win32.Build.0 = Release|Win32
 		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Debug|Win32.ActiveCfg = Debug|Win32
@@ -32,6 +34,9 @@ Global
 		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Final|Win32.Build.0 = Release|Win32
 		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Release|Win32.ActiveCfg = Release|Win32
 		{CA3DABF2-D85B-4328-8181-EB1C00D1E3D9}.Release|Win32.Build.0 = Release|Win32
+		{832FC2AF-B1E1-4FF9-94A8-25DD2622DB20}.Debug|Win32.ActiveCfg = Debug
+		{832FC2AF-B1E1-4FF9-94A8-25DD2622DB20}.Final|Win32.ActiveCfg = Release
+		{832FC2AF-B1E1-4FF9-94A8-25DD2622DB20}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
