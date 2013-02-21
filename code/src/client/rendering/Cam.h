@@ -15,6 +15,7 @@ public:
 
 	Cam & setPosition(Vec3f newPosition);
 	Cam & setFocus(Vec3f newFocus);
+	Vec3f getFocus() { return focus; }
 	Vec3f screenToWorldPlane(Vec2i screenPoint);
 
 	Vec3f getPosition() const;
