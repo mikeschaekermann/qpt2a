@@ -21,12 +21,17 @@ void AttackEvent::trigger()
 {
 	auto attackerO = GAMECONTEXT->getActiveCells().find(attackerId);
 	auto attackedO = GAMECONTEXT->getActiveCells().find(attackedId);
-	if (!attackedO) attackedO = GAMECONTEXT->getInactiveCells().find(attackedId);
+	//if (!attackedO) attackedO = GAMECONTEXT->getInactiveCells().find(attackedId);
 
 	if (attackerO != nullptr && attackedO != nullptr)
 	{
 		auto attacker = dynamic_cast<CellServer *>(attackerO);
 		auto attacked = dynamic_cast<CellServer *>(attackedO);
+
+		if (attacked->getHealthPoints() < 0.f)
+		{
+			return;
+		}
 
 		attacked->decreaseHealthPointsBy(damage);
 		CellAttack * attack = new CellAttack();
