@@ -20,6 +20,11 @@ PolypeptideFightEvent::PolypeptideFightEvent(double startTime, unsigned int cell
 
 void PolypeptideFightEvent::trigger()
 {
+	if (terminated)
+	{
+		return;
+	}
+
 	auto cell1 = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId1));
 	auto cell2 = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(cellId2));
 	if (cell1 != nullptr && cell2 != nullptr)
@@ -54,7 +59,15 @@ void PolypeptideFightEvent::trigger()
 			}
 			else if (!polypeptide1Dies && !polypeptide2Dies)
 			{
-				(*EVENT_MGR) += new PolypeptideFightEvent(this->m_dDeadTime, cellId1, cellId2, polypeptideId1, polypeptideId2);
+				PolypeptideFightEvent * e = new PolypeptideFightEvent(this->m_dDeadTime, cellId1, cellId2, polypeptideId1, polypeptideId2);
+				auto ar = GAMECONTEXT->getAttackRelations();
+				auto key = ar.make_set(cellId1, cellId2);
+				if (ar.relations.find(key) != ar.relations.end())
+				{
+					auto & relation = ar.relations[key];
+					relation.events.insert(make_pair(e->getId(), e));
+				}
+				(*EVENT_MGR) += e;
 			}
 
 			if (polypeptide1Dies)

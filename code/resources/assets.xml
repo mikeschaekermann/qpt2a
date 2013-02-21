@@ -429,6 +429,14 @@ vertexShader and fragmentShader are also file paths
   <stream>false</stream>
 </sound>
 
+<sound>
+  <key>nutriensoil</key>
+  <value>..\..\..\resources\sounds\nutriensoil.wav</value>
+  <3d>true</3d>
+  <loop>true</loop>
+  <stream>false</stream>
+</sound>
+
 <!-- shader -->
 
 <shader>

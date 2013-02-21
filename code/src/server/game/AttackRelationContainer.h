@@ -5,9 +5,13 @@
 
 #include "CellServer.h"
 #include "../event/GameEvent.h"
+#include "../event/PolypeptideCellAttackEvent.h"
+#include "../event/PolypeptideFightEvent.h"
 
 class AttackRelationContainer
 {
+	friend class PolypeptideCellAttackEvent;
+	friend class PolypeptideFightEvent;
 public:
 	AttackRelationContainer & addRelation(CellServer & cell1, CellServer & cell2);
 	AttackRelationContainer & removeRelationsFor(CellServer & cell);
@@ -15,19 +19,20 @@ public:
 private:
 	struct Relation
 	{
-		CellServer & cell1;
-		CellServer & cell2;
+		CellServer * cell1;
+		CellServer * cell2;
 		std::set<unsigned int> polypeptideIds1;
 		std::set<unsigned int> polypeptideIds2;
-		std::set<GameEvent *> events;
+		std::map<unsigned int, GameEvent *> events;
 		
+		Relation();
 		Relation(CellServer & cell1, CellServer & cell2);
 
 		std::set<unsigned int> * operator[](unsigned int id)
 		{
-			if (id == cell1.getId())
+			if (id == cell1->getId())
 				return &polypeptideIds1;
-			if (id == cell2.getId())
+			if (id == cell2->getId())
 				return &polypeptideIds2;
 
 			return nullptr;

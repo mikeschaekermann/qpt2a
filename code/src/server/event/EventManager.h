@@ -24,6 +24,7 @@ public:
 	static EventManager * getInstance();
 
 	double getTime() const;
+	bool isDeletedEvent(unsigned int id);
 
 	void operator+=(GameEvent * e);
 
@@ -39,5 +40,6 @@ private:
 	bool run;
 	std::priority_queue<GameEvent *, std::vector<GameEvent *>, CompareGameEvent> events;
 	std::vector<GameEvent *> toAddList;
+	std::map<unsigned int, bool> isDeletedList;
 	boost::mutex mutex;
 };

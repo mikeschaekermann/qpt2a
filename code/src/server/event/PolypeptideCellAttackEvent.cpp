@@ -20,11 +20,16 @@ PolypeptideCellAttackEvent::PolypeptideCellAttackEvent(double startTime, unsigne
 
 void PolypeptideCellAttackEvent::trigger()
 {
+	if (terminated)
+	{
+		return;
+	}
+
 	auto attackerCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(attackerCellId));
 	auto attackedCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(attackedCellId));
 	if (attackerCell != nullptr && attackedCell != nullptr)
 	{
-		if (attackedCell->getHealthPoints() < 0.f)
+		if (attackedCell->getHealthPoints() <= 0.f)
 		{
 			return;
 		}
@@ -49,7 +54,7 @@ void PolypeptideCellAttackEvent::trigger()
 				polypeptideCellAttack->damage = damage;
 				NETWORKMANAGER->sendTo<PolypeptideCellAttack>(polypeptideCellAttack, players);
 
-				if (attackedCell->getHealthPoints() < 0.f)
+				if (attackedCell->getHealthPoints() <= 0.f)
 				{
 					(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT("data.event.celldie.time"), attackedCell->getId());
 
@@ -68,7 +73,15 @@ void PolypeptideCellAttackEvent::trigger()
 				}
 				else
 				{
-					(*EVENT_MGR) += new PolypeptideCellAttackEvent(this->m_dDeadTime, attackerCellId, attackedCellId, polypeptideId, damage);
+					PolypeptideCellAttackEvent * e = new PolypeptideCellAttackEvent(this->m_dDeadTime, attackerCellId, attackedCellId, polypeptideId, damage);
+					auto ar = GAMECONTEXT->getAttackRelations();
+					auto key = ar.make_set(attackerCellId, attackedCellId);
+					if (ar.relations.find(key) != ar.relations.end())
+					{
+						auto & relation = ar.relations[key];
+						relation.events.insert(make_pair(e->getId(), e));
+					}
+					(*EVENT_MGR) += e;
 				}
 			}
 		}

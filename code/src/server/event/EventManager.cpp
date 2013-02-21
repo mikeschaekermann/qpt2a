@@ -22,10 +22,20 @@ double EventManager::getTime() const
 	return timer.getSeconds();
 }
 
+bool EventManager::isDeletedEvent(unsigned int id)
+{
+	if (isDeletedList.find(id) != isDeletedList.end())
+	{
+		return isDeletedList[id];
+	}
+	return true;
+}
+
 void EventManager::operator+=(GameEvent * e)
 {
 	mutex.lock();
 	toAddList.push_back(e);
+	isDeletedList.insert(make_pair(e->getId(), false));
 	mutex.unlock();
 }
 
@@ -42,6 +52,11 @@ void EventManager::operator()()
 			GAMECONTEXT->getMutex().unlock();
 			events.pop();
 			delete current;
+
+			if (isDeletedList.find(current->getId()) != isDeletedList.end())
+			{
+				isDeletedList[current->getId()] = true;
+			}
 		}
 		mutex.lock();
 		for (auto it = toAddList.begin(); it != toAddList.end(); ++it)
