@@ -97,6 +97,7 @@
     <ClInclude Include="..\..\src\Server\game\PlayerServer.h" />
     <ClInclude Include="..\..\src\server\game\PolypeptideServer.h" />
     <ClInclude Include="..\..\src\server\network\ServerNetworkManager.h" />
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\common\AABBCollisionBehavior.cpp" />
@@ -170,7 +171,11 @@
     <ClCompile Include="..\..\src\server\network\ServerNetworkmanager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\resources\images\icon.ico" />
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="server.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7C072AE6-2637-47ED-A4D2-637EECF59EE7}</ProjectGuid>
@@ -280,6 +285,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(BOOST_DIR);$(CINDER_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

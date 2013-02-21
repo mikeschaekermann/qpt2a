@@ -387,6 +387,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BDA85597264F42AEAB3941566E39B286"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_BE6CE7BA1CA341F581E40D8D1F0E3890"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -562,7 +568,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Setup\\Setup.msi"
+        "OutputFilename" = "8:Soma-Setup\\Soma.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -1854,6 +1860,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BDA85597264F42AEAB3941566E39B286"
+            {
+            "SourcePath" = "8:..\\..\\bin\\config.xml"
+            "TargetName" = "8:config.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_FBDA596DB02C4BEB80A61ADBE998515C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BE6CE7BA1CA341F581E40D8D1F0E3890"
             {
             "SourcePath" = "8:..\\..\\resources\\images\\ingame-button-verbindung-hover.svg"
@@ -2420,35 +2446,46 @@
                             }
                         }
                     }
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_FEF9BB3DAFCE4FF894DBE1D9708B8C42"
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_FBDA596DB02C4BEB80A61ADBE998515C"
                     {
-                    "Name" = "8:bin"
+                    "Name" = "8:application"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
-                    "Property" = "8:_854F2AA270064ED89D1A35C78854F671"
+                    "Property" = "8:_B989E80D2AD84D6E9A6AEBC47DFEF548"
                         "Folders"
                         {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_38EE37DCD3014986BAD50B4C13FDEA20"
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_DC6E9E29C2BD4658B4EC2421C4EE3A14"
                             {
-                            "Name" = "8:server"
+                            "Name" = "8:bin"
                             "AlwaysCreate" = "11:FALSE"
                             "Condition" = "8:"
                             "Transitive" = "11:FALSE"
-                            "Property" = "8:_428B614CA4864470BB418B298A79902B"
+                            "Property" = "8:_854F2AA270064ED89D1A35C78854F671"
                                 "Folders"
                                 {
-                                }
-                            }
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_B2CE1AC27B6C43B4AAECDDF2A6F9E55E"
-                            {
-                            "Name" = "8:client"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_2484B7A1DB0142059A4923A5A8DC2553"
-                                "Folders"
-                                {
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_38EE37DCD3014986BAD50B4C13FDEA20"
+                                    {
+                                    "Name" = "8:server"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_428B614CA4864470BB418B298A79902B"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B2CE1AC27B6C43B4AAECDDF2A6F9E55E"
+                                    {
+                                    "Name" = "8:client"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_2484B7A1DB0142059A4923A5A8DC2553"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2470,22 +2507,22 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Setup"
+        "ProductName" = "8:Soma"
         "ProductCode" = "8:{BB7AC7F4-6C18-4B34-95D4-B3911E050DE7}"
-        "PackageCode" = "8:{89B9CD0B-5F3A-4213-8B10-A25C6B360C33}"
+        "PackageCode" = "8:{7960B562-B093-4D3E-B507-230C73BF3E21}"
         "UpgradeCode" = "8:{05F0D4BA-A278-4547-A4D6-F1364C106081}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
+        "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:SurRenderManager"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Setup"
+        "Title" = "8:Soma"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:SurRenderManager"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -2592,6 +2629,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_10D6D28DC4774FEBB7BD3E8011B43AA4"
+            {
+            "Name" = "8:Soma"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_EAE64CB106584A79B8440DA884C5CEAC"
+            "Folder" = "8:_65ED8D15B6D24B98ABDE3C3D9100F723"
+            "WorkingFolder" = "8:_B2CE1AC27B6C43B4AAECDDF2A6F9E55E"
+            "Icon" = "8:_1D73DECBA0C847EBAEA25BE39BEAFFED"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D06F5A5FAAA445D0802C0CCCBDD17686"
+            {
+            "Name" = "8:Soma Server"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_6FF2A3D5E1F541769BC730D17D5C5518"
+            "Folder" = "8:_65ED8D15B6D24B98ABDE3C3D9100F723"
+            "WorkingFolder" = "8:_38EE37DCD3014986BAD50B4C13FDEA20"
+            "Icon" = "8:_1D73DECBA0C847EBAEA25BE39BEAFFED"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -2619,7 +2684,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_1D73DECBA0C847EBAEA25BE39BEAFFED"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -2641,7 +2707,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_1D73DECBA0C847EBAEA25BE39BEAFFED"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -2689,7 +2756,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_1D73DECBA0C847EBAEA25BE39BEAFFED"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -2783,7 +2851,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_1D73DECBA0C847EBAEA25BE39BEAFFED"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -2928,7 +2997,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_1D73DECBA0C847EBAEA25BE39BEAFFED"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"

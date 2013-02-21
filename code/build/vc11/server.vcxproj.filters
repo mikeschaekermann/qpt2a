@@ -247,6 +247,7 @@
     <ClInclude Include="..\..\src\common\PolypeptideCapacityContainer.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -516,5 +517,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="..\..\resources\images\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="server.rc" />
   </ItemGroup>
 </Project>
