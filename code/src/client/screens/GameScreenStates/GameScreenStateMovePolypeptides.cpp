@@ -36,7 +36,7 @@ void GameScreenStateMovePolypeptides::draw2D()
 
 bool GameScreenStateMovePolypeptides::touchClick(TouchWay touchWay)
 {
-	auto& containerMutex = GAME_SCR.getContainerMutex();
+	auto& containerMutex = GAME_SCR->getContainerMutex();
 
 	auto selectedPolypeptidesSize = screen->getSelectedPolypeptides().getSize();
 

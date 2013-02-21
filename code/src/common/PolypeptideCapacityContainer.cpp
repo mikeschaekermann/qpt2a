@@ -1,6 +1,8 @@
 #include "PolypeptideCapacityContainer.h"
 #include "../common/ConfigurationDataHandler.h"
 
+boost::mutex PolypeptideCapacityContainer::instanceMutex;
+
 PolypeptideCapacityContainer::PolypeptideCapacityContainer():
 	percentageUsable(CONFIG_FLOAT("data.polypeptide.percentageUsable")),
 	polypeptidesPerStandardCell(CONFIG_INT("data.polypeptide.maxPerStandardCell")),
@@ -25,11 +27,25 @@ PolypeptideCapacityContainer::PolypeptideCapacityContainer(PolypeptideCapacityCo
 
 PolypeptideCapacityContainer * PolypeptideCapacityContainer::getInstance()
 {
+	instanceMutex.lock();
 	if (instance == nullptr)
 	{
 		instance = new PolypeptideCapacityContainer();
 	}
+	instanceMutex.unlock();
+
 	return instance;
+}
+
+void PolypeptideCapacityContainer::releaseInstance()
+{
+	instanceMutex.lock();
+	if (instance != nullptr)
+	{
+		delete instance;
+		instance = nullptr;
+	}
+	instanceMutex.unlock();
 }
 
 unsigned int PolypeptideCapacityContainer::getNumberOfPolypeptidesAllowed() const

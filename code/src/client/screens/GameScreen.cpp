@@ -77,7 +77,7 @@ GameScreen::~GameScreen(void)
 
 void GameScreen::update(float frameTime)
 {
-	SOUND_PLAYER->setListener3d(Vec3f(RENDER_MGR->cam.getEyePoint().xy(), 10), Vec3f::zero(), Vec3f::zero(), RENDER_MGR->cam.getWorldUp());
+	SOUND_PLAYER->setListener3d(Vec3f(RENDER_MGR->cam.getFocus().xy(), 10), Vec3f::zero(), Vec3f::zero(), RENDER_MGR->cam.getWorldUp());
 
 	state->update(frameTime);
 
@@ -592,14 +592,14 @@ void GameScreen::drawPolypeptideBar() const
 		CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.background.g"), 
 		CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.background.b"), 
 		CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.background.a"));
-	gl::drawSolidRect(Rectf(Vec2f::zero(), Vec2f(CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.width"), getWindowHeight())));
+	gl::drawSolidRect(Rectf(Vec2f::zero(), Vec2f(CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.width"), (float)getWindowHeight())));
 
 	gl::color(
 		CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.foreground.r"), 
 		CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.foreground.g"), 
 		CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.foreground.b"), 
 		CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.foreground.a"));
-	gl::drawSolidRect(Rectf(Vec2f(0, getWindowHeight() * (1 - POLYCAPACITY->getExistingPerAllowed())), Vec2f(CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.width"), getWindowHeight())));
+	gl::drawSolidRect(Rectf(Vec2f(0, getWindowHeight() * (1 - POLYCAPACITY->getExistingPerAllowed())), Vec2f(CONFIG_FLOAT("data.ingamefeedback.polypeptideBar.width"), (float)getWindowHeight())));
 }
 
 boost::mutex & GameScreen::getContainerMutex()

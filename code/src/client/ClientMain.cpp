@@ -6,6 +6,8 @@
 #include "managers/GameManager.h"
 #include "managers/ScreenManager.h"
 #include "managers/AssetManager.h"
+#include "rendering/RenderManager.h"
+#include "sound/SoundPlayer.h"
 #include "../common/ConfigurationDataHandler.h"
 
 void ClientMain::setup()
@@ -39,8 +41,10 @@ void ClientMain::setup()
 
 void ClientMain::shutdown()
 {
+	SoundPlayer::releaseInstance();
 	AssetManager::releaseInstance();
 	GameManager::releaseInstance();
+	RenderManager::releaseInstance();
 	ScreenManager::releaseInstance();
 	exit(0);
 }

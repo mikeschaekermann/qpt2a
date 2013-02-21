@@ -91,3 +91,6 @@ template
 sdks
 samples
 *.tlog
+code/bin/Client/Final
+code/bin/Client/Final/*
+code/bin/Client/Release

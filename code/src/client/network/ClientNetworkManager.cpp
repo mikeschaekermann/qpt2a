@@ -161,7 +161,7 @@ NetworkMessage* ClientNetworkManager::createNetworkMessage(char* data)
 
 void ClientNetworkManager::handleMessage(NetworkMessage* message)
 {
-	GAME_SCR.getContainerMutex().lock();
+	GAME_SCR->getContainerMutex().lock();
 
 	switch (message->messageType.getType())
 	{
@@ -173,7 +173,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			if (gameOver->playerId == GAME_MGR->getMyPlayer()->getId())
 			{
 				SOUND_PLAYER->playSound(string("gameOver"));
-				GAME_SCR.switchToState(new GameScreenStateGameOver(&GAME_SCR));
+				GAME_SCR->switchToState(new GameScreenStateGameOver(GAME_SCR));
 			}
 		}
 		break;
@@ -183,7 +183,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		JoinFailure *joinFailure= dynamic_cast<JoinFailure*> (message);
 		if (joinFailure)
 		{
-			CONN_SCR.joinFailure(joinFailure->errorCode);
+			CONN_SCR->joinFailure(joinFailure->errorCode);
 			LOG_INFO("JoinFailure received");
 		}
 		break;
@@ -194,7 +194,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (joinSuccess)
 		{
 			GAME_MGR->setMyPlayerId(joinSuccess->playerId);
-			CONN_SCR.joinSuccess();
+			CONN_SCR->joinSuccess();
 			LOG_INFO("JoinSuccess received");
 			LOG_INFO("====================");
 			stringstream message;
@@ -268,8 +268,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (cellAttack)
 		{
 			LOG_INFO("CellAttack received");
-			auto attacker = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackerCellId);
-			auto attacked = GAME_SCR.getGameObjectsToDraw().find(cellAttack->attackedCellId);
+			auto attacker = GAME_SCR->getGameObjectsToDraw().find(cellAttack->attackerCellId);
+			auto attacked = GAME_SCR->getGameObjectsToDraw().find(cellAttack->attackedCellId);
 
 			if (attacker) dynamic_cast<StandardCellClient *>(attacker)->startAttackAnimation();
 			if (attacked) dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
@@ -285,7 +285,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				string text = stringify(ostringstream() << "-" << ceil((float) cellAttack->damage));
 				GameScreen::RenderText renderText(deathTime, textPos, text);
 				
-				GAME_SCR.addRenderText(renderText);
+				GAME_SCR->addRenderText(renderText);
 			}
 			LOG_INFO(stringify(ostringstream() << "Cell with id: " << cellAttack->attackerCellId << " is attacking cell with id: " << cellAttack->attackedCellId << " width a damage of: " << cellAttack->damage));
 			
@@ -299,25 +299,25 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (cellDie)
 		{
 			SOUND_PLAYER->playSound(string("cellDie"));
-			auto cellObject = GAME_SCR.getGameObjectsToDraw().find(cellDie->cellId);
+			auto cellObject = GAME_SCR->getGameObjectsToDraw().find(cellDie->cellId);
 			if (cellObject != nullptr)
 			{
-				GAME_SCR.removeGameObjectToCollide(cellObject);
+				GAME_SCR->removeGameObjectToCollide(cellObject);
 				auto cellClient = dynamic_cast<CellClient *>(cellObject);
 
 				if (cellClient != nullptr)
 				{
-					GAME_SCR.removeCellToPick(cellClient);
+					GAME_SCR->removeCellToPick(cellClient);
 					removeCreateCellRequestByParentCell(cellClient);
 
 					if (cellClient->getOwner() == GAME_MGR->getMyPlayer())
 					{
-						GAME_SCR.removeExploringCell(cellClient);
+						GAME_SCR->removeExploringCell(cellClient);
 						cellClient->decreaseGlobalTypeCounter();
 					}
 				}
-				GAME_SCR.removeGameObjectToUpdate(cellObject);
-				GAME_SCR.removeGameObjectToDraw(cellObject);
+				GAME_SCR->removeGameObjectToUpdate(cellObject);
+				GAME_SCR->removeGameObjectToDraw(cellObject);
 
 				delete cellObject;
 			}
@@ -334,7 +334,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 			if (cellNew->playerId != GAME_MGR->getMyPlayer()->getId())
 			{
-				GAME_SCR.addIncompleteCell(
+				GAME_SCR->addIncompleteCell(
 					cellNew->playerId, 
 					cellNew->type.getType(),
 					cellNew->cellId,
@@ -351,7 +351,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		if (createCellComplete)
 		{
 			LOG_INFO("CreateCellComplete received");
-			GAME_SCR.completeCellById(createCellComplete->cellId);
+			GAME_SCR->completeCellById(createCellComplete->cellId);
 		}
 		break;
 	}
@@ -381,9 +381,9 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				parentCell->addChild(newCell);
 				/// must be hidden so that the skin is updated later!
 				newCell->hide();
-				GAME_SCR.removeCellPreview(newCell);
-				GAME_SCR.addIncompleteCell(newCell);
-				GAME_SCR.addExploringCell(newCell);
+				GAME_SCR->removeCellPreview(newCell);
+				GAME_SCR->addIncompleteCell(newCell);
+				GAME_SCR->addExploringCell(newCell);
 				
 				createCellRequestContexts.erase(context);
 			}
@@ -405,8 +405,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				auto newCell = context->second.first;
 				auto parentCell = context->second.second;
 
-				GAME_SCR.removeCellPreview(newCell);
-				GAME_SCR.switchToState(new GameScreenStateCreateCell(&GAME_SCR, parentCell, newCell));
+				GAME_SCR->removeCellPreview(newCell);
+				GAME_SCR->switchToState(new GameScreenStateCreateCell(GAME_SCR, parentCell, newCell));
 				
 				createCellRequestContexts.erase(context);
 			}
@@ -438,7 +438,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 				stemCell.addPolypeptide(polypeptide);
 
-				GAME_SCR.getMyPolypeptides().addGameObject(polypeptide);
+				GAME_SCR->getMyPolypeptides().addGameObject(polypeptide);
 				createPolypeptideRequestContexts.erase(context);
 			}
 		}
@@ -492,10 +492,10 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 						polypeptide->setOwner(toCell);
 						
-						auto polypeptideInSelectionList = GAME_SCR.getSelectedPolypeptides().find(*it);
+						auto polypeptideInSelectionList = GAME_SCR->getSelectedPolypeptides().find(*it);
 						if (polypeptideInSelectionList != nullptr)
 						{
-							GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptideInSelectionList);
+							GAME_SCR->getSelectedPolypeptides().removeGameObject(polypeptideInSelectionList);
 						}
 						else
 						{
@@ -505,9 +505,9 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 					}
 				}
 
-				if (GAME_SCR.getSelectedPolypeptides().getSize() == 0)
+				if (GAME_SCR->getSelectedPolypeptides().getSize() == 0)
 				{
-					GAME_SCR.switchToState(new GameScreenStateNeutral(&GAME_SCR));
+					GAME_SCR->switchToState(new GameScreenStateNeutral(GAME_SCR));
 				}
 
 				movePolypeptideRequestContexts.erase(context);
@@ -546,12 +546,12 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			
 			unsigned int polypeptideId = polypeptideDie->polypeptideId;
 
-			auto polypeptide = GAME_SCR.getMyPolypeptides().find(polypeptideId);
+			auto polypeptide = GAME_SCR->getMyPolypeptides().find(polypeptideId);
 			if (polypeptide != nullptr)
 			{
 				polypeptide->getOwner()->removePolypeptide(polypeptide);
-				GAME_SCR.getSelectedPolypeptides().removeGameObject(polypeptide);
-				GAME_SCR.getMyPolypeptides().removeGameObject(polypeptide);
+				GAME_SCR->getSelectedPolypeptides().removeGameObject(polypeptide);
+				GAME_SCR->getMyPolypeptides().removeGameObject(polypeptide);
 
 				if (POLYCAPACITY->NumberOfPolypeptides == 0)
 				{
@@ -584,14 +584,14 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			unsigned int attackerCellId = polypeptideCellAttack->attackerCellId;
 			float damage = polypeptideCellAttack->damage;
 
-			auto attackedObject = GAME_SCR.getGameObjectsToDraw().find(attackedCellId);
+			auto attackedObject = GAME_SCR->getGameObjectsToDraw().find(attackedCellId);
 			if (attackedObject == nullptr)
 			{
 				LOG_ERROR("Attacked object does not exist!");
 				assert(false);
 			}
 
-			auto attackerObject = GAME_SCR.getGameObjectsToDraw().find(attackerCellId);
+			auto attackerObject = GAME_SCR->getGameObjectsToDraw().find(attackerCellId);
 			if (attackerObject == nullptr)
 			{
 				LOG_ERROR("Attacker object does not exist!");
@@ -614,7 +614,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 			bool ownCell = attackedCell->getOwner() == GAME_MGR->getMyPlayer();
 				
-			auto polypeptide = GAME_SCR.getMyPolypeptides().find(polypeptideId);
+			auto polypeptide = GAME_SCR->getMyPolypeptides().find(polypeptideId);
 			bool ownPoly = polypeptide != nullptr;
 
 			/// something terribly wrong is happening here:
@@ -634,7 +634,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide->setPosition(attackerCell->getPosition());
 				polypeptide->setAttackOptions(attackerCell->getPosition(), true, false);
 				polypeptide->setOwner(attackerCell);
-				GAME_SCR.addGameObjectToDraw(polypeptide);
+				GAME_SCR->addGameObjectToDraw(polypeptide);
 			}
 			else
 			{
@@ -661,14 +661,14 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			bool polypeptide1Dies = polypeptideFight->polypeptide1Dies;
 			bool polypeptide2Dies = polypeptideFight->polypeptide2Dies;
 
-			auto cellObject1 = GAME_SCR.getGameObjectsToDraw().find(cellId1);
+			auto cellObject1 = GAME_SCR->getGameObjectsToDraw().find(cellId1);
 			if (cellObject1 == nullptr)
 			{
 				LOG_ERROR("Parent cell of poly #1 could not be found!");
 				assert(false);
 			}
 
-			auto cellObject2 = GAME_SCR.getGameObjectsToDraw().find(cellId2);
+			auto cellObject2 = GAME_SCR->getGameObjectsToDraw().find(cellId2);
 			if (cellObject2 == nullptr)
 			{
 				LOG_ERROR("Parent cell of poly #2 could not be found!");
@@ -689,7 +689,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				assert(false);
 			}
 
-			auto polyObject1 = GAME_SCR.getMyPolypeptides().find(polypeptideId1);
+			auto polyObject1 = GAME_SCR->getMyPolypeptides().find(polypeptideId1);
 			if (cellObject1 == nullptr)
 			{
 				polyObject1 = new PolypeptideClient();
@@ -697,14 +697,14 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polyObject1->setPosition(cellClient1->getPosition());
 				polyObject1->setAttackOptions(cellClient1->getPosition(), true, polypeptide1Dies);
 				polyObject1->setOwner(cellClient1);
-				GAME_SCR.addGameObjectToDraw(polyObject1);
+				GAME_SCR->addGameObjectToDraw(polyObject1);
 			}
 			else
 			{
 				polyObject1->setAttackOptions(cellClient1->getPosition(), false, polypeptide1Dies);
 			}
 
-			auto polyObject2 = GAME_SCR.getMyPolypeptides().find(polypeptideId2);
+			auto polyObject2 = GAME_SCR->getMyPolypeptides().find(polypeptideId2);
 			if (cellObject2 == nullptr)
 			{
 				polyObject2 = new PolypeptideClient();
@@ -712,7 +712,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polyObject2->setPosition(cellClient2->getPosition());
 				polyObject2->setAttackOptions(cellClient2->getPosition(), true, polypeptide2Dies);
 				polyObject2->setOwner(cellClient2);
-				GAME_SCR.addGameObjectToDraw(polyObject2);
+				GAME_SCR->addGameObjectToDraw(polyObject2);
 			}
 			else
 			{
@@ -736,7 +736,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 	}
 	}
 
-	GAME_SCR.getContainerMutex().unlock();
+	GAME_SCR->getContainerMutex().unlock();
 }
 
 vector<ConnectionEndpoint> ClientNetworkManager::getConnectionEndpoints()

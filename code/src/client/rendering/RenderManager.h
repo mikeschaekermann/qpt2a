@@ -5,11 +5,10 @@
 #include "../../common/ConfigurationDataHandler.h"
 #include "../environment/StaticModificatorClient.h"
 #include "MarchingCubes.h"
-
 #include <string>
-
 #include "cinder/Vector.h"
 #include "cinder/gl/gl.h"
+#include "boost/thread/mutex.hpp"
 
 using namespace std;
 using namespace ci;
@@ -23,7 +22,7 @@ public:
 	Cam cam;
 
 	static RenderManager * const getInstance();
-	static void releaseInstance() { if(instance) delete instance; }
+	static void releaseInstance();
 
 	void renderSlimeShadedModel(string modelName,
 					 Vec3f worldTranslation = Vec3f(0, 0, 0),
@@ -74,6 +73,7 @@ private:
 	Vec3f lightPos;
 
 	static RenderManager* instance;
+	static boost::mutex instanceMutex;
 
 	float fogOfWarOpacity;
 	float fogOfWarInnerRadius;
