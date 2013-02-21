@@ -125,7 +125,7 @@
 		</fogOfWar>
 	</world>
 	<players>
-		<max>2</max>
+		<max>1</max>
 		<player>
 			<startposition>
 				<x>-50.0</x>
@@ -291,11 +291,11 @@
 		<menuscreen>
 			<background>
 				<x>-0.5</x>
-				<y>0</y>
+				<y>-20</y>
 			</background>
 			<connect>
 				<x>450.6585</x>
-				<y>450</y>
+				<y>440</y>
 			</connect>
 			<start>
 				<x>407</x>
@@ -303,11 +303,11 @@
 			</start>
 			<credits>
 				<x>430.3955</x>
-				<y>580</y>
+				<y>590</y>
 			</credits>
 			<exit>
 				<x>440.662</x>
-				<y>650</y>
+				<y>670</y>
 			</exit>
 		</menuscreen>
 		<connectcreen>
