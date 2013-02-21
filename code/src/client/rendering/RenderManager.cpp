@@ -216,8 +216,8 @@ void RenderManager::renderBlackShadedModel(string modelName)
 void RenderManager::renderBlackShadedModel(TriMesh& model)
 {
 	Vec4f ambient = Vec4f(0.3f, 0.3f, 0.3f, 1.f);
-	Vec4f diffuse = Vec4f(0.2f, 0.2f, 0.2f, 1.f);
-	Vec4f specular = Vec4f(0.1, 0.1, 0.1, 1.f);
+	Vec4f diffuse = Vec4f(0.2f, 0.2f, 0.2f, 0.5f);
+	Vec4f specular = Vec4f(0.1, 0.1, 0.1, 0.3);
 	float shininess = 10.f;
 
 	auto shader = ASSET_MGR->getShaderProg(string("poly"));
@@ -228,8 +228,6 @@ void RenderManager::renderBlackShadedModel(TriMesh& model)
 
 	shader.uniform("ambientColor", ambient);
 	shader.uniform("diffuseColor", diffuse);
-	shader.uniform("specularColor", specular);
-	shader.uniform("shininess", shininess);
 
 	gl::pushModelView();
 		gl::draw(model);
