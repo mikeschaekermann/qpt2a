@@ -7,6 +7,7 @@
 #include "../event/GameEvent.h"
 #include "../event/PolypeptideCellAttackEvent.h"
 #include "../event/PolypeptideFightEvent.h"
+#include <boost/thread/mutex.hpp>
 
 class AttackRelationContainer
 {
@@ -16,6 +17,8 @@ public:
 	AttackRelationContainer & addRelation(CellServer & cell1, CellServer & cell2);
 	AttackRelationContainer & removeRelationsFor(CellServer & cell);
 	AttackRelationContainer & updateRelationsFor(CellServer & cell);
+
+	void removeEvent(unsigned int id);
 private:
 	struct Relation
 	{
@@ -23,7 +26,7 @@ private:
 		CellServer * cell2;
 		std::set<unsigned int> polypeptideIds1;
 		std::set<unsigned int> polypeptideIds2;
-		std::map<unsigned int, GameEvent *> events;
+		std::set<unsigned int> eventIds;
 		
 		Relation();
 		Relation(CellServer & cell1, CellServer & cell2);
@@ -54,4 +57,6 @@ private:
 
 	std::map<unsigned int, std::set<unsigned int> > relationKey;
 	std::map<set<unsigned int>, Relation> relations;
+	std::map<unsigned int, GameEvent *> events;
+	boost::mutex mutex;
 };

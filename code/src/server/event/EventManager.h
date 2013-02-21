@@ -25,6 +25,7 @@ public:
 
 	double getTime() const;
 	bool isDeletedEvent(unsigned int id);
+	boost::mutex & getMutex();
 
 	void operator+=(GameEvent * e);
 

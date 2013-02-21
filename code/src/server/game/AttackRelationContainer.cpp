@@ -69,11 +69,13 @@ void AttackRelationContainer::loopThroughRelations(CellServer & cell)
 			{
 				auto & relation = relationIt->second;
 
+				mutex.lock();
 				resetRelations(relation);
 
 				fillRelations(relation, cell, polyId);
 
 				eventRelations(relation);
+				mutex.unlock();
 			}
 		}
 	}
@@ -84,14 +86,15 @@ void AttackRelationContainer::resetRelations(Relation & relation)
 	relation.polypeptideIds1.clear();
 	relation.polypeptideIds2.clear();
 
-	for (auto eIt = relation.events.begin(); eIt != relation.events.end(); ++eIt)
+	for (auto eIt = relation.eventIds.begin(); eIt != relation.eventIds.end(); ++eIt)
 	{
-		if (!(EVENT_MGR->isDeletedEvent(eIt->first)))
+		if (events.find(*eIt) != events.end())
 		{
-			eIt->second->setTerminated();
+			events[*eIt]->setTerminated();
 		}
+		events.erase(*eIt);
 	}
-	relation.events.clear();
+	relation.eventIds.clear();
 }
 
 void AttackRelationContainer::fillRelations(Relation & relation, CellServer & cell, unsigned int polyId)
@@ -121,7 +124,9 @@ void AttackRelationContainer::eventRelations(Relation & relation)
 				relation.cell2->getId(),
 				*p1It,
 				*p2It);
-		relation.events.insert(make_pair(e->getId(), e));
+
+		events.insert(make_pair(e->getId(), e));
+		relation.eventIds.insert(e->getId());
 	}
 
 	if (p1It != polypeptideIds1.end())
@@ -135,7 +140,9 @@ void AttackRelationContainer::eventRelations(Relation & relation)
 					relation.cell1->getId(),
 					relation.cell2->getId(),
 					*p1It);
-			relation.events.insert(make_pair(e->getId(), e));
+
+			events.insert(make_pair(e->getId(), e));
+			relation.eventIds.insert(e->getId());
 		}
 	}
 	else
@@ -149,7 +156,9 @@ void AttackRelationContainer::eventRelations(Relation & relation)
 					relation.cell2->getId(),
 					relation.cell1->getId(),
 					*p2It);
-			relation.events.insert(make_pair(e->getId(), e));
+
+			events.insert(make_pair(e->getId(), e));
+			relation.eventIds.insert(e->getId());
 		}
 	}
 }
@@ -181,6 +190,13 @@ void AttackRelationContainer::addRelationKeyElement(unsigned int key, unsigned i
 	auto & it = relationKey.insert(make_pair(key, set<unsigned int>())).first;
 	auto & elements = it->second;
 	elements.insert(element);
+}
+
+void AttackRelationContainer::removeEvent(unsigned int id)
+{
+	mutex.lock();
+	events.erase(id);
+	mutex.unlock();
 }
 
 AttackRelationContainer::Relation::Relation(CellServer & cell1, CellServer & cell2) :

@@ -24,11 +24,17 @@ double EventManager::getTime() const
 
 bool EventManager::isDeletedEvent(unsigned int id)
 {
+	bool result = true;
 	if (isDeletedList.find(id) != isDeletedList.end())
 	{
-		return isDeletedList[id];
+		result = isDeletedList[id];
 	}
-	return true;
+	return result;
+}
+
+boost::mutex & EventManager::getMutex()
+{
+	return mutex;
 }
 
 void EventManager::operator+=(GameEvent * e)
@@ -51,12 +57,9 @@ void EventManager::operator()()
 			current->trigger();
 			GAMECONTEXT->getMutex().unlock();
 			events.pop();
-			delete current;
 
-			if (isDeletedList.find(current->getId()) != isDeletedList.end())
-			{
-				isDeletedList[current->getId()] = true;
-			}
+			GAMECONTEXT->getAttackRelations().removeEvent(current->getId());
+			delete current;
 		}
 		mutex.lock();
 		for (auto it = toAddList.begin(); it != toAddList.end(); ++it)

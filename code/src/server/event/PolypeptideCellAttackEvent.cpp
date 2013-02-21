@@ -74,12 +74,15 @@ void PolypeptideCellAttackEvent::trigger()
 				else
 				{
 					PolypeptideCellAttackEvent * e = new PolypeptideCellAttackEvent(this->m_dDeadTime, attackerCellId, attackedCellId, polypeptideId, damage);
-					auto ar = GAMECONTEXT->getAttackRelations();
+					auto & ar = GAMECONTEXT->getAttackRelations();
 					auto key = ar.make_set(attackerCellId, attackedCellId);
 					if (ar.relations.find(key) != ar.relations.end())
 					{
 						auto & relation = ar.relations[key];
-						relation.events.insert(make_pair(e->getId(), e));
+						ar.mutex.lock();
+						ar.events.insert(make_pair(e->getId(), e));
+						relation.eventIds.insert(e->getId(), e);
+						ar.mutex.unlock();
 					}
 					(*EVENT_MGR) += e;
 				}
