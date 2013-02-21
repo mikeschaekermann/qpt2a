@@ -193,13 +193,16 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		JoinSuccess *joinSuccess = dynamic_cast<JoinSuccess*> (message);
 		if (joinSuccess)
 		{
-			GAME_MGR->setMyPlayerId(joinSuccess->playerId);
-			CONN_SCR->joinSuccess();
+			joinSuccessBuffered = new JoinSuccess();
+			joinSuccessBuffered->playerId = joinSuccess->playerId;
+
 			LOG_INFO("JoinSuccess received");
 			LOG_INFO("====================");
 			stringstream message;
 			message << "my player id: " << joinSuccess->playerId;
 			LOG_INFO(message.str());
+
+			initiateGame();
 		}
 		break;
 	}
@@ -208,6 +211,13 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		StartGame *startGame = dynamic_cast<StartGame*> (message);
 		if (startGame)
 		{
+			startGameBuffered = new StartGame();
+			startGameBuffered->barriers = startGame->barriers;
+			startGameBuffered->dynamicModifiers = startGame->dynamicModifiers;
+			startGameBuffered->players = startGame->players;
+			startGameBuffered->staticModifiers = startGame->staticModifiers;
+			startGameBuffered->worldRadius = startGame->worldRadius;
+
 			stringstream message;
 
 			LOG_INFO("StartGame received");
@@ -216,49 +226,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			LOG_INFO(message.str());
 			message.str("");
 
-			// Add all players
-			for (auto it = startGame->players.begin(); it != startGame->players.end(); ++it)
-			{
-				message << "player " << it->playerName << "(" << it->playerId << ") with stem cell (" << it->startCellId << ") at position (" << it->startPosition.x << ", " << it->startPosition.y << ", " << it->startPosition.z << ")";
-				LOG_INFO(message.str());
-				message.str("");
-
-				GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition);
-			}
-			
-			// Add barriers
-			for (auto it = startGame->barriers.begin(); it != startGame->barriers.end(); ++it)
-			{
-				message << "barrier " << it->modifierId << endl;
-				LOG_INFO(message.str());
-				message.str("");
-
-				GAME_MGR->addBarrier(it->modifierId, it->position, it->rotation, it->scale, it->radius);
-			}
-
-			// Add static environment
-			for (auto it = startGame->staticModifiers.begin(); it != startGame->staticModifiers.end(); ++it)
-			{
-				message << "static " << it->modifierId << it->type.getType() << endl;
-				LOG_INFO(message.str());
-				message.str("");
-				StaticModificator::Type type = StaticModificator::NUTRIENTSOIL;
-
-				switch (it->type.getType())
-				{
-				case StaticModifierType::NutrientSoil:
-					type = StaticModificator::NUTRIENTSOIL;
-					break;
-				case StaticModifierType::RadioActivity:
-					type = StaticModificator::RADIOACTIVITY;
-					break;
-				default:
-					continue;
-				}
-				GAME_MGR->addStaticModifier(it->modifierId, it->position, it->rotation, it->scale, it->radius, type);
-			}
-
-			SCREEN_MGR->openGameScreen();
+			initiateGame();
 		}
 		break;
 	}
@@ -753,7 +721,9 @@ vector<ConnectionEndpoint> ClientNetworkManager::getConnectionEndpoints()
 ClientNetworkManager::ClientNetworkManager(udp::endpoint serverEndpoint) :
 	NetworkManager(),
 	m_serverEndpoint(serverEndpoint),
-	nextRequestId(0)
+	nextRequestId(0),
+	joinSuccessBuffered(nullptr),
+	startGameBuffered(nullptr)
 {
 	m_endpoints.push_back(ConnectionEndpoint(serverEndpoint));
 }
@@ -804,4 +774,68 @@ void ClientNetworkManager::registerMovePolypeptideRequest(MovePolypeptideRequest
 	movePolypeptideRequestContexts.insert(make_pair(nextRequestId, make_tuple(fromCell, toCell, amount)));
 	request->requestId = nextRequestId;
 	++nextRequestId;
+}
+
+void ClientNetworkManager::initiateGame()
+{
+	if (joinSuccessBuffered != nullptr && startGameBuffered != nullptr)
+	{
+		auto joinSuccess = joinSuccessBuffered;
+		auto startGame = startGameBuffered;
+
+		/// handle join success message
+		GAME_MGR->setMyPlayerId(joinSuccess->playerId);
+		CONN_SCR->joinSuccess();
+
+		/// handle start game message
+		stringstream message;
+
+		// Add all players
+		for (auto it = startGame->players.begin(); it != startGame->players.end(); ++it)
+		{
+			message << "player " << it->playerName << "(" << it->playerId << ") with stem cell (" << it->startCellId << ") at position (" << it->startPosition.x << ", " << it->startPosition.y << ", " << it->startPosition.z << ")";
+			LOG_INFO(message.str());
+			message.str("");
+
+			GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition);
+		}
+			
+		// Add barriers
+		for (auto it = startGame->barriers.begin(); it != startGame->barriers.end(); ++it)
+		{
+			message << "barrier " << it->modifierId << endl;
+			LOG_INFO(message.str());
+			message.str("");
+
+			GAME_MGR->addBarrier(it->modifierId, it->position, it->rotation, it->scale, it->radius);
+		}
+
+		// Add static environment
+		for (auto it = startGame->staticModifiers.begin(); it != startGame->staticModifiers.end(); ++it)
+		{
+			message << "static " << it->modifierId << it->type.getType() << endl;
+			LOG_INFO(message.str());
+			message.str("");
+			StaticModificator::Type type = StaticModificator::NUTRIENTSOIL;
+
+			switch (it->type.getType())
+			{
+			case StaticModifierType::NutrientSoil:
+				type = StaticModificator::NUTRIENTSOIL;
+				break;
+			case StaticModifierType::RadioActivity:
+				type = StaticModificator::RADIOACTIVITY;
+				break;
+			default:
+				continue;
+			}
+			GAME_MGR->addStaticModifier(it->modifierId, it->position, it->rotation, it->scale, it->radius, type);
+		}
+
+		SCREEN_MGR->openGameScreen();
+
+		/// delete buffered messages
+		delete joinSuccessBuffered;
+		delete startGameBuffered;
+	}
 }
