@@ -14,7 +14,11 @@ void GameScreenStateMovePolypeptides::draw2D()
 	
 	glPushAttrib(GL_COLOR);
 	{
-		glColor4f(ColorA(1.f, 0.f, 0.f, 1.f));
+		glColor4f(ColorA(
+		CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.movingPolypeptideColor.r"), 
+		CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.movingPolypeptideColor.g"), 
+		CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.movingPolypeptideColor.b"), 
+		CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.movingPolypeptideColor.a")));
 		auto polypeptides = screen->getSelectedPolypeptides();
 		unsigned int i = 0;
 		for (auto it = polypeptides.begin(); it != polypeptides.end(); ++it)
