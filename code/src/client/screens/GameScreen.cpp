@@ -221,13 +221,18 @@ void GameScreen::draw()
 
 bool GameScreen::touchBegan(const TouchWay & touchWay)
 {
-	auto touchedAnything = false;
+	auto touchedAnything = Screen::touchBegan(touchWay);
 
-	auto touchedGUI = Screen::touchBegan(touchWay);
-	touchedAnything = touchedGUI;
-
-	if (!touchedGUI)
+	if (!touchedAnything)
 	{
+		/// find game object touched and highlight it
+		auto cellsPicked = getCellsPicked(touchWay.getCurrentPos());
+
+		if (cellsPicked.size() > 0)
+		{
+			SOUND_PLAYER->playSound(string("click"));
+		}
+
 		touchedAnything |= state->touchBegan(touchWay);
 	}
 
@@ -241,8 +246,29 @@ void GameScreen::touchMoved(const TouchWay & touchWay)
 };
 
 bool GameScreen::mouseMove(MouseEvent event)
-{
-	return (state->mouseMove(event) || Screen::mouseMove(event));
+{	
+	auto touchedAnything = Screen::mouseMove(event);
+
+	if (!touchedAnything)
+	{
+		/// reset color values for all game objects
+		for (auto it = gameObjectsToDraw.begin(); it != gameObjectsToDraw.end(); ++it)
+		{
+			it->second->resetColor();
+		}
+
+		/// find hovered game object and highlight it
+		auto cellsPicked = getCellsPicked(event.getPos());
+
+		if (cellsPicked.size() > 0)
+		{
+			cellsPicked[0]->setHoverColor();
+		}
+
+		touchedAnything |= state->mouseMove(event);
+	}
+
+	return touchedAnything;
 }
 
 void GameScreen::touchEnded(TouchWay touchWay)
