@@ -24,7 +24,7 @@ void PolypeptideCellAttackEvent::trigger()
 	auto attackedCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(attackedCellId));
 	if (attackerCell != nullptr && attackedCell != nullptr)
 	{
-		if (attackedCell->getHealthPoints() < 0.f)
+		if (attackedCell->getHealthPoints() <= 0.f)
 		{
 			return;
 		}
@@ -49,7 +49,7 @@ void PolypeptideCellAttackEvent::trigger()
 				polypeptideCellAttack->damage = damage;
 				NETWORKMANAGER->sendTo<PolypeptideCellAttack>(polypeptideCellAttack, players);
 
-				if (attackedCell->getHealthPoints() < 0.f)
+				if (attackedCell->getHealthPoints() <= 0.f)
 				{
 					(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT("data.event.celldie.time"), attackedCell->getId());
 

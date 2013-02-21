@@ -28,7 +28,7 @@ void AttackEvent::trigger()
 		auto attacker = dynamic_cast<CellServer *>(attackerO);
 		auto attacked = dynamic_cast<CellServer *>(attackedO);
 
-		if (attacked->getHealthPoints() < 0.f)
+		if (attacked->getHealthPoints() <= 0.f)
 		{
 			return;
 		}
@@ -44,7 +44,7 @@ void AttackEvent::trigger()
 		NETWORKMANAGER->sendTo<CellAttack>(attack, NETWORKMANAGER->getConnectionEndpoints());
 		LOG_INFO("CellAttack sent");
 
-		if (attacked->getHealthPoints() < 0.f)
+		if (attacked->getHealthPoints() <= 0.f)
 		{
 			(*EVENT_MGR) += new CellDieEvent(getDeadTime() - CONFIG_FLOAT("data.event.celldie.time"), attacked->getId());
 
