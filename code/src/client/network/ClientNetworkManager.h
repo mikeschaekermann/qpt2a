@@ -12,6 +12,8 @@ class CreatePolypeptideRequest;
 class MovePolypeptideRequest;
 class CellClient;
 class PolypeptideClient;
+class JoinSuccess;
+class StartGame;
 
 class ClientNetworkManager : public NetworkManager
 {
@@ -45,7 +47,12 @@ protected:
 private:
 	ClientNetworkManager(const ClientNetworkManager &other);
 
+	void initiateGame();
+
 	udp::endpoint m_serverEndpoint;
 	std::vector<ConnectionEndpoint> m_endpoints;
+
+	JoinSuccess * joinSuccessBuffered;
+	StartGame * startGameBuffered;
 };
 
