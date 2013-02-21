@@ -87,14 +87,16 @@ void AssetManager::loadAssets(string filePath)
 		else if(it->getTag() == "movie")
 		{
 			string key;
-
+			string tmpFilePath;
 			try
 			{
 				key = it->getChild("key").getValue();
-				MovieGl movie(it->getChild("value").getValue());
+				tmpFilePath = getAppPath().string().substr(0, 19) + it->getChild("value").getValue().substr(9);
+				MovieGl movie(tmpFilePath);
+				
 				movieMap.insert(pair<string, qtime::MovieGl>(key, movie));
 			}
-			catch(...)
+			catch(exception& e)
 			{
 				LOG_ERROR("Movie could not be loaded. Movie name: " + key);
 			}

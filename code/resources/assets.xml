@@ -33,10 +33,6 @@ vertexShader and fragmentShader are also file paths
 	<key></key>
 	<value></value>
 </movie>
-<guiMovie>
-	<key></key>
-	<value></value>
-</guiMovie>
 
 <model>
 	<key></key>
@@ -475,3 +471,10 @@ vertexShader and fragmentShader are also file paths
   <vertexShader>..\..\..\resources\shader\poly.vert</vertexShader>
   <fragmentShader>..\..\..\resources\shader\poly.frag</fragmentShader>
 </shader>
+
+<!-- Movies -->
+
+<movie>
+  <key>intro</key>
+  <value>..\..\..\resources\movies\intro.mov</value>
+</movie>

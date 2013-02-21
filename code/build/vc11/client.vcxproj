@@ -45,6 +45,7 @@
     <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.cpp" />
     <ClCompile Include="..\..\src\client\screens\GameScreenStates\GameScreenStateSelectPolypeptides.cpp" />
     <ClCompile Include="..\..\src\client\screens\GUIItem.cpp" />
+    <ClCompile Include="..\..\src\client\screens\IntroScreen.cpp" />
     <ClCompile Include="..\..\src\client\screens\IpInput.cpp" />
     <ClCompile Include="..\..\src\client\screens\MenuScreen.cpp" />
     <ClCompile Include="..\..\src\client\screens\Screen.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateNeutral.h" />
     <ClInclude Include="..\..\src\client\screens\GameScreenStates\GameScreenStateSelectPolypeptides.h" />
     <ClInclude Include="..\..\src\client\screens\GUIItem.h" />
+    <ClInclude Include="..\..\src\client\screens\IntroScreen.h" />
     <ClInclude Include="..\..\src\client\screens\IpInput.h" />
     <ClInclude Include="..\..\src\client\screens\IScreenItem.h" />
     <ClInclude Include="..\..\src\client\screens\MenuScreen.h" />

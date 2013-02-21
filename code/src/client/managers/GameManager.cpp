@@ -23,8 +23,6 @@ GameManager::GameManager(void):
 	SOUND_PLAYER->playMusic(string("backgroundMusic"));
 	networkManager = new ClientNetworkManager(serverEndpoint);
 	boost::thread(boost::bind(&NetworkManager::operator(), networkManager));
-
-	SCREEN_MGR->openMenuScreen();
 }
 
 GameManager::~GameManager(void)

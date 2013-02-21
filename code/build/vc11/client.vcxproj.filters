@@ -263,6 +263,7 @@
     <ClCompile Include="..\..\src\common\PolypeptideCapacityContainer.cpp">
       <Filter>Actors\Polypeptides</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\client\screens\IntroScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">
@@ -560,6 +561,7 @@
     <ClInclude Include="..\..\src\common\PolypeptideCapacityContainer.h">
       <Filter>Actors\Polypeptides</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\client\screens\IntroScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
