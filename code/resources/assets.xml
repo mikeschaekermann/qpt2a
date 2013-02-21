@@ -382,6 +382,14 @@ vertexShader and fragmentShader are also file paths
 </sound>
 
 <sound>
+  <key>polyAttack</key>
+  <value>..\..\..\resources\sounds\polyAttack.wav</value>
+  <3d>true</3d>
+  <loop>false</loop>
+  <stream>false</stream>
+</sound>
+
+<sound>
   <key>cellAttack</key>
   <value>..\..\..\resources\sounds\cellAttack.wav</value>
   <3d>true</3d>
