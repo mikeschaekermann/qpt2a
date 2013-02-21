@@ -633,6 +633,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide->setId(polypeptideId);
 				polypeptide->setPosition(attackerCell->getPosition());
 				polypeptide->setAttackOptions(true, false);
+				polypeptide->setOwner(attackerCell);
 				GAME_SCR.addGameObjectToDraw(polypeptide);
 			}
 			else

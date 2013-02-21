@@ -26,7 +26,7 @@ public:
 	float getBrightness() const { return brightness; }
 	void setBrightness(float newBrightness) { brightness = min<float>(max<float>(newBrightness, 0.0), 1.0); }
 	bool isVisible() const { return visible; }
-	void setVisibility(bool newVisible) { visible = newVisible; }
+	virtual void setVisibility(bool newVisible) { visible = newVisible; }
 	void show() { setVisibility(true); }
 	void hide() { setVisibility(false); }
 

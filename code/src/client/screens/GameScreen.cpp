@@ -102,6 +102,18 @@ void GameScreen::update(float frameTime)
 	for (auto it = gameObjectsToUpdate.begin(); it != gameObjectsToUpdate.end(); ++it)
 	{
 		it->second->update(frameTime);
+
+		/*auto tmpIt = it;
+		it++;
+
+		tmpIt->second->update(frameTime);
+		if (tmpIt->second->wantsToBeDestroyed())
+		{
+			gameObjectsToUpdate.removeGameObject(tmpIt->second->getId(), false);
+			gameObjectsToDraw.removeGameObject(tmpIt->second->getId(), false);
+			delete tmpIt->second;
+		}
+		*/
 	}
 
 	containerMutex.unlock();

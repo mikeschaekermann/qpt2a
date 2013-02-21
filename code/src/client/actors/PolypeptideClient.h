@@ -30,6 +30,8 @@ public:
 	virtual void setRadiusOfFocus(float radius);
 	virtual void setFocus(Vec3f center, float radius);
 
+	virtual void setVisibility(bool newVisible);
+
 	virtual void setOwner(Cell* owner);
 
 	void setAttackOptions(bool selfDestruct, bool dieTrying = false);

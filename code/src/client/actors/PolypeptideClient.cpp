@@ -19,6 +19,7 @@ PolypeptideClient::PolypeptideClient(Vec3f focusCenter, float focusRadius, float
 	remainingDistancePercentagePerSecond(1.f - CONFIG_FLOAT("data.polypeptide.attack.distancePercentageTravelledPerSecond"))
 {
 	this->cellRadius = cellRadius;
+	this->radius = 0.f;
 
 	scale = Vec3f(
 		CONFIG_FLOAT("data.polypeptide.scale"),
@@ -47,6 +48,7 @@ PolypeptideClient::PolypeptideClient() :
 	remainingDistancePercentagePerSecond(1.f - CONFIG_FLOAT("data.polypeptide.attack.distancePercentageTravelledPerSecond"))
 {
 	this->cellRadius = cellRadius;
+	this->radius = 0.f;
 
 	scale = Vec3f(
 		CONFIG_FLOAT("data.polypeptide.scale"),
@@ -64,8 +66,8 @@ PolypeptideClient::~PolypeptideClient()
 {
 	if (selfDestruct)
 	{
-		GAME_SCR.removeGameObjectToUpdate(this);
-		GAME_SCR.removeGameObjectToDraw(this);
+		//GAME_SCR.removeGameObjectToUpdate(this);
+		//GAME_SCR.removeGameObjectToDraw(this);
 		/// TODO delete from other containers my own polys could be in!
 	}
 }
@@ -73,6 +75,12 @@ PolypeptideClient::~PolypeptideClient()
 void PolypeptideClient::draw() const
 {
 	GameObjectClient::draw();
+}
+
+void PolypeptideClient::setVisibility(bool newVisible)
+{
+	/// polys must not be hidden by fog-of-war
+	visible = true;
 }
 
 void PolypeptideClient::drawAtTransformation() const
@@ -137,7 +145,8 @@ void PolypeptideClient::attackBehavior(float frameTime)
 
 			if (dieTrying)
 			{
-				delete this;
+				mayBeDeleted = true;
+				return;
 			}
 		}
 		/// on its way back to its origin
@@ -148,7 +157,8 @@ void PolypeptideClient::attackBehavior(float frameTime)
 
 			if (selfDestruct)
 			{
-				delete this;
+				mayBeDeleted = true;
+				return;
 			}
 		}
 	}

@@ -32,9 +32,14 @@ public:
 	void addParent(GameObject* parent);
 	void removeParent(GameObject* parent);
 
+	bool wantsToBeDestroyed() const { return mayBeDeleted; }
+
 	vector<GameObject *> & getChildren();
 
 protected:
+	/// flag indicating whether this object may be deleted
+	/// to allow self-destruction during for-loops
+	bool mayBeDeleted;
 	/// unique id identifying the game object within the process
 	unsigned int id;
 	/// current position in the game
@@ -47,6 +52,7 @@ protected:
 	float radius;
 
 	GameObject(void);
+
 private:
 	/// all children in the scene graph
 	vector<GameObject*> children;
