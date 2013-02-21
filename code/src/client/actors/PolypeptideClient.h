@@ -11,37 +11,14 @@ class PolypeptideClient :
 	virtual public GameObjectClient
 {
 public:
-	PolypeptideClient(Vec3f focusCenter, float focusRadius, float cellRadius) :
-		speed(CONFIG_FLOAT("data.polypeptide.speed")),
-		polyRotationSpeed(CONFIG_FLOAT("data.polypeptide.rotationSpeed")),
-		followPointRotationSpeed(CONFIG_FLOAT("data.polypeptide.pointRotationSpeed")),
-		maxAmplitudeEruption(CONFIG_INT("data.polypeptide.maxPointAmplitudeEruption")),
-		forward(Vec3f(1, 0, 0)),
-		focusCenter(focusCenter),
-		focusRadius(focusRadius),
-		cellRadius(cellRadius),
-		selfDestruct(false),
-		dieTrying(false),
-		wayBackFromFocus(false)
-	{
-		this->cellRadius = cellRadius;
-
-		scale = Vec3f(
-			CONFIG_FLOAT("data.polypeptide.scale"),
-			CONFIG_FLOAT("data.polypeptide.scale"),
-			CONFIG_FLOAT("data.polypeptide.scale")
-		);
-
-		float followPointAngle = toRadians(float(rand() % 361));
-		followPoint = Vec3f(focusCenter.x + (focusRadius * cos(followPointAngle)), focusCenter.y + (focusRadius * sin(followPointAngle)), focusCenter.z);
-	}
-
-	PolypeptideClient() {}
+	PolypeptideClient(Vec3f focusCenter, float focusRadius, float cellRadius);
+	PolypeptideClient();
 	~PolypeptideClient();
 
 	CellClient * getOwner();
 
 	virtual void update(float frameTime);
+	virtual void draw() const;
 
 	virtual void setPosition(Vec3f position) { GameObjectClient::setPosition(position); }
 	virtual void setRadius(float radius) { GameObjectClient::setRadius(radius); }
@@ -73,6 +50,8 @@ protected:
 	void arrivalBehavior(float frameTime);
 	void attackBehavior(float frameTime);
 	void updateFollowPoint(float frameTime);
+
+	float remainingDistancePercentagePerSecond;
 
 private:
 	Vec3f focusCenter;

@@ -190,6 +190,9 @@
     <rotationSpeed>200.0</rotationSpeed>
     <pointRotationSpeed>5.0</pointRotationSpeed>
     <maxPointAmplitudeEruption>10</maxPointAmplitudeEruption>
+    <attack>
+      <distancePercentageTravelledPerSecond>0.95</distancePercentageTravelledPerSecond>
+    </attack>
 	</polypeptide>
 	<environment>
 		<barriers>

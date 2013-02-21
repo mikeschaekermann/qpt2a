@@ -474,7 +474,5 @@ vertexShader and fragmentShader are also file paths
 
 <!-- Movies -->
 
-<!--<movie>
   <key>intro</key>
-  <value>C:\Repo\qpt2a\code\resources\movies\intro.mov</value>
-</movie>-->
+  <value>..\..\..\resources\movies\intro.mov</value>

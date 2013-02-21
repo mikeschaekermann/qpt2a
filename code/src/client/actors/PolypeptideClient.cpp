@@ -4,6 +4,62 @@
 #include "CellClient.h"
 #include "../managers/GameManager.h"
 
+PolypeptideClient::PolypeptideClient(Vec3f focusCenter, float focusRadius, float cellRadius) :
+	speed(CONFIG_FLOAT("data.polypeptide.speed")),
+	polyRotationSpeed(CONFIG_FLOAT("data.polypeptide.rotationSpeed")),
+	followPointRotationSpeed(CONFIG_FLOAT("data.polypeptide.pointRotationSpeed")),
+	maxAmplitudeEruption(CONFIG_INT("data.polypeptide.maxPointAmplitudeEruption")),
+	forward(Vec3f(1, 0, 0)),
+	focusCenter(focusCenter),
+	focusRadius(focusRadius),
+	cellRadius(cellRadius),
+	selfDestruct(false),
+	dieTrying(false),
+	wayBackFromFocus(false),
+	remainingDistancePercentagePerSecond(1.f - CONFIG_FLOAT("data.polypeptide.attack.distancePercentageTravelledPerSecond"))
+{
+	this->cellRadius = cellRadius;
+
+	scale = Vec3f(
+		CONFIG_FLOAT("data.polypeptide.scale"),
+		CONFIG_FLOAT("data.polypeptide.scale"),
+		CONFIG_FLOAT("data.polypeptide.scale")
+	);
+
+	float followPointAngle = toRadians(float(rand() % 361));
+	followPoint = Vec3f(focusCenter.x + (focusRadius * cos(followPointAngle)), focusCenter.y + (focusRadius * sin(followPointAngle)), focusCenter.z);
+
+	this->show();
+}
+
+PolypeptideClient::PolypeptideClient() :
+	speed(CONFIG_FLOAT("data.polypeptide.speed")),
+	polyRotationSpeed(CONFIG_FLOAT("data.polypeptide.rotationSpeed")),
+	followPointRotationSpeed(CONFIG_FLOAT("data.polypeptide.pointRotationSpeed")),
+	maxAmplitudeEruption(CONFIG_INT("data.polypeptide.maxPointAmplitudeEruption")),
+	forward(Vec3f(1, 0, 0)),
+	focusCenter(),
+	focusRadius(0.f),
+	cellRadius(0.f),
+	selfDestruct(false),
+	dieTrying(false),
+	wayBackFromFocus(false),
+	remainingDistancePercentagePerSecond(1.f - CONFIG_FLOAT("data.polypeptide.attack.distancePercentageTravelledPerSecond"))
+{
+	this->cellRadius = cellRadius;
+
+	scale = Vec3f(
+		CONFIG_FLOAT("data.polypeptide.scale"),
+		CONFIG_FLOAT("data.polypeptide.scale"),
+		CONFIG_FLOAT("data.polypeptide.scale")
+	);
+
+	float followPointAngle = toRadians(float(rand() % 361));
+	followPoint = Vec3f(focusCenter.x + (focusRadius * cos(followPointAngle)), focusCenter.y + (focusRadius * sin(followPointAngle)), focusCenter.z);
+
+	this->show();
+}
+
 PolypeptideClient::~PolypeptideClient()
 {
 	if (selfDestruct)
@@ -12,6 +68,11 @@ PolypeptideClient::~PolypeptideClient()
 		GAME_SCR.removeGameObjectToDraw(this);
 		/// TODO delete from other containers my own polys could be in!
 	}
+}
+
+void PolypeptideClient::draw() const
+{
+	GameObjectClient::draw();
 }
 
 void PolypeptideClient::drawAtTransformation() const
@@ -66,9 +127,6 @@ void PolypeptideClient::attackBehavior(float frameTime)
 		currentTarget = owner->getPosition();
 	}
 
-	auto distance = currentTarget - position;
-	position += distance * 0.6;
-
 	/// current target is reached
 	if (position.distance(currentTarget) < 20)
 	{
@@ -94,6 +152,9 @@ void PolypeptideClient::attackBehavior(float frameTime)
 			}
 		}
 	}
+
+	auto distance = currentTarget - position;
+	position += distance * (1.f - pow(remainingDistancePercentagePerSecond, frameTime));
 }
 
 void PolypeptideClient::updateFollowPoint(float frameTime)
@@ -138,4 +199,5 @@ void PolypeptideClient::setAttackOptions(bool selfDestruct, bool dieTrying)
 {
 	this->selfDestruct = selfDestruct;
 	this->dieTrying = dieTrying;
+	this->wayBackFromFocus = false;
 }
