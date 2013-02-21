@@ -491,6 +491,12 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 						fromCell->removePolypeptide(polypeptide);
 
 						polypeptide->setOwner(toCell);
+						auto polypeptideClient = dynamic_cast<PolypeptideClient *>(polypeptide);
+						if (polypeptideClient != nullptr)
+						{
+							polypeptideClient->setFocus(toCell->getPosition(), toCell->getRadius());
+							polypeptideClient->setState(Polypeptide::IDLE);
+						}
 						
 						auto polypeptideInSelectionList = GAME_SCR->getSelectedPolypeptides().find(*it);
 						if (polypeptideInSelectionList != nullptr)

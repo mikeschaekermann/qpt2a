@@ -8,29 +8,41 @@ class GameObjectClient :
 {
 public:
 	GameObjectClient():
-		hue(0.0f),
+		standardHue(0.f),
+		hue(0.f),
+		standardSaturation(0.7f),
 		saturation(0.7f),
-		brightness(0.9f),
+		standardBrightness(0.8f),
+		brightness(0.8f),
+		standardOpacity(0.7f),
 		opacity(0.7f),
 		visible(false)
 	{}
 	
 	virtual void draw() const;
 	
-	float getOpacity() const { return opacity; }
-	void setOpacity(float newOpacity) { opacity = min<float>(max<float>(newOpacity, 0.0), 1.0); }
-	float getHue() const { return hue; }
-	void setHue(float newHue) { hue = min<float>(max<float>(newHue, 0.0), 1.0); }
-	float getSaturation() const { return saturation; }
-	void setSaturation(float newSaturation) { saturation = min<float>(max<float>(newSaturation, 0.0), 1.0); }
-	float getBrightness() const { return brightness; }
-	void setBrightness(float newBrightness) { brightness = min<float>(max<float>(newBrightness, 0.0), 1.0); }
-	bool isVisible() const { return visible; }
-	virtual void setVisibility(bool newVisible) { visible = newVisible; }
-	void show() { setVisibility(true); }
-	void hide() { setVisibility(false); }
-
 	Vec2f getPosition2D() const;
+
+	float getOpacity() const;
+	void setOpacity(float newOpacity);
+
+	float getHue() const;
+	void setHue(float newHue);
+
+	float getSaturation() const;
+	void setSaturation(float newSaturation);
+
+	float getBrightness() const;
+	void setBrightness(float newBrightness);
+
+	virtual void resetColor();
+	virtual void setHoverColor();
+	virtual void setMouseDownColor();
+
+	bool isVisible() const;
+	virtual void setVisibility(bool newVisible);
+	void show();
+	void hide();
 
 protected:
 	/// @brief here the pure draw process is defined, independent from the transformation
@@ -39,7 +51,11 @@ protected:
 	float	hue,
 			saturation,
 			brightness,
-			opacity;
+			opacity,
+			standardHue,
+			standardSaturation,
+			standardBrightness,
+			standardOpacity;
 
 	bool	visible;
 };
