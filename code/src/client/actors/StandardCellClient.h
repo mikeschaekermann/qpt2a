@@ -48,6 +48,8 @@ public:
  virtual void increaseGlobalTypeCounter() const;
  virtual void decreaseGlobalTypeCounter() const;
 
+ virtual bool addPolypeptide(Polypeptide * polypeptide) { return CellClient::addPolypeptide(polypeptide); }
+
 private:
  virtual void setId(unsigned int id) { CellClient::setId(id); }
  virtual void setRotation(Vec3f rotation) { CellClient::setRotation(rotation); }
