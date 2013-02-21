@@ -84,10 +84,13 @@ void AttackRelationContainer::resetRelations(Relation & relation)
 	relation.polypeptideIds1.clear();
 	relation.polypeptideIds2.clear();
 
-	/*for (auto eIt = relation.events.begin(); eIt != relation.events.end(); ++eIt)
+	for (auto eIt = relation.events.begin(); eIt != relation.events.end(); ++eIt)
 	{
-		(*eIt)->setTerminated();
-	}*/
+		if (!(EVENT_MGR->isDeletedEvent(eIt->first)))
+		{
+			eIt->second->setTerminated();
+		}
+	}
 	relation.events.clear();
 }
 
@@ -109,42 +112,44 @@ void AttackRelationContainer::eventRelations(Relation & relation)
 	auto p2It = polypeptideIds2.begin();
 	for (;p1It != polypeptideIds1.end() && p2It != polypeptideIds2.end(); ++p1It, ++p2It)
 	{
-		relation.cell1.getPolypeptides().find(*p1It)->second->setState(Polypeptide::POLYPEPTIDEFIGHT);
-		relation.cell2.getPolypeptides().find(*p2It)->second->setState(Polypeptide::POLYPEPTIDEFIGHT);
-			
-		relation.events.insert(
-			EVENT_CRTR->createPolypeptideFightEvent(
+		relation.cell1->getPolypeptides().find(*p1It)->second->setState(Polypeptide::POLYPEPTIDEFIGHT);
+		relation.cell2->getPolypeptides().find(*p2It)->second->setState(Polypeptide::POLYPEPTIDEFIGHT);
+		
+		auto e = EVENT_CRTR->createPolypeptideFightEvent(
 				EVENT_MGR->getTime(),
-				relation.cell1.getId(),
-				relation.cell2.getId(),
+				relation.cell1->getId(),
+				relation.cell2->getId(),
 				*p1It,
-				*p2It));
+				*p2It);
+		relation.events.insert(make_pair(e->getId(), e));
 	}
 
 	if (p1It != polypeptideIds1.end())
 	{
 		for (; p1It != polypeptideIds1.end(); ++p1It)
 		{
-			relation.cell1.getPolypeptides().find(*p1It)->second->setState(Polypeptide::CELLFIGHT);
-			relation.events.insert(
-				EVENT_CRTR->createPolypeptideCellAttackEvent(
+			relation.cell1->getPolypeptides().find(*p1It)->second->setState(Polypeptide::CELLFIGHT);
+			
+			auto e = EVENT_CRTR->createPolypeptideCellAttackEvent(
 					EVENT_MGR->getTime(),
-					relation.cell1.getId(),
-					relation.cell2.getId(),
-					*p1It));
+					relation.cell1->getId(),
+					relation.cell2->getId(),
+					*p1It);
+			relation.events.insert(make_pair(e->getId(), e));
 		}
 	}
 	else
 	{
 		for (; p2It != polypeptideIds2.end(); ++p2It)
 		{
-			relation.cell2.getPolypeptides().find(*p2It)->second->setState(Polypeptide::CELLFIGHT);
-			relation.events.insert(
-				EVENT_CRTR->createPolypeptideCellAttackEvent(
+			relation.cell2->getPolypeptides().find(*p2It)->second->setState(Polypeptide::CELLFIGHT);
+
+			auto e = EVENT_CRTR->createPolypeptideCellAttackEvent(
 					EVENT_MGR->getTime(),
-					relation.cell2.getId(),
-					relation.cell1.getId(),
-					*p2It));
+					relation.cell2->getId(),
+					relation.cell1->getId(),
+					*p2It);
+			relation.events.insert(make_pair(e->getId(), e));
 		}
 	}
 }
@@ -179,6 +184,11 @@ void AttackRelationContainer::addRelationKeyElement(unsigned int key, unsigned i
 }
 
 AttackRelationContainer::Relation::Relation(CellServer & cell1, CellServer & cell2) :
-	cell1(cell1),
-	cell2(cell2)
+	cell1(&cell1),
+	cell2(&cell2)
+{ }
+
+AttackRelationContainer::Relation::Relation():
+	cell1(nullptr),
+	cell2(nullptr)
 { }
