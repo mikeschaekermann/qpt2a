@@ -264,6 +264,7 @@
       <Filter>Actors\Polypeptides</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\client\screens\IntroScreen.cpp" />
+    <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\client\network\ClientNetworkManager.h">

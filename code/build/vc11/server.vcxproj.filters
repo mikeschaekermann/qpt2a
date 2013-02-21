@@ -316,9 +316,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\Main.cpp" />
-    <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp">
-      <Filter>Eventlogic</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp">
       <Filter>Common</Filter>
     </ClCompile>

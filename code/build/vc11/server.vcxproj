@@ -156,7 +156,6 @@
     <ClCompile Include="..\..\src\server\environment\BarrierServer.cpp" />
     <ClCompile Include="..\..\src\server\environment\StaticModificatorServer.cpp" />
     <ClCompile Include="..\..\src\server\event\AttackEvent.cpp" />
-    <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp" />
     <ClCompile Include="..\..\src\server\event\CellDieEvent.cpp" />
     <ClCompile Include="..\..\src\server\event\EventCreator.cpp" />
     <ClCompile Include="..\..\src\server\event\EventManager.cpp" />

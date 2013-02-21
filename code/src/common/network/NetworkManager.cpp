@@ -92,6 +92,7 @@ void NetworkManager::operator()()
 
 			if (!message)
 			{
+				maintenanceMutex.unlock();
 				continue;
 			}
 		
@@ -102,7 +103,7 @@ void NetworkManager::operator()()
 				ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
 				if (connectionEndpoint)
 				{
-					for (unsigned i = connectionEndpoint->m_uiRemotePacketId + 1; i < message->messageId; ++i)
+					for (unsigned i = connectionEndpoint->m_uiRemotePacketId; i < message->messageId; ++i)
 					{
 						/// Check whether the messageId is already missing and add it then
 						if(std::find(connectionEndpoint->m_unreceivedMessages.begin(), connectionEndpoint->m_unreceivedMessages.end(), i) 
