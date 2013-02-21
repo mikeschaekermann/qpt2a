@@ -85,14 +85,13 @@ void PolypeptideClient::update(float frameTime)
 	switch(state)
 	{
 		case Polypeptide::State::IDLE:
+		case Polypeptide::State::TRAVEL:
+		default:
 			arrivalBehavior(frameTime);
 			break;
 		case Polypeptide::State::CELLFIGHT:
-			attackBehavior(frameTime);
-			break;
-		case Polypeptide::State::TRAVEL:
-			break;
 		case Polypeptide::State::POLYPEPTIDEFIGHT:
+			attackBehavior(frameTime);
 			break;
 	}
 }
