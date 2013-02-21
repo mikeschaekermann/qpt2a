@@ -46,9 +46,9 @@ private:
 
 	void createRelation(CellServer & cell1, CellServer & cell2);
 
-	void loopThroughRelations(CellServer & cell);
+	void loopThroughRelations(CellServer & cell, std::function<void(Relation & relation, CellServer & cell, unsigned int polyId)> func);
 
-	void resetRelations(Relation & relation);
+	void resetRelations(Relation & relation, CellServer & cell);
 	void fillRelations(Relation & relation, CellServer & cell, unsigned int polyId);
 	void eventRelations(Relation & relation);
 

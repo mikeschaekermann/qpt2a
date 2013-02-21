@@ -23,7 +23,15 @@ AttackRelationContainer & AttackRelationContainer::removeRelationsFor(CellServer
 
 AttackRelationContainer & AttackRelationContainer::updateRelationsFor(CellServer & cell)
 {
-	loopThroughRelations(cell);
+	loopThroughRelations(cell, [this](Relation & relation, CellServer & cell, unsigned int polyId)
+	{
+		resetRelations(relation, cell);
+	});
+	loopThroughRelations(cell, [this](Relation & relation, CellServer & cell, unsigned int polyId)
+	{
+		fillRelations(relation, cell, polyId);
+		eventRelations(relation);
+	});
 
 	return *this;
 }
@@ -47,7 +55,7 @@ void AttackRelationContainer::createRelation(CellServer & cell1, CellServer & ce
 		.insert(make_pair(key, Relation(cell1, cell2))).first->second;
 }
 
-void AttackRelationContainer::loopThroughRelations(CellServer & cell)
+void AttackRelationContainer::loopThroughRelations(CellServer & cell, std::function<void(Relation & relation, CellServer & cell, unsigned int polyId)> func)
 {
 	auto & keyIt = relationKey.find(cell.getId());
 	if (keyIt != relationKey.end())
@@ -70,21 +78,16 @@ void AttackRelationContainer::loopThroughRelations(CellServer & cell)
 				auto & relation = relationIt->second;
 
 				mutex.lock();
-				resetRelations(relation);
-
-				fillRelations(relation, cell, polyId);
-
-				eventRelations(relation);
+				func(relation, cell, polyId);
 				mutex.unlock();
 			}
 		}
 	}
 }
 
-void AttackRelationContainer::resetRelations(Relation & relation)
+void AttackRelationContainer::resetRelations(Relation & relation, CellServer & cell)
 {
-	relation.polypeptideIds1.clear();
-	relation.polypeptideIds2.clear();
+	relation[cell.getId()]->clear();
 
 	for (auto eIt = relation.eventIds.begin(); eIt != relation.eventIds.end(); ++eIt)
 	{

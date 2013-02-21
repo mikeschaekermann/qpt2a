@@ -22,26 +22,10 @@ double EventManager::getTime() const
 	return timer.getSeconds();
 }
 
-bool EventManager::isDeletedEvent(unsigned int id)
-{
-	bool result = true;
-	if (isDeletedList.find(id) != isDeletedList.end())
-	{
-		result = isDeletedList[id];
-	}
-	return result;
-}
-
-boost::mutex & EventManager::getMutex()
-{
-	return mutex;
-}
-
 void EventManager::operator+=(GameEvent * e)
 {
 	mutex.lock();
 	toAddList.push_back(e);
-	isDeletedList.insert(make_pair(e->getId(), false));
 	mutex.unlock();
 }
 
