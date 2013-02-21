@@ -606,3 +606,8 @@ boost::mutex & GameScreen::getContainerMutex()
 {
 	return containerMutex;
 }
+
+PolypeptideCapacityContainer * GameScreen::getPolypeptideCapacityContainer()
+{
+	return &polypeptideCapacityContainer;
+}
