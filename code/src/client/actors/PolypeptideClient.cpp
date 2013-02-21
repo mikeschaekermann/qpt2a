@@ -62,16 +62,6 @@ PolypeptideClient::PolypeptideClient() :
 	this->show();
 }
 
-PolypeptideClient::~PolypeptideClient()
-{
-	if (selfDestruct)
-	{
-		//GAME_SCR.removeGameObjectToUpdate(this);
-		//GAME_SCR.removeGameObjectToDraw(this);
-		/// TODO delete from other containers my own polys could be in!
-	}
-}
-
 void PolypeptideClient::draw() const
 {
 	GameObjectClient::draw();
@@ -132,7 +122,7 @@ void PolypeptideClient::attackBehavior(float frameTime)
 	}
 	else
 	{
-		currentTarget = owner->getPosition();
+		currentTarget = originPoint;
 	}
 
 	/// current target is reached
@@ -153,7 +143,7 @@ void PolypeptideClient::attackBehavior(float frameTime)
 		else
 		{
 			setState(Polypeptide::IDLE);
-			setFocus(owner->getPosition(), owner->getRadius());
+			setFocus(originPoint, focusRadius);
 
 			if (selfDestruct)
 			{
@@ -197,16 +187,9 @@ CellClient * PolypeptideClient::getOwner()
 	return dynamic_cast<CellClient *>(owner);
 }
 
-void PolypeptideClient::setOwner(Cell* owner)
+void PolypeptideClient::setAttackOptions(Vec3f originPoint, bool selfDestruct, bool dieTrying)
 {
-	Polypeptide::setOwner(owner);
-
-	cellRadius = owner->getRadius();
-	focusRadius = cellRadius - 20 < 1 ? 1 : cellRadius - 20;
-}
-
-void PolypeptideClient::setAttackOptions(bool selfDestruct, bool dieTrying)
-{
+	this->originPoint = originPoint;
 	this->selfDestruct = selfDestruct;
 	this->dieTrying = dieTrying;
 	this->wayBackFromFocus = false;

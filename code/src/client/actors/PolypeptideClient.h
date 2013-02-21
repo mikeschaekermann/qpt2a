@@ -13,7 +13,6 @@ class PolypeptideClient :
 public:
 	PolypeptideClient(Vec3f focusCenter, float focusRadius, float cellRadius);
 	PolypeptideClient();
-	~PolypeptideClient();
 
 	CellClient * getOwner();
 
@@ -32,11 +31,10 @@ public:
 
 	virtual void setVisibility(bool newVisible);
 
-	virtual void setOwner(Cell* owner);
-
-	void setAttackOptions(bool selfDestruct, bool dieTrying = false);
+	void setAttackOptions(Vec3f originPoint, bool selfDestruct, bool dieTrying = false);
 
 protected:
+	Vec3f originPoint;
 	bool selfDestruct;
 	bool dieTrying;
 	bool wayBackFromFocus;

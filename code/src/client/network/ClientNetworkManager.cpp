@@ -632,16 +632,16 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide = new PolypeptideClient();
 				polypeptide->setId(polypeptideId);
 				polypeptide->setPosition(attackerCell->getPosition());
-				polypeptide->setAttackOptions(true, false);
+				polypeptide->setAttackOptions(attackerCell->getPosition(), true, false);
 				polypeptide->setOwner(attackerCell);
 				GAME_SCR.addGameObjectToDraw(polypeptide);
 			}
 			else
 			{
-				polypeptide->setAttackOptions(false, false);
+				polypeptide->setAttackOptions(attackerCell->getPosition(), false, false);
 			}
 
-			polypeptide->setFocus(attackedCell->getPosition(), attackedCell->getRadius());
+			polypeptide->setFocus(attackedCell->getPosition(), attackerCell->getRadius());
 			attackedCell->decreaseHealthPointsBy(damage);
 			polypeptide->setState(Polypeptide::CELLFIGHT);
 		}
