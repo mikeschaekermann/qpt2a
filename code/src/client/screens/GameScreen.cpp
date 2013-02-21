@@ -97,25 +97,25 @@ void GameScreen::update(float frameTime)
 
 	containerMutex.unlock();
 
+	list<int> tmpToBeDeleted;
+
 	containerMutex.lock();
 
 	for (auto it = gameObjectsToUpdate.begin(); it != gameObjectsToUpdate.end(); ++it)
 	{
 		it->second->update(frameTime);
 
-		/*auto tmpIt = it;
-		it++;
-
-		tmpIt->second->update(frameTime);
-		if (tmpIt->second->wantsToBeDestroyed())
+		if (it->second->wantsToBeDestroyed())
 		{
-			gameObjectsToUpdate.removeGameObject(tmpIt->second->getId(), false);
-			gameObjectsToDraw.removeGameObject(tmpIt->second->getId(), false);
-			delete tmpIt->second;
+			tmpToBeDeleted.emplace_back(it->first);
 		}
-		*/
 	}
 
+	for(auto it = tmpToBeDeleted.begin(); it != tmpToBeDeleted.end(); ++it)
+	{
+		gameObjectsToUpdate.removeGameObject(*it, false);
+		gameObjectsToDraw.removeGameObject(*it);
+	}
 	containerMutex.unlock();
 }
 
