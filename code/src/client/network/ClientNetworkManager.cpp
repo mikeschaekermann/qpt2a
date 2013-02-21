@@ -183,7 +183,11 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		JoinFailure *joinFailure= dynamic_cast<JoinFailure*> (message);
 		if (joinFailure)
 		{
-			CONN_SCR->joinFailure(joinFailure->errorCode);
+			if (joinSuccessBuffered != nullptr)
+			{
+				CONN_SCR->joinFailure(joinFailure->errorCode);
+			}
+
 			LOG_INFO("JoinFailure received");
 		}
 		break;
