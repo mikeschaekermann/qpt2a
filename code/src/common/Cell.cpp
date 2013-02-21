@@ -35,7 +35,7 @@ Cell::Cell(Vec3f position, float radius, float angle, float healthPoints, Player
 
 void Cell::decreaseHealthPointsBy(float damage)
 {
- healthPoints -= damage;
+ healthPoints = max(0.f, healthPoints - damage);
  LOG_INFO(stringify(ostringstream() << "cell with id: " << id << " has still " << healthPoints << " healthpoints"));
 }
 

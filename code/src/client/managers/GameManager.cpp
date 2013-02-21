@@ -37,14 +37,13 @@ GameManager::~GameManager(void)
 		}
 	}
 
+	SCREEN_MGR->refreshGameScreen();
+	
 	/// stop network manager thread
 	/// and delete the instance
 	networkManager->stop();
 	networkManagerThread.join();
 	delete networkManager;
-
-	/// release singleton instances
-	PolypeptideCapacityContainer::releaseInstance();
 }
 
 GameManager * const GameManager::getInstance()

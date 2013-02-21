@@ -9,6 +9,7 @@
 #define SCREEN_MGR ScreenManager::getInstance()
 #define CONN_SCR SCREEN_MGR->getConnectScreen()
 #define GAME_SCR SCREEN_MGR->getGameScreen()
+#define POLYCAPACITY GAME_SCR->getPolypeptideCapacityContainer()
 
 class Screen;
 class GameScreen;
@@ -63,6 +64,8 @@ public:
 	void touchEnded(TouchWay touchWay);
 
 	void resize(ResizeEvent event);
+
+	void refreshGameScreen();
 
 	static ScreenManager * getInstance();
 	static void releaseInstance()

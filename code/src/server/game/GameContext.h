@@ -6,6 +6,7 @@
 
 #include "../../common/GameObject.h"
 #include "../../common/GameObjectContainer.h"
+#include "../../common/PolypeptideCapacityContainer.h"
 
 #include <map>
 
@@ -15,6 +16,7 @@ class Game;
 
 #define GAMECONTEXT GameContext::getInstance()
 #define NETWORKMANAGER GameContext::getInstance()->getNetworkManager()
+#define POLYCAPACITY(x) GAMECONTEXT->getPolypeptideCapacityContainer(x)
 
 class GameContext
 {
@@ -30,6 +32,10 @@ public:
 	void addPlayer(PlayerServer * player);
 	std::map<unsigned, PlayerServer *> & getPlayerMap();
 
+	PolypeptideCapacityContainer * getPolypeptideCapacityContainer(unsigned int id);
+	void addPolypeptideCapacityContainer(unsigned int id, PolypeptideCapacityContainer * polypeptideCapacityContainer);
+	std::map<unsigned int, PolypeptideCapacityContainer *> & getPolypeptideCapacityContainer();
+
 	NetworkManager * getNetworkManager();
 	void initializeNetworkManager(int port, Game * game);
 
@@ -42,6 +48,8 @@ private:
 
 	NetworkManager* networkManager;
 	std::map<unsigned, PlayerServer *> playermap;
+	/// identified by player id
+	std::map<unsigned int, PolypeptideCapacityContainer *> polypeptideCapacityContainers;
 	GameObjectContainer<GameObject> activeCells;
 	GameObjectContainer<GameObject> inactiveCells;
 	GameObjectContainer<GameObject> environment;
