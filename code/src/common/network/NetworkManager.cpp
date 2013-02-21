@@ -113,7 +113,7 @@ void NetworkManager::operator()()
 						}
 					}
 					connectionEndpoint->m_unreceivedMessages.remove(message->messageId);
-					connectionEndpoint->m_uiRemotePacketId = max(message->messageId, connectionEndpoint->m_uiRemotePacketId);
+					connectionEndpoint->m_uiRemotePacketId = max(message->messageId, connectionEndpoint->m_uiRemotePacketId + 1);
 				}
 			}
 		
@@ -171,7 +171,7 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 		/// Remove obsolete messages
 		for(std::map<unsigned, NetworkMessage*>::iterator it = connectionEndpoint->m_unconfirmedMessages.begin(); it != connectionEndpoint->m_unconfirmedMessages.end(); ++it) 
 		{
-			if (it->first <= message->messageId)
+			if (it->first < message->messageId)
 			{
 				bool obsolete = true;
 				for (unsigned i = 0; i < message->missingMessageIds.size(); ++i)

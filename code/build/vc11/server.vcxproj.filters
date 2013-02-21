@@ -511,6 +511,9 @@
     <ClCompile Include="..\..\src\common\PolypeptideCapacityContainer.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
