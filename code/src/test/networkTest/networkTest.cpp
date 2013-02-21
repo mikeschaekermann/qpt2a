@@ -17,6 +17,7 @@
 #include "EnvironmentAttackTest.h"
 #include "EnvironmentMoveTest.h"
 #include "ResourceBonusTest.h"
+#include "PolypeptideFightTest.h"
 
 using namespace std;
 
@@ -71,6 +72,9 @@ int main()
 	cout << endl;
 
 	testResourceBonus();
+	cout << endl;
+
+	testPolypeptideFight();
 	cout << endl;
 
 	cout << "All Test ran through! (Have you checked for new fields in the messages?)" << endl;

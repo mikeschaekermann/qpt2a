@@ -342,5 +342,8 @@
     <ClInclude Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.h">
       <Filter>Source Files\Network\Messages\Enum</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\test\networkTest\PolypeptideFightTest.h">
+      <Filter>Source Files\Test</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
