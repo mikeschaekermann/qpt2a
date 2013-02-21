@@ -55,5 +55,11 @@ void GameScreenStateNeutral::onKeyInput(KeyEvent& e)
 void GameScreenStateNeutral::mouseWheel(MouseEvent & e)
 {
 	auto& cam = RenderManager::getInstance()->cam;
-	cam.setPosition(cam.getPosition() + Vec3f(0.f, 0.f, -e.getWheelIncrement() * 100.f));
+
+	auto z = cam.getPosition().z;
+
+	if((cam.getPosition().z > 200 && e.getWheelIncrement() > 0) || (cam.getPosition().z < 2700 && e.getWheelIncrement() < 0))
+	{
+		cam.setPosition(cam.getPosition() + ((cam.getFocus() - cam.getPosition()).normalized() * e.getWheelIncrement() * 100.f));
+	}
 }
