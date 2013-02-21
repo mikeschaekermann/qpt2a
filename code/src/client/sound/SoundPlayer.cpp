@@ -1,6 +1,7 @@
 #include "SoundPlayer.h"
 
 SoundPlayer * SoundPlayer::instance = nullptr;
+boost::mutex SoundPlayer::instanceMutex;
 
 SoundPlayer::SoundPlayer(void) : 
 	numSoundChannels(99),
@@ -15,7 +16,8 @@ SoundPlayer::~SoundPlayer(void)
 
 SoundPlayer * const SoundPlayer::getInstance()
 {
-	if(!instance)
+	instanceMutex.lock();
+	if(instance == nullptr)
 	{
 		instance = new SoundPlayer();
 		auto result = FMOD::System_Create(&(instance->system));
@@ -35,8 +37,22 @@ SoundPlayer * const SoundPlayer::getInstance()
 
 		instance->system->init(100, 0, nullptr);
 	}
+	instanceMutex.unlock();
 
 	return instance;
+}
+
+void SoundPlayer::releaseInstance()
+{
+	instanceMutex.lock();
+	if (instance != nullptr)
+	{
+		instance->stopAll();
+		instance->system->close();
+		delete instance;
+		instance = nullptr;
+	}
+	instanceMutex.unlock();
 }
 
 void SoundPlayer::playSound(string& key)
@@ -88,13 +104,6 @@ void SoundPlayer::playMusic(string& key)
 void SoundPlayer::update()
 {
 	system->update();
-}
-
-void SoundPlayer::releaseInstance()
-{
-	stopAll();
-	system->close();
-	delete instance;
 }
 
 void SoundPlayer::stopAll()

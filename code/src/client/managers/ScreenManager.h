@@ -8,6 +8,7 @@
 
 #define SCREEN_MGR ScreenManager::getInstance()
 #define CONN_SCR SCREEN_MGR->getConnectScreen()
+#define GAME_SCR SCREEN_MGR->getGameScreen()
 
 class Screen;
 class GameScreen;
@@ -29,8 +30,8 @@ public:
 	void openConnectScreen();
 	void openCreditsScreen();
 	void openIntroScreen();
-	GameScreen & getGameScreen() const;
-	ConnectScreen & getConnectScreen() const;
+	GameScreen * getGameScreen() const;
+	ConnectScreen * getConnectScreen() const;
 	void closeScreen();
 	void exit();
 	void fadeToBlack(float alpha);

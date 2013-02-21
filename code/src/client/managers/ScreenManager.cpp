@@ -87,14 +87,14 @@ void ScreenManager::openCreditsScreen()
 	currentScreen = creditsScreen;
 }
 
-GameScreen & ScreenManager::getGameScreen() const
+GameScreen * ScreenManager::getGameScreen() const
 {
-	return *gameScreen;
+	return gameScreen;
 }
 
-ConnectScreen & ScreenManager::getConnectScreen() const
+ConnectScreen * ScreenManager::getConnectScreen() const
 { 
-	return *connectScreen;
+	return connectScreen;
 }
 
 void ScreenManager::fadeToBlack(float alpha)
