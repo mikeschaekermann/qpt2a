@@ -38,6 +38,18 @@
     <Filter Include="Source Files\Network\Messages\Game\InGame\Environment">
       <UniqueIdentifier>{419bc790-c509-412e-9839-42f256ff0ff5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Network\Messages\Game\InGame\Polypeptide">
+      <UniqueIdentifier>{1c6bd00c-bf87-4fc3-a676-3b48c164bccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\Messages\Game\InGame\Polypeptide\Combat">
+      <UniqueIdentifier>{d5866cc3-ee1b-4039-abc5-f2f3eb317f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\Messages\Game\InGame\Polypeptide\Creation">
+      <UniqueIdentifier>{c1f0f620-b307-48e8-8aac-2ef46b48a0c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\Messages\Game\InGame\Polypeptide\Travel">
+      <UniqueIdentifier>{91d34b16-2f73-45cc-9bbb-72f9d74fad67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\test\networkTest\networkTest.cpp">
@@ -126,6 +138,39 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\network\messages\game\outgame\NetworkPlayer.cpp">
       <Filter>Source Files\Network\Messages\Game\OutGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideFailure.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideRequest.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideSuccess.cpp">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.cpp">
+      <Filter>Source Files\Network\Messages\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.cpp">
+      <Filter>Source Files\Network\Messages\Enum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +308,39 @@
     </ClInclude>
     <ClInclude Include="..\..\src\test\networkTest\EnvironmentAttackTest.h">
       <Filter>Source Files\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideCellAttack.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideDie.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\combat\PolypeptideFight.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideFailure.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideRequest.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\creation\CreatePolypeptideSuccess.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideFailure.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideRequest.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\game\ingame\polypeptide\travel\MovePolypeptideSuccess.h">
+      <Filter>Source Files\Network\Messages\Game\InGame\Polypeptide\Travel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\CreatePolypeptideErrorCode.h">
+      <Filter>Source Files\Network\Messages\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\network\messages\enum\MovePolypeptideErrorCode.h">
+      <Filter>Source Files\Network\Messages\Enum</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

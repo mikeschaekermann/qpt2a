@@ -84,10 +84,10 @@ void AttackRelationContainer::resetRelations(Relation & relation)
 	relation.polypeptideIds1.clear();
 	relation.polypeptideIds2.clear();
 
-	for (auto eIt = relation.events.begin(); eIt != relation.events.end(); ++eIt)
+	/*for (auto eIt = relation.events.begin(); eIt != relation.events.end(); ++eIt)
 	{
 		(*eIt)->setTerminated();
-	}
+	}*/
 	relation.events.clear();
 }
 
