@@ -24,12 +24,18 @@ void PolypeptideCellAttackEvent::trigger()
 	auto attackedCell = dynamic_cast<CellServer *>(GAMECONTEXT->getActiveCells().find(attackedCellId));
 	if (attackerCell != nullptr && attackedCell != nullptr)
 	{
+		if (attackedCell->getHealthPoints() < 0.f)
+		{
+			return;
+		}
+
 		auto & polypeptideIt = attackerCell->getPolypeptides().find(polypeptideId);
 		if (polypeptideIt != attackerCell->getPolypeptides().end())
 		{
 			auto & polypeptide = polypeptideIt->second;
 			if (polypeptide != nullptr && polypeptide->getState() == Polypeptide::CELLFIGHT)
 			{
+				damage = ci::randFloat(0.5f, 2.0f) * damage;
 				attackedCell->decreaseHealthPointsBy(damage);
 
 				vector<ConnectionEndpoint> players;
@@ -40,7 +46,7 @@ void PolypeptideCellAttackEvent::trigger()
 				polypeptideCellAttack->attackerCellId = attackerCell->getId();
 				polypeptideCellAttack->attackedCellId = attackedCell->getId();
 				polypeptideCellAttack->polypeptideId = polypeptideId;
-				polypeptideCellAttack->damage = ci::randFloat(0.5f, 2.0f) * damage;
+				polypeptideCellAttack->damage = damage;
 				NETWORKMANAGER->sendTo<PolypeptideCellAttack>(polypeptideCellAttack, players);
 
 				if (attackedCell->getHealthPoints() < 0.f)
