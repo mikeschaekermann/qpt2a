@@ -63,6 +63,8 @@ public:
 
 	void resize(ResizeEvent event);
 
+	void refreshGameScreen();
+
 	static ScreenManager * getInstance();
 	static void releaseInstance()
 	{

@@ -34,6 +34,9 @@ GameManager::~GameManager(void)
 			delete it->second;
 		}
 	}
+
+	SCREEN_MGR->refreshGameScreen();
+
 	networkManager->stop();
 	networkManagerThread.join();
 	delete networkManager;

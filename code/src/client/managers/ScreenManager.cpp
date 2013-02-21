@@ -75,6 +75,7 @@ void ScreenManager::openMenuScreen()
 void ScreenManager::openGameScreen()
 {
 	currentScreen = gameScreen;
+	//setFullScreen(true);
 }
 
 void ScreenManager::openConnectScreen()
@@ -154,6 +155,12 @@ void ScreenManager::onKeyInput(KeyEvent& e) const
 void ScreenManager::mouseWheel(MouseEvent & e) const
 {
 	currentScreen->mouseWheel(e);
+}
+
+void ScreenManager::refreshGameScreen()
+{
+	delete gameScreen;
+	gameScreen = new GameScreen();
 }
 
 ScreenManager * ScreenManager::instance = nullptr;

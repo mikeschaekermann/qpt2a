@@ -22,9 +22,7 @@ public:
 
 	static GameManager * const getInstance();
 	static void releaseInstance() 
-	{ 
-		SCREEN_MGR->releaseInstance();
-		
+	{
 		instanceMutex.lock();
 		if (m_pManager != nullptr)
 		{
