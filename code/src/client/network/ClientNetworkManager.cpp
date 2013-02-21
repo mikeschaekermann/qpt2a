@@ -836,6 +836,9 @@ void ClientNetworkManager::initiateGame()
 
 		/// delete buffered messages
 		delete joinSuccessBuffered;
+		joinSuccessBuffered = nullptr;
+
 		delete startGameBuffered;
+		startGameBuffered = nullptr;
 	}
 }
