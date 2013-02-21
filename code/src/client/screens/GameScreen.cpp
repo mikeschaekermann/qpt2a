@@ -345,6 +345,7 @@ void GameScreen::removeCellToPick(CellClient * cell)
 
 	if (cell == pickedCell)
 	{
+		switchToState(new GameScreenStateNeutral(this));
 		unpickCells();
 	}
 }
@@ -360,6 +361,11 @@ void GameScreen::pickCell(CellClient * cell)
 void GameScreen::unpickCells()
 {
 	pickedCell = nullptr;
+}
+
+CellClient * GameScreen::getPickedCell()
+{
+	return pickedCell;
 }
 
 void GameScreen::addIncompleteCell(CellClient * cell)
