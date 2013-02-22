@@ -31,6 +31,4 @@ private:
 	MarchingCubes skin;
 	bool m_bCanManipulate;
 	float hue;
-
-	void initializeHue();
 };
