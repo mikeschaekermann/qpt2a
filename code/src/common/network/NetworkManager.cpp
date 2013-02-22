@@ -92,6 +92,7 @@ void NetworkManager::operator()()
 
 			if (!message)
 			{
+				maintenanceMutex.unlock();
 				continue;
 			}
 		
@@ -102,7 +103,7 @@ void NetworkManager::operator()()
 				ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
 				if (connectionEndpoint)
 				{
-					for (unsigned i = connectionEndpoint->m_uiRemotePacketId + 1; i < message->messageId; ++i)
+					for (unsigned i = connectionEndpoint->m_uiRemotePacketId; i < message->messageId; ++i)
 					{
 						/// Check whether the messageId is already missing and add it then
 						if(std::find(connectionEndpoint->m_unreceivedMessages.begin(), connectionEndpoint->m_unreceivedMessages.end(), i) 
@@ -112,7 +113,7 @@ void NetworkManager::operator()()
 						}
 					}
 					connectionEndpoint->m_unreceivedMessages.remove(message->messageId);
-					connectionEndpoint->m_uiRemotePacketId = max(message->messageId, connectionEndpoint->m_uiRemotePacketId);
+					connectionEndpoint->m_uiRemotePacketId = max(message->messageId, connectionEndpoint->m_uiRemotePacketId + 1);
 				}
 			}
 		
@@ -170,7 +171,7 @@ void NetworkManager::handleConnectionMessage(ConnectionMessage* message) {
 		/// Remove obsolete messages
 		for(std::map<unsigned, NetworkMessage*>::iterator it = connectionEndpoint->m_unconfirmedMessages.begin(); it != connectionEndpoint->m_unconfirmedMessages.end(); ++it) 
 		{
-			if (it->first <= message->messageId)
+			if (it->first < message->messageId)
 			{
 				bool obsolete = true;
 				for (unsigned i = 0; i < message->missingMessageIds.size(); ++i)

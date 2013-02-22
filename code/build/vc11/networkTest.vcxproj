@@ -177,6 +177,7 @@
     <ClInclude Include="..\..\src\test\networkTest\JoinRequestTest.h" />
     <ClInclude Include="..\..\src\test\networkTest\JoinSuccessTest.h" />
     <ClInclude Include="..\..\src\test\networkTest\NetworkMessageTest.h" />
+    <ClInclude Include="..\..\src\test\networkTest\PolypeptideFightTest.h" />
     <ClInclude Include="..\..\src\test\networkTest\ResourceBonusTest.h" />
     <ClInclude Include="..\..\src\test\networkTest\StartGameTest.h" />
   </ItemGroup>
