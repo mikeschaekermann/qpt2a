@@ -65,6 +65,8 @@ GameScreen::GameScreen()
 	)));
 
 	cellMenu->setVisible(false);
+
+	RENDER_MGR->cam.setFocus(Vec3f(0, 0, 0));
 }
 
 GameScreen::~GameScreen(void)

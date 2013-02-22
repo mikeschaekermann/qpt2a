@@ -14,10 +14,6 @@ RenderManager::RenderManager()
 			  CONFIG_FLOAT("data.rendering.camera.nearPlane"),
 			  CONFIG_FLOAT("data.rendering.camera.farPlane"));
 
-	cam
-		.setPosition(Vec3f( 0.0f, 0.0f, 0.0f ))
-		.setFocus(Vec3f::zero());
-
 	fogOfWarOpacity = CONFIG_FLOAT("data.world.fogOfWar.opacity");
 	fogOfWarInnerRadius = CONFIG_FLOAT("data.world.fogOfWar.innerRadius");
 	fogOfWarOuterRadius = CONFIG_FLOAT("data.world.fogOfWar.outerRadius");
