@@ -165,7 +165,11 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 	switch (message->messageType.getType())
 	{
+	
+	
 	case MessageType::GameOver:
+	{
+	try
 	{
 		GameOver *gameOver = dynamic_cast<GameOver*> (message);
 		if (gameOver)
@@ -176,9 +180,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				GAME_SCR->switchToState(new GameScreenStateGameOver(GAME_SCR));
 			}
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during GameOver message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::JoinFailure:
+	{
+	try
 	{
 		JoinFailure *joinFailure= dynamic_cast<JoinFailure*> (message);
 		if (joinFailure)
@@ -190,9 +203,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 			LOG_INFO("JoinFailure received");
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during JoinFailure message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::JoinSuccess:
+	{
+	try
 	{
 		JoinSuccess *joinSuccess = dynamic_cast<JoinSuccess*> (message);
 		if (joinSuccess)
@@ -208,9 +230,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 			initiateGame();
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during JoinSuccess message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::StartGame:
+	{
+	try
 	{
 		StartGame *startGame = dynamic_cast<StartGame*> (message);
 		if (startGame)
@@ -232,9 +263,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 
 			initiateGame();
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during StartGame message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::CellAttack:
+	{
+	try
 	{
 		CellAttack *cellAttack = dynamic_cast<CellAttack*> (message);
 		if (cellAttack)
@@ -287,9 +327,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			
 			LOG_INFO("CellAttack finished");
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during CellAttack message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::CellDie:
+	{
+	try
 	{
 		CellDie *cellDie = dynamic_cast<CellDie*> (message);
 		if (cellDie)
@@ -319,9 +368,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			}
 			LOG_INFO("CellDie received");
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during CellDie message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::CellNew:
+	{
+	try
 	{
 		CellNew *cellNew = dynamic_cast<CellNew*> (message);
 		if (cellNew)
@@ -339,9 +397,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				);
 			}
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during CellNew message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::CreateCellComplete:
+	{
+	try
 	{
 		CreateCellComplete *createCellComplete = dynamic_cast<CreateCellComplete*> (message);
 		if (createCellComplete)
@@ -349,9 +416,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			LOG_INFO("CreateCellComplete received");
 			GAME_SCR->completeCellById(createCellComplete->cellId);
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during CreateCellComplete message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::CreateCellSuccess:
+	{
+	try
 	{
 		CreateCellSuccess *createCellSuccess = dynamic_cast<CreateCellSuccess*> (message);
 		if (createCellSuccess)
@@ -384,9 +460,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				createCellRequestContexts.erase(context);
 			}
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during CreateCellSuccess message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::CreateCellFailure:
+	{
+	try
 	{
 		CreateCellFailure *createCellFailure = dynamic_cast<CreateCellFailure*> (message);
 		if (createCellFailure)
@@ -407,9 +492,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				createCellRequestContexts.erase(context);
 			}
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during CreateCellFailure message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::CreatePolypeptideSuccess:
+	{
+	try
 	{
 		CreatePolypeptideSuccess * createPolySuccess = dynamic_cast<CreatePolypeptideSuccess *>(message);
 		if (createPolySuccess)
@@ -438,9 +532,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				createPolypeptideRequestContexts.erase(context);
 			}
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during CreatePolypeptideSuccess message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::CreatePolypeptideFailure:
+	{
+	try
 	{
 		CreatePolypeptideFailure * createPolyFailure = dynamic_cast<CreatePolypeptideFailure *>(message);
 		if (createPolyFailure)
@@ -458,9 +561,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				createPolypeptideRequestContexts.erase(context);
 			}
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during CreatePolypeptideFailure message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::MovePolypeptideSuccess:
+	{
+	try
 	{
 		MovePolypeptideSuccess * movePolypeptideSuccess = dynamic_cast<MovePolypeptideSuccess *>(message);
 		if (movePolypeptideSuccess)
@@ -476,7 +588,6 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				auto fromCell = std::get<0>(context->second);
 				auto toCell = std::get<1>(context->second);
 				auto amount = std::get<2>(context->second);
-				/// make travel
 
 				if (polypeptideIds.size() <= amount)
 				{
@@ -523,9 +634,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				movePolypeptideRequestContexts.erase(context);
 			}
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during MovePolypeptideSuccess message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::MovePolypeptideFailure:
+	{
+	try
 	{
 		MovePolypeptideFailure * movePolypeptideFailure = dynamic_cast<MovePolypeptideFailure *>(message);
 		if (movePolypeptideFailure)
@@ -545,9 +665,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				movePolypeptideRequestContexts.erase(context);
 			}
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during MovePolypeptideFailure message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::PolypeptideDie:
+	{
+	try
 	{
 		PolypeptideDie * polypeptideDie = dynamic_cast<PolypeptideDie *>(message);
 		if (polypeptideDie)
@@ -571,9 +700,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				assert(false);
 			}
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during PolypeptideDie message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::PolypeptideCellAttack:
+	{
+	try
 	{
 		PolypeptideCellAttack * polypeptideCellAttack = dynamic_cast<PolypeptideCellAttack *>(message);
 		if (polypeptideCellAttack)
@@ -645,9 +783,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			attackedCell->decreaseHealthPointsBy(damage);
 			polypeptide->setState(Polypeptide::CELLFIGHT);
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during PolypeptideCellAttack message handling.");
+	}
+	break;
+	}
+	
+	
 	case MessageType::PolypeptideFight:
+	{
+	try
 	{
 		PolypeptideFight * polypeptideFight = dynamic_cast<PolypeptideFight *>(message);
 		if (polypeptideFight)
@@ -737,8 +884,15 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			polyObject2->setFocus(focusCenter, cellClient2->getRadius());
 			polyObject2->setState(Polypeptide::POLYPEPTIDEFIGHT);
 		}
-		break;
 	}
+	catch(...)
+	{
+		LOG_ERROR("Error occured during PolypeptideFight message handling.");
+	}
+	break;
+	}
+	
+	
 	default:
 	{
 		LOG_WARNING("Message received that could not be categorized.");
