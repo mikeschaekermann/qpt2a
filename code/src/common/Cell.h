@@ -16,6 +16,8 @@ class Cell :
  virtual public GameObject
 {
 public:
+	~Cell();
+
  void decreaseHealthPointsBy(float damage);
 
  void completeCell();
