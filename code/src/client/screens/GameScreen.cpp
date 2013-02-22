@@ -116,6 +116,7 @@ void GameScreen::update(float frameTime)
 		gameObjectsToUpdate.removeGameObject(*it, false);
 		gameObjectsToDraw.removeGameObject(*it);
 	}
+
 	containerMutex.unlock();
 }
 
