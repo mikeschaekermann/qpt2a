@@ -45,7 +45,7 @@ bool PolypeptideCapacityContainer::isFull() const
 
 void PolypeptideCapacityContainer::changeNumberOfPolypeptides(int amount)
 {
-	if (NumberOfPolypeptides < -amount)
+	if (int(NumberOfPolypeptides) < -amount)
 	{
 		LOG_ERROR("Tried to decrease the number of polypeptides to a negative amount.");
 		assert(false);
@@ -59,7 +59,7 @@ void PolypeptideCapacityContainer::changeNumberOfPolypeptides(int amount)
 
 void PolypeptideCapacityContainer::changeNumberOfStandardCells(int amount)
 {
-	if (NumberOfStandardCells < -amount)
+	if (int(NumberOfStandardCells) < -amount)
 	{
 		LOG_ERROR("Tried to decrease the number of bone cells to a negative amount.");
 		assert(false);
@@ -73,7 +73,7 @@ void PolypeptideCapacityContainer::changeNumberOfStandardCells(int amount)
 
 void PolypeptideCapacityContainer::changeNumberOfBoneCells(int amount)
 {
-	if (NumberOfBoneCells < -amount)
+	if (int(NumberOfBoneCells) < -amount)
 	{
 		LOG_ERROR("Tried to decrease the number of bone cells to a negative amount.");
 		assert(false);
