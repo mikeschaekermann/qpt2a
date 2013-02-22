@@ -128,13 +128,13 @@
 		<max>2</max>
 		<player>
 			<startposition>
-				<x>-95.0</x>
+				<x>-105.0</x>
 				<y>0.0</y>
 			</startposition>
 		</player>
 		<player>
 			<startposition>
-				<x>95.0</x>
+				<x>105.0</x>
 				<y>0.0</y>
 			</startposition>
 		</player>
@@ -157,10 +157,10 @@
 		</attack>
 		<build>
 			<standardcell>
-				<time>2.5</time>
+				<time>1.5</time>
 			</standardcell>
 			<bonecell>
-				<time>5.0</time>
+				<time>3.5</time>
 			</bonecell>
 		</build>
 		<celldie>
@@ -205,12 +205,12 @@
 	</cell>
 	<polypeptide>
 		<scale>50.0</scale>
-		<maxPerStemCell>3</maxPerStemCell>
+		<maxPerStemCell>5</maxPerStemCell>
 		<maxPerStandardCell>5</maxPerStandardCell>
 		<maxPerBoneCell>15</maxPerBoneCell>
 		<radius>10.0</radius>
 		<healthpoints>1.0</healthpoints>
-		<damage>0.5</damage>
+		<damage>1.0</damage>
 		<speed>100.0</speed>
 		<percentageUsable>0.2</percentageUsable>
 		<rotationSpeed>200.0</rotationSpeed>
