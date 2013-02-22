@@ -703,6 +703,7 @@
       <Filter>Rendering\Shader</Filter>
     </None>
     <None Include="..\..\resources\images\icon.ico" />
+    <None Include="ClassDiagram13.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
