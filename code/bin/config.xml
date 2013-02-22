@@ -128,14 +128,14 @@
 		<max>2</max>
 		<player>
 			<startposition>
-				<x>-50.0</x>
-				<y>100.0</y>
+				<x>-95.0</x>
+				<y>0.0</y>
 			</startposition>
 		</player>
 		<player>
 			<startposition>
-				<x>-50.0</x>
-				<y>-100.0</y>
+				<x>95.0</x>
+				<y>0.0</y>
 			</startposition>
 		</player>
 		<player>
@@ -225,49 +225,49 @@
 			<barrier>
 				<position>
 					<x>0.0</x>
-					<y>0.0</y>
+					<y>85.0</y>
 				</position>
 				<rotation>
 					<x>0.0</x>
 					<y>0.0</y>
 				</rotation>
-				<radius>45.0</radius>
+				<radius>75.0</radius>
 			</barrier>
 			<barrier>
 				<position>
-					<x>95.0</x>
-					<y>0.0</y>
+					<x>0.0</x>
+					<y>-85.0</y>
 				</position>
 				<rotation>
 					<x>0.0</x>
 					<y>0.0</y>
 				</rotation>
-				<radius>30.0</radius>
+				<radius>75.0</radius>
 			</barrier>
 		</barriers>
 		<modifiers>
 			<static>
 				<radioactivity>
 					<position>
-						<x>150.0</x>
-						<y>180.0</y>
+						<x>0.0</x>
+						<y>-365.0</y>
 					</position>
 					<rotation>
 						<x>0.0</x>
 						<y>0.0</y>
 					</rotation>
-          <radius>50.0</radius>
+          <radius>200.0</radius>
 				</radioactivity>
         <nutrientsoil>
 					<position>
-						<x>-100.0</x>
-						<y>-150.0</y>
+						<x>0.0</x>
+						<y>365.0</y>
 					</position>
 					<rotation>
 						<x>0.0</x>
 						<y>0.0</y>
 					</rotation>
-          <radius>150.0</radius>
+          <radius>200.0</radius>
 				</nutrientsoil>
 			</static>
 		</modifiers>
