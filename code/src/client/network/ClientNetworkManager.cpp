@@ -243,8 +243,32 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			auto attacker = GAME_SCR->getGameObjectsToDraw().find(cellAttack->attackerCellId);
 			auto attacked = GAME_SCR->getGameObjectsToDraw().find(cellAttack->attackedCellId);
 
-			if (attacker) dynamic_cast<StandardCellClient *>(attacker)->startAttackAnimation();
-			if (attacked) dynamic_cast<CellClient *>(attacked)->decreaseHealthPointsBy(cellAttack->damage);
+			if (attacker)
+			{
+				auto attackerStandard = dynamic_cast<StandardCellClient *>(attacker);
+				if (attackerStandard != nullptr)
+				{
+					attackerStandard->startAttackAnimation();
+				}
+				else
+				{
+					LOG_ERROR("Server told me that a cell which is not a standard cell attacked another cell!");
+					assert(false);
+				}
+			}
+			if (attacked)
+			{
+				auto attackedCell = dynamic_cast<CellClient *>(attacked);
+				if (attackedCell != nullptr)
+				{
+					attackedCell->decreaseHealthPointsBy(cellAttack->damage);
+				}
+				else
+				{
+					LOG_ERROR("Server told me that a game object which is not a cell got attacked by another cell!");
+					assert(false);
+				}
+			}
 
 			if (attacker && attacked)
 			{

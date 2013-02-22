@@ -3,6 +3,7 @@
 #include "../../common/Cell.h"
 #include "../../client/actors/GameObjectClient.h"
 #include "../../common/ConfigurationDataHandler.h"
+#include "../../common/network/messages/enum/CellType.h"
 
 class PolypeptideClient;
 
@@ -11,7 +12,8 @@ class CellClient :
 	virtual public GameObjectClient
 {
 public:
-	CellClient()
+	CellClient():
+		type(CellType::Invalid)
 	{
 		setOpacity(CONFIG_FLOAT("data.ingamefeedback.building.completeOpacity"));
 	}
@@ -29,6 +31,8 @@ public:
 
 	virtual bool addPolypeptide(Polypeptide * polypeptide);
 
+	virtual CellType::Type getType() const { return type; }
+
 protected:
 	float getHealthPercentage() const;
 	float getBrightnessFromHealthPoints() const;
@@ -36,4 +40,6 @@ protected:
 
 	virtual void setRotation(Vec3f rotation) { GameObject::setRotation(rotation); }
 	virtual void setScale(Vec3f scale) { GameObject::setScale(scale); }
+
+	CellType::Type type;
 };

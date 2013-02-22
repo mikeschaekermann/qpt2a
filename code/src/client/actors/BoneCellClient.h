@@ -16,6 +16,7 @@ public:
   CellClient(),
   BoneCell(position, angle)
  {
+	this->type = CellType::BoneCell;
 	setId(id);
 	this->polyMax = CONFIG_INT("data.polypeptide.maxPerBoneCell");
  }

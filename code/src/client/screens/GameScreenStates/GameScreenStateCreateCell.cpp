@@ -9,7 +9,7 @@
 
 GameScreenStateCreateCell::GameScreenStateCreateCell(GameScreen * screen, CellClient * pickedCell, CellClient * cell):
 	GameScreenState(screen),
-	cellType(CellType::StandardCell),
+	cellType(cell->getType()),
 	cell(cell)
 {
 	if (pickedCell != nullptr)
@@ -126,6 +126,16 @@ bool GameScreenStateCreateCell::touchBegan(const TouchWay & touchWay)
 			);
 
 			GAME_SCR->addCellPreview(cell);
+
+			LOG_INFO("CREATE CELL REQUEST:");
+			LOG_INFO("PLAYER ID:");
+			LOG_INFO(createCellRequest->playerId);
+			LOG_INFO("CELL ID:");
+			LOG_INFO(createCellRequest->cellId);
+			LOG_INFO("ANGLE");
+			LOG_INFO(createCellRequest->angle);
+			LOG_INFO("TYPE");
+			LOG_INFO(createCellRequest->type.getType());
 
 			NETWORK_MGR->send(createCellRequest);
 			LOG_INFO("CreateCellRequest sent");

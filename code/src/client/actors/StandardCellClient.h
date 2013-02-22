@@ -17,6 +17,7 @@ public:
   StandardCell(position, angle),
   spikesScale(1.0)
  {
+	this->type = CellType::StandardCell;
 	setId(id);
 	this->polyMax = CONFIG_INT("data.polypeptide.maxPerStandardCell");
 
