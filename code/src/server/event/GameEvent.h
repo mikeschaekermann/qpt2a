@@ -9,6 +9,12 @@ protected:
 	double m_dDeadTime;
 	bool terminated;
 public:
+	GameEvent() :
+		terminated(false)
+	{
+		id = IIdentifiable::getNewId();
+	}
+
 	GameEvent(double startTime, double duration) :
 	  m_dDeadTime(startTime + duration),
 	  terminated(false)

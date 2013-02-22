@@ -826,7 +826,10 @@ void ClientNetworkManager::initiateGame()
 		/// handle start game message
 		stringstream message;
 
+		float color[8] = {180.f / 360.f, 30.f / 360.f, 120.f / 360.f, 60.f / 360.f, 0.f / 360.f, 280.f / 360.f, 300.f, 240.f / 360.f};
+
 		// Add all players
+		unsigned int i = 0;
 		for (auto it = startGame->players.begin(); it != startGame->players.end(); ++it)
 		{
 			message << "player " << it->playerName << "(" << it->playerId << ") with stem cell (" << it->startCellId << ") at position (" << it->startPosition.x << ", " << it->startPosition.y << ", " << it->startPosition.z << ")";
@@ -834,6 +837,7 @@ void ClientNetworkManager::initiateGame()
 			message.str("");
 
 			GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition);
+			GAME_MGR->getPlayerById(it->playerId)->setHue(color[i++]);
 		}
 			
 		// Add barriers

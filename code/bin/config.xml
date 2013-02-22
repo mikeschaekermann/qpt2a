@@ -67,19 +67,19 @@
 				<r>0.10980392</r>
 				<g>0.67843137</g>
 				<b>0.52156862</b>
-				<a>0.6</a>
+				<a>1.0</a>
 			</maxRadiusColor>
 			<stepRadiusColor>
 				<r>0.10980392</r>
 				<g>0.67843137</g>
 				<b>0.52156862</b>
-				<a>0.6</a>
+				<a>1.0</a>
 			</stepRadiusColor>
 			<selectRadiusColor>
 				<r>0.10980392</r>
 				<g>0.67843137</g>
 				<b>0.52156862</b>
-				<a>0.2</a>
+				<a>0.3</a>
 			</selectRadiusColor>
 			<movingPolypeptideColor>
 				<r>0.10980392</r>
@@ -117,7 +117,7 @@
 		</light>
 	</rendering>
 	<world>
-		<radius>500.0</radius>
+		<radius>1000.0</radius>
 		<fogOfWar>
 		  <opacity>0.6</opacity>
 		  <innerRadius>40</innerRadius>
@@ -153,13 +153,18 @@
 	</players>
 	<event>
 		<attack>
-			<time>0.8</time>
+			<time>0.5</time>
 		</attack>
 		<build>
-			<time>2.5</time>
+			<standardcell>
+				<time>2.5</time>
+			</standardcell>
+			<bonecell>
+				<time>5.0</time>
+			</bonecell>
 		</build>
 		<celldie>
-			<time>1.0</time>
+			<time>0.5</time>
 		</celldie>
 		<polypeptidefight>
 			<time>1.0</time>
@@ -184,10 +189,10 @@
 		</stemcell>
 		<standardcell>
 			<radius>20.0</radius>
-			<healthpoints>100.0</healthpoints>
-			<attackradius>15.0</attackradius>
-			<distanceDropOffDegree>120.0</distanceDropOffDegree>
-			<damage>10.0</damage>
+			<healthpoints>150.0</healthpoints>
+			<attackradius>18.0</attackradius>
+			<distanceDropOffDegree>110.0</distanceDropOffDegree>
+			<damage>8.0</damage>
 			<spikes>
 				<numberOnEachSide>7</numberOnEachSide>
 				<shrinkAmountPerSecond>0.75</shrinkAmountPerSecond>
@@ -195,25 +200,25 @@
 		</standardcell>
 		<bonecell>
 			<radius>30.0</radius>
-			<healthpoints>300.0</healthpoints>
+			<healthpoints>600.0</healthpoints>
 		</bonecell>
 	</cell>
 	<polypeptide>
 		<scale>50.0</scale>
-		<maxPerStemCell>15</maxPerStemCell>
-    <maxPerStandardCell>5</maxPerStandardCell>
-    <maxPerBoneCell>20</maxPerBoneCell>
-		<radius>5.0</radius>
+		<maxPerStemCell>3</maxPerStemCell>
+		<maxPerStandardCell>5</maxPerStandardCell>
+		<maxPerBoneCell>15</maxPerBoneCell>
+		<radius>10.0</radius>
 		<healthpoints>1.0</healthpoints>
-		<damage>2.0</damage>
-    <speed>100.0</speed>
-    <percentageUsable>0.5</percentageUsable>
-    <rotationSpeed>200.0</rotationSpeed>
-    <pointRotationSpeed>5.0</pointRotationSpeed>
-    <maxPointAmplitudeEruption>10</maxPointAmplitudeEruption>
-    <attack>
-      <distancePercentageTravelledPerSecond>0.95</distancePercentageTravelledPerSecond>
-    </attack>
+		<damage>0.5</damage>
+		<speed>100.0</speed>
+		<percentageUsable>0.2</percentageUsable>
+		<rotationSpeed>200.0</rotationSpeed>
+		<pointRotationSpeed>7.0</pointRotationSpeed>
+		<maxPointAmplitudeEruption>10</maxPointAmplitudeEruption>
+		<attack>
+		  <distancePercentageTravelledPerSecond>0.95</distancePercentageTravelledPerSecond>
+		</attack>
 	</polypeptide>
 	<environment>
 		<barriers>
