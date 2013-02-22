@@ -77,18 +77,10 @@ bool StandardCellClient::spikesCanBeSeen() const
 
 void StandardCellClient::increaseGlobalTypeCounter() const
 {
-	++(POLYCAPACITY->NumberOfStandardCells);
+	POLYCAPACITY->changeNumberOfStandardCells(1);
 }
 
 void StandardCellClient::decreaseGlobalTypeCounter() const
 {
-	if (POLYCAPACITY->NumberOfStandardCells == 0)
-	{
-		LOG_ERROR("Tried to remove a standard cell although the standard cell counter is already zero.");
-		assert(false);
-	}
-	else
-	{
-		--(POLYCAPACITY->NumberOfStandardCells);
-	}
+	POLYCAPACITY->changeNumberOfStandardCells(-1);
 }

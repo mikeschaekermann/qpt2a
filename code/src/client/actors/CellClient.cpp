@@ -57,36 +57,42 @@ void CellClient::drawHealthBar(float healthBarOpacity)
 
 		auto innerHalfSize = outerHalfSize - Vec2f(1, 1);
 
-		auto innerTopLeft = position2D - innerHalfSize;
-		auto innerBottomRight = innerTopLeft;
-		innerBottomRight.y += innerHalfSize.y * 2;
-		auto healthInPercent = getHealthPercentage();
-		innerBottomRight.x += (innerHalfSize.x * 2) * healthInPercent;
-
-		ColorA barColor;
-		auto criticalPercentage = CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalPercentage");
-
-		if (healthInPercent > criticalPercentage)
+		/// health bar must not be drawn if the
+		/// corner radii do not fit inside,
+		/// because this leads to graphical defects!
+		if (innerHalfSize.x >= cornerRadius)
 		{
-			barColor = ColorA(
-				CONFIG_FLOAT("data.ingamefeedback.healthBar.goodColor.r"),
-				CONFIG_FLOAT("data.ingamefeedback.healthBar.goodColor.g"),
-				CONFIG_FLOAT("data.ingamefeedback.healthBar.goodColor.b"),
-				healthBarOpacity
-			);
-		}
-		else
-		{
-			barColor = ColorA(
-				CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalColor.r"),
-				CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalColor.g"),
-				CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalColor.b"),
-				healthBarOpacity
-			);
-		}
+			auto innerTopLeft = position2D - innerHalfSize;
+			auto innerBottomRight = innerTopLeft;
+			innerBottomRight.y += innerHalfSize.y * 2;
+			auto healthInPercent = getHealthPercentage();
+			innerBottomRight.x += (innerHalfSize.x * 2) * healthInPercent;
 
-		gl::color(barColor);
-		gl::drawSolidRoundedRect(Rectf(innerTopLeft, innerBottomRight), cornerRadius, 5);
+			ColorA barColor;
+			auto criticalPercentage = CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalPercentage");
+
+			if (healthInPercent > criticalPercentage)
+			{
+				barColor = ColorA(
+					CONFIG_FLOAT("data.ingamefeedback.healthBar.goodColor.r"),
+					CONFIG_FLOAT("data.ingamefeedback.healthBar.goodColor.g"),
+					CONFIG_FLOAT("data.ingamefeedback.healthBar.goodColor.b"),
+					healthBarOpacity
+				);
+			}
+			else
+			{
+				barColor = ColorA(
+					CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalColor.r"),
+					CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalColor.g"),
+					CONFIG_FLOAT("data.ingamefeedback.healthBar.criticalColor.b"),
+					healthBarOpacity
+				);
+			}
+
+			gl::color(barColor);
+			gl::drawSolidRoundedRect(Rectf(innerTopLeft, innerBottomRight), cornerRadius, 5);
+		}
 	}
 }
 

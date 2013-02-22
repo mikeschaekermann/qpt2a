@@ -206,6 +206,7 @@
     <ClInclude Include="..\..\src\common\StandardCell.h" />
     <ClInclude Include="..\..\src\common\StemCell.h" />
     <ClInclude Include="..\..\src\common\StemCellCollisionBehavior.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\bin\config.xml">
@@ -214,6 +215,7 @@
     <None Include="..\..\resources\assets.xml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="..\..\resources\images\icon.ico" />
     <None Include="..\..\resources\shader\barrier.frag" />
     <None Include="..\..\resources\shader\barrier.vert" />
     <None Include="..\..\resources\shader\phong.frag" />
@@ -231,6 +233,9 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram11.cd" />
     <None Include="ClassDiagram12.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{01B47039-3133-407A-944A-3F554A017C2C}</ProjectGuid>

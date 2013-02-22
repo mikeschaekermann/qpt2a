@@ -29,18 +29,10 @@ void BoneCellClient::drawAtTransformation() const
 
 void BoneCellClient::increaseGlobalTypeCounter() const
 {
-	++(POLYCAPACITY->NumberOfBoneCells);
+	POLYCAPACITY->changeNumberOfBoneCells(1);
 }
 
 void BoneCellClient::decreaseGlobalTypeCounter() const
 {
-	if (POLYCAPACITY->NumberOfBoneCells == 0)
-	{
-		LOG_ERROR("Tried to remove a bone cell although the bone cell counter is already zero.");
-		assert(false);
-	}
-	else
-	{
-		--(POLYCAPACITY->NumberOfBoneCells);
-	}
+	POLYCAPACITY->changeNumberOfBoneCells(-1);
 }

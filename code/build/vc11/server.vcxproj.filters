@@ -247,6 +247,7 @@
     <ClInclude Include="..\..\src\common\PolypeptideCapacityContainer.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Gamelogic">
@@ -315,9 +316,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\Main.cpp" />
-    <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp">
-      <Filter>Eventlogic</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\common\ConfigurationDataHandler.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -513,8 +511,15 @@
     <ClCompile Include="..\..\src\common\PolypeptideCapacityContainer.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\event\BuildingEvent.cpp">
+      <Filter>Eventlogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="..\..\resources\images\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="server.rc" />
   </ItemGroup>
 </Project>

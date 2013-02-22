@@ -562,6 +562,7 @@
       <Filter>Actors\Polypeptides</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\client\screens\IntroScreen.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -701,5 +702,9 @@
     <None Include="..\..\resources\shader\poly.vert">
       <Filter>Rendering\Shader</Filter>
     </None>
+    <None Include="..\..\resources\images\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc" />
   </ItemGroup>
 </Project>
