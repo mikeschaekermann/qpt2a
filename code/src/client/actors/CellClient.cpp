@@ -6,9 +6,26 @@
 
 void CellClient::update(float frameTime)
 {
+	list<PolypeptideClient *> tmpToBeDeleted;
+
 	for (auto it = polypeptides.begin(); it != polypeptides.end(); ++it)
 	{
 		it->second->update(frameTime);
+
+		if (it->second->wantsToBeDestroyed())
+		{
+			tmpToBeDeleted.emplace_back(dynamic_cast<PolypeptideClient *>(it->second));
+		}
+	}
+
+	for(auto it = tmpToBeDeleted.begin(); it != tmpToBeDeleted.end(); ++it)
+	{
+		/// remove from player's global poly list
+		GAME_SCR->getMyPolypeptides().removeGameObject(*it);
+		/// remove from cell's local poly list
+		removePolypeptide(*it);
+
+		delete *it;
 	}
 }
 

@@ -71,7 +71,7 @@ bool EventCreator::createBuildEvent(const double time, const unsigned int reques
 
 bool EventCreator::createAttackEvent(const double time, bool isAttacker, CellServer & currentCell)
 {
-	if (isAttacker && (!currentCell.getIsComplete() || currentCell.getType() != CellServer::STANDARDCELL))
+	if (!currentCell.getIsComplete())
 	{
 		LOG_INFO("No attack is performed");
 		return false;

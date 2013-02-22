@@ -36,7 +36,7 @@ void PolypeptideFightEvent::trigger()
 		{
 			vector<ConnectionEndpoint> players;
 			players.push_back(*(GAMECONTEXT->getPlayer(cell1->getOwner()->getId())));
-			players.push_back(*(GAMECONTEXT->getPlayer(cell1->getOwner()->getId())));
+			players.push_back(*(GAMECONTEXT->getPlayer(cell2->getOwner()->getId())));
 
 			bool polypeptide1Dies = ci::randBool();
 			bool polypeptide2Dies = ci::randBool();
@@ -79,6 +79,7 @@ void PolypeptideFightEvent::trigger()
 				delete polypeptide1;
 				--(POLYCAPACITY(cell1->getOwner()->getId())->NumberOfPolypeptides);
 				GAMECONTEXT->getAttackRelations().updateRelationsFor(*cell1);
+				LOG_INFO(stringify(ostringstream() << "cell with id: " << polypeptide1 << " deleted"));
 			}
 
 			if (polypeptide2Dies)
@@ -87,6 +88,7 @@ void PolypeptideFightEvent::trigger()
 				delete polypeptide2;
 				--(POLYCAPACITY(cell2->getOwner()->getId())->NumberOfPolypeptides);
 				GAMECONTEXT->getAttackRelations().updateRelationsFor(*cell2);
+				LOG_INFO(stringify(ostringstream() << "cell with id: " << polypeptide2 << " deleted"));
 			}
 		}
 	}

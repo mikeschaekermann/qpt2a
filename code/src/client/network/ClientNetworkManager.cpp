@@ -696,7 +696,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			}
 
 			auto polyObject1 = GAME_SCR->getMyPolypeptides().find(polypeptideId1);
-			if (cellObject1 == nullptr)
+			if (polyObject1 == nullptr)
 			{
 				polyObject1 = new PolypeptideClient();
 				polyObject1->setId(polypeptideId1);
@@ -711,7 +711,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			}
 
 			auto polyObject2 = GAME_SCR->getMyPolypeptides().find(polypeptideId2);
-			if (cellObject2 == nullptr)
+			if (polyObject2 == nullptr)
 			{
 				polyObject2 = new PolypeptideClient();
 				polyObject2->setId(polypeptideId2);

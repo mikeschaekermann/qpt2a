@@ -24,11 +24,9 @@ PolypeptideFight::PolypeptideFight(char* data, unsigned &index) : NetworkMessage
 	index += sizeof(polypeptideId2);
 
 	memcpy(&polypeptide1Dies, &data[index], sizeof(polypeptide1Dies));
-	polypeptide1Dies = ntohl(polypeptide1Dies);
 	index += sizeof(polypeptide1Dies);
 
 	memcpy(&polypeptide2Dies, &data[index], sizeof(polypeptide2Dies));
-	polypeptide2Dies = ntohl(polypeptide2Dies);
 	index += sizeof(polypeptide2Dies);
 }
 
@@ -66,13 +64,11 @@ unsigned PolypeptideFight::writeToArray(char* data, unsigned start)
 	memcpy(&data[index], &networkpolypeptideId2, sizeof(networkpolypeptideId2));
 	index += sizeof(networkpolypeptideId2);
 
-	unsigned networkpolypeptide1Dies = htonl(polypeptide1Dies);
-	memcpy(&data[index], &networkpolypeptide1Dies, sizeof(networkpolypeptide1Dies));
-	index += sizeof(networkpolypeptide1Dies);
+	memcpy(&data[index], &polypeptide1Dies, sizeof(polypeptide1Dies));
+	index += sizeof(polypeptide1Dies);
 
-	unsigned networkpolypeptide2Dies = htonl(polypeptide2Dies);
-	memcpy(&data[index], &networkpolypeptide2Dies, sizeof(networkpolypeptide2Dies));
-	index += sizeof(networkpolypeptide2Dies);
+	memcpy(&data[index], &polypeptide2Dies, sizeof(polypeptide2Dies));
+	index += sizeof(polypeptide2Dies);
 	
 	return index;
 }
