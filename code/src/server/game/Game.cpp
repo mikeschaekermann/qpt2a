@@ -307,6 +307,10 @@ void Game::createCell(CreateCellRequest & request)
 	unsigned int cellId = request.cellId;
 	float angle = request.angle;
 	CellType type = request.type;
+	LOG_INFO(stringify(ostringstream() << "received data: " << endl
+		<< "player id: " << playerId << endl
+		<< "parent cell id: " << cellId << endl
+		<< "type: " << type.getType()));
 
 	if (GAMECONTEXT->getPlayer(playerId))
 	{

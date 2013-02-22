@@ -47,6 +47,7 @@ void PolypeptideCellAttackEvent::trigger()
 				players.push_back(*(GAMECONTEXT->getPlayer(attackerCell->getOwner()->getId())));
 				players.push_back(*(GAMECONTEXT->getPlayer(attackedCell->getOwner()->getId())));
 
+				LOG_INFO("PolypeptideCellAttack sent");
 				PolypeptideCellAttack * polypeptideCellAttack = new PolypeptideCellAttack;
 				polypeptideCellAttack->attackerCellId = attackerCell->getId();
 				polypeptideCellAttack->attackedCellId = attackedCell->getId();
