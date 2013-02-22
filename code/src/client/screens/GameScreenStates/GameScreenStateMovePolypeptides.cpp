@@ -46,7 +46,12 @@ bool GameScreenStateMovePolypeptides::touchClick(TouchWay touchWay)
 		if (selectedPolypeptidesSize != 0)
 		{
 			containerMutex.lock();
-			auto fromCell = screen->getSelectedPolypeptides().begin()->second->getOwner();
+
+			if (GAME_SCR->getSelectedPolypeptides().begin() == screen->getSelectedPolypeptides().end())
+			{
+				return true;
+			}
+			auto fromCell = GAME_SCR->getSelectedPolypeptides().begin()->second->getOwner();
 			containerMutex.unlock();
 
 			auto toCell = cellsPicked[0];
