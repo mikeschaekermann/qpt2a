@@ -467,7 +467,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 		{
 			LOG_INFO("MovePolypeptideSuccess received");
 			unsigned int requestId = movePolypeptideSuccess->requestId;
-			auto polypeptideIds = movePolypeptideSuccess->polypeptideIds;
+			auto& polypeptideIds = movePolypeptideSuccess->polypeptideIds;
 
 			auto context = movePolypeptideRequestContexts.find(requestId);
 
@@ -482,7 +482,15 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				{
 					for (auto it = polypeptideIds.begin(); it != polypeptideIds.end(); ++it)
 					{
-						Polypeptide * polypeptide = fromCell->getPolypeptides().find(*it)->second;
+						auto polyIt = fromCell->getPolypeptides().find(*it);
+
+						if (polyIt == fromCell->getPolypeptides().end())
+						{
+							LOG_ERROR("Tried to move polypeptide which the cell does not have in its list!");
+							return;
+						}
+
+						Polypeptide * polypeptide = polyIt->second;
 						toCell->addPolypeptide(polypeptide);
 						fromCell->removePolypeptide(polypeptide);
 
