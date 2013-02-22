@@ -75,20 +75,20 @@ void PolypeptideFightEvent::trigger()
 
 			if (polypeptide1Dies)
 			{
+				LOG_INFO(stringify(ostringstream() << "polypeptide with id: " << polypeptide1->getId() << " deleted"));
 				cell1->removePolypeptide(polypeptide1);
 				delete polypeptide1;
 				--(POLYCAPACITY(cell1->getOwner()->getId())->NumberOfPolypeptides);
 				GAMECONTEXT->getAttackRelations().updateRelationsFor(*cell1);
-				LOG_INFO(stringify(ostringstream() << "cell with id: " << polypeptide1 << " deleted"));
 			}
 
 			if (polypeptide2Dies)
 			{
+				LOG_INFO(stringify(ostringstream() << "polypeptide with id: " << polypeptide2->getId() << " deleted"));
 				cell2->removePolypeptide(polypeptide2);
 				delete polypeptide2;
 				--(POLYCAPACITY(cell2->getOwner()->getId())->NumberOfPolypeptides);
 				GAMECONTEXT->getAttackRelations().updateRelationsFor(*cell2);
-				LOG_INFO(stringify(ostringstream() << "cell with id: " << polypeptide2 << " deleted"));
 			}
 		}
 	}
