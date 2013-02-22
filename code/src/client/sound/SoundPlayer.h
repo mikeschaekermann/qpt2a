@@ -38,6 +38,9 @@ public:
 private:
 	static SoundPlayer*		instance;
 	static boost::mutex		instanceMutex;
+
+	boost::mutex			nextChannelIdMutex;
+
 	FMOD::System*			system;
 	FMOD::Channel*			soundChannels[99];
 	FMOD::Channel*			musicChannel;

@@ -65,9 +65,12 @@ void SoundPlayer::playSound(string& key, Vec3f pos, Vec3f vel)
 {
 	auto sound = AssetManager::getInstance()->getSound(key);
 	
+	nextChannelIdMutex.lock();
+
 	system->playSound(FMOD_CHANNEL_FREE, sound, true, &soundChannels[nextChannelId]);
 	FMOD_MODE mode;
 	sound->getMode(&mode);
+
 	if((mode & FMOD_3D) == FMOD_3D)
 	{
 		FMOD_VECTOR fPos,
@@ -86,14 +89,14 @@ void SoundPlayer::playSound(string& key, Vec3f pos, Vec3f vel)
 
 	soundChannels[nextChannelId]->setPaused(false);
 
-	if(nextChannelId > numSoundChannels)
+	++nextChannelId;
+
+	if(nextChannelId >= numSoundChannels)
 	{
 		nextChannelId = 0;
 	}
-	else
-	{
-		++nextChannelId;
-	}
+
+	nextChannelIdMutex.unlock();
 }
 
 void SoundPlayer::playMusic(string& key)
