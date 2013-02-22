@@ -183,7 +183,14 @@ void PolypeptideClient::setFocus(Vec3f center, float radius)
 
 CellClient * PolypeptideClient::getOwner()
 {
-	return dynamic_cast<CellClient *>(owner);
+	if(owner != nullptr)
+	{
+		return dynamic_cast<CellClient *>(owner);
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 void PolypeptideClient::setAttackOptions(Vec3f originPoint, bool selfDestruct, bool dieTrying)
