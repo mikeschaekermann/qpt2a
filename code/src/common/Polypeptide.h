@@ -5,6 +5,8 @@
 
 #include "GameObject.h"
 
+#include "boost/thread/mutex.hpp"
+
 class Cell;
 
 class Polypeptide :
@@ -28,9 +30,12 @@ public:
 	const Cell * getOwner() const { return owner; }
 	void setOwner( Cell * owner) { this->owner = owner; }
 
+	static boost::mutex& getMutex() { return polyMutex; }
+
 protected:
  State state;
  Cell * owner;
+ static boost::mutex polyMutex;
 
  Polypeptide(void);
  Polypeptide(Vec3f position, float angle, Cell * owner);

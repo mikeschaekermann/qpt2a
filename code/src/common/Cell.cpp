@@ -33,6 +33,14 @@ Cell::Cell(Vec3f position, float radius, float angle, float healthPoints, Player
  this->rotation = Vec3f(0.0f, 0.0f, float(ci::toDegrees(angle)));
 }
 
+Cell::~Cell()
+{
+	for(auto it = polypeptides.begin(); it != polypeptides.end(); ++it)
+	{
+		it->second->setOwner(nullptr);
+	}
+}
+
 void Cell::decreaseHealthPointsBy(float damage)
 {
  healthPoints = max(0.f, healthPoints - damage);
@@ -67,19 +75,31 @@ bool Cell::addPolypeptide(Polypeptide * polypeptide)
 	{
 		polypeptide->setOwner(this);
 
-		return polypeptides.insert(make_pair(polypeptide->getId(), polypeptide)).second;
+		Polypeptide::getMutex().lock();
+		auto poly = polypeptides.insert(make_pair(polypeptide->getId(), polypeptide)).second;
+		Polypeptide::getMutex().unlock();
+		
+		return poly;
 	}
 	return false;
 }
 
 bool Cell::removePolypeptide(Polypeptide * polypeptide)
 {
+	Polypeptide::getMutex().lock();
 	auto it = polypeptides.find(polypeptide->getId());
+	
 	if (it != polypeptides.end())
 	{
-	polypeptides.erase(it);
-	return true;
+		polypeptides.erase(it);
+
+		Polypeptide::getMutex().unlock();
+
+		return true;
 	}
+	
+	Polypeptide::getMutex().unlock();
+
 	return false;
 }
 

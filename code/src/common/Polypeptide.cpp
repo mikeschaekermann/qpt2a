@@ -1,5 +1,7 @@
 #include "Polypeptide.h"
 
+ boost::mutex Polypeptide::polyMutex;
+
 Polypeptide::Polypeptide() : state(IDLE)
 { }
 
