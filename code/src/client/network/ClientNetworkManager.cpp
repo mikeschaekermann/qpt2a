@@ -836,8 +836,7 @@ void ClientNetworkManager::initiateGame()
 			LOG_INFO(message.str());
 			message.str("");
 
-			GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition);
-			GAME_MGR->getPlayerById(it->playerId)->setHue(color[i++]);
+			GAME_MGR->addPlayer(it->playerId, it->playerName, it->startCellId, it->startPosition, color[(i++)%8]);
 		}
 			
 		// Add barriers

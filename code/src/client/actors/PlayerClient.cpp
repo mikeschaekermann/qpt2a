@@ -59,7 +59,7 @@ void PlayerClient::initializeHue()
 	/// according to the name which is unique
 	/// among all players in a game
 
-	unsigned int srandValue = 0;
+	/*unsigned int srandValue = 0;
 
 	for (unsigned int i = 0; i < name.length(); ++i)
 	{
@@ -71,7 +71,7 @@ void PlayerClient::initializeHue()
 
 	hue = float(rand() % 101) / 100.0f;
 
-	srand((unsigned int) time(NULL));
+	srand((unsigned int) time(NULL));*/
 }
 
 MarchingCubes & PlayerClient::getSkin()
