@@ -39,7 +39,7 @@ public:
 	void addPetriDish(float radius);
 	void addStaticModifier(unsigned int id, Vec3f position, Vec3f rotation, Vec3f scale, float radius, StaticModificator::Type type);
 	void addBarrier(unsigned int id, Vec3f position, Vec3f rotation, Vec3f scale, float radius);
-	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition);
+	void addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition, float hue);
 	void setMyPlayerId(unsigned int id);
 	PlayerClient * getMyPlayer() const;
 	float getMyHue() const;

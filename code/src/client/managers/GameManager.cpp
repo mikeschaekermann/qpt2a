@@ -88,7 +88,7 @@ void GameManager::draw()
 	SCREEN_MGR->draw();
 }
 
-void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition)
+void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellId, Vec3f stemCellPosition, float hue)
 {
 	if (players.find(id) != players.end())
 	{
@@ -113,6 +113,7 @@ void GameManager::addPlayer(unsigned int id, string name, unsigned int stemCellI
 	}
 
 	auto player = players[id];
+	player->setHue(hue);
 	StemCellClient * stemCell = new StemCellClient(stemCellId, stemCellPosition, 0, player);
 	stemCell->setHue(player->getHue());
 	player->setStemCell(stemCell);
