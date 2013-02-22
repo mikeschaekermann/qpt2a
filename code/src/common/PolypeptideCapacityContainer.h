@@ -19,6 +19,10 @@ public:
 	/// i.e. no more polys can be added
 	bool isFull() const;
 
+	void changeNumberOfPolypeptides(int amount);
+	void changeNumberOfStandardCells(int amount);
+	void changeNumberOfBoneCells(int amount);
+
 private:
 	const float percentageUsable;
 	const unsigned int polypeptidesPerStandardCell;

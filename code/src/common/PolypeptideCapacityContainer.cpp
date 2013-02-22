@@ -42,3 +42,45 @@ bool PolypeptideCapacityContainer::isFull() const
 {
 	return (getRemainingNumberOfPolypeptidesAllowed() <= 0);
 }
+
+void PolypeptideCapacityContainer::changeNumberOfPolypeptides(int amount)
+{
+	if (NumberOfPolypeptides < -amount)
+	{
+		LOG_ERROR("Tried to decrease the number of polypeptides to a negative amount.");
+		assert(false);
+		NumberOfPolypeptides = 0;
+	}
+	else
+	{
+		NumberOfPolypeptides += amount;
+	}
+}
+
+void PolypeptideCapacityContainer::changeNumberOfStandardCells(int amount)
+{
+	if (NumberOfStandardCells < -amount)
+	{
+		LOG_ERROR("Tried to decrease the number of bone cells to a negative amount.");
+		assert(false);
+		NumberOfStandardCells = 0;
+	}
+	else
+	{
+		NumberOfStandardCells += amount;
+	}
+}
+
+void PolypeptideCapacityContainer::changeNumberOfBoneCells(int amount)
+{
+	if (NumberOfBoneCells < -amount)
+	{
+		LOG_ERROR("Tried to decrease the number of bone cells to a negative amount.");
+		assert(false);
+		NumberOfBoneCells = 0;
+	}
+	else
+	{
+		NumberOfBoneCells += amount;
+	}
+}

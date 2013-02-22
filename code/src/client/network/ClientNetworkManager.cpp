@@ -406,7 +406,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide->show();
 				polypeptide->setOwner(&stemCell);
 
-				++(POLYCAPACITY->NumberOfPolypeptides);
+				POLYCAPACITY->changeNumberOfPolypeptides(1);
 
 				stemCell.addPolypeptide(polypeptide);
 
@@ -530,17 +530,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polypeptide->getOwner()->removePolypeptide(polypeptide);
 				GAME_SCR->getSelectedPolypeptides().removeGameObject(polypeptide);
 				GAME_SCR->getMyPolypeptides().removeGameObject(polypeptide);
-
-				if (POLYCAPACITY->NumberOfPolypeptides == 0)
-				{
-					LOG_ERROR("Tried to remove a polypeptide although the polypeptide counter is already zero.");
-					assert(false);
-				}
-				else
-				{
-					--(POLYCAPACITY->NumberOfPolypeptides);
-				}
-
+				POLYCAPACITY->changeNumberOfPolypeptides(-1);
 				delete polypeptide;
 			}
 			else
@@ -668,6 +658,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			}
 
 			auto polyObject1 = GAME_SCR->getMyPolypeptides().find(polypeptideId1);
+			/// poly #1 is opponent's poly
 			if (cellObject1 == nullptr)
 			{
 				polyObject1 = new PolypeptideClient();
@@ -677,12 +668,18 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polyObject1->setOwner(cellClient1);
 				GAME_SCR->addGameObjectToDraw(polyObject1);
 			}
+			/// poly #1 is my own poly
 			else
 			{
 				polyObject1->setAttackOptions(cellClient1->getPosition(), false, polypeptide1Dies);
+				if (polypeptide1Dies)
+				{
+					POLYCAPACITY->changeNumberOfPolypeptides(-1);
+				}
 			}
 
 			auto polyObject2 = GAME_SCR->getMyPolypeptides().find(polypeptideId2);
+			/// poly #2 is opponent's poly
 			if (cellObject2 == nullptr)
 			{
 				polyObject2 = new PolypeptideClient();
@@ -692,9 +689,14 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				polyObject2->setOwner(cellClient2);
 				GAME_SCR->addGameObjectToDraw(polyObject2);
 			}
+			/// poly #2 is my own poly
 			else
 			{
 				polyObject2->setAttackOptions(cellClient2->getPosition(), false, polypeptide2Dies);
+				if (polypeptide2Dies)
+				{
+					POLYCAPACITY->changeNumberOfPolypeptides(-1);
+				}
 			}
 
 			auto focusCenter = (polyObject1->getPosition() + polyObject2->getPosition()) * 0.5f;
