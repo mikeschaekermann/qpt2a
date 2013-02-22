@@ -21,7 +21,7 @@ void GameScreenStateMovePolypeptides::draw2D()
 			CONFIG_FLOAT("data.ingamefeedback.pickPolypeptides.movingPolypeptideColor.a")
 		));
 		
-		unsigned int size = screen->getSelectedPolypeptides().getSize();
+		unsigned int size = GAME_SCR->getSelectedPolypeptides().getSize();
 		for(unsigned i = 0; i < size; ++i)
 		{
 			float angle = 360.f / size;

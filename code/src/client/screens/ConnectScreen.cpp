@@ -127,7 +127,7 @@ void ConnectScreen::update(float frameTime)
 		{
 			connectButton->setEnabled(true);
 			backButton->setEnabled(true);
-			messageBox->setValue("Connection timed out");
+			messageBox->setValue("Connection will be established \nwhen game is full.");
 		}
 	}
 }
