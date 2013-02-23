@@ -5,9 +5,18 @@
 
 #include <list>
 #include <map>
+#include <queue>
 #include <boost/asio.hpp>
 
 #include "messages/NetworkMessage.h"
+
+struct CompareNetworkMessage : public std::binary_function<NetworkMessage *, NetworkMessage *, bool>                                                                                       
+{  
+  bool operator()(const NetworkMessage * lhs, const NetworkMessage * rhs) const  
+  {  
+	  return lhs->messageId > rhs->messageId;  
+  }  
+};
 
 class ConnectionEndpoint
 {
@@ -17,6 +26,7 @@ public:
 	
 	std::list<unsigned int> m_unreceivedMessages;
 	std::map<unsigned int, NetworkMessage*> m_unconfirmedMessages;
+	std::priority_queue<NetworkMessage *, std::vector<NetworkMessage*>, CompareNetworkMessage> m_unhandledMessages;
 	
 	boost::asio::ip::udp::endpoint m_endpoint;
 

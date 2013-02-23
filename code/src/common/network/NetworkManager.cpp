@@ -123,13 +123,45 @@ void NetworkManager::operator()()
 			{
 				handleConnectionMessage(connectionMessage);
 				maintenanceMutex.unlock();
+				delete message;
 			}
 			else
 			{
 				maintenanceMutex.unlock();
-				handleMessage(message);
+
+				ConnectionEndpoint *connectionEndpoint = getConnectionEndpoint(message->endpoint);
+				if (connectionEndpoint)
+				{
+					/// Add the message
+					connectionEndpoint->m_unhandledMessages.push(message);
+
+					/// Find the lowest messageId of the missing messages
+					auto currentMessageId = message->messageId;
+					for (auto it = connectionEndpoint->m_unreceivedMessages.begin(); 
+						it != connectionEndpoint->m_unreceivedMessages.end(); ++it)
+					{
+						if (*it < currentMessageId)
+						{
+							currentMessageId = *it;
+						}
+					}
+
+					/// Handle all received messages until the next gap can be found
+					while (!connectionEndpoint->m_unhandledMessages.empty() && 
+						connectionEndpoint->m_unhandledMessages.top()->messageId == currentMessageId++)
+					{
+						NetworkMessage * currentMessage = connectionEndpoint->m_unhandledMessages.top();	
+						connectionEndpoint->m_unhandledMessages.pop();
+						handleMessage(currentMessage);
+						delete currentMessage;
+					}
+				}
+				else
+				{
+					handleMessage(message);
+					delete message;
+				}
 			}
-			delete message;
 		}
 	}
 	catch(std::exception &ex)
