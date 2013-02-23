@@ -80,6 +80,8 @@ void ScreenManager::openGameScreen()
 
 void ScreenManager::openConnectScreen()
 {
+	delete connectScreen;
+	connectScreen = new ConnectScreen();
 	currentScreen = connectScreen;
 }
 

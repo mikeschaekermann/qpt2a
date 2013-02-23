@@ -25,6 +25,7 @@ void GameScreenStateNeutral::touchMoved(const TouchWay & touchWay)
 
 void GameScreenStateNeutral::onKeyInput(KeyEvent& e)
 {
+	
 	auto& cam = RenderManager::getInstance()->cam;
 
 	if (e.getCode() == KeyEvent::KEY_ESCAPE)
