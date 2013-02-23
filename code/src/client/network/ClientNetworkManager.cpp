@@ -161,7 +161,9 @@ NetworkMessage* ClientNetworkManager::createNetworkMessage(char* data)
 
 void ClientNetworkManager::handleMessage(NetworkMessage* message)
 {
-	GAME_SCR->getContainerMutex().lock();
+	auto& mutex = GAME_SCR->getContainerMutex();
+	
+	mutex.lock();
 
 	switch (message->messageType.getType())
 	{
@@ -293,7 +295,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				else
 				{
 					LOG_ERROR("Server told me that a cell which is not a standard cell attacked another cell!");
-					assert(false);
+					mutex.unlock();
+					return;
 				}
 			}
 			if (attacked)
@@ -306,7 +309,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 				else
 				{
 					LOG_ERROR("Server told me that a game object which is not a cell got attacked by another cell!");
-					assert(false);
+					mutex.unlock();
+					return;
 				}
 			}
 
@@ -598,6 +602,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 						if (polyIt == fromCell->getPolypeptides().end())
 						{
 							LOG_ERROR("Tried to move polypeptide which the cell does not have in its list!");
+							mutex.unlock();
 							return;
 						}
 
@@ -621,7 +626,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 						else
 						{
 							LOG_ERROR("Tried to move polypeptide which the client does not have in its list!");
-							assert(false);
+							mutex.unlock();
+							return;
 						}
 					}
 				}
@@ -697,7 +703,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			else
 			{
 				LOG_ERROR("Tried to delete polypeptide which the client does not have in its list!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 		}
 	}
@@ -726,28 +733,32 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			if (attackedObject == nullptr)
 			{
 				LOG_ERROR("Attacked object does not exist!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 
 			auto attackerObject = GAME_SCR->getGameObjectsToDraw().find(attackerCellId);
 			if (attackerObject == nullptr)
 			{
 				LOG_ERROR("Attacker object does not exist!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 
 			auto attackedCell = dynamic_cast<CellClient *>(attackedObject);
 			if (attackedCell == nullptr)
 			{
 				LOG_ERROR("Attacked object is not of type CellClient!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 
 			auto attackerCell = dynamic_cast<CellClient *>(attackerObject);
 			if (attackerCell == nullptr)
 			{
 				LOG_ERROR("Attacker object is not of type CellClient!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 
 			bool ownCell = attackedCell->getOwner() == GAME_MGR->getMyPlayer();
@@ -761,7 +772,8 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			if (ownCell == ownPoly)
 			{
 				LOG_ERROR("Either the attacking poly or the cell being attacked must be mine and the other one must not be mine!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 
 			/// other player's poly is attacking!
@@ -812,28 +824,32 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 			if (cellObject1 == nullptr)
 			{
 				LOG_ERROR("Parent cell of poly #1 could not be found!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 
 			auto cellObject2 = GAME_SCR->getGameObjectsToDraw().find(cellId2);
 			if (cellObject2 == nullptr)
 			{
 				LOG_ERROR("Parent cell of poly #2 could not be found!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 
 			auto cellClient1 = dynamic_cast<CellClient *>(cellObject1);
 			if (cellClient1 == nullptr)
 			{
 				LOG_ERROR("Parent cell of poly #1 is not of type CellClient!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 
 			auto cellClient2 = dynamic_cast<CellClient *>(cellObject2);
 			if (cellClient2 == nullptr)
 			{
 				LOG_ERROR("Parent cell of poly #2 is not of type CellClient!");
-				assert(false);
+				mutex.unlock();
+				return;
 			}
 
 			auto polyObject1 = GAME_SCR->getMyPolypeptides().find(polypeptideId1);
@@ -900,7 +916,7 @@ void ClientNetworkManager::handleMessage(NetworkMessage* message)
 	}
 	}
 
-	GAME_SCR->getContainerMutex().unlock();
+	mutex.unlock();
 }
 
 vector<ConnectionEndpoint> ClientNetworkManager::getConnectionEndpoints()

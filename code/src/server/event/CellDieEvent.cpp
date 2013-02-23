@@ -58,8 +58,11 @@ void CellDieEvent::trigger()
 			{
 				--(POLYCAPACITY(player->getId())->NumberOfBoneCells);
 			}
+			
+			bool isStemCell = cell->getType() == CellServer::STEMCELL;
+			bool hasTooManyPolypeptides = POLYCAPACITY(player->getId())->getRemainingNumberOfPolypeptidesAllowed() < 0;
 
-			if (POLYCAPACITY(player->getId())->getRemainingNumberOfPolypeptidesAllowed() < 0)
+			if (!isStemCell && hasTooManyPolypeptides)
 			{
 				unsigned int nrOfPolys = -POLYCAPACITY(player->getId())->getRemainingNumberOfPolypeptidesAllowed();
 
@@ -70,17 +73,21 @@ void CellDieEvent::trigger()
 				while (!q.empty())
 				{
 					auto curCell = q.front();
-					for (auto it = curCell->getPolypeptides().begin(); i < nrOfPolys && it != curCell->getPolypeptides().end(); ++i)
+					q.pop();
+					auto polyIt = curCell->getPolypeptides().begin();
+					while (i < nrOfPolys && polyIt != curCell->getPolypeptides().end())
 					{
 						LOG_INFO("PolypeptideDie sent because capacity is low");
 						PolypeptideDie * message = new PolypeptideDie();
 						message->cellId = curCell->getId();
-						message->polypeptideId = it->second->getId();
+						message->polypeptideId = polyIt->second->getId();
 						message->endpoint = player->getEndpoint();
 						NETWORKMANAGER->send(message);
 
-						delete it->second;
-						it = curCell->getPolypeptides().erase(it);
+						delete polyIt->second;
+						polyIt = curCell->getPolypeptides().erase(polyIt);
+
+						++i;
 					}
 
 					if (i == nrOfPolys) break;
@@ -100,9 +107,12 @@ void CellDieEvent::trigger()
 			NETWORKMANAGER->sendTo<CellDie>(die, NETWORKMANAGER->getConnectionEndpoints());
 			LOG_INFO("CellDie sent");
 			
-			GAMECONTEXT->getAttackRelations().removeRelationsFor(*cell);
-			GAMECONTEXT->getAttackRelations().updateRelationsFor(*cell);
-			GAMECONTEXT->getActiveCells().removeGameObject(cell->getId());
+			if (!isStemCell)
+			{
+				GAMECONTEXT->getAttackRelations().removeRelationsFor(*cell);
+				GAMECONTEXT->getAttackRelations().updateRelationsFor(*cell);
+				GAMECONTEXT->getActiveCells().removeGameObject(cell->getId());
+			}
 		}
 	}
 }

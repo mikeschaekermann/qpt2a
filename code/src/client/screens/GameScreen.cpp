@@ -282,12 +282,9 @@ void GameScreen::touchEnded(TouchWay touchWay)
 
 bool GameScreen::touchClick(TouchWay touchWay)
 {
-	auto touchedAnything = false;
+	auto touchedAnything = Screen::touchClick(touchWay);
 
-	auto touchedGUI = Screen::touchClick(touchWay);
-	touchedAnything = touchedGUI;
-
-	if (!touchedGUI)
+	if (!touchedAnything)
 	{
 		touchedAnything |= state->touchClick(touchWay);
 	}

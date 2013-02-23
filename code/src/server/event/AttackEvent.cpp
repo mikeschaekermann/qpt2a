@@ -28,21 +28,19 @@ void AttackEvent::trigger()
 		auto attacker = dynamic_cast<CellServer *>(attackerO);
 		auto attacked = dynamic_cast<CellServer *>(attackedO);
 
-		if (attacked->getHealthPoints() <= 0.f)
+		if (attacked->getHealthPoints() > 0.f)
 		{
-			return;
+			attacked->decreaseHealthPointsBy(damage);
+			CellAttack * attack = new CellAttack();
+			attack->attackerCellId = attacker->getId();
+			attack->attackedCellId = attacked->getId();
+			attack->damage = damage;
+
+			LOG_INFO(stringify(ostringstream() << "Cell with id: " << attack->attackerCellId << " is attacking cell with id: " << attack->attackedCellId << " width a damage of: " << attack->damage));
+
+			NETWORKMANAGER->sendTo<CellAttack>(attack, NETWORKMANAGER->getConnectionEndpoints());
+			LOG_INFO("CellAttack sent");
 		}
-
-		attacked->decreaseHealthPointsBy(damage);
-		CellAttack * attack = new CellAttack();
-		attack->attackerCellId = attacker->getId();
-		attack->attackedCellId = attacked->getId();
-		attack->damage = damage;
-
-		LOG_INFO(stringify(ostringstream() << "Cell with id: " << attack->attackerCellId << " is attacking cell with id: " << attack->attackedCellId << " width a damage of: " << attack->damage));
-
-		NETWORKMANAGER->sendTo<CellAttack>(attack, NETWORKMANAGER->getConnectionEndpoints());
-		LOG_INFO("CellAttack sent");
 
 		if (attacked->getHealthPoints() <= 0.f)
 		{
