@@ -31,7 +31,7 @@ void CellDieEvent::trigger()
 		if (cell != nullptr)
 		{
 			auto player = GAMECONTEXT->getPlayer(cell->getOwner()->getId());
-
+			
 			for (auto it = cell->getPolypeptides().begin(); it != cell->getPolypeptides().end(); ++it)
 			{
 				LOG_INFO("PolypeptideDie sent because cell died");
@@ -43,11 +43,6 @@ void CellDieEvent::trigger()
 
 				delete it->second;
 				--(POLYCAPACITY(player->getId())->NumberOfPolypeptides);
-			}
-
-			for (auto it = cell->getChildren().begin(); it != cell->getChildren().end(); ++it)
-			{
-				(*EVENT_MGR) += new CellDieEvent(getDeadTime(), (*it)->getId());
 			}
 
 			if (cell->getType() == CellServer::STANDARDCELL)
@@ -106,6 +101,11 @@ void CellDieEvent::trigger()
 
 			NETWORKMANAGER->sendTo<CellDie>(die, NETWORKMANAGER->getConnectionEndpoints());
 			LOG_INFO("CellDie sent");
+			
+			for (auto it = cell->getChildren().begin(); it != cell->getChildren().end(); ++it)
+			{
+				(*EVENT_MGR) += new CellDieEvent(getDeadTime(), (*it)->getId());
+			}
 			
 			if (!isStemCell)
 			{
