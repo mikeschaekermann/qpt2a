@@ -49,16 +49,25 @@ MenuScreen::MenuScreen()
 				(self->serverStartupInfo).cb = sizeof((self->serverStartupInfo));
 				ZeroMemory( &(self->serverProcessInfo), sizeof((self->serverProcessInfo)) );
 				if (!
-				CreateProcess
-						(
-						TEXT("..\\..\\server\\Debug\\server.exe"),
-						NULL,NULL,NULL,FALSE,
-						CREATE_NEW_CONSOLE,
-						NULL,NULL,
-						&(self->serverStartupInfo),
-						&(self->serverProcessInfo)
+						CreateProcess(
+							TEXT("..\\..\\server\\Debug\\server.exe"),
+							NULL,NULL,NULL,FALSE,
+							CREATE_NEW_CONSOLE,
+							NULL,NULL,
+							&(self->serverStartupInfo),
+							&(self->serverProcessInfo)
+						)
+					&&
+						!CreateProcess(
+							TEXT("..\\server\\server.exe"),
+							NULL,NULL,NULL,FALSE,
+							CREATE_NEW_CONSOLE,
+							NULL,NULL,
+							&(self->serverStartupInfo),
+							&(self->serverProcessInfo)
 						)
 					)
+					
 				{
 					LOG_ERROR("Could not start server in a thread!");
 				}

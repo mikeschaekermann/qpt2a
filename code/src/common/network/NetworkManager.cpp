@@ -282,12 +282,24 @@ void NetworkManager::connectionMaintenance()
 void NetworkManager::stop()
 {
 	run = false;
-	
-	serverSocket->shutdown(boost::asio::socket_base::shutdown_both);
-	serverSocket->close();
-	
-	// Wait on threads
-	while ((maintenanceThreadRunning || networkThreadRunning) && !forceShutdown);
+	try
+	{
+		serverSocket->shutdown(boost::asio::socket_base::shutdown_both);
+		serverSocket->close();
+	}
+	catch(...)
+	{
+		/// Cannot do anything
+	}
+
+	float shutdownTime = 5.f;
+
+	// Wait on threads (max 5 seconds)
+	while ((maintenanceThreadRunning || networkThreadRunning) && !forceShutdown && shutdownTime > 0.f)
+	{
+		shutdownTime -= 0.1f;
+		boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+	}
 }
 
 	
