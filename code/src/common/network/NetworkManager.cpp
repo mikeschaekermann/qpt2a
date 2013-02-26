@@ -11,7 +11,7 @@
 using boost::asio::ip::udp;
 using namespace std;
 
-NetworkManager::NetworkManager(unsigned short listenPort) : run(true), bound(true), networkThreadRunning(false), maintenanceThreadRunning(false)
+NetworkManager::NetworkManager(unsigned short listenPort) : run(true), bound(true), networkThreadRunning(false), maintenanceThreadRunning(false), forceShutdown(false)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service);
@@ -20,7 +20,7 @@ NetworkManager::NetworkManager(unsigned short listenPort) : run(true), bound(tru
 	serverSocket->bind(udp::endpoint(udp::v4(), listenPort));
 }
 
-NetworkManager::NetworkManager() : run(true), bound(false), networkThreadRunning(false), maintenanceThreadRunning(false)
+NetworkManager::NetworkManager() : run(true), bound(false), networkThreadRunning(false), maintenanceThreadRunning(false), forceShutdown(false)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service);
@@ -28,7 +28,7 @@ NetworkManager::NetworkManager() : run(true), bound(false), networkThreadRunning
     serverSocket->set_option(boost::asio::ip::udp::socket::reuse_address(true));
 }
 
-NetworkManager::NetworkManager(const NetworkManager &other) : run(true), bound(false), networkThreadRunning(false), maintenanceThreadRunning(false)
+NetworkManager::NetworkManager(const NetworkManager &other) : run(true), bound(false), networkThreadRunning(false), maintenanceThreadRunning(false), forceShutdown(false)
 {
 	io_service = new boost::asio::io_service();
 	serverSocket = new boost::asio::ip::udp::socket(*io_service, udp::endpoint(udp::v4(), other.serverSocket->local_endpoint().port()));
@@ -38,12 +38,9 @@ NetworkManager::NetworkManager(const NetworkManager &other) : run(true), bound(f
 
 NetworkManager::~NetworkManager()
 {
-	run = false;
-	
-	serverSocket->shutdown(boost::asio::socket_base::shutdown_both);
-	serverSocket->close();
-	// Wait on threads
-	while (maintenanceThreadRunning || networkThreadRunning);
+	forceShutdown = true;
+
+	stop();
 
 	if (serverSocket)
 	{
@@ -285,6 +282,12 @@ void NetworkManager::connectionMaintenance()
 void NetworkManager::stop()
 {
 	run = false;
+	
+	serverSocket->shutdown(boost::asio::socket_base::shutdown_both);
+	serverSocket->close();
+	
+	// Wait on threads
+	while ((maintenanceThreadRunning || networkThreadRunning) && !forceShutdown);
 }
 
 	

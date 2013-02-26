@@ -65,4 +65,5 @@ private:
 
 	bool networkThreadRunning;
 	bool maintenanceThreadRunning;
+	bool forceShutdown;
 };
