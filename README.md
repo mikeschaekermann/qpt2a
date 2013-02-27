@@ -4,6 +4,12 @@ Soma
 A realtime online strategy game created by students at the University of Applied Sciences Salzburg as a semester project (3rd semester) in 2013. 
 Players build cellular tissue inside a Petri dish aiming to eliminate the opponents' stem cells.
 
+Usage
+=====
+
+Download the [setup file](https://github.com/mikeschaekermann/qpt2a/blob/master/code/build/vc11/Soma-Setup/Soma.msi) and run it.
+Now, you can play with another person on the network. The one to create the server needs a public IP address.
+
 Contributors:
 =============
 
